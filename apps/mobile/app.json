@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Todo List",
+    "slug": "todo-list",
+    "version": "0.0.1",
+    "orientation": "portrait",
+    "scheme": "todo-list",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.daon.todolist"
+    },
+    "android": {
+      "package": "com.daon.todolist",
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "plugins": ["expo-router"]
+  }
+}
