@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>디자인 토큰 — Dopamine Planner Design System</title>
+  <!-- Fonts -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.304/fonts/webfonts/JetBrainsMono.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/demo.css">
+  <link rel="stylesheet" href="../css/atoms.css">
+  <link rel="stylesheet" href="../css/molecules.css">
+  <link rel="stylesheet" href="../css/organisms.css">
+</head>
+<body>
+  <script src="../js/sidebar.js"></script>
+  <main class="proto-main">
+    <section id="tokens" class="proto-section">
+      <h1 class="proto-section-title">1. 디자인 토큰</h1>
+
+      <!-- ── 1.1 Color Palette (Primitive Colors) ── -->
+      <h2 class="proto-subsection-title">1.1 컬러 팔레트 (Primitive Colors)</h2>
+
+      <h3 class="proto-group-title">Main — Purple</h3>
+      <div class="proto-swatch-grid">
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-purple-100)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-purple-100</div>
+            <div class="proto-swatch-label-hex">#D7AEF2</div>
+            <div class="proto-swatch-label-usage">배경 하이라이트, 비활성 상태</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-purple-200)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-purple-200</div>
+            <div class="proto-swatch-label-hex">#C599F2</div>
+            <div class="proto-swatch-label-usage">호버 상태</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-purple-300)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-purple-300</div>
+            <div class="proto-swatch-label-hex">#B87EF2</div>
+            <div class="proto-swatch-label-usage">활성 상태</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-purple-500)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-purple-500 <span class="proto-swatch-star">★</span></div>
+            <div class="proto-swatch-label-hex">#9755D9</div>
+            <div class="proto-swatch-label-usage">Primary 브랜드색</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-purple-700)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-purple-700</div>
+            <div class="proto-swatch-label-hex">#8A63BF</div>
+            <div class="proto-swatch-label-usage">눌림 상태</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="proto-group-title">Sub 01 — Periwinkle</h3>
+      <div class="proto-swatch-grid">
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-periwinkle-100)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-periwinkle-100</div>
+            <div class="proto-swatch-label-hex">#D2D3FF</div>
+            <div class="proto-swatch-label-usage">연한 배경, 태그</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-periwinkle-200)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-periwinkle-200</div>
+            <div class="proto-swatch-label-hex">#BFCEFF</div>
+            <div class="proto-swatch-label-usage">—</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-periwinkle-300)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-periwinkle-300</div>
+            <div class="proto-swatch-label-hex">#BAC3FF</div>
+            <div class="proto-swatch-label-usage">—</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-periwinkle-400)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-periwinkle-400</div>
+            <div class="proto-swatch-label-hex">#9DABE8</div>
+            <div class="proto-swatch-label-usage">—</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-periwinkle-500)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-periwinkle-500 <span class="proto-swatch-star">★</span></div>
+            <div class="proto-swatch-label-hex">#9DA3E8</div>
+            <div class="proto-swatch-label-usage">Secondary 색상</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="proto-group-title">Sub 02 — Neutral + Grounding</h3>
+      <div class="proto-swatch-grid">
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-indigo-600)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-indigo-600</div>
+            <div class="proto-swatch-label-hex">#7578BF</div>
+            <div class="proto-swatch-label-usage">보조 텍스트/아이콘</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-lavender-gray-300)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-lavender-gray-300</div>
+            <div class="proto-swatch-label-hex">#B8BAD9</div>
+            <div class="proto-swatch-label-usage">보더, 디바이더</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block proto-swatch-block--bordered" style="background-color: var(--color-gray-50)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-gray-50</div>
+            <div class="proto-swatch-label-hex">#F2F2F2</div>
+            <div class="proto-swatch-label-usage">Surface 배경</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block proto-swatch-block--bordered" style="background-color: var(--color-white)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-white</div>
+            <div class="proto-swatch-label-hex">#FFFFFF</div>
+            <div class="proto-swatch-label-usage">기본 배경</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-black-900)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-black-900</div>
+            <div class="proto-swatch-label-hex">#000000</div>
+            <div class="proto-swatch-label-usage">Grounding (본문 텍스트)</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="proto-group-title">Status</h3>
+      <div class="proto-swatch-grid">
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-red-500)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-red-500</div>
+            <div class="proto-swatch-label-hex">#EF4444</div>
+            <div class="proto-swatch-label-usage">Error</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-green-500)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-green-500</div>
+            <div class="proto-swatch-label-hex">#22C55E</div>
+            <div class="proto-swatch-label-usage">Success</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-yellow-500)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-yellow-500</div>
+            <div class="proto-swatch-label-hex">#F59E0B</div>
+            <div class="proto-swatch-label-usage">Warning</div>
+          </div>
+        </div>
+        <div class="proto-swatch">
+          <div class="proto-swatch-block" style="background-color: var(--color-blue-500)"></div>
+          <div class="proto-swatch-label">
+            <div class="proto-swatch-label-token">--color-blue-500</div>
+            <div class="proto-swatch-label-hex">#3B82F6</div>
+            <div class="proto-swatch-label-usage">Info</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 1.2 Semantic Colors ── -->
+      <h2 class="proto-subsection-title">1.2 시맨틱 컬러 (Semantic Tokens)</h2>
+
+      <h3 class="proto-group-title">Text</h3>
+      <div class="proto-semantic-group">
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-text-primary)"></div>
+          <span class="proto-semantic-token">--color-text-primary</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-black-900 <span class="proto-semantic-ref-arrow">&rarr;</span> #000000</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-text-secondary)"></div>
+          <span class="proto-semantic-token">--color-text-secondary</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-indigo-600 <span class="proto-semantic-ref-arrow">&rarr;</span> #7578BF</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-text-tertiary)"></div>
+          <span class="proto-semantic-token">--color-text-tertiary</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-lavender-gray-300 <span class="proto-semantic-ref-arrow">&rarr;</span> #B8BAD9</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block proto-semantic-block--bordered" style="background-color: var(--color-text-inverse)"></div>
+          <span class="proto-semantic-token">--color-text-inverse</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-white <span class="proto-semantic-ref-arrow">&rarr;</span> #FFFFFF</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-text-brand)"></div>
+          <span class="proto-semantic-token">--color-text-brand</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-purple-500 <span class="proto-semantic-ref-arrow">&rarr;</span> #9755D9</span>
+        </div>
+      </div>
+
+      <h3 class="proto-group-title">Background</h3>
+      <div class="proto-semantic-group">
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block proto-semantic-block--bordered" style="background-color: var(--color-bg-base)"></div>
+          <span class="proto-semantic-token">--color-bg-base</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-white <span class="proto-semantic-ref-arrow">&rarr;</span> #FFFFFF</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-bg-surface)"></div>
+          <span class="proto-semantic-token">--color-bg-surface</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-gray-50 <span class="proto-semantic-ref-arrow">&rarr;</span> #F2F2F2</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block proto-semantic-block--bordered" style="background-color: var(--color-bg-elevated)"></div>
+          <span class="proto-semantic-token">--color-bg-elevated</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-white <span class="proto-semantic-ref-arrow">&rarr;</span> #FFFFFF</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-bg-brand-subtle)"></div>
+          <span class="proto-semantic-token">--color-bg-brand-subtle</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-purple-100 <span class="proto-semantic-ref-arrow">&rarr;</span> #D7AEF2</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-bg-secondary-subtle)"></div>
+          <span class="proto-semantic-token">--color-bg-secondary-subtle</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-periwinkle-100 <span class="proto-semantic-ref-arrow">&rarr;</span> #D2D3FF</span>
+        </div>
+      </div>
+
+      <h3 class="proto-group-title">Interactive — Primary</h3>
+      <div class="proto-semantic-group">
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-interactive-primary)"></div>
+          <span class="proto-semantic-token">--color-interactive-primary</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-purple-500 <span class="proto-semantic-ref-arrow">&rarr;</span> #9755D9</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-interactive-primary-hover)"></div>
+          <span class="proto-semantic-token">--color-interactive-primary-hover</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-purple-300 <span class="proto-semantic-ref-arrow">&rarr;</span> #B87EF2</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-interactive-primary-active)"></div>
+          <span class="proto-semantic-token">--color-interactive-primary-active</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-purple-700 <span class="proto-semantic-ref-arrow">&rarr;</span> #8A63BF</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-interactive-primary-disabled)"></div>
+          <span class="proto-semantic-token">--color-interactive-primary-disabled</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-purple-100 <span class="proto-semantic-ref-arrow">&rarr;</span> #D7AEF2</span>
+        </div>
+      </div>
+
+      <h3 class="proto-group-title">Interactive — Secondary</h3>
+      <div class="proto-semantic-group">
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-interactive-secondary)"></div>
+          <span class="proto-semantic-token">--color-interactive-secondary</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-periwinkle-500 <span class="proto-semantic-ref-arrow">&rarr;</span> #9DA3E8</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-interactive-secondary-hover)"></div>
+          <span class="proto-semantic-token">--color-interactive-secondary-hover</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-periwinkle-300 <span class="proto-semantic-ref-arrow">&rarr;</span> #BAC3FF</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-interactive-secondary-active)"></div>
+          <span class="proto-semantic-token">--color-interactive-secondary-active</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-periwinkle-400 <span class="proto-semantic-ref-arrow">&rarr;</span> #9DABE8</span>
+        </div>
+      </div>
+
+      <h3 class="proto-group-title">Border</h3>
+      <div class="proto-semantic-group">
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-border-default)"></div>
+          <span class="proto-semantic-token">--color-border-default</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-lavender-gray-300 <span class="proto-semantic-ref-arrow">&rarr;</span> #B8BAD9</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-border-focus)"></div>
+          <span class="proto-semantic-token">--color-border-focus</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-purple-500 <span class="proto-semantic-ref-arrow">&rarr;</span> #9755D9</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block proto-semantic-block--bordered" style="background-color: var(--color-border-subtle)"></div>
+          <span class="proto-semantic-token">--color-border-subtle</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-gray-50 <span class="proto-semantic-ref-arrow">&rarr;</span> #F2F2F2</span>
+        </div>
+      </div>
+
+      <h3 class="proto-group-title">Status</h3>
+      <div class="proto-semantic-group">
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-status-success)"></div>
+          <span class="proto-semantic-token">--color-status-success</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-green-500 <span class="proto-semantic-ref-arrow">&rarr;</span> #22C55E</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-status-error)"></div>
+          <span class="proto-semantic-token">--color-status-error</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-red-500 <span class="proto-semantic-ref-arrow">&rarr;</span> #EF4444</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-status-warning)"></div>
+          <span class="proto-semantic-token">--color-status-warning</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-yellow-500 <span class="proto-semantic-ref-arrow">&rarr;</span> #F59E0B</span>
+        </div>
+        <div class="proto-semantic-row">
+          <div class="proto-semantic-block" style="background-color: var(--color-status-info)"></div>
+          <span class="proto-semantic-token">--color-status-info</span>
+          <span class="proto-semantic-ref"><span class="proto-semantic-ref-arrow">&rarr;</span> --color-blue-500 <span class="proto-semantic-ref-arrow">&rarr;</span> #3B82F6</span>
+        </div>
+      </div>
+
+      <!-- ── 1.3 Component Colors ── -->
+      <h2 class="proto-subsection-title">1.3 컴포넌트 컬러 (Component Tokens)</h2>
+
+      <div class="proto-component-group">
+        <h4 class="proto-component-title">Button</h4>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--button-primary-bg)"></div>
+          <span class="proto-component-token">--button-primary-bg</span>
+          <span class="proto-component-ref">&rarr; --color-interactive-primary &rarr; --color-purple-500 &rarr; #9755D9</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block proto-component-block--bordered" style="background-color: var(--button-primary-text)"></div>
+          <span class="proto-component-token">--button-primary-text</span>
+          <span class="proto-component-ref">&rarr; --color-text-inverse &rarr; --color-white &rarr; #FFFFFF</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--button-primary-bg-hover)"></div>
+          <span class="proto-component-token">--button-primary-bg-hover</span>
+          <span class="proto-component-ref">&rarr; --color-interactive-primary-hover &rarr; --color-purple-300 &rarr; #B87EF2</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--button-primary-bg-active)"></div>
+          <span class="proto-component-token">--button-primary-bg-active</span>
+          <span class="proto-component-ref">&rarr; --color-interactive-primary-active &rarr; --color-purple-700 &rarr; #8A63BF</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--button-primary-bg-disabled)"></div>
+          <span class="proto-component-token">--button-primary-bg-disabled</span>
+          <span class="proto-component-ref">&rarr; --color-interactive-primary-disabled &rarr; --color-purple-100 &rarr; #D7AEF2</span>
+        </div>
+      </div>
+
+      <div class="proto-component-group">
+        <h4 class="proto-component-title">Tab Bar</h4>
+        <div class="proto-component-row">
+          <div class="proto-component-block proto-component-block--bordered" style="background-color: var(--tab-bar-bg)"></div>
+          <span class="proto-component-token">--tab-bar-bg</span>
+          <span class="proto-component-ref">&rarr; --color-bg-elevated &rarr; --color-white &rarr; #FFFFFF</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--tab-bar-active)"></div>
+          <span class="proto-component-token">--tab-bar-active</span>
+          <span class="proto-component-ref">&rarr; --color-interactive-primary &rarr; --color-purple-500 &rarr; #9755D9</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--tab-bar-inactive)"></div>
+          <span class="proto-component-token">--tab-bar-inactive</span>
+          <span class="proto-component-ref">&rarr; --color-lavender-gray-300 &rarr; #B8BAD9</span>
+        </div>
+      </div>
+
+      <div class="proto-component-group">
+        <h4 class="proto-component-title">Todo Item</h4>
+        <div class="proto-component-row">
+          <div class="proto-component-block proto-component-block--bordered" style="background-color: var(--todo-item-bg)"></div>
+          <span class="proto-component-token">--todo-item-bg</span>
+          <span class="proto-component-ref">&rarr; --color-bg-elevated &rarr; --color-white &rarr; #FFFFFF</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--todo-item-border)"></div>
+          <span class="proto-component-token">--todo-item-border</span>
+          <span class="proto-component-ref">&rarr; --color-border-default &rarr; --color-lavender-gray-300 &rarr; #B8BAD9</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--todo-item-completed-text)"></div>
+          <span class="proto-component-token">--todo-item-completed-text</span>
+          <span class="proto-component-ref">&rarr; --color-text-tertiary &rarr; --color-lavender-gray-300 &rarr; #B8BAD9</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--todo-item-checkbox-checked)"></div>
+          <span class="proto-component-token">--todo-item-checkbox-checked</span>
+          <span class="proto-component-ref">&rarr; --color-interactive-primary &rarr; --color-purple-500 &rarr; #9755D9</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--todo-item-checkbox-unchecked)"></div>
+          <span class="proto-component-token">--todo-item-checkbox-unchecked</span>
+          <span class="proto-component-ref">&rarr; --color-border-default &rarr; --color-lavender-gray-300 &rarr; #B8BAD9</span>
+        </div>
+      </div>
+
+      <div class="proto-component-group">
+        <h4 class="proto-component-title">Category Badge</h4>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--badge-bg)"></div>
+          <span class="proto-component-token">--badge-bg</span>
+          <span class="proto-component-ref">&rarr; --color-bg-secondary-subtle &rarr; --color-periwinkle-100 &rarr; #D2D3FF</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--badge-text)"></div>
+          <span class="proto-component-token">--badge-text</span>
+          <span class="proto-component-ref">&rarr; --color-interactive-secondary &rarr; --color-periwinkle-500 &rarr; #9DA3E8</span>
+        </div>
+      </div>
+
+      <div class="proto-component-group">
+        <h4 class="proto-component-title">FAB (Floating Action Button)</h4>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--fab-bg)"></div>
+          <span class="proto-component-token">--fab-bg</span>
+          <span class="proto-component-ref">&rarr; --color-interactive-primary &rarr; --color-purple-500 &rarr; #9755D9</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block proto-component-block--bordered" style="background-color: var(--fab-text)"></div>
+          <span class="proto-component-token">--fab-text</span>
+          <span class="proto-component-ref">&rarr; --color-text-inverse &rarr; --color-white &rarr; #FFFFFF</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--fab-shadow)"></div>
+          <span class="proto-component-token">--fab-shadow</span>
+          <span class="proto-component-ref">rgba(151, 85, 217, 0.3)</span>
+        </div>
+      </div>
+
+      <div class="proto-component-group">
+        <h4 class="proto-component-title">Section Header</h4>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--section-done-text)"></div>
+          <span class="proto-component-token">--section-done-text</span>
+          <span class="proto-component-ref">&rarr; --color-text-secondary &rarr; --color-indigo-600 &rarr; #7578BF</span>
+        </div>
+        <div class="proto-component-row">
+          <div class="proto-component-block" style="background-color: var(--section-progress-text)"></div>
+          <span class="proto-component-token">--section-progress-text</span>
+          <span class="proto-component-ref">&rarr; --color-text-primary &rarr; --color-black-900 &rarr; #000000</span>
+        </div>
+      </div>
+
+      <!-- ── WCAG Color Contrast ── -->
+      <h2 class="proto-subsection-title">WCAG 색 대비율</h2>
+
+      <div class="proto-contrast-grid">
+        <div class="proto-contrast-item" style="background-color: #FFFFFF; color: #000000; border: 1px solid var(--color-border-default);">
+          <div class="proto-contrast-ratio">21:1 AA/AAA</div>
+          <div class="proto-contrast-label">Black #000000 on White #FFFFFF</div>
+        </div>
+        <div class="proto-contrast-item" style="background-color: #F2F2F2; color: #000000;">
+          <div class="proto-contrast-ratio">18.1:1 AA/AAA</div>
+          <div class="proto-contrast-label">Black #000000 on Gray #F2F2F2</div>
+        </div>
+        <div class="proto-contrast-item" style="background-color: #FFFFFF; color: #9755D9; border: 1px solid var(--color-border-default);">
+          <div class="proto-contrast-ratio">4.6:1 AA</div>
+          <div class="proto-contrast-label">Purple 500 #9755D9 on White #FFFFFF</div>
+        </div>
+        <div class="proto-contrast-item" style="background-color: #9755D9; color: #FFFFFF;">
+          <div class="proto-contrast-ratio">4.6:1 AA (Large)</div>
+          <div class="proto-contrast-label">White #FFFFFF on Purple 500 #9755D9</div>
+        </div>
+        <div class="proto-contrast-item" style="background-color: #FFFFFF; color: #7578BF; border: 1px solid var(--color-border-default);">
+          <div class="proto-contrast-ratio">3.4:1 UI Only</div>
+          <div class="proto-contrast-label">Indigo 600 #7578BF on White #FFFFFF</div>
+        </div>
+        <div class="proto-contrast-item" style="background-color: #F2F2F2; color: #7578BF;">
+          <div class="proto-contrast-ratio">3.1:1 UI Only</div>
+          <div class="proto-contrast-label">Indigo 600 #7578BF on Gray #F2F2F2</div>
+        </div>
+      </div>
+
+      <!-- ── 1.4 Typography ── -->
+      <h2 class="proto-subsection-title">1.4 타이포그래피</h2>
+
+      <div class="proto-type-scale">
+        <!-- xs (11px / 16px) -->
+        <div class="proto-type-row">
+          <div class="proto-type-label">xs — 0.6875rem (11px) / line-height: 1rem (16px) — 캡션, 이월 횟수</div>
+          <div class="proto-type-weights">
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Regular (400)</div>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-regular); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Medium (500)</div>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-medium); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">SemiBold (600)</div>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-semibold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Bold (700)</div>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-xs); line-height: var(--line-height-xs); font-weight: var(--font-weight-bold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- sm (13px / 18px) -->
+        <div class="proto-type-row">
+          <div class="proto-type-label">sm — 0.8125rem (13px) / line-height: 1.125rem (18px) — 보조 텍스트, 날짜</div>
+          <div class="proto-type-weights">
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Regular (400)</div>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-regular); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Medium (500)</div>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-medium); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">SemiBold (600)</div>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-semibold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Bold (700)</div>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-sm); line-height: var(--line-height-sm); font-weight: var(--font-weight-bold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- md (15px / 22px) -->
+        <div class="proto-type-row">
+          <div class="proto-type-label">md — 0.9375rem (15px) / line-height: 1.375rem (22px) — 본문 기본, 투두 제목</div>
+          <div class="proto-type-weights">
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Regular (400)</div>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-regular); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Medium (500)</div>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-medium); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">SemiBold (600)</div>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-semibold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Bold (700)</div>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-md); line-height: var(--line-height-md); font-weight: var(--font-weight-bold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- lg (17px / 24px) -->
+        <div class="proto-type-row">
+          <div class="proto-type-label">lg — 1.0625rem (17px) / line-height: 1.5rem (24px) — 섹션 헤더</div>
+          <div class="proto-type-weights">
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Regular (400)</div>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-regular); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Medium (500)</div>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-medium); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">SemiBold (600)</div>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-semibold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Bold (700)</div>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-lg); line-height: var(--line-height-lg); font-weight: var(--font-weight-bold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- xl (20px / 28px) -->
+        <div class="proto-type-row">
+          <div class="proto-type-label">xl — 1.25rem (20px) / line-height: 1.75rem (28px) — 페이지 타이틀</div>
+          <div class="proto-type-weights">
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Regular (400)</div>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-regular); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Medium (500)</div>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-medium); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">SemiBold (600)</div>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-semibold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Bold (700)</div>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-xl); line-height: var(--line-height-xl); font-weight: var(--font-weight-bold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2xl (24px / 32px) -->
+        <div class="proto-type-row">
+          <div class="proto-type-label">2xl — 1.5rem (24px) / line-height: 2rem (32px) — 날짜 네비게이션</div>
+          <div class="proto-type-weights">
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Regular (400)</div>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-regular); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-regular); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Medium (500)</div>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-medium); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-medium); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">SemiBold (600)</div>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-semibold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-semibold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+            <div class="proto-type-sample">
+              <div class="proto-type-weight-label">Bold (700)</div>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">투두 리스트 서비스</span>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-bold); font-family: var(--font-family-sans);">Dopamine Planner</span>
+              <span style="font-size: var(--font-size-2xl); line-height: var(--line-height-2xl); font-weight: var(--font-weight-bold); font-family: var(--font-family-mono);">2026-05-01 (12:00)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 1.5 Spacing & Border Radius ── -->
+      <h2 class="proto-subsection-title">1.5 간격 & Border Radius</h2>
+
+      <h3 class="proto-group-title">Spacing Scale</h3>
+      <div class="proto-spacing-scale">
+        <div class="proto-spacing-row">
+          <span class="proto-spacing-label">--spacing-1</span>
+          <div class="proto-spacing-block" style="width: var(--spacing-1)"></div>
+          <span class="proto-spacing-value">4px</span>
+          <span class="proto-spacing-usage">아이콘과 텍스트 사이</span>
+        </div>
+        <div class="proto-spacing-row">
+          <span class="proto-spacing-label">--spacing-2</span>
+          <div class="proto-spacing-block" style="width: var(--spacing-2)"></div>
+          <span class="proto-spacing-value">8px</span>
+          <span class="proto-spacing-usage">요소 내부 여백</span>
+        </div>
+        <div class="proto-spacing-row">
+          <span class="proto-spacing-label">--spacing-3</span>
+          <div class="proto-spacing-block" style="width: var(--spacing-3)"></div>
+          <span class="proto-spacing-value">12px</span>
+          <span class="proto-spacing-usage">리스트 아이템 간격</span>
+        </div>
+        <div class="proto-spacing-row">
+          <span class="proto-spacing-label">--spacing-4</span>
+          <div class="proto-spacing-block" style="width: var(--spacing-4)"></div>
+          <span class="proto-spacing-value">16px</span>
+          <span class="proto-spacing-usage">카드 내부 패딩</span>
+        </div>
+        <div class="proto-spacing-row">
+          <span class="proto-spacing-label">--spacing-5</span>
+          <div class="proto-spacing-block" style="width: var(--spacing-5)"></div>
+          <span class="proto-spacing-value">20px</span>
+          <span class="proto-spacing-usage">섹션 간 간격</span>
+        </div>
+        <div class="proto-spacing-row">
+          <span class="proto-spacing-label">--spacing-6</span>
+          <div class="proto-spacing-block" style="width: var(--spacing-6)"></div>
+          <span class="proto-spacing-value">24px</span>
+          <span class="proto-spacing-usage">화면 좌우 패딩</span>
+        </div>
+        <div class="proto-spacing-row">
+          <span class="proto-spacing-label">--spacing-8</span>
+          <div class="proto-spacing-block" style="width: var(--spacing-8)"></div>
+          <span class="proto-spacing-value">32px</span>
+          <span class="proto-spacing-usage">큰 섹션 간격</span>
+        </div>
+      </div>
+
+      <h3 class="proto-group-title">Border Radius</h3>
+      <div class="proto-radius-scale">
+        <div class="proto-radius-item">
+          <div class="proto-radius-box" style="border-radius: var(--radius-sm);">sm</div>
+          <div class="proto-radius-label">--radius-sm<br>4px</div>
+          <div class="proto-radius-usage">태그, 뱃지</div>
+        </div>
+        <div class="proto-radius-item">
+          <div class="proto-radius-box" style="border-radius: var(--radius-md);">md</div>
+          <div class="proto-radius-label">--radius-md<br>8px</div>
+          <div class="proto-radius-usage">카드, 입력 필드</div>
+        </div>
+        <div class="proto-radius-item">
+          <div class="proto-radius-box" style="border-radius: var(--radius-lg);">lg</div>
+          <div class="proto-radius-label">--radius-lg<br>12px</div>
+          <div class="proto-radius-usage">모달, 바텀 시트</div>
+        </div>
+        <div class="proto-radius-item">
+          <div class="proto-radius-box" style="border-radius: var(--radius-full);">full</div>
+          <div class="proto-radius-label">--radius-full<br>9999px</div>
+          <div class="proto-radius-usage">원형 (FAB, 아바타)</div>
+        </div>
+      </div>
+
+      <!-- ── 1.6 Motion ── -->
+      <h2 class="proto-subsection-title">1.6 모션 (Duration x Easing)</h2>
+
+      <div class="proto-motion-grid">
+        <!-- Header Row -->
+        <div class="proto-motion-header"></div>
+        <div class="proto-motion-header">default<br><span style="font-size: 0.6rem;">cubic-bezier(0.4, 0, 0.2, 1)</span></div>
+        <div class="proto-motion-header">enter<br><span style="font-size: 0.6rem;">cubic-bezier(0, 0, 0.2, 1)</span></div>
+        <div class="proto-motion-header">exit<br><span style="font-size: 0.6rem;">cubic-bezier(0.4, 0, 1, 1)</span></div>
+
+        <!-- fast (100ms) -->
+        <div class="proto-motion-row-label">fast<br>100ms</div>
+        <div class="proto-motion-cell proto-motion-fast-default">
+          <div class="proto-motion-track"><div class="proto-motion-box"></div></div>
+        </div>
+        <div class="proto-motion-cell proto-motion-fast-enter">
+          <div class="proto-motion-track"><div class="proto-motion-box"></div></div>
+        </div>
+        <div class="proto-motion-cell proto-motion-fast-exit">
+          <div class="proto-motion-track"><div class="proto-motion-box"></div></div>
+        </div>
+
+        <!-- normal (200ms) -->
+        <div class="proto-motion-row-label">normal<br>200ms</div>
+        <div class="proto-motion-cell proto-motion-normal-default">
+          <div class="proto-motion-track"><div class="proto-motion-box"></div></div>
+        </div>
+        <div class="proto-motion-cell proto-motion-normal-enter">
+          <div class="proto-motion-track"><div class="proto-motion-box"></div></div>
+        </div>
+        <div class="proto-motion-cell proto-motion-normal-exit">
+          <div class="proto-motion-track"><div class="proto-motion-box"></div></div>
+        </div>
+
+        <!-- slow (300ms) -->
+        <div class="proto-motion-row-label">slow<br>300ms</div>
+        <div class="proto-motion-cell proto-motion-slow-default">
+          <div class="proto-motion-track"><div class="proto-motion-box"></div></div>
+        </div>
+        <div class="proto-motion-cell proto-motion-slow-enter">
+          <div class="proto-motion-track"><div class="proto-motion-box"></div></div>
+        </div>
+        <div class="proto-motion-cell proto-motion-slow-exit">
+          <div class="proto-motion-track"><div class="proto-motion-box"></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="../js/icons.js"></script>
+</body>
+</html>

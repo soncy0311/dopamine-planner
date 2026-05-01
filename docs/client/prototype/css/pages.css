@@ -1,0 +1,354 @@
+/* ============================================================
+ * Section 4: Page Prototypes
+ * ============================================================ */
+
+/* === 페이지 프로토타입 — 프레임 === */
+.proto-page-frame {
+  width: 430px;
+  min-height: 932px;
+  border: 2px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-base);
+  overflow: hidden;
+  position: relative;
+  margin: var(--spacing-8) auto;
+}
+
+.proto-page-label {
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border-subtle);
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* === 페이지 프로토타입 — 내부 레이아웃 === */
+.page-content {
+  padding-bottom: 76px; /* 56px TabBar + 20px Safe Area */
+  overflow-y: auto;
+  height: 100%;
+}
+
+.page-tab-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.page-fab {
+  position: absolute;
+  right: var(--spacing-4);
+  bottom: calc(76px + var(--spacing-4)); /* TabBar 높이 + 간격 */
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: var(--fab-bg);
+  color: var(--fab-text);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px var(--fab-shadow);
+  z-index: 1;
+}
+
+/* === 페이지 4.1 — 로그인 (AuthLayout) === */
+.page-auth-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(932px - 33px); /* 프레임 높이 - 라벨 높이 */
+  padding: 0 var(--spacing-6);
+}
+
+.page-auth-logo {
+  text-align: center;
+  margin-bottom: var(--spacing-8);
+}
+
+.page-auth-logo-icon {
+  color: var(--color-text-brand);
+  margin-bottom: var(--spacing-2);
+}
+
+.page-auth-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-brand);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+.page-auth-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.page-auth-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.page-auth-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-3);
+  width: 100%;
+  height: 48px;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: opacity var(--duration-fast) var(--easing-default);
+}
+
+.page-auth-button:hover {
+  opacity: 0.9;
+}
+
+.page-auth-button-logo {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-lg);
+}
+
+/* Google 버튼 — 브랜드 색상 직접 사용 */
+.page-auth-button-google {
+  background: var(--color-bg-base);
+  color: var(--color-text-primary);
+  border-color: #4285F4;
+}
+
+.page-auth-button-google .page-auth-button-logo {
+  color: #4285F4;
+}
+
+/* Kakao 버튼 — 브랜드 색상 직접 사용 */
+.page-auth-button-kakao {
+  background: #FEE500;
+  color: #191919;
+  border-color: #FEE500;
+}
+
+/* === 페이지 4.2~4.3 — 메인 페이지 공통 === */
+.page-todo-sections {
+  padding: var(--spacing-4);
+}
+
+/* === 페이지 4.4 — 투두 생성 (오버레이 + 바텀 시트) === */
+.page-todo-create-bg {
+  filter: brightness(0.6);
+}
+
+.page-todo-create-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.page-todo-create-sheet {
+  position: absolute;
+  bottom: 76px; /* TabBar 높이 위 */
+  left: 0;
+  right: 0;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  z-index: 3;
+}
+
+/* 선택된 우선순위 배지 강조 */
+.proto-badge-selected {
+  outline: 2px solid var(--color-interactive-primary);
+  outline-offset: 1px;
+}
+
+/* === 페이지 4.4~4.6 — ManageLayout 공통 === */
+.page-manage-header {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 var(--spacing-4);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.page-manage-header-back {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+}
+
+.page-manage-header-title {
+  flex: 1;
+  text-align: center;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.page-manage-header-action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-interactive-primary);
+}
+
+/* === 페이지 4.5 — Epic 관리 === */
+.page-epic-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  padding: var(--spacing-4);
+}
+
+/* === 페이지 4.6 — 설정 === */
+.page-settings-header {
+  justify-content: flex-start;
+}
+
+.page-settings-title {
+  text-align: left;
+  padding-left: var(--spacing-2);
+}
+
+.page-settings-content {
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+}
+
+/* 프로필 카드 */
+.page-profile-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.page-profile-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-interactive-primary);
+  color: var(--color-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  flex-shrink: 0;
+}
+
+.page-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.page-profile-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.page-profile-email {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.page-profile-provider {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+}
+
+/* 설정 섹션 */
+.page-settings-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-settings-section-title {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-tertiary);
+  padding-left: var(--spacing-4);
+  margin: 0 0 var(--spacing-2) 0;
+}
+
+/* 메뉴 항목 */
+.page-settings-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 48px;
+  padding: 0 var(--spacing-4);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.page-settings-chevron {
+  color: var(--color-text-tertiary);
+}
+
+/* 로그아웃 버튼 (destructive) */
+.page-settings-logout {
+  width: 100%;
+  height: 48px;
+  background: var(--color-status-error);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  margin-bottom: var(--spacing-6);
+  transition: opacity var(--duration-fast) var(--easing-default);
+}
+
+.page-settings-logout:hover {
+  opacity: 0.9;
+}
+
+/* === 인터랙티브 데모 패널 === */
+.page-interactive-panel {
+  position: absolute;
+  top: 33px; /* 라벨 높이 */
+  left: 0;
+  right: 0;
+  bottom: 76px; /* TabBar 높이 */
+}

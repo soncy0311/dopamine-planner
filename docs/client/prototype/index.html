@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overview — Dopamine Planner Design System</title>
+  <!-- Fonts -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.304/fonts/webfonts/JetBrainsMono.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="./css/tokens.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/demo.css">
+  <link rel="stylesheet" href="./css/atoms.css">
+  <link rel="stylesheet" href="./css/molecules.css">
+  <link rel="stylesheet" href="./css/organisms.css">
+</head>
+<body>
+  <script src="./js/sidebar.js"></script>
+  <main class="proto-main">
+    <section class="proto-section">
+      <h1 class="proto-section-title">Dopamine Planner Design System</h1>
+
+      <p style="font-size: var(--font-size-md); color: var(--color-text-secondary); line-height: var(--line-height-lg); margin-bottom: var(--spacing-4);">
+        Dopamine Planner 서비스의 디자인 시스템 프로토타입입니다.<br>
+        디자인 토큰, 아이콘, 컴포넌트를 한눈에 확인하고 검증할 수 있습니다.
+      </p>
+
+      <div class="proto-overview-grid">
+        <a class="proto-overview-card" href="./pages/tokens.html">
+          <div class="proto-overview-card-title">1. 디자인 토큰</div>
+          <div class="proto-overview-card-desc">컬러 팔레트, 시맨틱 컬러, 컴포넌트 컬러, 타이포그래피, 간격, Border Radius, 모션 토큰</div>
+        </a>
+        <a class="proto-overview-card" href="./pages/icons.html">
+          <div class="proto-overview-card-title">2. 아이콘 시스템</div>
+          <div class="proto-overview-card-desc">Lucide 기반 10개 아이콘 — 크기 변형(16/20/24px), 컬러 변형(Primary/Secondary/Brand)</div>
+        </a>
+        <a class="proto-overview-card" href="./pages/atoms.html">
+          <div class="proto-overview-card-title">3.1 Atoms</div>
+          <div class="proto-overview-card-desc">Button, Checkbox, Icon, Badge, Divider, Avatar — 기본 UI 단위 컴포넌트</div>
+        </a>
+        <a class="proto-overview-card" href="./pages/molecules.html">
+          <div class="proto-overview-card-title">3.2 Molecules</div>
+          <div class="proto-overview-card-desc">TodoItem, SectionHeader, DateNavigator, TabBarItem, FormField — 조합 컴포넌트</div>
+        </a>
+        <a class="proto-overview-card" href="./pages/organisms.html">
+          <div class="proto-overview-card-title">3.3 Organisms</div>
+          <div class="proto-overview-card-desc">TodoSection, BottomTabBar, TodoCreateSheet, CategoryList, EpicCard — 화면 단위 컴포넌트</div>
+        </a>
+        <a class="proto-overview-card" href="./pages/page-prototypes.html">
+          <div class="proto-overview-card-title">4. 페이지 프로토타입</div>
+          <div class="proto-overview-card-desc">로그인, 메인(Life/Work), 투두 생성, 분류 관리, Epic 관리, 설정 — 7개 페이지 + 인터랙티브 데모</div>
+        </a>
+      </div>
+    </section>
+  </main>
+  <script src="./js/icons.js"></script>
+</body>
+</html>

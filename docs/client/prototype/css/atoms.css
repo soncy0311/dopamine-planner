@@ -1,0 +1,332 @@
+/* ============================================================
+ * Atoms: Basic UI Components
+ * ============================================================ */
+
+/* ── Component Card ── */
+.proto-component-card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-6);
+  margin-bottom: var(--spacing-4);
+}
+
+.proto-component-card h4 {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0 0 var(--spacing-1) 0;
+}
+
+.proto-component-card > p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-4) 0;
+}
+
+/* ── Button ── */
+.proto-button {
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-2) var(--spacing-4);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-sans);
+  border: none;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--easing-default);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.proto-button-grid {
+  display: grid;
+  grid-template-columns: auto repeat(4, 1fr);
+  gap: var(--spacing-3);
+  align-items: center;
+}
+
+.proto-button-grid-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+/* Primary */
+.proto-button-primary {
+  background: var(--button-primary-bg);
+  color: var(--button-primary-text);
+}
+.proto-button-primary:hover,
+.proto-button-primary.proto-state-hover {
+  background: var(--button-primary-bg-hover);
+}
+.proto-button-primary:active,
+.proto-button-primary.proto-state-active {
+  background: var(--button-primary-bg-active);
+}
+.proto-button-primary.proto-state-disabled {
+  background: var(--button-primary-bg-disabled);
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Secondary */
+.proto-button-secondary {
+  background: var(--color-interactive-secondary);
+  color: var(--color-text-inverse);
+}
+.proto-button-secondary:hover,
+.proto-button-secondary.proto-state-hover {
+  background: var(--color-interactive-secondary-hover);
+}
+.proto-button-secondary:active,
+.proto-button-secondary.proto-state-active {
+  background: var(--color-interactive-secondary-active);
+}
+.proto-button-secondary.proto-state-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Ghost */
+.proto-button-ghost {
+  background: transparent;
+  color: var(--color-interactive-primary);
+  border: 1px solid var(--color-interactive-primary);
+}
+.proto-button-ghost:hover,
+.proto-button-ghost.proto-state-hover {
+  background: var(--color-bg-brand-subtle);
+}
+.proto-button-ghost:active,
+.proto-button-ghost.proto-state-active {
+  background: var(--color-interactive-primary);
+  color: var(--color-text-inverse);
+}
+.proto-button-ghost.proto-state-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Destructive */
+.proto-button-destructive {
+  background: var(--color-status-error);
+  color: var(--color-text-inverse);
+}
+.proto-button-destructive:hover,
+.proto-button-destructive.proto-state-hover {
+  opacity: 0.9;
+}
+.proto-button-destructive:active,
+.proto-button-destructive.proto-state-active {
+  opacity: 0.8;
+}
+.proto-button-destructive.proto-state-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Checkbox ── */
+.proto-checkbox-demo {
+  display: flex;
+  gap: var(--spacing-6);
+  align-items: center;
+}
+
+.proto-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  cursor: pointer;
+}
+
+.proto-checkbox-box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--todo-item-checkbox-unchecked);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) var(--easing-default);
+  flex-shrink: 0;
+}
+
+.proto-checkbox-box svg {
+  color: var(--color-text-inverse);
+}
+
+.proto-checkbox-checked .proto-checkbox-box {
+  background: var(--todo-item-checkbox-checked);
+  border-color: var(--todo-item-checkbox-checked);
+}
+
+.proto-checkbox-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.proto-checkbox-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+/* ── Icon Size Demo ── */
+.proto-icon-size-demo-component {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.proto-icon-variant-row-component {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.proto-icon-variant-row-component .proto-icon-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  min-width: 80px;
+}
+
+.proto-icon-variant-row-component svg {
+  color: var(--color-text-primary);
+}
+
+/* ── Badge ── */
+.proto-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-sans);
+  white-space: nowrap;
+}
+
+.proto-badge-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.proto-badge-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.proto-badge-group-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  min-width: 80px;
+}
+
+.proto-badge-category {
+  background: var(--badge-bg);
+  color: var(--badge-text);
+}
+
+.proto-badge-priority-high {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-status-error);
+}
+
+.proto-badge-priority-medium {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-status-warning);
+}
+
+.proto-badge-priority-low {
+  background: var(--color-bg-surface);
+  color: var(--color-text-tertiary);
+}
+
+.proto-badge-carry-over {
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+}
+
+/* ── Divider ── */
+.proto-divider {
+  border: none;
+  height: 1px;
+  background: var(--color-border-default);
+  margin: var(--spacing-3) 0;
+}
+
+.proto-divider-demo {
+  padding: var(--spacing-2) 0;
+}
+
+.proto-divider-demo p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  padding: var(--spacing-2) 0;
+}
+
+/* ── Avatar ── */
+.proto-avatar {
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.proto-avatar-sm {
+  width: 32px;
+  height: 32px;
+}
+
+.proto-avatar-md {
+  width: 40px;
+  height: 40px;
+}
+
+.proto-avatar-image {
+  background: var(--color-bg-brand-subtle);
+}
+
+.proto-avatar-initials {
+  background: var(--color-interactive-primary);
+  color: var(--color-text-inverse);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.proto-avatar-sm.proto-avatar-initials {
+  font-size: var(--font-size-xs);
+}
+
+.proto-avatar-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.proto-avatar-group {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.proto-avatar-group-label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  min-width: 80px;
+}

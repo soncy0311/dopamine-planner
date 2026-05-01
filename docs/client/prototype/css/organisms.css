@@ -1,0 +1,385 @@
+/* ============================================================
+ * Organisms: Complex Compositions
+ * ============================================================ */
+
+/* ── TodoSection ── */
+.proto-todo-section-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.proto-todo-section-frame {
+  width: 430px;
+  max-width: 100%;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* ── BottomTabBar ── */
+.proto-bottom-tab-bar-demo {
+  width: 430px;
+  max-width: 100%;
+}
+
+.proto-bottom-tab-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 56px;
+  padding-bottom: 20px;
+  background: var(--tab-bar-bg);
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+/* ── TodoCreateSheet ── */
+.proto-create-sheet-demo {
+  width: 430px;
+  max-width: 100%;
+  position: relative;
+}
+
+.proto-create-sheet {
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--spacing-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  border: 1px solid var(--color-border-subtle);
+}
+
+.proto-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: var(--color-border-default);
+  border-radius: var(--radius-full);
+  margin: 0 auto var(--spacing-2);
+}
+
+.proto-sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.proto-sheet-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+.proto-sheet-close {
+  background: none;
+  border: none;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.proto-form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.proto-sheet-priority {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.proto-sheet-priority-options {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.proto-sheet-save {
+  width: 100%;
+}
+
+/* ── CategoryList ── */
+.proto-category-list-demo {
+  max-width: 430px;
+}
+
+.proto-category-item {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 var(--spacing-4);
+  gap: var(--spacing-3);
+}
+
+.proto-category-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.proto-category-name {
+  flex: 1;
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+}
+
+.proto-category-more {
+  background: none;
+  border: none;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── EpicCard ── */
+.proto-epic-card-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  max-width: 430px;
+}
+
+.proto-epic-card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.proto-epic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.proto-epic-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.proto-epic-progress-bar {
+  height: 8px;
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.proto-epic-progress-fill {
+  height: 100%;
+  background: var(--color-interactive-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--duration-normal) var(--easing-default);
+}
+
+.proto-epic-progress-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ── EpicAccordion ── */
+.proto-epic-accordion-demo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  max-width: 430px;
+}
+
+.proto-epic-accordion-item {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.proto-epic-accordion-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-4);
+  cursor: pointer;
+  user-select: none;
+}
+
+.proto-epic-accordion-chevron {
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+  transition: transform var(--duration-fast) var(--easing-default);
+}
+
+.proto-epic-accordion-item[data-expanded="true"] .proto-epic-accordion-chevron {
+  transform: rotate(90deg);
+}
+
+.proto-epic-accordion-header .proto-epic-title {
+  flex: 1;
+}
+
+.proto-epic-accordion-header .proto-epic-progress-text {
+  flex-shrink: 0;
+}
+
+.proto-epic-accordion-progress {
+  padding: 0 var(--spacing-4) var(--spacing-3);
+}
+
+.proto-epic-accordion-body {
+  border-top: 1px solid var(--color-border-subtle);
+  display: none;
+}
+
+.proto-epic-accordion-item[data-expanded="true"] .proto-epic-accordion-body {
+  display: block;
+}
+
+.proto-epic-sub-issue {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding: var(--spacing-1) var(--spacing-4) var(--spacing-1) var(--spacing-8);
+  gap: var(--spacing-2);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.proto-epic-sub-issue:last-of-type {
+  border-bottom: none;
+}
+
+.proto-epic-sub-issue .proto-checkbox-box {
+  width: 14px;
+  height: 14px;
+}
+
+.proto-epic-sub-issue-title {
+  flex: 1;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.proto-epic-sub-issue-completed .proto-epic-sub-issue-title {
+  text-decoration: line-through;
+  color: var(--todo-item-completed-text);
+}
+
+.proto-epic-add-issue {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  width: 100%;
+  padding: var(--spacing-2) var(--spacing-4) var(--spacing-2) var(--spacing-8);
+  background: none;
+  border: none;
+  border-top: 1px solid var(--color-border-subtle);
+  color: var(--color-interactive-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--easing-default);
+}
+
+.proto-epic-add-issue:hover {
+  background: var(--color-bg-surface);
+}
+
+/* ── IssueCard ── */
+.proto-issue-card {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-elevated);
+  overflow: hidden;
+}
+
+.proto-issue-card + .proto-issue-card {
+  margin-top: var(--spacing-2);
+}
+
+.proto-issue-card > .proto-todo-item {
+  border-bottom: none;
+}
+
+/* ── IssueCard Accordion ── */
+.proto-issue-card-accordion {
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-elevated);
+  overflow: hidden;
+}
+
+.proto-issue-card-accordion + .proto-issue-card,
+.proto-issue-card + .proto-issue-card-accordion,
+.proto-issue-card-accordion + .proto-issue-card-accordion {
+  margin-top: var(--spacing-2);
+}
+
+.proto-issue-card-accordion > .proto-todo-item {
+  border-bottom: none;
+  cursor: pointer;
+}
+
+.proto-issue-card-accordion-chevron {
+  grid-row: 2;
+  grid-column: 3;
+  color: var(--color-text-tertiary);
+  flex-shrink: 0;
+  transition: transform var(--duration-fast) var(--easing-default);
+}
+
+.proto-issue-card-accordion[data-expanded="true"] .proto-issue-card-accordion-chevron {
+  transform: rotate(90deg);
+}
+
+.proto-issue-card-accordion-body {
+  display: none;
+  border-top: 1px solid var(--color-border-subtle);
+}
+
+.proto-issue-card-accordion[data-expanded="true"] .proto-issue-card-accordion-body {
+  display: block;
+}
+
+.proto-issue-card-accordion-progress {
+  padding: 0 var(--spacing-4) var(--spacing-3);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.proto-issue-card-accordion-progress .proto-epic-progress-bar {
+  flex: 1;
+}
+
+/* ── Segmented Progress Bar ── */
+.proto-epic-progress-segmented {
+  display: flex;
+  gap: 2px;
+  background: transparent;
+  overflow: visible;
+}
+
+.proto-epic-progress-segment {
+  flex: 1;
+  height: 8px;
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-full);
+}
+
+.proto-epic-progress-segment-filled {
+  background: var(--color-interactive-primary);
+}

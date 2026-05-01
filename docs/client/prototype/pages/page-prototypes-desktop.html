@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>데스크톱 프로토타입 — Dopamine Planner Design System</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.304/fonts/webfonts/JetBrainsMono.css" />
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/demo.css">
+  <link rel="stylesheet" href="../css/atoms.css">
+  <link rel="stylesheet" href="../css/molecules.css">
+  <link rel="stylesheet" href="../css/organisms.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/pages-desktop.css">
+</head>
+<body>
+  <script src="../js/sidebar.js"></script>
+  <main class="proto-main">
+    <section class="proto-section">
+      <h1 class="proto-section-title">5. 페이지 프로토타입 — 데스크톱</h1>
+
+      <!-- 5.1 메인 — Life -->
+      <div class="proto-desktop-frame" id="desktop-main-life">
+        <div class="proto-page-label">5.1 메인 — Life</div>
+        <div class="desktop-app">
+          <!-- Side Nav (Life 활성) -->
+          <nav class="desktop-side-nav">
+            <div class="desktop-nav-logo">
+              <svg width="28" height="28" class="desktop-nav-logo-icon" aria-hidden="true"><use href="#icon-circle-check"></use></svg>
+              <span class="desktop-nav-logo-text">Dopamine Planner</span>
+            </div>
+            <div class="desktop-nav-section">
+              <span class="desktop-nav-label">워크스페이스</span>
+              <button class="desktop-nav-item desktop-nav-item-active">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-home"></use></svg>
+                Life
+              </button>
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-briefcase"></use></svg>
+                Work
+              </button>
+            </div>
+            <div class="desktop-nav-spacer"></div>
+            <div class="desktop-nav-divider"></div>
+            <div class="desktop-nav-section">
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-settings"></use></svg>
+                설정
+              </button>
+            </div>
+          </nav>
+          <!-- Content -->
+          <div class="desktop-content">
+            <div class="proto-date-navigator" data-expanded="false">
+              <div class="proto-date-nav-header">
+                <button class="proto-date-nav-btn" aria-label="이전 주"><svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-left"></use></svg></button>
+                <button class="proto-date-nav-toggle" aria-label="달력 펼치기">
+                  <span class="proto-date-nav-title">2026년 5월</span>
+                  <svg class="proto-date-nav-toggle-icon" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                </button>
+                <button class="proto-date-nav-btn" aria-label="다음 주"><svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></button>
+              </div>
+              <div class="proto-date-nav-week">
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">일</span><span class="proto-date-nav-day-num">27</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">월</span><span class="proto-date-nav-day-num">28</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">화</span><span class="proto-date-nav-day-num">29</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">수</span><span class="proto-date-nav-day-num">30</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-selected"><span class="proto-date-nav-day-label">목</span><span class="proto-date-nav-day-num">1</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-today"><span class="proto-date-nav-day-label">금</span><span class="proto-date-nav-day-num">2</span></div>
+                <div class="proto-date-nav-day"><span class="proto-date-nav-day-label">토</span><span class="proto-date-nav-day-num">3</span></div>
+              </div>
+              <div class="proto-date-nav-calendar">
+                <div class="proto-date-nav-cal-header"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+                <div class="proto-date-nav-cal-grid">
+                  <span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">27</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">28</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">29</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">30</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-selected">1</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-today">2</span><span class="proto-date-nav-cal-day">3</span>
+                  <span class="proto-date-nav-cal-day">4</span><span class="proto-date-nav-cal-day">5</span><span class="proto-date-nav-cal-day">6</span><span class="proto-date-nav-cal-day">7</span><span class="proto-date-nav-cal-day">8</span><span class="proto-date-nav-cal-day">9</span><span class="proto-date-nav-cal-day">10</span>
+                  <span class="proto-date-nav-cal-day">11</span><span class="proto-date-nav-cal-day">12</span><span class="proto-date-nav-cal-day">13</span><span class="proto-date-nav-cal-day">14</span><span class="proto-date-nav-cal-day">15</span><span class="proto-date-nav-cal-day">16</span><span class="proto-date-nav-cal-day">17</span>
+                  <span class="proto-date-nav-cal-day">18</span><span class="proto-date-nav-cal-day">19</span><span class="proto-date-nav-cal-day">20</span><span class="proto-date-nav-cal-day">21</span><span class="proto-date-nav-cal-day">22</span><span class="proto-date-nav-cal-day">23</span><span class="proto-date-nav-cal-day">24</span>
+                  <span class="proto-date-nav-cal-day">25</span><span class="proto-date-nav-cal-day">26</span><span class="proto-date-nav-cal-day">27</span><span class="proto-date-nav-cal-day">28</span><span class="proto-date-nav-cal-day">29</span><span class="proto-date-nav-cal-day">30</span><span class="proto-date-nav-cal-day">31</span>
+                </div>
+              </div>
+            </div>
+            <div class="desktop-filter-row">
+              <div class="proto-filter-chips">
+                <button class="proto-filter-chip proto-filter-chip-active" data-filter="all">전체</button>
+                <button class="proto-filter-chip" data-filter="건강">건강</button>
+                <button class="proto-filter-chip" data-filter="자기개발">자기개발</button>
+                <button class="proto-filter-chip" data-filter="생활">생활</button>
+              </div>
+              <button class="desktop-add-btn">
+                <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                새 투두
+              </button>
+            </div>
+            <div class="desktop-content-body">
+              <div class="page-todo-sections" style="padding: 0;">
+                <div class="proto-section-header proto-section-header-done">
+                  <span class="proto-section-header-title">완료</span>
+                  <span class="proto-section-header-count">2</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+                <div role="list">
+                  <div class="proto-issue-card-accordion" data-expanded="false" data-category="건강">
+                    <div class="proto-todo-item proto-todo-item-completed" role="listitem">
+                      <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
+                        <span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span>
+                      </div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">건강</span></div>
+                        <span class="proto-todo-item-title">아침 운동</span>
+                      </div>
+                      <svg class="proto-issue-card-accordion-chevron" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
+                    </div>
+                    <div class="proto-issue-card-accordion-progress">
+                      <div class="proto-epic-progress-bar proto-epic-progress-segmented">
+                        <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+                        <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+                      </div>
+                      <span class="proto-epic-progress-text">100%</span>
+                    </div>
+                    <div class="proto-issue-card-accordion-body">
+                      <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
+                        <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                        <span class="proto-epic-sub-issue-title">스트레칭 10분</span>
+                      </div>
+                      <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
+                        <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                        <span class="proto-epic-sub-issue-title">러닝 20분</span>
+                      </div>
+                      <button class="proto-epic-add-issue" aria-label="서브 이슈 추가"><svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg> 서브 이슈 추가</button>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="생활">
+                    <div class="proto-todo-item proto-todo-item-completed" role="listitem">
+                      <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">생활</span></div>
+                        <span class="proto-todo-item-title">장보기</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="height: var(--spacing-5)"></div>
+                <div class="proto-section-header proto-section-header-progress">
+                  <span class="proto-section-header-title">진행 중</span>
+                  <span class="proto-section-header-count">3</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+                <div role="list">
+                  <div class="proto-issue-card-accordion" data-expanded="true" data-category="건강">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags">
+                          <span class="proto-badge proto-badge-priority-high">High</span>
+                          <span class="proto-badge proto-badge-category">건강</span>
+                        </div>
+                        <span class="proto-todo-item-title">저녁 운동</span>
+                      </div>
+                      <svg class="proto-issue-card-accordion-chevron" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
+                    </div>
+                    <div class="proto-issue-card-accordion-progress">
+                      <div class="proto-epic-progress-bar proto-epic-progress-segmented">
+                        <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+                        <div class="proto-epic-progress-segment"></div>
+                      </div>
+                      <span class="proto-epic-progress-text">50%</span>
+                    </div>
+                    <div class="proto-issue-card-accordion-body">
+                      <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
+                        <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                        <span class="proto-epic-sub-issue-title">웨이트 트레이닝</span>
+                      </div>
+                      <div class="proto-epic-sub-issue">
+                        <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                        <span class="proto-epic-sub-issue-title">유산소 30분</span>
+                      </div>
+                      <button class="proto-epic-add-issue" aria-label="서브 이슈 추가"><svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg> 서브 이슈 추가</button>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="자기개발">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">자기개발</span></div>
+                        <span class="proto-todo-item-title">책 읽기</span>
+                      </div>
+                      <span class="proto-badge proto-badge-carry-over">+2</span>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="생활">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">생활</span></div>
+                        <span class="proto-todo-item-title">비타민 챙기</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.2 메인 — Work -->
+      <div class="proto-desktop-frame" id="desktop-main-work">
+        <div class="proto-page-label">5.2 메인 — Work</div>
+        <div class="desktop-app">
+          <nav class="desktop-side-nav">
+            <div class="desktop-nav-logo">
+              <svg width="28" height="28" class="desktop-nav-logo-icon" aria-hidden="true"><use href="#icon-circle-check"></use></svg>
+              <span class="desktop-nav-logo-text">Dopamine Planner</span>
+            </div>
+            <div class="desktop-nav-section">
+              <span class="desktop-nav-label">워크스페이스</span>
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-home"></use></svg>
+                Life
+              </button>
+              <button class="desktop-nav-item desktop-nav-item-active">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-briefcase"></use></svg>
+                Work
+              </button>
+            </div>
+            <div class="desktop-nav-spacer"></div>
+            <div class="desktop-nav-divider"></div>
+            <div class="desktop-nav-section">
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-settings"></use></svg>
+                설정
+              </button>
+            </div>
+          </nav>
+          <div class="desktop-content">
+            <div class="proto-date-navigator" data-expanded="false">
+              <div class="proto-date-nav-header">
+                <button class="proto-date-nav-btn" aria-label="이전 주"><svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-left"></use></svg></button>
+                <button class="proto-date-nav-toggle" aria-label="달력 펼치기">
+                  <span class="proto-date-nav-title">2026년 5월</span>
+                  <svg class="proto-date-nav-toggle-icon" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                </button>
+                <button class="proto-date-nav-btn" aria-label="다음 주"><svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></button>
+              </div>
+              <div class="proto-date-nav-week">
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">일</span><span class="proto-date-nav-day-num">27</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">월</span><span class="proto-date-nav-day-num">28</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">화</span><span class="proto-date-nav-day-num">29</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">수</span><span class="proto-date-nav-day-num">30</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-selected"><span class="proto-date-nav-day-label">목</span><span class="proto-date-nav-day-num">1</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-today"><span class="proto-date-nav-day-label">금</span><span class="proto-date-nav-day-num">2</span></div>
+                <div class="proto-date-nav-day"><span class="proto-date-nav-day-label">토</span><span class="proto-date-nav-day-num">3</span></div>
+              </div>
+              <div class="proto-date-nav-calendar">
+                <div class="proto-date-nav-cal-header"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+                <div class="proto-date-nav-cal-grid">
+                  <span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">27</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">28</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">29</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">30</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-selected">1</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-today">2</span><span class="proto-date-nav-cal-day">3</span>
+                  <span class="proto-date-nav-cal-day">4</span><span class="proto-date-nav-cal-day">5</span><span class="proto-date-nav-cal-day">6</span><span class="proto-date-nav-cal-day">7</span><span class="proto-date-nav-cal-day">8</span><span class="proto-date-nav-cal-day">9</span><span class="proto-date-nav-cal-day">10</span>
+                  <span class="proto-date-nav-cal-day">11</span><span class="proto-date-nav-cal-day">12</span><span class="proto-date-nav-cal-day">13</span><span class="proto-date-nav-cal-day">14</span><span class="proto-date-nav-cal-day">15</span><span class="proto-date-nav-cal-day">16</span><span class="proto-date-nav-cal-day">17</span>
+                  <span class="proto-date-nav-cal-day">18</span><span class="proto-date-nav-cal-day">19</span><span class="proto-date-nav-cal-day">20</span><span class="proto-date-nav-cal-day">21</span><span class="proto-date-nav-cal-day">22</span><span class="proto-date-nav-cal-day">23</span><span class="proto-date-nav-cal-day">24</span>
+                  <span class="proto-date-nav-cal-day">25</span><span class="proto-date-nav-cal-day">26</span><span class="proto-date-nav-cal-day">27</span><span class="proto-date-nav-cal-day">28</span><span class="proto-date-nav-cal-day">29</span><span class="proto-date-nav-cal-day">30</span><span class="proto-date-nav-cal-day">31</span>
+                </div>
+              </div>
+            </div>
+            <div class="desktop-filter-row">
+              <div class="proto-filter-chips">
+                <button class="proto-filter-chip proto-filter-chip-active" data-filter="all">전체</button>
+                <button class="proto-filter-chip" data-filter="프로젝트A">프로젝트A</button>
+                <button class="proto-filter-chip" data-filter="미팅">미팅</button>
+                <button class="proto-filter-chip" data-filter="운영">운영</button>
+              </div>
+              <button class="desktop-add-btn">
+                <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                새 투두
+              </button>
+            </div>
+            <div class="desktop-content-body">
+              <div class="page-todo-sections" style="padding: 0;">
+                <div class="proto-section-header proto-section-header-done">
+                  <span class="proto-section-header-title">완료</span>
+                  <span class="proto-section-header-count">2</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+                <div role="list">
+                  <div class="proto-issue-card" data-category="프로젝트A">
+                    <div class="proto-todo-item proto-todo-item-completed" role="listitem">
+                      <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">프로젝트A</span></div>
+                        <span class="proto-todo-item-title">코드 리뷰</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="미팅">
+                    <div class="proto-todo-item proto-todo-item-completed" role="listitem">
+                      <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">미팅</span></div>
+                        <span class="proto-todo-item-title">스탠드업 미팅</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="height: var(--spacing-5)"></div>
+                <div class="proto-section-header proto-section-header-progress">
+                  <span class="proto-section-header-title">진행 중</span>
+                  <span class="proto-section-header-count">3</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+                <div role="list">
+                  <div class="proto-issue-card-accordion" data-expanded="true" data-category="프로젝트A">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags">
+                          <span class="proto-badge proto-badge-priority-high">High</span>
+                          <span class="proto-badge proto-badge-category">프로젝트A</span>
+                        </div>
+                        <span class="proto-todo-item-title">API 설계</span>
+                      </div>
+                      <svg class="proto-issue-card-accordion-chevron" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
+                    </div>
+                    <div class="proto-issue-card-accordion-progress">
+                      <div class="proto-epic-progress-bar proto-epic-progress-segmented">
+                        <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+                        <div class="proto-epic-progress-segment"></div>
+                        <div class="proto-epic-progress-segment"></div>
+                      </div>
+                      <span class="proto-epic-progress-text">33%</span>
+                    </div>
+                    <div class="proto-issue-card-accordion-body">
+                      <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
+                        <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                        <span class="proto-epic-sub-issue-title">엔드포인트 목록 정리</span>
+                      </div>
+                      <div class="proto-epic-sub-issue">
+                        <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                        <span class="proto-epic-sub-issue-title">Request/Response 스키마 작성</span>
+                      </div>
+                      <div class="proto-epic-sub-issue">
+                        <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                        <span class="proto-epic-sub-issue-title">인증 미들웨어 설계</span>
+                      </div>
+                      <button class="proto-epic-add-issue" aria-label="서브 이슈 추가"><svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg> 서브 이슈 추가</button>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="운영">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">운영</span></div>
+                        <span class="proto-todo-item-title">배포 스크립트 작성</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="운영">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">운영</span></div>
+                        <span class="proto-todo-item-title">주간 보고서</span>
+                      </div>
+                      <span class="proto-badge proto-badge-carry-over">+1</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.3 투두 생성 (모달) -->
+      <div class="proto-desktop-frame" id="desktop-todo-create">
+        <div class="proto-page-label">5.3 투두 생성 (모달)</div>
+        <div class="desktop-app" style="filter: brightness(0.6);">
+          <nav class="desktop-side-nav">
+            <div class="desktop-nav-logo">
+              <svg width="28" height="28" class="desktop-nav-logo-icon" aria-hidden="true"><use href="#icon-circle-check"></use></svg>
+              <span class="desktop-nav-logo-text">Dopamine Planner</span>
+            </div>
+            <div class="desktop-nav-section">
+              <span class="desktop-nav-label">워크스페이스</span>
+              <button class="desktop-nav-item desktop-nav-item-active">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-home"></use></svg>
+                Life
+              </button>
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-briefcase"></use></svg>
+                Work
+              </button>
+            </div>
+            <div class="desktop-nav-spacer"></div>
+            <div class="desktop-nav-divider"></div>
+            <div class="desktop-nav-section">
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-settings"></use></svg>
+                설정
+              </button>
+            </div>
+          </nav>
+          <div class="desktop-content">
+            <div class="desktop-content-body">
+              <div class="page-todo-sections" style="padding: 0; padding-top: var(--spacing-6);">
+                <div class="proto-section-header proto-section-header-done">
+                  <span class="proto-section-header-title">완료</span>
+                  <span class="proto-section-header-count">2</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 모달 오버레이 -->
+        <div class="desktop-modal-overlay">
+          <div class="desktop-modal" role="dialog" aria-modal="true" aria-labelledby="desktop-modal-title">
+            <div class="desktop-modal-header">
+              <h5 id="desktop-modal-title" class="desktop-modal-title">새 투두</h5>
+              <button class="desktop-modal-close" aria-label="닫기">✕</button>
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label" for="desktop-title-input">제목 *</label>
+              <input class="proto-form-input" id="desktop-title-input" type="text" placeholder="할 일을 입력하세요">
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label" for="desktop-desc-input">설명</label>
+              <textarea class="proto-form-input proto-form-textarea" id="desktop-desc-input" placeholder="설명을 입력하세요 (선택)" rows="3"></textarea>
+            </div>
+            <div class="proto-sheet-priority">
+              <span class="proto-form-label">우선순위</span>
+              <div class="proto-sheet-priority-options">
+                <span class="proto-badge proto-badge-priority-high">High</span>
+                <span class="proto-badge proto-badge-priority-medium proto-badge-selected">Medium</span>
+                <span class="proto-badge proto-badge-priority-low">Low</span>
+              </div>
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label">분류</label>
+              <div class="proto-combobox" data-open="false">
+                <input class="proto-combobox-input" type="text" placeholder="분류를 검색하세요">
+                <svg class="proto-combobox-icon" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                <div class="proto-combobox-dropdown">
+                  <div class="proto-combobox-option" data-value="건강">건강</div>
+                  <div class="proto-combobox-option" data-value="자기개발">자기개발</div>
+                  <div class="proto-combobox-option" data-value="생활">생활</div>
+                </div>
+              </div>
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label" for="desktop-date-input">등록일</label>
+              <input class="proto-form-input" id="desktop-date-input" type="date" value="2026-05-01">
+            </div>
+            <button class="proto-button proto-button-primary proto-sheet-save">저장하기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.4 설정 -->
+      <div class="proto-desktop-frame" id="desktop-settings">
+        <div class="proto-page-label">5.4 설정</div>
+        <div class="desktop-app">
+          <nav class="desktop-side-nav">
+            <div class="desktop-nav-logo">
+              <svg width="28" height="28" class="desktop-nav-logo-icon" aria-hidden="true"><use href="#icon-circle-check"></use></svg>
+              <span class="desktop-nav-logo-text">Dopamine Planner</span>
+            </div>
+            <div class="desktop-nav-section">
+              <span class="desktop-nav-label">워크스페이스</span>
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-home"></use></svg>
+                Life
+              </button>
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-briefcase"></use></svg>
+                Work
+              </button>
+            </div>
+            <div class="desktop-nav-spacer"></div>
+            <div class="desktop-nav-divider"></div>
+            <div class="desktop-nav-section">
+              <button class="desktop-nav-item desktop-nav-item-active">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-settings"></use></svg>
+                설정
+              </button>
+            </div>
+          </nav>
+          <div class="desktop-content">
+            <div class="desktop-settings-body">
+              <h3 class="desktop-settings-title">설정</h3>
+              <div class="page-settings-content" style="padding: 0;">
+                <div class="page-profile-card">
+                  <div class="page-profile-avatar">홍</div>
+                  <div class="page-profile-info">
+                    <span class="page-profile-name">홍길동</span>
+                    <span class="page-profile-email">hong@email.com</span>
+                    <span class="page-profile-provider">Google 계정 연동</span>
+                  </div>
+                </div>
+                <div class="page-settings-section">
+                  <h4 class="page-settings-section-title">계정</h4>
+                  <hr class="proto-divider" role="separator">
+                  <div class="page-settings-menu-item">
+                    <span>소셜 계정 연동</span>
+                    <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg>
+                  </div>
+                </div>
+                <div class="page-settings-section">
+                  <h4 class="page-settings-section-title">앱</h4>
+                  <hr class="proto-divider" role="separator">
+                  <div class="page-settings-menu-item">
+                    <span>알림 설정</span>
+                    <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg>
+                  </div>
+                </div>
+                <div class="page-settings-section">
+                  <h4 class="page-settings-section-title">정보</h4>
+                  <hr class="proto-divider" role="separator">
+                  <div class="page-settings-menu-item">
+                    <span>버전 정보</span>
+                    <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg>
+                  </div>
+                </div>
+                <button class="proto-button page-settings-logout">로그아웃</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.5 인터랙티브 데모 -->
+      <div class="proto-desktop-frame" id="desktop-interactive">
+        <div class="proto-page-label">5.5 인터랙티브 데모 (탭 전환 + 체크박스)</div>
+        <div class="desktop-app">
+          <nav class="desktop-side-nav" id="desktop-interactive-nav">
+            <div class="desktop-nav-logo">
+              <svg width="28" height="28" class="desktop-nav-logo-icon" aria-hidden="true"><use href="#icon-circle-check"></use></svg>
+              <span class="desktop-nav-logo-text">Dopamine Planner</span>
+            </div>
+            <div class="desktop-nav-section">
+              <span class="desktop-nav-label">워크스페이스</span>
+              <button class="desktop-nav-item desktop-nav-item-active" data-desktop-panel="desktop-panel-life">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-home"></use></svg>
+                Life
+              </button>
+              <button class="desktop-nav-item" data-desktop-panel="desktop-panel-work">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-briefcase"></use></svg>
+                Work
+              </button>
+            </div>
+            <div class="desktop-nav-spacer"></div>
+            <div class="desktop-nav-divider"></div>
+            <div class="desktop-nav-section">
+              <button class="desktop-nav-item" data-desktop-panel="desktop-panel-settings">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-settings"></use></svg>
+                설정
+              </button>
+            </div>
+          </nav>
+
+          <!-- Life 패널 -->
+          <div class="desktop-panel desktop-panel-active" id="desktop-panel-life">
+            <div class="proto-date-navigator" data-expanded="false">
+              <div class="proto-date-nav-header">
+                <button class="proto-date-nav-btn" aria-label="이전 주"><svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-left"></use></svg></button>
+                <button class="proto-date-nav-toggle" aria-label="달력 펼치기">
+                  <span class="proto-date-nav-title">2026년 5월</span>
+                  <svg class="proto-date-nav-toggle-icon" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                </button>
+                <button class="proto-date-nav-btn" aria-label="다음 주"><svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></button>
+              </div>
+              <div class="proto-date-nav-week">
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">일</span><span class="proto-date-nav-day-num">27</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">월</span><span class="proto-date-nav-day-num">28</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">화</span><span class="proto-date-nav-day-num">29</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">수</span><span class="proto-date-nav-day-num">30</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-selected"><span class="proto-date-nav-day-label">목</span><span class="proto-date-nav-day-num">1</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-today"><span class="proto-date-nav-day-label">금</span><span class="proto-date-nav-day-num">2</span></div>
+                <div class="proto-date-nav-day"><span class="proto-date-nav-day-label">토</span><span class="proto-date-nav-day-num">3</span></div>
+              </div>
+              <div class="proto-date-nav-calendar">
+                <div class="proto-date-nav-cal-header"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+                <div class="proto-date-nav-cal-grid">
+                  <span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">27</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">28</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">29</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">30</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-selected">1</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-today">2</span><span class="proto-date-nav-cal-day">3</span>
+                  <span class="proto-date-nav-cal-day">4</span><span class="proto-date-nav-cal-day">5</span><span class="proto-date-nav-cal-day">6</span><span class="proto-date-nav-cal-day">7</span><span class="proto-date-nav-cal-day">8</span><span class="proto-date-nav-cal-day">9</span><span class="proto-date-nav-cal-day">10</span>
+                  <span class="proto-date-nav-cal-day">11</span><span class="proto-date-nav-cal-day">12</span><span class="proto-date-nav-cal-day">13</span><span class="proto-date-nav-cal-day">14</span><span class="proto-date-nav-cal-day">15</span><span class="proto-date-nav-cal-day">16</span><span class="proto-date-nav-cal-day">17</span>
+                  <span class="proto-date-nav-cal-day">18</span><span class="proto-date-nav-cal-day">19</span><span class="proto-date-nav-cal-day">20</span><span class="proto-date-nav-cal-day">21</span><span class="proto-date-nav-cal-day">22</span><span class="proto-date-nav-cal-day">23</span><span class="proto-date-nav-cal-day">24</span>
+                  <span class="proto-date-nav-cal-day">25</span><span class="proto-date-nav-cal-day">26</span><span class="proto-date-nav-cal-day">27</span><span class="proto-date-nav-cal-day">28</span><span class="proto-date-nav-cal-day">29</span><span class="proto-date-nav-cal-day">30</span><span class="proto-date-nav-cal-day">31</span>
+                </div>
+              </div>
+            </div>
+            <div class="desktop-filter-row">
+              <div class="proto-filter-chips">
+                <button class="proto-filter-chip proto-filter-chip-active" data-filter="all">전체</button>
+                <button class="proto-filter-chip" data-filter="건강">건강</button>
+                <button class="proto-filter-chip" data-filter="자기개발">자기개발</button>
+                <button class="proto-filter-chip" data-filter="생활">생활</button>
+              </div>
+              <button class="desktop-add-btn">
+                <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                새 투두
+              </button>
+            </div>
+            <div class="desktop-content-body">
+              <div class="page-todo-sections" style="padding: 0;">
+                <div class="proto-section-header proto-section-header-done">
+                  <span class="proto-section-header-title">완료</span>
+                  <span class="proto-section-header-count">2</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+                <div role="list">
+                  <div class="proto-issue-card" data-category="건강">
+                    <div class="proto-todo-item proto-todo-item-completed" role="listitem">
+                      <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">건강</span></div>
+                        <span class="proto-todo-item-title">아침 운동</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="생활">
+                    <div class="proto-todo-item proto-todo-item-completed" role="listitem">
+                      <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">생활</span></div>
+                        <span class="proto-todo-item-title">장보기</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="height: var(--spacing-5)"></div>
+                <div class="proto-section-header proto-section-header-progress">
+                  <span class="proto-section-header-title">진행 중</span>
+                  <span class="proto-section-header-count">3</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+                <div role="list">
+                  <div class="proto-issue-card" data-category="건강">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags">
+                          <span class="proto-badge proto-badge-priority-high">High</span>
+                          <span class="proto-badge proto-badge-category">건강</span>
+                        </div>
+                        <span class="proto-todo-item-title">저녁 운동</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="자기개발">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">자기개발</span></div>
+                        <span class="proto-todo-item-title">책 읽기</span>
+                      </div>
+                      <span class="proto-badge proto-badge-carry-over">+2</span>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="생활">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">생활</span></div>
+                        <span class="proto-todo-item-title">비타민 챙기</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Work 패널 -->
+          <div class="desktop-panel" id="desktop-panel-work">
+            <div class="proto-date-navigator" data-expanded="false">
+              <div class="proto-date-nav-header">
+                <button class="proto-date-nav-btn" aria-label="이전 주"><svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-left"></use></svg></button>
+                <button class="proto-date-nav-toggle" aria-label="달력 펼치기">
+                  <span class="proto-date-nav-title">2026년 5월</span>
+                  <svg class="proto-date-nav-toggle-icon" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                </button>
+                <button class="proto-date-nav-btn" aria-label="다음 주"><svg width="20" height="20" aria-hidden="true"><use href="#icon-chevron-right"></use></svg></button>
+              </div>
+              <div class="proto-date-nav-week">
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">일</span><span class="proto-date-nav-day-num">27</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">월</span><span class="proto-date-nav-day-num">28</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">화</span><span class="proto-date-nav-day-num">29</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-other"><span class="proto-date-nav-day-label">수</span><span class="proto-date-nav-day-num">30</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-selected"><span class="proto-date-nav-day-label">목</span><span class="proto-date-nav-day-num">1</span></div>
+                <div class="proto-date-nav-day proto-date-nav-day-today"><span class="proto-date-nav-day-label">금</span><span class="proto-date-nav-day-num">2</span></div>
+                <div class="proto-date-nav-day"><span class="proto-date-nav-day-label">토</span><span class="proto-date-nav-day-num">3</span></div>
+              </div>
+              <div class="proto-date-nav-calendar">
+                <div class="proto-date-nav-cal-header"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+                <div class="proto-date-nav-cal-grid">
+                  <span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">27</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">28</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">29</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-other">30</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-selected">1</span><span class="proto-date-nav-cal-day proto-date-nav-cal-day-today">2</span><span class="proto-date-nav-cal-day">3</span>
+                  <span class="proto-date-nav-cal-day">4</span><span class="proto-date-nav-cal-day">5</span><span class="proto-date-nav-cal-day">6</span><span class="proto-date-nav-cal-day">7</span><span class="proto-date-nav-cal-day">8</span><span class="proto-date-nav-cal-day">9</span><span class="proto-date-nav-cal-day">10</span>
+                  <span class="proto-date-nav-cal-day">11</span><span class="proto-date-nav-cal-day">12</span><span class="proto-date-nav-cal-day">13</span><span class="proto-date-nav-cal-day">14</span><span class="proto-date-nav-cal-day">15</span><span class="proto-date-nav-cal-day">16</span><span class="proto-date-nav-cal-day">17</span>
+                  <span class="proto-date-nav-cal-day">18</span><span class="proto-date-nav-cal-day">19</span><span class="proto-date-nav-cal-day">20</span><span class="proto-date-nav-cal-day">21</span><span class="proto-date-nav-cal-day">22</span><span class="proto-date-nav-cal-day">23</span><span class="proto-date-nav-cal-day">24</span>
+                  <span class="proto-date-nav-cal-day">25</span><span class="proto-date-nav-cal-day">26</span><span class="proto-date-nav-cal-day">27</span><span class="proto-date-nav-cal-day">28</span><span class="proto-date-nav-cal-day">29</span><span class="proto-date-nav-cal-day">30</span><span class="proto-date-nav-cal-day">31</span>
+                </div>
+              </div>
+            </div>
+            <div class="desktop-filter-row">
+              <div class="proto-filter-chips">
+                <button class="proto-filter-chip proto-filter-chip-active" data-filter="all">전체</button>
+                <button class="proto-filter-chip" data-filter="프로젝트A">프로젝트A</button>
+                <button class="proto-filter-chip" data-filter="미팅">미팅</button>
+                <button class="proto-filter-chip" data-filter="운영">운영</button>
+              </div>
+              <button class="desktop-add-btn">
+                <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                새 투두
+              </button>
+            </div>
+            <div class="desktop-content-body">
+              <div class="page-todo-sections" style="padding: 0;">
+                <div class="proto-section-header proto-section-header-done">
+                  <span class="proto-section-header-title">완료</span>
+                  <span class="proto-section-header-count">2</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+                <div role="list">
+                  <div class="proto-issue-card" data-category="프로젝트A">
+                    <div class="proto-todo-item proto-todo-item-completed" role="listitem">
+                      <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">프로젝트A</span></div>
+                        <span class="proto-todo-item-title">코드 리뷰</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="미팅">
+                    <div class="proto-todo-item proto-todo-item-completed" role="listitem">
+                      <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0"><span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">미팅</span></div>
+                        <span class="proto-todo-item-title">스탠드업 미팅</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="height: var(--spacing-5)"></div>
+                <div class="proto-section-header proto-section-header-progress">
+                  <span class="proto-section-header-title">진행 중</span>
+                  <span class="proto-section-header-count">3</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+                <div role="list">
+                  <div class="proto-issue-card" data-category="프로젝트A">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags">
+                          <span class="proto-badge proto-badge-priority-high">High</span>
+                          <span class="proto-badge proto-badge-category">프로젝트A</span>
+                        </div>
+                        <span class="proto-todo-item-title">API 설계</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="운영">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">운영</span></div>
+                        <span class="proto-todo-item-title">배포 스크립트 작성</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="proto-issue-card" data-category="운영">
+                    <div class="proto-todo-item" role="listitem">
+                      <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0"><span class="proto-checkbox-box"></span></div>
+                      <div class="proto-todo-item-content">
+                        <div class="proto-todo-item-tags"><span class="proto-badge proto-badge-category">운영</span></div>
+                        <span class="proto-todo-item-title">주간 보고서</span>
+                      </div>
+                      <span class="proto-badge proto-badge-carry-over">+1</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings 패널 -->
+          <div class="desktop-panel" id="desktop-panel-settings">
+            <div class="desktop-settings-body">
+              <h3 class="desktop-settings-title">설정</h3>
+              <div class="page-settings-content" style="padding: 0;">
+                <div class="page-profile-card">
+                  <div class="page-profile-avatar">홍</div>
+                  <div class="page-profile-info">
+                    <span class="page-profile-name">홍길동</span>
+                    <span class="page-profile-email">hong@email.com</span>
+                    <span class="page-profile-provider">Google 계정 연동</span>
+                  </div>
+                </div>
+                <div class="page-settings-section">
+                  <h4 class="page-settings-section-title">계정</h4>
+                  <hr class="proto-divider" role="separator">
+                  <div class="page-settings-menu-item"><span>소셜 계정 연동</span><svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg></div>
+                </div>
+                <div class="page-settings-section">
+                  <h4 class="page-settings-section-title">앱</h4>
+                  <hr class="proto-divider" role="separator">
+                  <div class="page-settings-menu-item"><span>알림 설정</span><svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg></div>
+                </div>
+                <div class="page-settings-section">
+                  <h4 class="page-settings-section-title">정보</h4>
+                  <hr class="proto-divider" role="separator">
+                  <div class="page-settings-menu-item"><span>버전 정보</span><svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg></div>
+                </div>
+                <button class="proto-button page-settings-logout">로그아웃</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </main>
+  <script src="../js/icons.js"></script>
+  <script src="../js/pages.js"></script>
+</body>
+</html>

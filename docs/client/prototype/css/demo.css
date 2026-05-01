@@ -1,0 +1,419 @@
+/* ============================================================
+ * Token & Icon Demo Visualization Styles
+ * ============================================================ */
+
+/* ── Swatch Grid (Color Palette) ── */
+.proto-swatch-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-5);
+}
+
+.proto-swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 120px;
+}
+
+.proto-swatch-block {
+  width: 100%;
+  height: 80px;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-2);
+}
+
+.proto-swatch-block--bordered {
+  border: 1px solid var(--color-border-default);
+}
+
+.proto-swatch-label {
+  text-align: center;
+}
+
+.proto-swatch-label-token {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-primary);
+  word-break: break-all;
+}
+
+.proto-swatch-label-hex {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-secondary);
+}
+
+.proto-swatch-label-usage {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  margin-top: var(--spacing-1);
+}
+
+.proto-swatch-star {
+  color: var(--color-interactive-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* ── Semantic Color Mapping ── */
+.proto-semantic-group {
+  margin-bottom: var(--spacing-5);
+}
+
+.proto-semantic-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2) 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.proto-semantic-block {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.proto-semantic-block--bordered {
+  border: 1px solid var(--color-border-default);
+}
+
+.proto-semantic-token {
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-primary);
+  min-width: 280px;
+}
+
+.proto-semantic-ref {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-secondary);
+}
+
+.proto-semantic-ref-arrow {
+  color: var(--color-text-tertiary);
+  margin: 0 var(--spacing-1);
+}
+
+/* ── Component Color Groups ── */
+.proto-component-group {
+  margin-bottom: var(--spacing-5);
+  padding: var(--spacing-4);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+}
+
+.proto-component-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-2) 0;
+}
+
+.proto-component-block {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.proto-component-block--bordered {
+  border: 1px solid var(--color-border-default);
+}
+
+.proto-component-token {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-primary);
+  min-width: 220px;
+}
+
+.proto-component-ref {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-secondary);
+}
+
+/* ── WCAG Contrast ── */
+.proto-contrast-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-4);
+  margin-top: var(--spacing-5);
+}
+
+.proto-contrast-item {
+  width: 260px;
+  padding: var(--spacing-4);
+  border-radius: var(--radius-md);
+  text-align: center;
+}
+
+.proto-contrast-label {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  margin-top: var(--spacing-2);
+  opacity: 0.8;
+}
+
+.proto-contrast-ratio {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-top: var(--spacing-1);
+}
+
+/* ── Typography Scale ── */
+.proto-type-scale {
+  margin-bottom: var(--spacing-6);
+}
+
+.proto-type-row {
+  margin-bottom: var(--spacing-6);
+  padding: var(--spacing-4);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+}
+
+.proto-type-label {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--spacing-3);
+  padding-bottom: var(--spacing-2);
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.proto-type-weights {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-4);
+}
+
+.proto-type-sample {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.proto-type-weight-label {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--spacing-1);
+}
+
+/* ── Spacing Scale ── */
+.proto-spacing-scale {
+  margin-bottom: var(--spacing-6);
+}
+
+.proto-spacing-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-3);
+}
+
+.proto-spacing-label {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-secondary);
+  min-width: 100px;
+  text-align: right;
+}
+
+.proto-spacing-block {
+  height: 24px;
+  background-color: var(--color-interactive-primary);
+  border-radius: var(--radius-sm);
+}
+
+.proto-spacing-value {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-tertiary);
+  min-width: 40px;
+}
+
+.proto-spacing-usage {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+/* ── Border Radius ── */
+.proto-radius-scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-6);
+  margin-bottom: var(--spacing-6);
+}
+
+.proto-radius-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.proto-radius-box {
+  width: 80px;
+  height: 80px;
+  background-color: var(--color-bg-brand-subtle);
+  border: 2px solid var(--color-interactive-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.proto-radius-label {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.proto-radius-usage {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
+  text-align: center;
+}
+
+/* ── Motion Grid ── */
+.proto-motion-grid {
+  display: grid;
+  grid-template-columns: 140px repeat(3, 1fr);
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-6);
+}
+
+.proto-motion-header {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: var(--spacing-2);
+}
+
+.proto-motion-row-label {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  padding-right: var(--spacing-3);
+}
+
+.proto-motion-cell {
+  position: relative;
+  height: 40px;
+  cursor: pointer;
+}
+
+.proto-motion-track {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.proto-motion-box {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 32px;
+  height: 32px;
+  background-color: var(--color-interactive-primary);
+  border-radius: var(--radius-sm);
+}
+
+/* Motion transition classes — each combination */
+.proto-motion-fast-default .proto-motion-box { transition: left 100ms cubic-bezier(0.4, 0, 0.2, 1); }
+.proto-motion-fast-enter .proto-motion-box { transition: left 100ms cubic-bezier(0, 0, 0.2, 1); }
+.proto-motion-fast-exit .proto-motion-box { transition: left 100ms cubic-bezier(0.4, 0, 1, 1); }
+.proto-motion-normal-default .proto-motion-box { transition: left 200ms cubic-bezier(0.4, 0, 0.2, 1); }
+.proto-motion-normal-enter .proto-motion-box { transition: left 200ms cubic-bezier(0, 0, 0.2, 1); }
+.proto-motion-normal-exit .proto-motion-box { transition: left 200ms cubic-bezier(0.4, 0, 1, 1); }
+.proto-motion-slow-default .proto-motion-box { transition: left 300ms cubic-bezier(0.4, 0, 0.2, 1); }
+.proto-motion-slow-enter .proto-motion-box { transition: left 300ms cubic-bezier(0, 0, 0.2, 1); }
+.proto-motion-slow-exit .proto-motion-box { transition: left 300ms cubic-bezier(0.4, 0, 1, 1); }
+
+.proto-motion-cell:hover .proto-motion-box {
+  left: calc(100% - 36px);
+}
+
+/* ── Icon Grid ── */
+.proto-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-6);
+}
+
+.proto-icon-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  background-color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+}
+
+.proto-icon-row svg {
+  flex-shrink: 0;
+  color: var(--color-text-primary);
+}
+
+.proto-icon-name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.proto-icon-usage {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.proto-icon-demo {
+  margin-bottom: var(--spacing-6);
+}
+
+.proto-icon-demo-row {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-6);
+  padding: var(--spacing-3) 0;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.proto-icon-demo-label {
+  font-size: var(--font-size-sm);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-primary);
+  min-width: 120px;
+}
+
+.proto-icon-size-variant,
+.proto-icon-color-variant {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.proto-icon-variant-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-1);
+}
+
+.proto-icon-variant-label {
+  font-size: var(--font-size-xs);
+  font-family: var(--font-family-mono);
+  color: var(--color-text-tertiary);
+}

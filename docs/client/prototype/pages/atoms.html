@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atoms — Dopamine Planner Design System</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.304/fonts/webfonts/JetBrainsMono.css" />
+  <link rel="stylesheet" href="../css/tokens.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/demo.css">
+  <link rel="stylesheet" href="../css/atoms.css">
+  <link rel="stylesheet" href="../css/molecules.css">
+  <link rel="stylesheet" href="../css/organisms.css">
+</head>
+<body>
+  <script src="../js/sidebar.js"></script>
+  <main class="proto-main">
+    <section class="proto-section">
+      <h1 class="proto-section-title">3.1 Atoms</h1>
+
+      <!-- Button -->
+      <div class="proto-component-card">
+        <h4>Button</h4>
+        <p>4개 변형(primary, secondary, ghost, destructive) × 4개 상태(default, hover, active, disabled)</p>
+        <div class="proto-button-grid">
+          <div></div>
+          <div class="proto-button-grid-label">Default</div>
+          <div class="proto-button-grid-label">Hover</div>
+          <div class="proto-button-grid-label">Active</div>
+          <div class="proto-button-grid-label">Disabled</div>
+          <div class="proto-button-grid-label">Primary</div>
+          <div><button class="proto-button proto-button-primary">Primary</button></div>
+          <div><button class="proto-button proto-button-primary proto-state-hover">Primary</button></div>
+          <div><button class="proto-button proto-button-primary proto-state-active">Primary</button></div>
+          <div><button class="proto-button proto-button-primary proto-state-disabled" aria-disabled="true">Primary</button></div>
+          <div class="proto-button-grid-label">Secondary</div>
+          <div><button class="proto-button proto-button-secondary">Secondary</button></div>
+          <div><button class="proto-button proto-button-secondary proto-state-hover">Secondary</button></div>
+          <div><button class="proto-button proto-button-secondary proto-state-active">Secondary</button></div>
+          <div><button class="proto-button proto-button-secondary proto-state-disabled" aria-disabled="true">Secondary</button></div>
+          <div class="proto-button-grid-label">Ghost</div>
+          <div><button class="proto-button proto-button-ghost">Ghost</button></div>
+          <div><button class="proto-button proto-button-ghost proto-state-hover">Ghost</button></div>
+          <div><button class="proto-button proto-button-ghost proto-state-active">Ghost</button></div>
+          <div><button class="proto-button proto-button-ghost proto-state-disabled" aria-disabled="true">Ghost</button></div>
+          <div class="proto-button-grid-label">Destructive</div>
+          <div><button class="proto-button proto-button-destructive">Destructive</button></div>
+          <div><button class="proto-button proto-button-destructive proto-state-hover">Destructive</button></div>
+          <div><button class="proto-button proto-button-destructive proto-state-active">Destructive</button></div>
+          <div><button class="proto-button proto-button-destructive proto-state-disabled" aria-disabled="true">Destructive</button></div>
+        </div>
+      </div>
+
+      <!-- Checkbox -->
+      <div class="proto-component-card">
+        <h4>Checkbox</h4>
+        <p>3개 상태: unchecked, checked, disabled</p>
+        <div class="proto-checkbox-demo">
+          <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
+            <span class="proto-checkbox-box"></span>
+            <span class="proto-checkbox-label">Unchecked</span>
+          </div>
+          <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
+            <span class="proto-checkbox-box">
+              <svg width="14" height="14"><use href="#icon-check"></use></svg>
+            </span>
+            <span class="proto-checkbox-label">Checked</span>
+          </div>
+          <div class="proto-checkbox proto-checkbox-disabled" role="checkbox" aria-checked="false" aria-disabled="true">
+            <span class="proto-checkbox-box"></span>
+            <span class="proto-checkbox-label">Disabled</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Icon -->
+      <div class="proto-component-card">
+        <h4>Icon</h4>
+        <p>3가지 크기 변형: 16px, 20px, 24px (기본)</p>
+        <div class="proto-icon-size-demo-component">
+          <div class="proto-icon-variant-row-component">
+            <span class="proto-icon-label">Check</span>
+            <svg width="16" height="16" aria-hidden="true"><use href="#icon-check"></use></svg>
+            <svg width="20" height="20" aria-hidden="true"><use href="#icon-check"></use></svg>
+            <svg width="24" height="24" aria-hidden="true"><use href="#icon-check"></use></svg>
+          </div>
+          <div class="proto-icon-variant-row-component">
+            <span class="proto-icon-label">Plus</span>
+            <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
+            <svg width="20" height="20" aria-hidden="true"><use href="#icon-plus"></use></svg>
+            <svg width="24" height="24" aria-hidden="true"><use href="#icon-plus"></use></svg>
+          </div>
+          <div class="proto-icon-variant-row-component">
+            <span class="proto-icon-label">Settings</span>
+            <svg width="16" height="16" aria-hidden="true"><use href="#icon-settings"></use></svg>
+            <svg width="20" height="20" aria-hidden="true"><use href="#icon-settings"></use></svg>
+            <svg width="24" height="24" aria-hidden="true"><use href="#icon-settings"></use></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badge -->
+      <div class="proto-component-card">
+        <h4>Badge</h4>
+        <p>3개 변형: category, priority (High/Medium/Low), carry-over</p>
+        <div class="proto-badge-demo">
+          <div class="proto-badge-group">
+            <span class="proto-badge-group-label">Category</span>
+            <span class="proto-badge proto-badge-category">건강</span>
+            <span class="proto-badge proto-badge-category">프로젝트A</span>
+          </div>
+          <div class="proto-badge-group">
+            <span class="proto-badge-group-label">Priority</span>
+            <span class="proto-badge proto-badge-priority-high">
+              High
+            </span>
+            <span class="proto-badge proto-badge-priority-medium">Medium</span>
+            <span class="proto-badge proto-badge-priority-low">Low</span>
+          </div>
+          <div class="proto-badge-group">
+            <span class="proto-badge-group-label">Carry-over</span>
+            <span class="proto-badge proto-badge-carry-over">🔄 2</span>
+            <span class="proto-badge proto-badge-carry-over">🔄 5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div class="proto-component-card">
+        <h4>Divider</h4>
+        <p>수평 구분선</p>
+        <div class="proto-divider-demo">
+          <p>위쪽 콘텐츠</p>
+          <hr class="proto-divider" role="separator">
+          <p>아래쪽 콘텐츠</p>
+        </div>
+      </div>
+
+      <!-- Avatar -->
+      <div class="proto-component-card">
+        <h4>Avatar</h4>
+        <p>2가지 크기(sm: 32px, md: 40px) × 2가지 타입(이미지, 이니셜)</p>
+        <div class="proto-avatar-demo">
+          <div class="proto-avatar-group">
+            <span class="proto-avatar-group-label">sm (32px)</span>
+            <div class="proto-avatar proto-avatar-sm proto-avatar-image" role="img" aria-label="사용자 아바타"></div>
+            <div class="proto-avatar proto-avatar-sm proto-avatar-initials" role="img" aria-label="홍길동">
+              <span>홍</span>
+            </div>
+          </div>
+          <div class="proto-avatar-group">
+            <span class="proto-avatar-group-label">md (40px)</span>
+            <div class="proto-avatar proto-avatar-md proto-avatar-image" role="img" aria-label="사용자 아바타"></div>
+            <div class="proto-avatar proto-avatar-md proto-avatar-initials" role="img" aria-label="김철수">
+              <span>김</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="../js/icons.js"></script>
+</body>
+</html>

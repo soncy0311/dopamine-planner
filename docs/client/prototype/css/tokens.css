@@ -1,0 +1,161 @@
+/* ============================================================
+ * Design System Tokens
+ * ============================================================ */
+
+:root {
+  /* === Primitive Color Tokens === */
+
+  /* ── Main - Purple ── */
+  --color-purple-100: #D7AEF2;
+  --color-purple-200: #C599F2;
+  --color-purple-300: #B87EF2;
+  --color-purple-500: #9755D9;
+  --color-purple-700: #8A63BF;
+
+  /* ── Sub 01 - Periwinkle ── */
+  --color-periwinkle-100: #D2D3FF;
+  --color-periwinkle-200: #BFCEFF;
+  --color-periwinkle-300: #BAC3FF;
+  --color-periwinkle-400: #9DABE8;
+  --color-periwinkle-500: #9DA3E8;
+
+  /* ── Sub 02 - Neutral ── */
+  --color-indigo-600: #7578BF;
+  --color-lavender-gray-300: #B8BAD9;
+  --color-gray-50: #F2F2F2;
+  --color-white: #FFFFFF;
+  --color-black-900: #000000;
+
+  /* ── Semantic Colors (Status) ── */
+  --color-red-500: #EF4444;
+  --color-green-500: #22C55E;
+  --color-yellow-500: #F59E0B;
+  --color-blue-500: #3B82F6;
+
+  /* === Semantic Color Tokens === */
+
+  /* ── Text ── */
+  --color-text-primary: var(--color-black-900);
+  --color-text-secondary: var(--color-indigo-600);
+  --color-text-tertiary: var(--color-lavender-gray-300);
+  --color-text-inverse: var(--color-white);
+  --color-text-brand: var(--color-purple-500);
+
+  /* ── Background ── */
+  --color-bg-base: var(--color-white);
+  --color-bg-surface: var(--color-gray-50);
+  --color-bg-elevated: var(--color-white);
+  --color-bg-brand-subtle: var(--color-purple-100);
+  --color-bg-secondary-subtle: var(--color-periwinkle-100);
+
+  /* ── Interactive — Primary ── */
+  --color-interactive-primary: var(--color-purple-500);
+  --color-interactive-primary-hover: var(--color-purple-300);
+  --color-interactive-primary-active: var(--color-purple-700);
+  --color-interactive-primary-disabled: var(--color-purple-100);
+
+  /* ── Interactive — Secondary ── */
+  --color-interactive-secondary: var(--color-periwinkle-500);
+  --color-interactive-secondary-hover: var(--color-periwinkle-300);
+  --color-interactive-secondary-active: var(--color-periwinkle-400);
+
+  /* ── Border ── */
+  --color-border-default: var(--color-lavender-gray-300);
+  --color-border-focus: var(--color-purple-500);
+  --color-border-subtle: var(--color-gray-50);
+
+  /* ── Status ── */
+  --color-status-success: var(--color-green-500);
+  --color-status-error: var(--color-red-500);
+  --color-status-warning: var(--color-yellow-500);
+  --color-status-info: var(--color-blue-500);
+
+  /* === Component Color Tokens === */
+
+  /* ── Button ── */
+  --button-primary-bg: var(--color-interactive-primary);
+  --button-primary-text: var(--color-text-inverse);
+  --button-primary-bg-hover: var(--color-interactive-primary-hover);
+  --button-primary-bg-active: var(--color-interactive-primary-active);
+  --button-primary-bg-disabled: var(--color-interactive-primary-disabled);
+
+  /* ── Tab Bar ── */
+  --tab-bar-bg: var(--color-bg-elevated);
+  --tab-bar-active: var(--color-interactive-primary);
+  --tab-bar-inactive: var(--color-lavender-gray-300);
+
+  /* ── Todo Item ── */
+  --todo-item-bg: var(--color-bg-elevated);
+  --todo-item-border: var(--color-border-default);
+  --todo-item-completed-text: var(--color-text-tertiary);
+  --todo-item-checkbox-checked: var(--color-interactive-primary);
+  --todo-item-checkbox-unchecked: var(--color-border-default);
+
+  /* ── Category Badge ── */
+  --badge-bg: var(--color-bg-secondary-subtle);
+  --badge-text: var(--color-interactive-secondary);
+
+  /* ── FAB ── */
+  --fab-bg: var(--color-interactive-primary);
+  --fab-text: var(--color-text-inverse);
+  --fab-shadow: rgba(151, 85, 217, 0.3);
+
+  /* ── Section Header ── */
+  --section-done-text: var(--color-text-secondary);
+  --section-progress-text: var(--color-text-primary);
+
+  /* === Typography Tokens === */
+
+  /* ── Font Family ── */
+  --font-family-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, 'Courier New', monospace;
+
+  /* ── Font Size ── */
+  --font-size-xs: 0.6875rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-md: 0.9375rem;
+  --font-size-lg: 1.0625rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+
+  /* ── Line Height ── */
+  --line-height-xs: 1rem;
+  --line-height-sm: 1.125rem;
+  --line-height-md: 1.375rem;
+  --line-height-lg: 1.5rem;
+  --line-height-xl: 1.75rem;
+  --line-height-2xl: 2rem;
+
+  /* ── Font Weight ── */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* === Spacing Tokens === */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 20px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+
+  /* === Border Radius Tokens === */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* === Motion Tokens === */
+
+  /* ── Duration ── */
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+
+  /* ── Easing ── */
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-enter: cubic-bezier(0, 0, 0.2, 1);
+  --easing-exit: cubic-bezier(0.4, 0, 1, 1);
+}
