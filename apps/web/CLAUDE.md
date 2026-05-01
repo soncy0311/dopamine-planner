@@ -66,11 +66,7 @@ apps/web/
 
 ## 환경 변수
 
-| 변수 | 설명 |
-|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase 프로젝트 URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon(public) 키 |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase service role 키 (API Routes 서버 전용) |
+`env/.env.web.local`에서 관리한다. `dev` 스크립트가 `dotenv-cli`로 자동 로드한다. 변수 목록은 `env/.env.web.example` 참조.
 
 ## 실행 명령어
 

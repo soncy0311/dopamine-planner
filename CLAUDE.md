@@ -96,19 +96,22 @@ todo-list/                  (Monorepo — pnpm + Turborepo)
 
 ## 환경 변수 관리
 
-- `.env`, `.env.local`, `.env.*.local`은 `.gitignore` 처리
-- 원격에 커밋되는 파일은 `.env.example`뿐이다
-- 새 환경 변수를 추가할 때는 반드시 `.env.example`도 함께 갱신한다
+- 환경 변수 파일은 루트 `env/` 폴더에서 중앙 관리한다
+- `env/*.example`만 원격에 커밋하고, `env/*.local`은 `.gitignore` 처리
+- 새 환경 변수를 추가할 때는 반드시 `env/*.example`도 함께 갱신한다
+- 각 앱의 `dev` 스크립트는 `dotenv-cli`로 `env/` 폴더의 `.local` 파일을 로드한다
+- 프로덕션(Vercel)은 대시보드에서 환경 변수를 주입한다
 - 모바일 앱: `EXPO_PUBLIC_` 접두사 사용
 
-### 주요 환경 변수
+### 환경 변수 파일 구조
 
-| 변수 | 위치 | 설명 |
-|---|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | apps/web | Supabase 프로젝트 URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | apps/web | Supabase anon(public) 키 |
-| `SUPABASE_SERVICE_ROLE_KEY` | apps/web (서버 전용) | Supabase service role 키 (API Routes에서 사용) |
-| `EXPO_PUBLIC_WEBVIEW_URL` | apps/mobile | WebView에서 로드할 URL |
+```
+env/
+├── .env.web.example       # 웹 앱 템플릿 (커밋)
+├── .env.web.local         # 웹 앱 실제 값 (gitignore)
+├── .env.mobile.example    # 모바일 앱 템플릿 (커밋)
+└── .env.mobile.local      # 모바일 앱 실제 값 (gitignore)
+```
 
 ## GitHub Projects 설정
 

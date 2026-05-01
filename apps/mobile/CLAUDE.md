@@ -51,9 +51,7 @@ apps/mobile/
 
 ## 환경 변수
 
-| 변수 | 설명 | 기본값 |
-|------|------|--------|
-| `EXPO_PUBLIC_WEBVIEW_URL` | WebView에서 로드할 URL | `http://localhost:3000` |
+`env/.env.mobile.local`에서 관리한다. `dev` 스크립트가 `dotenv-cli`로 자동 로드한다. 변수 목록은 `env/.env.mobile.example` 참조.
 
 > Expo에서는 `EXPO_PUBLIC_` 접두사가 붙은 변수만 클라이언트에서 접근 가능하다.
 
