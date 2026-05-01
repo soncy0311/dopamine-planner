@@ -119,7 +119,10 @@ env/
 |---|---|
 | project_url | https://github.com/users/soncy0311/projects/3 |
 | project_id | `PVT_kwHOAx9shM4BWSik` |
+| owner | `soncy0311` (user) |
+| project_number | `3` |
 | status_field_id | `PVTSSF_lAHOAx9shM4BWSikzhRoGOM` |
+| sprint_field_id | `PVTIF_lAHOAx9shM4BWSikzhRoGO4` |
 
 ### Status 옵션 ID
 
