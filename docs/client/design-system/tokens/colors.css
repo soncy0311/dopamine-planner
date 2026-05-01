@@ -1,0 +1,39 @@
+/**
+ * ============================================================
+ * Primitive Color Tokens
+ * ============================================================
+ * 팔레트의 모든 색을 값 기반으로 등록한다.
+ * 이 토큰은 직접 사용하지 않고, Semantic 토큰에서 참조한다.
+ *
+ * @see detail-design-system.md § 3.2 Primitive Tokens
+ * ============================================================
+ */
+
+:root {
+  /* ── Main - Purple ── */
+  --color-purple-100: #D7AEF2;
+  --color-purple-200: #C599F2;
+  --color-purple-300: #B87EF2;
+  --color-purple-500: #9755D9;
+  --color-purple-700: #8A63BF;
+
+  /* ── Sub 01 - Periwinkle ── */
+  --color-periwinkle-100: #D2D3FF;
+  --color-periwinkle-200: #BFCEFF;
+  --color-periwinkle-300: #BAC3FF;
+  --color-periwinkle-400: #9DABE8;
+  --color-periwinkle-500: #9DA3E8;
+
+  /* ── Sub 02 - Neutral ── */
+  --color-indigo-600: #7578BF;
+  --color-lavender-gray-300: #B8BAD9;
+  --color-gray-50: #F2F2F2;
+  --color-white: #FFFFFF;
+  --color-black-900: #000000;
+
+  /* ── Semantic Colors (Status) ── */
+  --color-red-500: #EF4444;
+  --color-green-500: #22C55E;
+  --color-yellow-500: #F59E0B;
+  --color-blue-500: #3B82F6;
+}

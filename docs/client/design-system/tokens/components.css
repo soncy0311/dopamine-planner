@@ -1,0 +1,44 @@
+/**
+ * ============================================================
+ * Component Tokens
+ * ============================================================
+ * 특정 컴포넌트에 한정된 토큰.
+ * Semantic 토큰을 참조하여 컴포넌트별 고유 특성을 조정한다.
+ *
+ * @see detail-design-system.md § 3.2 Component Tokens
+ * ============================================================
+ */
+
+:root {
+  /* ── Button ── */
+  --button-primary-bg: var(--color-interactive-primary);
+  --button-primary-text: var(--color-text-inverse);
+  --button-primary-bg-hover: var(--color-interactive-primary-hover);
+  --button-primary-bg-active: var(--color-interactive-primary-active);
+  --button-primary-bg-disabled: var(--color-interactive-primary-disabled);
+
+  /* ── Tab Bar ── */
+  --tab-bar-bg: var(--color-bg-elevated);
+  --tab-bar-active: var(--color-interactive-primary);
+  --tab-bar-inactive: var(--color-lavender-gray-300);
+
+  /* ── Todo Item ── */
+  --todo-item-bg: var(--color-bg-elevated);
+  --todo-item-border: var(--color-border-default);
+  --todo-item-completed-text: var(--color-text-tertiary);
+  --todo-item-checkbox-checked: var(--color-interactive-primary);
+  --todo-item-checkbox-unchecked: var(--color-border-default);
+
+  /* ── Category Badge ── */
+  --badge-bg: var(--color-bg-secondary-subtle);
+  --badge-text: var(--color-interactive-secondary);
+
+  /* ── FAB (Floating Action Button) ── */
+  --fab-bg: var(--color-interactive-primary);
+  --fab-text: var(--color-text-inverse);
+  --fab-shadow: rgba(151, 85, 217, 0.3);
+
+  /* ── Section Header ── */
+  --section-done-text: var(--color-text-secondary);
+  --section-progress-text: var(--color-text-primary);
+}
