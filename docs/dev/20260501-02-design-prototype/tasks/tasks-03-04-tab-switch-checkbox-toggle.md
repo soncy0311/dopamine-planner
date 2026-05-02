@@ -4,11 +4,11 @@
 
 - **Sub-PRD**: `sub-prd-03-feat-page-prototypes.md`
 - **의존성**: `tasks-03-02` (Life/Work 메인 페이지), `tasks-03-03` (Settings 설정 페이지)
-- **대상 파일**: `docs/client/prototype/index.html` — `#page-main-interactive` 프레임 내부 + `<script>` 블록
+- **대상 파일**: `docs/base/prototype/index.html` — `#page-main-interactive` 프레임 내부 + `<script>` 블록
 - **참조 파일**:
   - `sub-prd-03-feat-page-prototypes.md` §3
-  - `docs/client/design-system/components.md` — BottomTabBar, TodoItem
-  - `docs/client/design-system/accessibility.md` — ARIA 속성, 키보드 탐색
+  - `docs/base/design-system/components.md` — BottomTabBar, TodoItem
+  - `docs/base/design-system/accessibility.md` — ARIA 속성, 키보드 탐색
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 

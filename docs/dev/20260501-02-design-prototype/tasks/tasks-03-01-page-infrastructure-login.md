@@ -4,11 +4,11 @@
 
 - **Sub-PRD**: `sub-prd-03-feat-page-prototypes.md`
 - **의존성**: Sub-PRD 02 완료 (컴포넌트 라이브러리 CSS 클래스)
-- **대상 파일**: `docs/client/prototype/index.html`
+- **대상 파일**: `docs/base/prototype/index.html`
 - **참조 파일**:
   - `sub-prd-03-feat-page-prototypes.md` §1, §2.1
-  - `docs/client/design-system/components.md` — AuthLayout 템플릿
-  - `docs/client/design-system/accessibility.md` — ARIA/접근성
+  - `docs/base/design-system/components.md` — AuthLayout 템플릿
+  - `docs/base/design-system/accessibility.md` — ARIA/접근성
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 

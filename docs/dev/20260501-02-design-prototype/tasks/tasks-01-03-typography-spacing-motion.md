@@ -4,8 +4,8 @@
 
 - **Sub-PRD**: `sub-prd-01-feat-tokens-icons.md`
 - **의존성**: `tasks-01-01` (HTML 구조 + 토큰 정의 완료 후 진행)
-- **대상 파일**: `docs/client/prototype/index.html` — `<section id="tokens">` 내부
-- **참조 파일**: `docs/client/design-system/tokens/typography.css`, `spacing.css`, `motion.css`
+- **대상 파일**: `docs/base/prototype/index.html` — `<section id="tokens">` 내부
+- **참조 파일**: `docs/base/design-system/tokens/typography.css`, `spacing.css`, `motion.css`
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 

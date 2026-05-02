@@ -4,10 +4,10 @@
 
 - **Sub-PRD**: `sub-prd-02-feat-component-library.md`
 - **의존성**: `tasks-02-01` (섹션 구조 + `#atoms` div 존재 필요)
-- **대상 파일**: `docs/client/prototype/index.html` — `<div id="atoms">` 내부에 추가
+- **대상 파일**: `docs/base/prototype/index.html` — `<div id="atoms">` 내부에 추가
 - **참조 파일**:
   - `sub-prd-02-feat-component-library.md` §2.4~2.6
-  - `docs/client/design-system/components.md` — Atoms (Badge, Divider, Avatar)
+  - `docs/base/design-system/components.md` — Atoms (Badge, Divider, Avatar)
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 

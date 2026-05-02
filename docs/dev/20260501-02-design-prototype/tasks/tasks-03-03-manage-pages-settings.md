@@ -4,11 +4,11 @@
 
 - **Sub-PRD**: `sub-prd-03-feat-page-prototypes.md`
 - **의존성**: `tasks-03-01` (페이지 프레임 CSS + 섹션 구조)
-- **대상 파일**: `docs/client/prototype/index.html` — `#page-category`, `#page-epic`, `#page-settings` 프레임 내부에 추가
+- **대상 파일**: `docs/base/prototype/index.html` — `#page-category`, `#page-epic`, `#page-settings` 프레임 내부에 추가
 - **참조 파일**:
   - `sub-prd-03-feat-page-prototypes.md` §2.5~2.7
-  - `docs/client/design-system/components.md` — ManageLayout 템플릿, CategoryList, EpicCard
-  - `docs/client/design-system/accessibility.md` — ARIA/접근성
+  - `docs/base/design-system/components.md` — ManageLayout 템플릿, CategoryList, EpicCard
+  - `docs/base/design-system/accessibility.md` — ARIA/접근성
   - `tasks-02-04-organisms.md` — CategoryList, EpicCard CSS 클래스 참조
 
 ## 대상 체크리스트 (Sub-PRD 매핑)

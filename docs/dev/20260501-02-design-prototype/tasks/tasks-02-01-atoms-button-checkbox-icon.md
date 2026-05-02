@@ -4,11 +4,11 @@
 
 - **Sub-PRD**: `sub-prd-02-feat-component-library.md`
 - **의존성**: Sub-PRD 01 완료 (HTML 구조, 토큰, SVG 심볼)
-- **대상 파일**: `docs/client/prototype/index.html`
+- **대상 파일**: `docs/base/prototype/index.html`
 - **참조 파일**:
   - `sub-prd-02-feat-component-library.md` §2.1~2.3
-  - `docs/client/design-system/components.md` — Atoms (Button, Checkbox, Icon)
-  - `docs/client/design-system/accessibility.md` — ARIA/접근성
+  - `docs/base/design-system/components.md` — Atoms (Button, Checkbox, Icon)
+  - `docs/base/design-system/accessibility.md` — ARIA/접근성
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 

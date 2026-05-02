@@ -17,7 +17,7 @@ Next.js 15 + React 19 기반 웹 클라이언트. 모바일 WebView에서도 로
 
 ## 디자인 시스템
 
-- 디자인 토큰·컴포넌트 명세는 `docs/client/design-system/`을 따른다
+- 디자인 토큰·컴포넌트 명세는 `docs/base/design-system/`을 따른다
 - 컬러는 3단계 토큰 계층(Primitive → Semantic → Component)을 사용한다
 - 60-30-10 컬러 규칙: 60% White/Gray, 30% Periwinkle, 10% Purple 500
 - WCAG 2.1 AA 접근성 기준을 준수한다
@@ -78,6 +78,5 @@ pnpm --filter @todo-list/web lint    # 린트
 
 ## 참고 문서
 
-- `docs/client/design-system/` — 디자인 시스템 명세 (토큰, 컴포넌트, 접근성)
-- `docs/client/20260501-01-design-system/detail-design-system.md` — 디자인 시스템 상세 요구사항
-- `docs/shared/20260501-01-todo-list-initialize/API_CONTRACT.md` — API 계약서 (Supabase + API Routes)
+- `docs/base/design-system/` — 디자인 시스템 명세 (토큰, 컴포넌트, 접근성)
+- `docs/base/prototype/` — HTML/CSS 프로토타입

@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: `sub-prd-01-feat-tokens-icons.md`
 - **의존성**: `tasks-01-01` (HTML 구조 + 토큰 정의 완료 후 진행)
-- **대상 파일**: `docs/client/prototype/index.html` — `<svg><defs>` 및 `<section id="icons">`
+- **대상 파일**: `docs/base/prototype/index.html` — `<svg><defs>` 및 `<section id="icons">`
 - **참조**: Lucide Icons (https://lucide.dev) — 인라인 SVG로 포함
 
 ## 대상 체크리스트 (Sub-PRD 매핑)

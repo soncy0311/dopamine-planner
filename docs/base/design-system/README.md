@@ -19,7 +19,7 @@
 ## 디렉토리 구조
 
 ```
-docs/client/design-system/
+docs/base/design-system/
 ├── README.md              ← 이 파일
 ├── tokens/
 │   ├── index.css          ← 토큰 진입점 (모든 토큰 import)
@@ -90,6 +90,5 @@ Primitive  →  Semantic  →  Component
 
 ## 관련 문서
 
-- [상세 디자인 시스템 요구사항](../20260501-01-design-system/detail-design-system.md)
 - [컴포넌트 명세](./components.md)
 - [접근성 가이드라인](./accessibility.md)

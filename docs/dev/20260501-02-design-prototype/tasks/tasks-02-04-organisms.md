@@ -4,11 +4,11 @@
 
 - **Sub-PRD**: `sub-prd-02-feat-component-library.md`
 - **의존성**: `tasks-02-03` (TodoItem, SectionHeader, TabBarItem, FormField), `tasks-02-01` (Button)
-- **대상 파일**: `docs/client/prototype/index.html` — `<div id="organisms">` 내부에 추가
+- **대상 파일**: `docs/base/prototype/index.html` — `<div id="organisms">` 내부에 추가
 - **참조 파일**:
   - `sub-prd-02-feat-component-library.md` §4.1~4.5
-  - `docs/client/design-system/components.md` — Organisms 전체
-  - `docs/client/design-system/accessibility.md` — ARIA/접근성
+  - `docs/base/design-system/components.md` — Organisms 전체
+  - `docs/base/design-system/accessibility.md` — ARIA/접근성
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 

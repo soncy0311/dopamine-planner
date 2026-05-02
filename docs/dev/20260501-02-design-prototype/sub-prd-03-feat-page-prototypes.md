@@ -383,7 +383,7 @@ BottomTabBar 탭 클릭으로 Life/Work/Settings 간 페이지 전환을 구현�
 
 ### Sub-01/02 파일 확장
 
-`docs/client/prototype/index.html`에 `<section id="pages">` 를 추가한다.
+`docs/base/prototype/index.html`에 `<section id="pages">` 를 추가한다.
 
 ```html
 <section id="pages">

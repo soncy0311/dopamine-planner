@@ -1,36 +1,46 @@
 # Dopamine Planner 서비스 기획서
 
 > 작성일: 2026-05-01
-> 최종 수정일: 2026-05-02
+> 최종 수정일: 2026-05-02 (v2 — 데스크탑/모바일 네이티브 + RPC 전환)
 > 상태: Draft
+> 마이그레이션 계획: [`../20260502-01-stack-pivot/detail-stack-pivot.md`](../20260502-01-stack-pivot/detail-stack-pivot.md)
 
 ---
 
 ## 1. 서비스 개요
 
 일상(Life)과 업무(Work)를 구분하여 관리할 수 있는 플래너 서비스.
-웹과 모바일(WebView) 환경에서 동일한 사용 경험을 제공한다.
+**웹·데스크탑·모바일** 세 환경에서 동일한 사용 경험을 제공한다.
 
-**Supabase BaaS** 기반 아키텍처로 서버 운영 없이 인증, 데이터베이스, 실시간 동기화를 처리한다.
-비즈니스 로직이 필요한 작업은 **Next.js API Routes**(Vercel Serverless)로 처리한다.
+**Supabase BaaS** 기반 아키텍처로 자체 백엔드 운영 없이 인증, 데이터베이스, 실시간 동기화를 처리한다.
+복합 비즈니스 로직(트랜잭션, 일괄 처리)은 **Postgres RPC 함수** 로 DB 안에서 직접 처리하며, 클라이언트는 `supabase.rpc()` 한 줄로 호출한다.
 
 ```
-┌──────────────┐     ┌──────────────────────────────┐
-│  Web Client  │────>│  Next.js (Vercel)             │
-│  (Next.js)   │     │  ├── App Router (프론트엔드)   │
-│              │<────│  └── API Routes (비즈니스 로직) │
-└──────────────┘     └──────────┬───────────────────┘
-┌──────────────┐                │
-│Mobile Client │────> (WebView) │
-│(Expo WebView)│                │
-└──────────────┘                ▼
-                     ┌──────────────────────┐
-                     │  Supabase (무료 티어)  │
-                     │  ├── PostgreSQL (DB)  │
-                     │  ├── Auth (OAuth)     │
-                     │  └── Realtime (동기화) │
-                     └──────────────────────┘
+┌──────────────┐   ┌──────────────┐   ┌──────────────┐
+│  Web (브라우저) │   │  Desktop      │   │  Mobile       │
+│  apps/web     │   │  apps/desktop │   │  apps/mobile  │
+│  Next.js SPA  │   │  Electron     │   │  Expo (RN)    │
+│  (정적 export) │   │  (SPA 래핑)   │   │  (네이티브)    │
+└───────┬──────┘   └───────┬──────┘   └───────┬──────┘
+        │                  │                  │
+        │  packages/core (TS 비즈니스 로직 공유)  │
+        │  · Supabase 클라이언트 팩토리           │
+        │  · 도메인 매퍼·서비스·Query 훅           │
+        └────────────────┬─────────────────────┘
+                         ▼
+              ┌────────────────────────┐
+              │  Supabase (무료 티어)    │
+              │  ├── PostgreSQL (DB+RLS)│
+              │  ├── Auth (OAuth)       │
+              │  ├── Realtime (동기화)   │
+              │  └── RPC 함수 (비즈로직) │
+              └────────────────────────┘
 ```
+
+- **자체 서버 0**: Vercel 은 정적 SPA + OAuth 콜백 라우트만 호스팅. 비즈니스 로직은 클라이언트 또는 Postgres RPC.
+- **데스크탑**: Electron 으로 웹 SPA 를 wrapping. Vercel 기본 도메인 (`<slug>.vercel.app`) 사용 — 커스텀 도메인 불필요.
+- **모바일**: WebView 가 아닌 RN 네이티브. 비즈니스 로직만 `packages/core` 로 공유.
+- **`SUPABASE_SERVICE_ROLE_KEY` 가 클라이언트 환경 어디에도 노출되지 않음** — RPC 함수가 `SECURITY DEFINER` 로 권한 우회를 함수 본문 내에서 한정.
 
 ---
 
@@ -216,7 +226,7 @@ public.sub_issue
 
 ### 4.1 Supabase 직접 호출 (단순 CRUD)
 
-클라이언트에서 Supabase JS SDK로 직접 호출한다. RLS로 보안을 처리한다.
+클라이언트(`packages/core` 의 훅) 에서 Supabase JS SDK 로 직접 호출한다. RLS 로 보안을 처리한다.
 
 | 대상 | 작업 |
 |---|---|
@@ -225,7 +235,7 @@ public.sub_issue
 | Sub Issue | 조회, 생성, 수정, 상태 변경, 삭제 |
 
 ```typescript
-// 예시: 카테고리 목록 조회
+// 예시: 카테고리 목록 조회 (packages/core 내부)
 const { data } = await supabase
   .from('category')
   .select('*')
@@ -233,15 +243,39 @@ const { data } = await supabase
   .order('sort_order');
 ```
 
-### 4.2 Next.js API Routes (복합 비즈니스 로직)
+### 4.2 Postgres RPC 함수 (복합 비즈니스 로직)
 
-트랜잭션이 필요하거나 복합 로직이 있는 작업은 Next.js API Routes로 처리한다.
-API Routes에서는 Supabase Service Role Key를 사용하여 RLS를 우회한다.
+트랜잭션이 필요하거나 복합 로직이 있는 작업은 **Postgres RPC 함수** 로 DB 안에서 처리한다. 클라이언트는 `supabase.rpc()` 한 줄로 호출하며, 함수는 `SECURITY DEFINER` + 본문 내 `auth.uid()` 검증으로 본인 데이터만 다룬다 — `SERVICE_ROLE_KEY` 클라이언트 노출 없음.
 
-| 엔드포인트 | 설명 |
+| RPC 함수 | 설명 |
 |---|---|
-| `POST /api/todos/carry-over` | 미완료 투두 일괄 이월 (트랜잭션) |
-| `GET /api/epics/:id/progress` | Epic 진행률 집계 |
+| `carry_over_todos(target_date date)` | 미완료 투두 일괄 이월 (단일 트랜잭션) |
+| `recalc_epic_progress(epic_id uuid)` | Epic 진행률 재계산 (또는 view 로 대체) |
+
+```typescript
+// 예시: 미완료 투두 이월
+const { data, error } = await supabase.rpc('carry_over_todos', {
+  target_date: '2026-05-02',
+});
+```
+
+```sql
+-- 예시: 함수 정의 (supabase/migrations/003_carry_over_todos.sql)
+create or replace function public.carry_over_todos(target_date date)
+returns setof public.sub_issue
+language plpgsql security definer set search_path = public
+as $$
+begin
+  if auth.uid() is null then raise exception 'unauthorized'; end if;
+  -- 본문에서 auth.uid() 로 본인 데이터만 조작
+  ...
+end;
+$$;
+grant execute on function public.carry_over_todos(date) to authenticated;
+revoke execute on function public.carry_over_todos(date) from anon, public;
+```
+
+> 📌 **Vercel API Routes 미사용**: 자체 서버 코드 0. 비즈니스 로직 = 클라이언트 + Postgres RPC.
 
 ### 4.3 Realtime 구독
 
@@ -311,20 +345,26 @@ supabase
 
 | 영역 | 기술 |
 |---|---|
-| Frontend (Web) | Next.js 15, React 19, TypeScript |
-| Mobile | Expo 52 (React Native) + WebView |
+| Web (apps/web) | Next.js 15 (`output: 'export'` SPA), React 19, TypeScript |
+| Desktop (apps/desktop) | Electron — 웹 SPA wrapping (`<slug>.vercel.app` loadURL 또는 번들) |
+| Mobile (apps/mobile) | Expo SDK 52 (React Native, **네이티브** — WebView 미사용) |
 | Backend (BaaS) | Supabase (PostgreSQL + Auth + Realtime) |
-| API | Next.js API Routes (Vercel Serverless) |
+| 비즈니스 로직 | 클라이언트 (`packages/core`) + Postgres RPC 함수 |
 | SDK | @supabase/supabase-js, @supabase/ssr |
+| 공통 패키지 | `@todo-list/shared` (타입), `@todo-list/core` (비즈로직), `@todo-list/ui` (React) |
 | Monorepo | pnpm workspaces + Turborepo |
-| Infra | Vercel (프론트엔드) + Supabase (백엔드) |
+| Infra | Vercel (웹 SPA 정적 호스팅, 기본 도메인) + Supabase (DB·Auth·Realtime·RPC) |
+
+> 자체 서버(Node/Next.js API Routes)는 운영하지 않는다. Vercel 은 정적 SPA + OAuth 콜백 Route Handler 만 호스팅.
 
 ### 6.1 무료 티어 범위
 
 | 서비스 | 무료 한도 | 비고 |
 |---|---|---|
-| Vercel (Hobby) | 100GB 대역폭/월, Serverless 10초 제한 | 충분 |
+| Vercel (Hobby) | 100GB 대역폭/월, 100K function invocation/월 | 정적 SPA + 콜백만 사용 — 한도 여유 큼 |
 | Supabase (Free) | 500MB DB, 50K MAU, Realtime 무제한 | 충분 |
+| GitHub (데스크탑 배포) | Releases 무제한 | MVP 단계 자동 업데이트 없이 사용 |
+| EAS Build (모바일) | Free tier 월 30 빌드 | 개인 검증 충분 |
 
 ---
 
@@ -332,8 +372,9 @@ supabase
 
 | 단계 | 목표 | 주요 작업 |
 |---|---|---|
-| **M1 — 기반 구축** | Supabase 설정 완료 | Supabase 프로젝트 생성, DB 스키마, RLS 정책, Auth(Google/Kakao) 연동 |
-| **M2 — 핵심 기능** | 투두 CRUD + 일자별 관리 | Supabase SDK로 투두 CRUD, 이월 로직(API Route), 일자별 조회 |
-| **M3 — 계층 관리** | 분류/Epic/Sub Issue 구조 | 카테고리·Epic CRUD, 계층 필터링, 진행률 집계 |
-| **M4 — UI 완성** | 웹 UI + Realtime 동기화 | 메인 화면, 날짜 탐색, 반응형, Realtime 구독 |
-| **M5 — 모바일 배포** | 앱스토어 출시 | WebView 래핑, 네이티브 조정, 배포 |
+| **M0 — 스택 전환** | v2 아키텍처 전환 | 마이그레이션 플랜 수행 (`../20260502-01-stack-pivot/detail-stack-pivot.md`) |
+| **M1 — 기반 구축** | Supabase + RPC 정의 완료 | DB 스키마 + RLS 마이그레이션, Auth(Google/Kakao), `carry_over_todos` / `recalc_epic_progress` RPC |
+| **M2 — 공통 클라이언트** | `packages/core` 비즈니스 로직 완성 | Supabase 팩토리, 도메인 매퍼, 서비스, TanStack Query 훅 |
+| **M3 — 웹 SPA** | apps/web 핵심 기능 | 인증 + 메인 일자 뷰 + CRUD + Realtime 구독 |
+| **M4 — 데스크탑** | apps/desktop Electron MVP | SPA loadURL, custom URI scheme deep link OAuth, 패키징 (.dmg/.exe) |
+| **M5 — 모바일** | apps/mobile Expo 네이티브 | RN 화면, expo-auth-session, EAS Build 로 스토어 배포 |

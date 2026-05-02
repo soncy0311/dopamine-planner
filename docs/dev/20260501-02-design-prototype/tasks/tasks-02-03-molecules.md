@@ -6,11 +6,11 @@
 - **의존성**:
   - `tasks-02-01` (Checkbox, Icon)
   - `tasks-02-02` (Badge)
-- **대상 파일**: `docs/client/prototype/index.html` — `<div id="molecules">` 내부에 추가
+- **대상 파일**: `docs/base/prototype/index.html` — `<div id="molecules">` 내부에 추가
 - **참조 파일**:
   - `sub-prd-02-feat-component-library.md` §3.1~3.5
-  - `docs/client/design-system/components.md` — Molecules 전체
-  - `docs/client/design-system/accessibility.md` — ARIA/접근성
+  - `docs/base/design-system/components.md` — Molecules 전체
+  - `docs/base/design-system/accessibility.md` — ARIA/접근성
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 

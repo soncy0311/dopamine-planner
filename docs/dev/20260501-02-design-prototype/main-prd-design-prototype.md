@@ -302,7 +302,7 @@ Atomic Design 계층별로 모든 컴포넌트의 상태(state)와 변형(varian
 ### 시스템 구성
 
 ```
-docs/client/prototype/
+docs/base/prototype/
 └── index.html          ← 독립 실행 가능한 단일 HTML 파일
     ├── <style>         ← CSS Custom Properties (토큰) + 컴포넌트 스타일
     ├── <body>          ← 섹션별 마크업
@@ -310,7 +310,7 @@ docs/client/prototype/
 ```
 
 - **단일 HTML 파일**: 외부 의존성 없이 브라우저에서 바로 열 수 있다
-- **CSS Custom Properties**: `docs/client/design-system/tokens/*.css`에 정의된 토큰을 그대로 사용
+- **CSS Custom Properties**: `docs/base/design-system/tokens/*.css`에 정의된 토큰을 그대로 사용
 - **Lucide Icons**: CDN 또는 인라인 SVG로 포함
 - **Pretendard 폰트**: CDN으로 로드
 
@@ -357,7 +357,7 @@ SubIssue (오늘):
 
 ### API 엔드포인트
 
-프로토타입은 정적 파일이므로 API 엔드포인트가 필요 없다. 실제 서비스의 API 설계는 `docs/shared/20260501-01-todo-list-initialize/detail-todo-service-initialize.md` 섹션 4를 참조한다.
+프로토타입은 정적 파일이므로 API 엔드포인트가 필요 없다. 실제 서비스의 API 설계는 `docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md` 섹션 4를 참조한다.
 
 ### 기술적 고려사항
 
@@ -399,19 +399,19 @@ SubIssue (오늘):
 
 ## 관련 문서
 
-- 요구사항 문서: `docs/shared/20260501-01-todo-list-initialize/detail-todo-service-initialize.md`
-- 디자인 시스템 개요: `docs/client/design-system/README.md`
-- 디자인 시스템 상세: `docs/client/20260501-01-design-system/detail-design-system.md`
-- 컴포넌트 명세: `docs/client/design-system/components.md`
-- 접근성 가이드: `docs/client/design-system/accessibility.md`
-- 디자인 토큰: `docs/client/design-system/tokens/`
+- 요구사항 문서: `docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md`
+- 디자인 시스템 개요: `docs/base/design-system/README.md`
+- 디자인 시스템 상세: `docs/dev/20260501-01-design-system/detail-design-system.md`
+- 컴포넌트 명세: `docs/base/design-system/components.md`
+- 접근성 가이드: `docs/base/design-system/accessibility.md`
+- 디자인 토큰: `docs/base/design-system/tokens/`
   - `colors.css` — Primitive Color Tokens
   - `semantic.css` — Semantic Color Tokens
   - `components.css` — Component Tokens
   - `typography.css` — Typography Tokens
   - `spacing.css` — Spacing & Layout Tokens
   - `motion.css` — Motion Tokens
-- 컬러 팔레트 원본: `docs/client/20260501-01-design-system/colors/`
+- 컬러 팔레트 원본: `docs/dev/20260501-01-design-system/colors/`
 
 ---
 

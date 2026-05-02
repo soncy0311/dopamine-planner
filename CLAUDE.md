@@ -136,5 +136,5 @@ env/
 
 ## 참고 문서
 
-- `docs/client/design-system/` — 디자인 시스템 명세
-- `docs/client/20260501-01-design-system/detail-design-system.md` — 디자인 시스템 상세 요구사항
+- `docs/base/design-system/` — 디자인 시스템 명세 (토큰, 컴포넌트, 접근성)
+- `docs/base/prototype/` — HTML/CSS 프로토타입

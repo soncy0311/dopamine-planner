@@ -4,12 +4,12 @@
 
 - **Sub-PRD**: `sub-prd-01-feat-tokens-icons.md`
 - **의존성**: 없음 (기반 작업)
-- **대상 파일**: `docs/client/prototype/index.html`
-- **참조 파일**: `docs/client/design-system/tokens/*.css` (모든 토큰 값)
+- **대상 파일**: `docs/base/prototype/index.html`
+- **참조 파일**: `docs/base/design-system/tokens/*.css` (모든 토큰 값)
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [x] `docs/client/prototype/` 디렉토리 생성
+- [x] `docs/base/prototype/` 디렉토리 생성
 - [x] `index.html` 기본 구조 작성 (DOCTYPE, head, body, nav)
 - [x] Pretendard Variable, JetBrains Mono CDN 링크 추가
 - [x] `:root`에 Primitive Color Tokens 정의
@@ -24,7 +24,7 @@
 
 ### 1. 디렉토리 및 파일 생성
 
-- `docs/client/prototype/` 디렉토리를 생성한다
+- `docs/base/prototype/` 디렉토리를 생성한다
 - `index.html` 파일을 아래 골격으로 생성한다
 
 ### 2. HTML 기본 구조
@@ -71,7 +71,7 @@ Pretendard Variable과 JetBrains Mono를 CDN으로 로드한다. 폴백 폰트�
 
 ### 4. 토큰 정의 (:root)
 
-`<style>` 내 `:root`에 아래 6개 토큰 그룹을 정의한다. 값은 `docs/client/design-system/tokens/*.css`에서 **정확히** 복사한다.
+`<style>` 내 `:root`에 아래 6개 토큰 그룹을 정의한다. 값은 `docs/base/design-system/tokens/*.css`에서 **정확히** 복사한다.
 
 #### 4.1 Primitive Color Tokens (`colors.css`)
 
@@ -296,14 +296,14 @@ Semantic 토큰의 `var()` 참조를 사용한다.
 
 ## 주의사항
 
-1. **토큰 값 정확성**: `docs/client/design-system/tokens/*.css`에 정의된 값과 정확히 일치해야 한다
+1. **토큰 값 정확성**: `docs/base/design-system/tokens/*.css`에 정의된 값과 정확히 일치해야 한다
 2. **계층 참조 유지**: Semantic → Primitive `var()` 참조, Component → Semantic `var()` 참조. 직접 HEX 값을 쓰지 않는다
 3. **프로토타입 스타일 분리**: 프로토타입 레이아웃용 스타일은 `proto-` 접두사 클래스를 사용한다
 4. **폰트 폴백**: CDN 로딩 실패를 대비하여 시스템 폰트 폴백을 지정한다
 
 ## 검증 체크리스트
 
-- [x] `docs/client/prototype/index.html` 파일이 존재한다
+- [x] `docs/base/prototype/index.html` 파일이 존재한다
 - [x] 브라우저에서 더블 클릭하여 빈 페이지가 에러 없이 렌더링된다
 - [x] Pretendard Variable CDN이 로드된다 (DevTools Network 탭 확인)
 - [x] JetBrains Mono CDN이 로드된다 (DevTools Network 탭 확인)

@@ -316,7 +316,7 @@ SectionHeader + TodoItem[] 조합을 2개 변형으로 표시한다.
 
 ### Sub-01 파일 확장
 
-Sub-01에서 생성한 `docs/client/prototype/index.html`에 `<section id="components">` 를 추가한다.
+Sub-01에서 생성한 `docs/base/prototype/index.html`에 `<section id="components">` 를 추가한다.
 
 ```html
 <section id="components">
