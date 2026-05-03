@@ -1,7 +1,7 @@
 # Dopamine Planner 서비스 기획서
 
 > 작성일: 2026-05-01
-> 최종 수정일: 2026-05-02 (v2 — 데스크탑/모바일 네이티브 + RPC 전환)
+> 최종 수정일: 2026-05-03 (MVP 결정 7개 확정 반영 — Realtime MVP 포함, Nativewind 자동 토큰 매핑, Google OAuth 만)
 > 상태: Draft
 > 마이그레이션 계획: [`../20260502-01-stack-pivot/detail-stack-pivot.md`](../20260502-01-stack-pivot/detail-stack-pivot.md)
 
@@ -10,23 +10,24 @@
 ## 1. 서비스 개요
 
 일상(Life)과 업무(Work)를 구분하여 관리할 수 있는 플래너 서비스.
-**웹·데스크탑·모바일** 세 환경에서 동일한 사용 경험을 제공한다.
+**MVP: 웹과 모바일** 두 환경에서 동일한 사용 경험을 제공한다. 데스크탑(Electron) 은 동일 웹 SPA 를 wrapping 하는 형태로 **후속 마일스톤** 에서 도입한다.
 
 **Supabase BaaS** 기반 아키텍처로 자체 백엔드 운영 없이 인증, 데이터베이스, 실시간 동기화를 처리한다.
 복합 비즈니스 로직(트랜잭션, 일괄 처리)은 **Postgres RPC 함수** 로 DB 안에서 직접 처리하며, 클라이언트는 `supabase.rpc()` 한 줄로 호출한다.
 
 ```
-┌──────────────┐   ┌──────────────┐   ┌──────────────┐
-│  Web (브라우저) │   │  Desktop      │   │  Mobile       │
-│  apps/web     │   │  apps/desktop │   │  apps/mobile  │
-│  Next.js SPA  │   │  Electron     │   │  Expo (RN)    │
-│  (정적 export) │   │  (SPA 래핑)   │   │  (네이티브)    │
-└───────┬──────┘   └───────┬──────┘   └───────┬──────┘
-        │                  │                  │
-        │  packages/core (TS 비즈니스 로직 공유)  │
-        │  · Supabase 클라이언트 팩토리           │
-        │  · 도메인 매퍼·서비스·Query 훅           │
-        └────────────────┬─────────────────────┘
+┌──────────────┐                       ┌──────────────┐
+│  Web (브라우저) │                       │  Mobile       │
+│  apps/web     │   🔮 후속:              │  apps/mobile  │
+│  Next.js SPA  │   apps/desktop         │  Expo (RN)    │
+│  (정적 export) │   (Electron 으로 SPA   │  (네이티브)    │
+│               │    동일 wrapping)      │               │
+└───────┬──────┘                       └───────┬──────┘
+        │                                     │
+        │  packages/core (TS 비즈니스 로직 공유) │
+        │  · Supabase 클라이언트 팩토리          │
+        │  · 도메인 매퍼·서비스·Query 훅          │
+        └────────────────┬────────────────────┘
                          ▼
               ┌────────────────────────┐
               │  Supabase (무료 티어)    │
@@ -38,7 +39,7 @@
 ```
 
 - **자체 서버 0**: Vercel 은 정적 SPA + OAuth 콜백 라우트만 호스팅. 비즈니스 로직은 클라이언트 또는 Postgres RPC.
-- **데스크탑**: Electron 으로 웹 SPA 를 wrapping. Vercel 기본 도메인 (`<slug>.vercel.app`) 사용 — 커스텀 도메인 불필요.
+- **MVP 범위**: 웹 SPA + 모바일 RN 네이티브. 데스크탑은 같은 SPA 를 Electron 으로 wrapping 하므로 후속에 가볍게 추가 가능.
 - **모바일**: WebView 가 아닌 RN 네이티브. 비즈니스 로직만 `packages/core` 로 공유.
 - **`SUPABASE_SERVICE_ROLE_KEY` 가 클라이언트 환경 어디에도 노출되지 않음** — RPC 함수가 `SECURITY DEFINER` 로 권한 우회를 함수 본문 내에서 한정.
 
@@ -132,10 +133,10 @@
 
 Supabase Auth 기반 소셜 로그인을 제공한다.
 
-| 제공자 | 설명 |
-|---|---|
-| **Google** | Supabase Auth — Google OAuth 2.0 |
-| **Kakao** | Supabase Auth — Kakao OAuth 2.0 |
+| 제공자 | 설명 | MVP |
+|---|---|---|
+| **Google** | Supabase Auth — Google OAuth 2.0 | ✅ |
+| **Kakao** | Supabase Auth — Kakao OAuth 2.0 (사업자 등록 검토 필요) | 🔮 후속 |
 
 - Supabase `signInWithOAuth`로 소셜 로그인을 처리한다.
 - 최초 로그인 시 Supabase Auth에 계정이 자동 생성된다.
@@ -303,7 +304,7 @@ supabase
 
 | 화면 | 설명 |
 |---|---|
-| 로그인 | Supabase Auth UI — 소셜 로그인 (Google, Kakao) |
+| 로그인 | Supabase Auth UI — 소셜 로그인 (MVP: Google. Kakao 후속) |
 | 메인 (오늘의 투두) | 하단 탭 바 + 완료/진행 중 섹션 |
 | 날짜 탐색 | 좌우 스와이프로 다른 날짜 투두 확인 |
 | 투두 생성/수정 | 제목, 설명, 우선순위, 분류 선택, 등록일 |
@@ -343,17 +344,18 @@ supabase
 
 ## 6. 기술 스택
 
-| 영역 | 기술 |
-|---|---|
-| Web (apps/web) | Next.js 15 (`output: 'export'` SPA), React 19, TypeScript |
-| Desktop (apps/desktop) | Electron — 웹 SPA wrapping (`<slug>.vercel.app` loadURL 또는 번들) |
-| Mobile (apps/mobile) | Expo SDK 52 (React Native, **네이티브** — WebView 미사용) |
-| Backend (BaaS) | Supabase (PostgreSQL + Auth + Realtime) |
-| 비즈니스 로직 | 클라이언트 (`packages/core`) + Postgres RPC 함수 |
-| SDK | @supabase/supabase-js, @supabase/ssr |
-| 공통 패키지 | `@todo-list/shared` (타입), `@todo-list/core` (비즈로직), `@todo-list/ui` (React) |
-| Monorepo | pnpm workspaces + Turborepo |
-| Infra | Vercel (웹 SPA 정적 호스팅, 기본 도메인) + Supabase (DB·Auth·Realtime·RPC) |
+| 영역 | 기술 | MVP |
+|---|---|---|
+| Web (apps/web) | Next.js 15 (`output: 'export'` SPA), React 19, TypeScript | ✅ |
+| Mobile (apps/mobile) | Expo SDK 52 (React Native, **네이티브** — WebView 미사용) | ✅ |
+| Backend (BaaS) | Supabase (PostgreSQL + Auth + Realtime) | ✅ |
+| 비즈니스 로직 | 클라이언트 (`packages/core`) + Postgres RPC 함수 | ✅ |
+| SDK | @supabase/supabase-js, @supabase/ssr | ✅ |
+| 공통 패키지 | `@todo-list/shared` (타입), `@todo-list/core` (비즈로직), `@todo-list/ui` (React) | ✅ |
+| **디자인 토큰** | **Tailwind (`packages/config/tailwind.config.js`) + Nativewind v4** — web/mobile className 단일 source of truth (마이그레이션 §4.2) | ✅ |
+| Monorepo | pnpm workspaces + Turborepo | ✅ |
+| Infra | Vercel (웹 SPA 정적 호스팅, 기본 도메인, **git 연동 자동 배포**) + Supabase (DB·Auth·Realtime·RPC) | ✅ |
+| Desktop (apps/desktop) 🔮 | Electron — 동일 웹 SPA wrapping (`<slug>.vercel.app` loadURL 또는 번들) | 후속 |
 
 > 자체 서버(Node/Next.js API Routes)는 운영하지 않는다. Vercel 은 정적 SPA + OAuth 콜백 Route Handler 만 호스팅.
 
@@ -363,8 +365,8 @@ supabase
 |---|---|---|
 | Vercel (Hobby) | 100GB 대역폭/월, 100K function invocation/월 | 정적 SPA + 콜백만 사용 — 한도 여유 큼 |
 | Supabase (Free) | 500MB DB, 50K MAU, Realtime 무제한 | 충분 |
-| GitHub (데스크탑 배포) | Releases 무제한 | MVP 단계 자동 업데이트 없이 사용 |
 | EAS Build (모바일) | Free tier 월 30 빌드 | 개인 검증 충분 |
+| GitHub Releases (데스크탑) 🔮 | 무제한 | 후속 마일스톤에서 활용 |
 
 ---
 
@@ -373,8 +375,8 @@ supabase
 | 단계 | 목표 | 주요 작업 |
 |---|---|---|
 | **M0 — 스택 전환** | v2 아키텍처 전환 | 마이그레이션 플랜 수행 (`../20260502-01-stack-pivot/detail-stack-pivot.md`) |
-| **M1 — 기반 구축** | Supabase + RPC 정의 완료 | DB 스키마 + RLS 마이그레이션, Auth(Google/Kakao), `carry_over_todos` / `recalc_epic_progress` RPC |
-| **M2 — 공통 클라이언트** | `packages/core` 비즈니스 로직 완성 | Supabase 팩토리, 도메인 매퍼, 서비스, TanStack Query 훅 |
-| **M3 — 웹 SPA** | apps/web 핵심 기능 | 인증 + 메인 일자 뷰 + CRUD + Realtime 구독 |
-| **M4 — 데스크탑** | apps/desktop Electron MVP | SPA loadURL, custom URI scheme deep link OAuth, 패키징 (.dmg/.exe) |
-| **M5 — 모바일** | apps/mobile Expo 네이티브 | RN 화면, expo-auth-session, EAS Build 로 스토어 배포 |
+| **M1 — 기반 구축** | Supabase + RPC 정의 완료 | DB 스키마 + RLS 마이그레이션, **Auth (Google — MVP. Kakao 후속)**, `carry_over_todos` / `recalc_epic_progress` RPC, **Realtime publication 활성화 (MVP 포함)** |
+| **M2 — 공통 클라이언트** | `packages/core` 비즈니스 로직 완성 | Supabase 팩토리, 도메인 매퍼, 서비스, TanStack Query 훅, **Realtime 구독 헬퍼** |
+| **M3 — 웹 SPA** | apps/web 핵심 기능 | 인증 + 메인 일자 뷰 + CRUD + **Realtime 구독 (DB 변경 시 UI 즉시 반영)** + Vercel git 연동 자동 배포 |
+| **M4 — 모바일** | apps/mobile Expo 네이티브 | RN 화면 (`apps/mobile/src/components/` 직배치), **Nativewind v4 셋업 (디자인 토큰 자동 매핑)**, expo-auth-session (`dopamine-planner://auth/callback`), **Realtime 구독 + 웹과의 다중 디바이스 sync 검증**, EAS Build 로 스토어 배포 |
+| **🔮 후속 — 데스크탑** | apps/desktop Electron 도입 (MVP 범위 밖) | SPA loadURL, custom URI scheme deep link OAuth, 패키징 (.dmg/.exe) |
