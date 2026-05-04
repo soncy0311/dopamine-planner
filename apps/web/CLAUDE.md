@@ -2,22 +2,24 @@
 
 ## 개요
 
-Next.js 15 + React 19 기반 웹 클라이언트. 모바일 WebView에서도 로드되므로 **모바일 우선 설계**를 따른다.
+Next.js 15 + React 19 기반 **정적 SPA** (`output: 'export'`). 비즈니스 로직은 클라이언트에서 **Supabase 직접 호출 + Postgres RPC 함수** 로 처리한다 (자체 서버 운영 안 함). OAuth 콜백 라우트(`src/app/auth/callback/route.ts`) 만 동적으로 동작한다 (api 디렉토리 밖). **모바일 우선 설계**를 따른다.
 
 ## 기술 스택
 
-- Next.js 15 (App Router)
+- Next.js 15 (App Router, `output: 'export'` 정적 SPA)
 - React 19
-- Tailwind CSS v4 (스타일링)
+- Tailwind CSS v3 (`packages/config/tailwind.config.js` 공유 preset)
 - shadcn/ui + Radix Primitives (UI 컴포넌트)
 - Lucide Icons (아이콘)
 - Pretendard (폰트)
 - @supabase/supabase-js (Supabase SDK)
-- @supabase/ssr (서버 사이드 인증)
+- @supabase/ssr (OAuth 콜백 Route Handler 한정)
+- @tanstack/react-query (데이터 페칭·캐시)
+- `@todo-list/core` (Supabase 클라이언트·서비스·Realtime 훅 공유)
 
 ## 디자인 시스템
 
-- 디자인 토큰·컴포넌트 명세는 `docs/client/design-system/`을 따른다
+- 디자인 토큰·컴포넌트 명세는 `docs/base/design-system/`을 따른다
 - 컬러는 3단계 토큰 계층(Primitive → Semantic → Component)을 사용한다
 - 60-30-10 컬러 규칙: 60% White/Gray, 30% Periwinkle, 10% Purple 500
 - WCAG 2.1 AA 접근성 기준을 준수한다
@@ -28,14 +30,16 @@ Next.js 15 + React 19 기반 웹 클라이언트. 모바일 WebView에서도 로
 apps/web/
 ├── src/
 │   ├── app/              # Next.js App Router (페이지·레이아웃)
-│   │   ├── api/          # API Routes (비즈니스 로직)
-│   │   └── auth/         # OAuth 콜백 라우트
+│   │   ├── (auth)/       # 인증 라우트 그룹 (`login/`)
+│   │   ├── (main)/       # 메인 라우트 그룹 (`life/`, `work/`) — client-side 인증 가드
+│   │   ├── auth/         # OAuth 콜백 Route Handler (`auth/callback/route.ts`) — Vercel 함수로 분리 배포
+│   │   ├── globals.css   # Tailwind directive
+│   │   └── providers.tsx # QueryClientProvider 등 클라이언트 Provider 컴포넌트
 │   └── lib/
-│       └── supabase/     # Supabase 클라이언트 설정
-│           ├── client.ts # 브라우저용 클라이언트
-│           ├── server.ts # 서버 컴포넌트/API Routes용 클라이언트
-│           └── middleware.ts # 미들웨어용 클라이언트
+│       └── supabase/     # 브라우저 SDK 래퍼 (필요 시) — 핵심은 `@todo-list/core` 사용
 ├── next.config.ts
+├── postcss.config.mjs
+├── tailwind.config.ts
 ├── tsconfig.json
 └── package.json
 ```
@@ -45,8 +49,39 @@ apps/web/
 - 경로 alias: `@/*` → `./src/*`
 - 공유 컴포넌트는 `packages/ui`에서 가져온다 (`@todo-list/ui`)
 - 공유 타입은 `packages/shared`에서 가져온다 (`@todo-list/shared`)
+- 비즈니스 로직(Supabase 클라이언트, 서비스, RPC 호출, Realtime 훅) 은 `packages/core`에서 가져온다 (`@todo-list/core`)
 - `next.config.ts`에 `transpilePackages`로 내부 패키지를 등록한다
 - 컴포넌트는 Atomic Design 계층(Atoms → Molecules → Organisms → Templates)을 따른다
+
+## 빌드 / 설정
+
+`next.config.ts` 요지:
+
+```ts
+const nextConfig = {
+  output: 'export',
+  transpilePackages: ['@todo-list/core', '@todo-list/ui', '@todo-list/shared'],
+  images: { unoptimized: true },
+};
+```
+
+- `output: 'export'` 로 정적 빌드 후 Vercel 정적 호스팅
+- `transpilePackages` 로 monorepo 내부 패키지를 Next 가 직접 트랜스파일
+- `images.unoptimized` 로 export 모드와 `next/image` 호환
+
+## Realtime
+
+Realtime 구독 로직은 `@todo-list/core` 단일 위치에서 관리한다 (web/mobile 공유). 컴포넌트는 훅을 import 해서 사용만 한다.
+
+```ts
+import { subscribeTodos } from '@todo-list/core';
+import { supabase } from '@/lib/supabase/client';
+
+useEffect(() => {
+  const unsub = subscribeTodos(supabase, 'life', () => qc.invalidateQueries({ queryKey: ['todos'] }));
+  return unsub;
+}, [qc]);
+```
 
 ## 반응형 기준
 
@@ -70,14 +105,25 @@ apps/web/
 
 ## 실행 명령어
 
+루트 `Makefile` 을 단일 진입점으로 사용한다. web dev 는 docker-compose 컨테이너로 동작 (호스트 Node/pnpm 버전 영향 안 받음).
+
 ```bash
-pnpm --filter @todo-list/web dev     # 개발 서버 (localhost:3000)
-pnpm --filter @todo-list/web build   # 프로덕션 빌드
-pnpm --filter @todo-list/web lint    # 린트
+make up           # supabase + web container 한 번에 기동 (http://localhost:3000)
+make down         # 전체 종료
+
+make web-up       # web 컨테이너만 기동
+make web-down     # web 컨테이너만 중지
+make web-logs     # web 컨테이너 log tail
+make web-shell    # web 컨테이너 sh 진입 (디버깅)
+make web-build    # 이미지 강제 rebuild (lockfile 변경 후)
+
+make build        # turbo build (정적 export)
+make lint         # turbo lint
 ```
+
+> `pnpm install` 을 호스트에서 한 뒤에는 `make web-build` 로 컨테이너 이미지를 재빌드해야 lockfile 변경이 반영된다 (node_modules 는 anonymous volume 으로 격리됨).
 
 ## 참고 문서
 
-- `docs/client/design-system/` — 디자인 시스템 명세 (토큰, 컴포넌트, 접근성)
-- `docs/client/20260501-01-design-system/detail-design-system.md` — 디자인 시스템 상세 요구사항
-- `docs/shared/20260501-01-todo-list-initialize/API_CONTRACT.md` — API 계약서 (Supabase + API Routes)
+- `docs/base/design-system/` — 디자인 시스템 명세 (토큰, 컴포넌트, 접근성)
+- `docs/base/prototype/` — HTML/CSS 프로토타입

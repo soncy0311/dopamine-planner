@@ -1,0 +1,5 @@
+# Supabase CLI 로컬 산출물 (Sub-PRD-03 §주의사항 1 — Dashboard 직접 수정 금지)
+.branches
+.temp
+.env
+seed.sql
