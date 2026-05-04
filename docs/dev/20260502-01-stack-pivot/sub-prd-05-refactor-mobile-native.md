@@ -7,7 +7,7 @@
 - **시작일**: 2026-05-04
 - **종료일**: 2026-05-04
 - **최신 업데이트**: 2026-05-04
-- **상태**: 진행전
+- **상태**: 코드 작성 완료 (사용자 환경 검증 대기 — `pnpm install` / iOS 시뮬레이터 / OAuth / 다중 디바이스 sync)
 
 ## 배경 및 목적
 
@@ -184,39 +184,39 @@ xcrun simctl openurl booted "dopamine-planner://auth/callback?code=test"
 
 ## 작업
 
-- [ ] `apps/mobile/package.json` 에서 `react-native-webview` 제거 (Sub-02 처리됐다면 확인만)
-- [ ] `apps/mobile/package.json` 에 `expo-auth-session`, `expo-web-browser`, `@react-native-async-storage/async-storage` 추가
-- [ ] `apps/mobile/package.json` 에 `nativewind`, `tailwindcss` 확인 (Sub-02 처리분)
-- [ ] `apps/mobile/babel.config.js` Nativewind plugin 등록
-- [ ] `apps/mobile/metro.config.js` Nativewind metro 설정 (`withNativeWind`)
-- [ ] `apps/mobile/tailwind.config.js` content paths 채움 + Nativewind preset
-- [ ] `apps/mobile/src/global.css` 신설 (Tailwind directive)
-- [ ] `apps/mobile/app.json` `scheme` 을 `todo-list` → `dopamine-planner` 변경
-- [ ] `apps/mobile/src/app/index.tsx` 폐기 (expo-router 그룹 구조로 대체)
-- [ ] `apps/mobile/src/app/_layout.tsx` 신설 (QueryClientProvider, global.css import)
-- [ ] `apps/mobile/src/app/(auth)/login.tsx` Google OAuth (expo-auth-session)
-- [ ] `apps/mobile/src/app/(main)/_layout.tsx` Tab navigator + 인증 가드
-- [ ] `apps/mobile/src/app/(main)/life/index.tsx` stub + Realtime 구독 훅
-- [ ] `apps/mobile/src/app/(main)/work/index.tsx` stub
-- [ ] `apps/mobile/src/app/(main)/settings/index.tsx` stub
-- [ ] `apps/mobile/src/components/Button.tsx`, `TodoItem.tsx` stub
-- [ ] `apps/mobile/src/lib/supabase.ts` (core 팩토리 + AsyncStorage)
-- [ ] `apps/mobile/eas.json` 신설 (preview / production profile)
-- [ ] `pnpm --filter @todo-list/mobile dev` (`expo start --dev-client`) iOS 시뮬레이터 부팅 검증
-- [ ] iOS 시뮬레이터에서 `(auth)/login` → Google OAuth → `(main)/life` 진입 검증
-- [ ] **검증 게이트**: 웹 `/life` + iOS `(main)/life` 동시 접속 → todo 추가 시 양쪽 즉시 반영
+- [x] `apps/mobile/package.json` 에서 `react-native-webview` 제거 (Sub-02 처리됐다면 확인만)
+- [x] `apps/mobile/package.json` 에 `expo-auth-session`, `expo-web-browser`, `@react-native-async-storage/async-storage` 추가
+- [x] `apps/mobile/package.json` 에 `nativewind`, `tailwindcss` 확인 (Sub-02 처리분)
+- [x] `apps/mobile/babel.config.js` Nativewind plugin 등록
+- [x] `apps/mobile/metro.config.js` Nativewind metro 설정 (`withNativeWind`)
+- [x] `apps/mobile/tailwind.config.js` content paths 채움 + Nativewind preset
+- [x] `apps/mobile/src/global.css` 신설 (Tailwind directive)
+- [x] `apps/mobile/app.json` `scheme` 을 `todo-list` → `dopamine-planner` 변경
+- [x] `apps/mobile/src/app/index.tsx` 를 redirect stub 으로 갱신 (`<Redirect href="/(main)/life" />` — 단순 삭제 시 root path 진입 라우트 부재)
+- [x] `apps/mobile/src/app/_layout.tsx` 신설 (QueryClientProvider, `../global.css` import)
+- [x] `apps/mobile/src/app/(auth)/login.tsx` Google OAuth (expo-auth-session)
+- [x] `apps/mobile/src/app/(main)/_layout.tsx` Tab navigator + 인증 가드
+- [x] `apps/mobile/src/app/(main)/life/index.tsx` stub + Realtime 구독 훅
+- [x] `apps/mobile/src/app/(main)/work/index.tsx` stub
+- [x] `apps/mobile/src/app/(main)/settings/index.tsx` stub
+- [x] `apps/mobile/src/components/Button.tsx`, `TodoItem.tsx` stub
+- [x] `apps/mobile/src/lib/supabase.ts` (core 팩토리 + AsyncStorage)
+- [x] `apps/mobile/eas.json` 신설 (preview / production profile)
+- [ ] `pnpm --filter @todo-list/mobile dev` (`expo start --dev-client`) iOS 시뮬레이터 부팅 검증 *(사용자 환경)*
+- [ ] iOS 시뮬레이터에서 `(auth)/login` → Google OAuth → `(main)/life` 진입 검증 *(사용자 환경)*
+- [ ] **검증 게이트**: 웹 `/life` + iOS `(main)/life` 동시 접속 → todo 추가 시 양쪽 즉시 반영 *(사용자 환경)*
 
 ## 검증 기준
 
-- [ ] `pnpm --filter @todo-list/mobile dev` (`expo start --dev-client`) iOS 시뮬레이터 부팅 성공
-- [ ] `(auth)/login` 에서 Google OAuth 버튼 클릭 → 외부 브라우저 → 동의 → `dopamine-planner://auth/callback` 수신 → `(main)/life` 진입
-- [ ] `(main)/life` 에서 Nativewind className 정상 매핑 (디자인 토큰 색상/간격이 web `/life` 와 시각적으로 일치)
-- [ ] **다중 디바이스 Realtime sync (검증 게이트)**: 웹 `/life` + iOS 시뮬레이터 `(main)/life` 동시 접속 → 한쪽에서 sub_issue INSERT 시 양쪽 화면 즉시 반영
-- [ ] `grep -RIn "react-native-webview" apps/mobile/` 결과 0건
-- [ ] `grep -n '"scheme"' apps/mobile/app.json` 결과가 `"scheme": "dopamine-planner"`
-- [ ] `apps/mobile/eas.json` 존재 + `preview`, `production` profile 정의
-- [ ] `xcrun simctl openurl booted "dopamine-planner://auth/callback?code=test"` 실행 시 앱이 deep link 수신 (로그 또는 화면 전환 확인)
-- [ ] `apps/mobile/babel.config.js` 에 `nativewind/babel` plugin 명시
+- [ ] `pnpm --filter @todo-list/mobile dev` (`expo start --dev-client`) iOS 시뮬레이터 부팅 성공 *(사용자 환경)*
+- [ ] `(auth)/login` 에서 Google OAuth 버튼 클릭 → 외부 브라우저 → 동의 → `dopamine-planner://auth/callback` 수신 → `(main)/life` 진입 *(사용자 환경)*
+- [ ] `(main)/life` 에서 Nativewind className 정상 매핑 (디자인 토큰 색상/간격이 web `/life` 와 시각적으로 일치) *(사용자 환경)*
+- [ ] **다중 디바이스 Realtime sync (검증 게이트)**: 웹 `/life` + iOS 시뮬레이터 `(main)/life` 동시 접속 → 한쪽에서 sub_issue INSERT 시 양쪽 화면 즉시 반영 *(사용자 환경)*
+- [x] `grep -RIn "react-native-webview" apps/mobile/` 결과 0건
+- [x] `grep -n '"scheme"' apps/mobile/app.json` 결과가 `"scheme": "dopamine-planner"`
+- [x] `apps/mobile/eas.json` 존재 + `preview`, `production` profile 정의
+- [ ] `xcrun simctl openurl booted "dopamine-planner://auth/callback?code=test"` 실행 시 앱이 deep link 수신 (로그 또는 화면 전환 확인) *(사용자 환경)*
+- [x] `apps/mobile/babel.config.js` 에 `nativewind/babel` plugin 명시
 
 ---
 

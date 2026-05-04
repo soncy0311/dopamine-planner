@@ -19,12 +19,12 @@ Expo 52 (React Native 0.76) 기반 **네이티브** 모바일 앱. expo-router �
 
 ```
 apps/mobile/src/app/         # expo-router (그룹 라우팅)
-├── _layout.tsx              # Root 레이아웃 (인증 게이트)
+├── _layout.tsx              # Root 레이아웃 (QueryClientProvider, global.css)
+├── index.tsx                # `/` → (main)/life redirect stub
 ├── (auth)/
-│   ├── login.tsx
-│   └── callback.tsx         # OAuth 콜백 (expo-auth-session)
+│   └── login.tsx            # Google OAuth (expo-auth-session) — 콜백도 동일 화면에서 처리
 └── (main)/
-    ├── _layout.tsx          # 하단 탭 바
+    ├── _layout.tsx          # Tab navigator + 인증 가드
     ├── life/
     ├── work/
     └── settings/
@@ -42,16 +42,17 @@ apps/mobile/src/app/         # expo-router (그룹 라우팅)
 
 ## OAuth (expo-auth-session)
 
-- Google OAuth 는 `expo-auth-session/providers/google` 사용
-- 콜백 처리 후 Supabase 세션을 `setSession({ access_token, refresh_token })` 으로 주입
-- `WebBrowser.maybeCompleteAuthSession()` 호출 누락 금지 (앱 진입 시 1회)
-- 앱 스킴: `dopamine-planner://` (`app.json` `scheme` 필드)
+- Google OAuth 는 `supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo, skipBrowserRedirect: true } })` 로 인증 URL 만 받고, `AuthSession.startAsync({ authUrl })` 로 외부 브라우저 기동
+- 콜백 deep link 수신 후 `supabase.auth.exchangeCodeForSession(code)` 으로 세션 교환
+- 별도 `(auth)/callback.tsx` 파일 미신설 — `(auth)/login.tsx` 안에서 startAsync 결과를 그대로 처리
+- 앱 스킴: `dopamine-planner://` (`app.json` `scheme` 필드) — Supabase Dashboard 의 redirect URI 화이트리스트와 정확히 일치
 
 ## Nativewind v4 설정
 
-- `nativewind` v4 설치 후 `tailwind.config.ts` 의 `presets: [require('nativewind/preset')]`
-- `babel.config.js` 의 `plugins: ['nativewind/babel']`
-- 글로벌 CSS: `app/global.css` 에 Tailwind base / components / utilities 임포트
+- `apps/mobile/babel.config.js` — `babel-preset-expo` (`{ jsxImportSource: 'nativewind' }`) + `nativewind/babel` preset
+- `apps/mobile/metro.config.js` — `withNativeWind(getDefaultConfig(__dirname), { input: './src/global.css' })`
+- `apps/mobile/tailwind.config.js` — 공유 config (`@todo-list/config/tailwind.config.js`) 를 spread + `presets: [require('nativewind/preset')]`
+- `apps/mobile/src/global.css` — `@tailwind base/components/utilities;` (루트 `_layout.tsx` 에서 `import '../global.css'`)
 - 컴포넌트는 `className` prop 으로 Tailwind 유틸리티 사용 (web 과 동일 토큰)
 
 ## 앱 설정 (app.json)

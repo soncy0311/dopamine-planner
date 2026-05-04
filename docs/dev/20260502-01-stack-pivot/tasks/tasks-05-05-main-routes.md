@@ -16,10 +16,10 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/mobile/src/app/(main)/_layout.tsx` Tab navigator + 인증 가드
-- [ ] `apps/mobile/src/app/(main)/life/index.tsx` stub + Realtime 구독 훅
-- [ ] `apps/mobile/src/app/(main)/work/index.tsx` stub
-- [ ] `apps/mobile/src/app/(main)/settings/index.tsx` stub
+- [x] `apps/mobile/src/app/(main)/_layout.tsx` Tab navigator + 인증 가드
+- [x] `apps/mobile/src/app/(main)/life/index.tsx` stub + Realtime 구독 훅
+- [x] `apps/mobile/src/app/(main)/work/index.tsx` stub
+- [x] `apps/mobile/src/app/(main)/settings/index.tsx` stub
 
 ## 구현 세부사항
 
@@ -56,13 +56,13 @@ export default function MainLayout() {
 
 ### 2. `(main)/life/index.tsx` — Realtime 구독 훅
 
-Sub-04 의 web 구현과 동일 헬퍼 (`@todo-list/core/realtime/subscribeTodos`) 재사용. `useEffect` cleanup 필수.
+Sub-04 의 web 구현과 동일 헬퍼 (`@todo-list/core` 단일 진입점에서 export 된 `subscribeTodos`) 재사용. `useEffect` cleanup 필수.
 
 ```tsx
 import { useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useQueryClient } from '@tanstack/react-query';
-import { subscribeTodos } from '@todo-list/core/realtime/subscribeTodos';
+import { subscribeTodos } from '@todo-list/core';
 import { supabase } from '@/lib/supabase';
 
 export default function LifeScreen() {
@@ -121,10 +121,10 @@ export default function SettingsScreen() {
 
 ## 검증 체크리스트
 
-- [ ] `ls apps/mobile/src/app/\(main\)/_layout.tsx apps/mobile/src/app/\(main\)/life/index.tsx apps/mobile/src/app/\(main\)/work/index.tsx apps/mobile/src/app/\(main\)/settings/index.tsx` 4건 모두 존재
-- [ ] `grep -n "Tabs" apps/mobile/src/app/\(main\)/_layout.tsx` 1건 이상
-- [ ] `grep -n "Redirect" apps/mobile/src/app/\(main\)/_layout.tsx` 1건
-- [ ] `grep -n "onAuthStateChange" apps/mobile/src/app/\(main\)/_layout.tsx` 1건
-- [ ] `grep -n "subscribeTodos" apps/mobile/src/app/\(main\)/life/index.tsx` 1건
-- [ ] `grep -n "invalidateQueries" apps/mobile/src/app/\(main\)/life/index.tsx` 1건
-- [ ] `grep -n "useEffect" apps/mobile/src/app/\(main\)/life/index.tsx` 1건
+- [x] `ls apps/mobile/src/app/\(main\)/_layout.tsx apps/mobile/src/app/\(main\)/life/index.tsx apps/mobile/src/app/\(main\)/work/index.tsx apps/mobile/src/app/\(main\)/settings/index.tsx` 4건 모두 존재
+- [x] `grep -n "Tabs" apps/mobile/src/app/\(main\)/_layout.tsx` 1건 이상
+- [x] `grep -n "Redirect" apps/mobile/src/app/\(main\)/_layout.tsx` 1건
+- [x] `grep -n "onAuthStateChange" apps/mobile/src/app/\(main\)/_layout.tsx` 1건
+- [x] `grep -n "subscribeTodos" apps/mobile/src/app/\(main\)/life/index.tsx` 1건
+- [x] `grep -n "invalidateQueries" apps/mobile/src/app/\(main\)/life/index.tsx` 1건
+- [x] `grep -n "useEffect" apps/mobile/src/app/\(main\)/life/index.tsx` 1건

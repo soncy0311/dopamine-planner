@@ -13,10 +13,10 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/mobile/babel.config.js` Nativewind plugin 등록
-- [ ] `apps/mobile/metro.config.js` Nativewind metro 설정 (`withNativeWind`)
-- [ ] `apps/mobile/tailwind.config.js` content paths 채움 + Nativewind preset
-- [ ] `apps/mobile/src/global.css` 신설 (Tailwind directive)
+- [x] `apps/mobile/babel.config.js` Nativewind plugin 등록
+- [x] `apps/mobile/metro.config.js` Nativewind metro 설정 (`withNativeWind`)
+- [x] `apps/mobile/tailwind.config.js` content paths 채움 + Nativewind preset
+- [x] `apps/mobile/src/global.css` 신설 (Tailwind directive)
 
 ## 구현 세부사항
 
@@ -80,10 +80,10 @@ module.exports = {
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "nativewind/babel" apps/mobile/babel.config.js` 1건
-- [ ] `grep -n "withNativeWind" apps/mobile/metro.config.js` 1건
-- [ ] `grep -n "./src/global.css" apps/mobile/metro.config.js` 1건
-- [ ] `grep -n "nativewind/preset" apps/mobile/tailwind.config.js` 1건
-- [ ] `grep -n "@todo-list/config/tailwind.config.js" apps/mobile/tailwind.config.js` 1건
-- [ ] `grep -n "@tailwind base" apps/mobile/src/global.css` 1건
-- [ ] `grep -n "@tailwind utilities" apps/mobile/src/global.css` 1건
+- [x] `grep -n "nativewind/babel" apps/mobile/babel.config.js` 1건
+- [x] `grep -n "withNativeWind" apps/mobile/metro.config.js` 1건
+- [x] `grep -n "./src/global.css" apps/mobile/metro.config.js` 1건
+- [x] `grep -n "nativewind/preset" apps/mobile/tailwind.config.js` 1건
+- [x] `grep -n "@todo-list/config/tailwind.config.js" apps/mobile/tailwind.config.js` 1건
+- [x] `grep -n "@tailwind base" apps/mobile/src/global.css` 1건
+- [x] `grep -n "@tailwind utilities" apps/mobile/src/global.css` 1건

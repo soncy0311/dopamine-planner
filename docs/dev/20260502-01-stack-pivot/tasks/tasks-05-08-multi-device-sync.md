@@ -11,7 +11,7 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] **검증 게이트**: 웹 `/life` + iOS `(main)/life` 동시 접속 → todo 추가 시 양쪽 즉시 반영
+- [ ] **검증 게이트**: 웹 `/life` + iOS `(main)/life` 동시 접속 → todo 추가 시 양쪽 즉시 반영 *(사용자 환경)*
 
 ## 구현 세부사항
 
@@ -38,10 +38,16 @@ pnpm --filter @todo-list/mobile dev
 
 ### 3. INSERT 동기화 검증
 
-Supabase SQL Studio (또는 한 쪽 클라이언트의 todo 추가 UI) 에서 다음 INSERT 실행:
+Supabase SQL Studio (또는 한 쪽 클라이언트의 todo 추가 UI) 에서 다음 INSERT 실행. `sub_issue` 에는 `workspace` 칼럼이 없으므로, `epic_issue → category` 를 JOIN 하여 `workspace='life'` 인 epic 의 id 를 사용한다.
 
 ```sql
-INSERT INTO sub_issue (workspace, title, ...) VALUES ('life', '테스트 todo', ...);
+-- life workspace 의 epic 한 개에 todo 추가
+INSERT INTO sub_issue (user_id, epic_id, title, due_date)
+SELECT auth.uid(), e.id, '테스트 todo', current_date
+  FROM epic_issue e
+  JOIN category c ON c.id = e.category_id
+ WHERE c.user_id = auth.uid() AND c.workspace = 'life'
+ LIMIT 1;
 ```
 
 **기대 동작**: 웹 `/life` + iOS `(main)/life` 양쪽에 1초 이내 반영 (Realtime publication → channel → invalidateQueries → refetch).
@@ -53,7 +59,9 @@ INSERT INTO sub_issue (workspace, title, ...) VALUES ('life', '테스트 todo', 
 
 ### 5. workspace 필터 검증
 
-`workspace='work'` 로 INSERT → `(main)/life` 화면에는 반영되지 않아야 함. `subscribeTodos(supabase, 'life', ...)` 의 channel 필터가 정상 동작함을 확인.
+`workspace='work'` 인 epic 에 todo 를 INSERT → `(main)/life` 화면에는 반영되지 않아야 함.
+
+> **구현 의미**: Sub-PRD-04 결정에 따라 `subscribeTodos` 자체는 `sub_issue` 테이블 전체를 광역 구독한 뒤 callback 으로 invalidate 만 한다. 따라서 work workspace INSERT 도 mobile life 화면의 invalidate 는 트리거하지만, `useTodos` 의 query 가 자체적으로 `epic.category.workspace='life'` 필터를 걸기 때문에 refetch 결과에 work todo 는 포함되지 않아 화면 변동이 발생하지 않는다.
 
 ## 주의사항
 
@@ -70,6 +78,6 @@ INSERT INTO sub_issue (workspace, title, ...) VALUES ('life', '테스트 todo', 
 - [ ] `workspace='life'` INSERT 시 양쪽 즉시 반영 (1초 이내)
 - [ ] `workspace='life'` UPDATE 시 양쪽 즉시 반영
 - [ ] `workspace='life'` DELETE 시 양쪽 즉시 반영
-- [ ] `workspace='work'` INSERT 시 `(main)/life` 화면에는 반영되지 않음 (필터 검증)
+- [ ] `workspace='work'` 인 epic 에 INSERT 시 `(main)/life` 화면에는 반영되지 않음 (useTodos 의 자체 workspace 필터 검증)
 - [ ] 양쪽 클라이언트 모두 `auth.uid()` 동일 (SQL Studio 에서 `select auth.uid()` 확인)
 - [ ] main PRD §종료 게이트 (다중 디바이스 sync) 충족 → Sub-PRD 05 종료

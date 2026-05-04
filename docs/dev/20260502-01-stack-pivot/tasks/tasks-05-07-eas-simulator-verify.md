@@ -10,9 +10,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/mobile/eas.json` 신설 (preview / production profile)
-- [ ] `pnpm --filter @todo-list/mobile dev` (`expo start --dev-client`) iOS 시뮬레이터 부팅 검증
-- [ ] iOS 시뮬레이터에서 `(auth)/login` → Google OAuth → `(main)/life` 진입 검증
+- [x] `apps/mobile/eas.json` 신설 (preview / production profile)
+- [ ] `pnpm --filter @todo-list/mobile dev` (`expo start --dev-client`) iOS 시뮬레이터 부팅 검증 *(사용자 환경)*
+- [ ] iOS 시뮬레이터에서 `(auth)/login` → Google OAuth → `(main)/life` 진입 검증 *(사용자 환경)*
 
 ## 구현 세부사항
 
@@ -84,11 +84,11 @@ xcrun simctl openurl booted "dopamine-planner://auth/callback?code=test"
 
 ## 검증 체크리스트
 
-- [ ] `ls apps/mobile/eas.json` 존재
-- [ ] `cat apps/mobile/eas.json | jq '.build.preview, .build.production'` 양쪽 존재 (null 아님)
-- [ ] `cat apps/mobile/eas.json | jq '.build.preview.ios.simulator'` 결과 `true`
-- [ ] `pnpm --filter @todo-list/mobile dev` 실행 후 iOS 시뮬레이터 부팅 성공 (수동 확인)
-- [ ] `xcrun simctl openurl booted "dopamine-planner://auth/callback?code=test"` 시 앱이 deep link 수신 (콘솔 로그 또는 화면 전환 확인)
-- [ ] `(auth)/login` → Google OAuth → `(main)/life` 진입 (수동 확인)
-- [ ] `(main)/life` 화면의 Nativewind className 정상 매핑 (시각 확인 — bg/text 색상, padding 등)
-- [ ] Tab 3개 (Life/Work/Settings) 정상 동작
+- [x] `ls apps/mobile/eas.json` 존재
+- [x] `cat apps/mobile/eas.json | jq '.build.preview, .build.production'` 양쪽 존재 (null 아님)
+- [x] `cat apps/mobile/eas.json | jq '.build.preview.ios.simulator'` 결과 `true`
+- [ ] `pnpm --filter @todo-list/mobile dev` 실행 후 iOS 시뮬레이터 부팅 성공 *(사용자 환경 — 수동 확인)*
+- [ ] `xcrun simctl openurl booted "dopamine-planner://auth/callback?code=test"` 시 앱이 deep link 수신 *(사용자 환경)*
+- [ ] `(auth)/login` → Google OAuth → `(main)/life` 진입 *(사용자 환경 — 수동 확인)*
+- [ ] `(main)/life` 화면의 Nativewind className 정상 매핑 *(사용자 환경 — 시각 확인)*
+- [ ] Tab 3개 (Life/Work/Settings) 정상 동작 *(사용자 환경)*

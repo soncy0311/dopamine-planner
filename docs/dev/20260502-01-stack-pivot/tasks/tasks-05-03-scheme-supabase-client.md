@@ -14,8 +14,8 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/mobile/app.json` `scheme` 을 `todo-list` → `dopamine-planner` 변경
-- [ ] `apps/mobile/src/lib/supabase.ts` (core 팩토리 + AsyncStorage)
+- [x] `apps/mobile/app.json` `scheme` 을 `todo-list` → `dopamine-planner` 변경
+- [x] `apps/mobile/src/lib/supabase.ts` (core 팩토리 + AsyncStorage)
 
 ## 구현 세부사항
 
@@ -31,7 +31,7 @@ Sub-PRD §6 코드 그대로 적용. core 팩토리에 `AsyncStorage` 를 주입
 
 ```ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createClient } from '@todo-list/core/supabase/createClient';
+import { createClient } from '@todo-list/core';
 
 export const supabase = createClient({
   url: process.env.EXPO_PUBLIC_SUPABASE_URL!,
@@ -39,6 +39,8 @@ export const supabase = createClient({
   storage: AsyncStorage,
 });
 ```
+
+> **Note**: `@todo-list/core` 의 `package.json` exports 가 `.` 단일 진입점만 제공하므로, subpath (`@todo-list/core/supabase/createClient`) 는 import 불가. 모든 mobile 코드는 `@todo-list/core` 단일 진입점에서 가져온다.
 
 ## 주의사항
 
@@ -50,11 +52,11 @@ export const supabase = createClient({
 
 ## 검증 체크리스트
 
-- [ ] `grep -n '"scheme"' apps/mobile/app.json` 결과가 `"scheme": "dopamine-planner"`
-- [ ] `grep -n '"todo-list"' apps/mobile/app.json` 결과에 scheme 항목이 포함되지 않음
-- [ ] `ls apps/mobile/src/lib/supabase.ts` 존재
-- [ ] `grep -n "AsyncStorage" apps/mobile/src/lib/supabase.ts` 1건
-- [ ] `grep -n "@todo-list/core/supabase/createClient" apps/mobile/src/lib/supabase.ts` 1건
-- [ ] `grep -n "EXPO_PUBLIC_SUPABASE_URL" apps/mobile/src/lib/supabase.ts` 1건
-- [ ] `grep -n "EXPO_PUBLIC_SUPABASE_ANON_KEY" apps/mobile/src/lib/supabase.ts` 1건
-- [ ] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/mobile/` 0건
+- [x] `grep -n '"scheme"' apps/mobile/app.json` 결과가 `"scheme": "dopamine-planner"`
+- [x] `grep -n '"todo-list"' apps/mobile/app.json` 결과에 scheme 항목이 포함되지 않음
+- [x] `ls apps/mobile/src/lib/supabase.ts` 존재
+- [x] `grep -n "AsyncStorage" apps/mobile/src/lib/supabase.ts` 1건
+- [x] `grep -n "@todo-list/core" apps/mobile/src/lib/supabase.ts` 1건
+- [x] `grep -n "EXPO_PUBLIC_SUPABASE_URL" apps/mobile/src/lib/supabase.ts` 1건
+- [x] `grep -n "EXPO_PUBLIC_SUPABASE_ANON_KEY" apps/mobile/src/lib/supabase.ts` 1건
+- [x] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/mobile/` 0건

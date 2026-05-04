@@ -4,7 +4,7 @@
     "slug": "todo-list",
     "version": "0.0.1",
     "orientation": "portrait",
-    "scheme": "todo-list",
+    "scheme": "dopamine-planner",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,

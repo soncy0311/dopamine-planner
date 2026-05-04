@@ -10,9 +10,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/mobile/package.json` 에서 `react-native-webview` 제거 (Sub-02 처리됐다면 확인만)
-- [ ] `apps/mobile/package.json` 에 `expo-auth-session`, `expo-web-browser`, `@react-native-async-storage/async-storage` 추가
-- [ ] `apps/mobile/package.json` 에 `nativewind`, `tailwindcss` 확인 (Sub-02 처리분)
+- [x] `apps/mobile/package.json` 에서 `react-native-webview` 제거 (Sub-02 처리됐다면 확인만)
+- [x] `apps/mobile/package.json` 에 `expo-auth-session`, `expo-web-browser`, `@react-native-async-storage/async-storage` 추가
+- [x] `apps/mobile/package.json` 에 `nativewind`, `tailwindcss` 확인 (Sub-02 처리분)
 
 ## 구현 세부사항
 
@@ -49,10 +49,10 @@
 
 ## 검증 체크리스트
 
-- [ ] `grep -n '"react-native-webview"' apps/mobile/package.json` 결과 0건
-- [ ] `grep -n '"expo-auth-session"' apps/mobile/package.json` 결과 1건
-- [ ] `grep -n '"expo-web-browser"' apps/mobile/package.json` 결과 1건
-- [ ] `grep -n '"@react-native-async-storage/async-storage"' apps/mobile/package.json` 결과 1건
-- [ ] `grep -n '"nativewind"' apps/mobile/package.json` 결과 1건
-- [ ] `grep -n '"tailwindcss"' apps/mobile/package.json` 결과 1건
-- [ ] `pnpm install` exit code 0
+- [x] `grep -n '"react-native-webview"' apps/mobile/package.json` 결과 0건
+- [x] `grep -n '"expo-auth-session"' apps/mobile/package.json` 결과 1건
+- [x] `grep -n '"expo-web-browser"' apps/mobile/package.json` 결과 1건
+- [x] `grep -n '"@react-native-async-storage/async-storage"' apps/mobile/package.json` 결과 1건
+- [x] `grep -n '"nativewind"' apps/mobile/package.json` 결과 1건
+- [x] `grep -n '"tailwindcss"' apps/mobile/package.json` 결과 1건
+- [ ] `pnpm install` exit code 0 *(사용자 환경)*

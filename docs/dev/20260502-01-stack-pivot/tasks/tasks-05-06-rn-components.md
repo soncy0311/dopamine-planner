@@ -11,7 +11,7 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/mobile/src/components/Button.tsx`, `TodoItem.tsx` stub
+- [x] `apps/mobile/src/components/Button.tsx`, `TodoItem.tsx` stub
 
 ## 구현 세부사항
 
@@ -80,9 +80,9 @@ export function TodoItem({ title, done = false, onToggle }: Props) {
 
 ## 검증 체크리스트
 
-- [ ] `ls apps/mobile/src/components/Button.tsx apps/mobile/src/components/TodoItem.tsx` 양쪽 존재
-- [ ] `grep -n "className" apps/mobile/src/components/Button.tsx` 1건 이상
-- [ ] `grep -n "className" apps/mobile/src/components/TodoItem.tsx` 1건 이상
-- [ ] `grep -n "Pressable" apps/mobile/src/components/Button.tsx` 1건
-- [ ] `grep -RIn "from '@todo-list/ui'" apps/mobile/src/components/` 0건 (web ui 미참조)
-- [ ] `grep -RIn "from 'react-dom'" apps/mobile/src/components/` 0건
+- [x] `ls apps/mobile/src/components/Button.tsx apps/mobile/src/components/TodoItem.tsx` 양쪽 존재
+- [x] `grep -n "className" apps/mobile/src/components/Button.tsx` 1건 이상
+- [x] `grep -n "className" apps/mobile/src/components/TodoItem.tsx` 1건 이상
+- [x] `grep -n "Pressable" apps/mobile/src/components/Button.tsx` 1건
+- [x] `grep -RIn "from '@todo-list/ui'" apps/mobile/src/components/` 0건 (web ui 미참조)
+- [x] `grep -RIn "from 'react-dom'" apps/mobile/src/components/` 0건
