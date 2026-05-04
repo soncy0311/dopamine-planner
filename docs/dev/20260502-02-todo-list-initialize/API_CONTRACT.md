@@ -1,6 +1,7 @@
 # API Contract
 
 > 작성일: 2026-05-01
+> 최종 수정일: 2026-05-05 — v2 (stack-pivot) 머지 후 SoT 정합 (OAuth 콜백·RPC 반환·Realtime publication 4건 갱신)
 > 기반 문서: detail-todo-service-initialize.md
 > 상태: Draft
 
@@ -16,6 +17,8 @@
 |---|---|
 | **Supabase SDK 직접 호출** | 단순 CRUD (Category, Epic, Sub Issue) — RLS로 보안 처리 |
 | **Postgres RPC 함수** | 복합 비즈니스 로직 (이월, 집계 등 트랜잭션 필요 작업) — `supabase.rpc(<fn>)` 호출, `SECURITY DEFINER` 로 권한 한정 |
+
+> Realtime publication (`supabase_realtime`) 등록 테이블 = `profile / category / epic_issue / sub_issue` 4종 (마이그레이션 005 기준). §5 의 구독 패턴은 4 테이블 모두 동일하게 적용된다.
 
 ### 1.2 인증
 
@@ -101,25 +104,40 @@ const { error } = await supabase.auth.signInWithOAuth({
 
 ### 2.2 OAuth 콜백 처리
 
-Next.js App Router에서 콜백을 처리한다.
+Next.js App Router에서 콜백을 처리한다. `apps/web/src/app/auth/callback/route.ts` — `app/` 안의 `auth/` 경로가 OAuth 콜백 한정 dynamic Route Handler (api 디렉토리 밖).
 
 ```typescript
-// app/auth/callback/route.ts
-import { createClient } from '@/lib/supabase/server';
+// apps/web/src/app/auth/callback/route.ts
 import { NextResponse } from 'next/server';
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
 
   if (code) {
-    const supabase = await createClient();
+    const cookieStore = await cookies();
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll: () => cookieStore.getAll(),
+          setAll: (toSet) => {
+            toSet.forEach(({ name, value, options }) => cookieStore.set(name, value, options));
+          },
+        },
+      },
+    );
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(`${origin}/`);
+  return NextResponse.redirect(new URL('/life', request.url));
 }
 ```
+
+> 콜백 성공 시 `/life` (기본 워크스페이스) 로 redirect 한다. 별도 `@/lib/supabase/server` 파일을 두지 않고, 쿠키 어댑터(`getAll`/`setAll`) 를 라우트 핸들러 안에서 인라인 정의한다.
 
 ### 2.3 인증 상태 구독
 
@@ -385,32 +403,34 @@ const { error } = await supabase
 `SECURITY DEFINER` + `auth.uid()` null 체크로 본인 데이터만 조작한다.
 모든 RPC 는 `grant execute … to authenticated`, `revoke … from anon, public` 을 적용한다.
 
-### 4.1 carry_over_todos(target_date date) → { moved_count integer }
+### 4.1 carry_over_todos(target_date date) → table(moved_count integer)
 
 - **입력**: `target_date date` (오늘 날짜 등 일괄 이월할 기준일)
 - **처리**: 미완료 sub_issue (`status <> 'done'` — 즉 `todo`) 의 `due_date` 를 `target_date` 로 일괄 갱신, `carry_over_count` +1. 단일 트랜잭션 내에서 처리
-- **반환**: `{ moved_count integer }` (이월된 행 수)
+- **반환**: `table(moved_count integer)` — supabase-js 에서는 단일 row 배열로 도착 (`{ moved_count: number }[]`)
 - **권한**: `authenticated` 만 실행 가능 (`SECURITY DEFINER` + `auth.uid()` null 체크)
 
 ```typescript
 const { data, error } = await supabase.rpc('carry_over_todos', {
   target_date: '2026-05-01',
 });
-// data: { moved_count: 3 }
+// data: [{ moved_count: 3 }]
+const movedCount = data?.[0]?.moved_count ?? 0;
 ```
 
-### 4.2 recalc_epic_progress(epic_id uuid) → { progress numeric }
+### 4.2 recalc_epic_progress(epic_id uuid) → table(progress numeric)
 
 - **입력**: `epic_id uuid`
 - **처리**: 해당 epic 의 sub_issue 진행률 (완료/전체) 을 재계산해 `epic_issue.progress` 컬럼에 저장
-- **반환**: `{ progress numeric }` (0~1 범위)
+- **반환**: `table(progress numeric)` — supabase-js 에서는 단일 row 배열로 도착 (`{ progress: number }[]`, 0~1 범위)
 - **권한**: `authenticated` 만 실행 가능 (`SECURITY DEFINER` + `auth.uid()` null 체크)
 
 ```typescript
 const { data, error } = await supabase.rpc('recalc_epic_progress', {
   epic_id: epicId,
 });
-// data: { progress: 0.3 }
+// data: [{ progress: 0.3 }]
+const progress = data?.[0]?.progress ?? 0;
 ```
 
 > 정확한 컬럼/타입은 Sub-03 의 SQL 정의 시 본 섹션과 1:1 정합되도록 갱신한다. 함수명·인자명·반환 타입은 `main-prd-stack-pivot.md` §데이터베이스 스키마 마이그레이션 4·5 와 동일하게 유지한다.
