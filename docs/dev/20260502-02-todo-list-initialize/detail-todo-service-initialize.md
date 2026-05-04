@@ -180,23 +180,26 @@ public.category
 
 public.epic_issue
  ├── id (PK, uuid, default gen_random_uuid())
+ ├── user_id (FK → auth.users.id)        -- RLS 성능을 위한 비정규화 (JOIN 회피)
  ├── category_id (FK → category.id)
  ├── title
  ├── description
  ├── status (active | completed | archived)
  ├── registered_date
  ├── completed_date
+ ├── progress (numeric, default 0)        -- recalc_epic_progress RPC 가 갱신
  ├── created_at
  └── updated_at
 
 public.sub_issue
  ├── id (PK, uuid, default gen_random_uuid())
- ├── epic_issue_id (FK → epic_issue.id)
+ ├── user_id (FK → auth.users.id)        -- RLS 성능을 위한 비정규화 (JOIN 회피)
+ ├── epic_id (FK → epic_issue.id)         -- 칼럼명 단축 (RPC SQL 정합)
  ├── title
  ├── description
  ├── priority (high | medium | low)
  ├── status (todo | done)
- ├── registered_date
+ ├── due_date                             -- 투두가 배치되는 일자 (carry_over 의 이동 대상)
  ├── completed_date
  ├── carry_over_count
  ├── created_at
@@ -207,19 +210,22 @@ public.sub_issue
 
 - `auth.users` 1 : 1 `profile`
 - `auth.users` 1 : N `category`
+- `auth.users` 1 : N `epic_issue` (`user_id` 직접 보유 — RLS 단순화)
+- `auth.users` 1 : N `sub_issue` (`user_id` 직접 보유 — RLS 단순화)
 - `category` 1 : N `epic_issue`
 - `epic_issue` 1 : N `sub_issue`
 
 ### 3.3 Row Level Security (RLS)
 
 모든 `public` 테이블에 RLS를 활성화하여 사용자별 데이터를 격리한다.
+`epic_issue`/`sub_issue` 는 `user_id` 칼럼을 비정규화 보유하여 JOIN 없이 직접 비교한다 (성능 + 정책 가독성).
 
 | 테이블 | 정책 |
 |---|---|
 | `profile` | `auth.uid() = id` |
 | `category` | `auth.uid() = user_id` |
-| `epic_issue` | `category.user_id = auth.uid()` (JOIN) |
-| `sub_issue` | `epic_issue → category.user_id = auth.uid()` (JOIN) |
+| `epic_issue` | `auth.uid() = user_id` |
+| `sub_issue` | `auth.uid() = user_id` |
 
 ---
 

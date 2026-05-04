@@ -10,11 +10,15 @@
   - `supabase/migrations/005_realtime_publication.sql`
 - **참조 파일**: `main-prd-stack-pivot.md`, `sub-prd-03-feat-supabase-infra.md`, `docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md` (§3 ERD), `docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` (§4 RPC)
 
+## 상태
+
+- 2026-05-04: **완료** — Sub-PRD §RPC 작성 원칙 5개 모두 준수. WHERE 절에 `auth.uid()` 직접 명시 (RPC 원칙 ③) — Sub-PRD 본문 예시의 `uid` 변수 패턴 대신 inline `auth.uid()` 채택. 003 은 carry_over_count 도 +1 갱신 (detail §2.3 / sub_issue.carry_over_count).
+
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `supabase/migrations/003_carry_over_todos.sql` 작성 — RPC 함수
-- [ ] `supabase/migrations/004_recalc_epic_progress.sql` 작성 — RPC 함수
-- [ ] `supabase/migrations/005_realtime_publication.sql` 작성 — publication 등록
+- [x] `supabase/migrations/003_carry_over_todos.sql` 작성 — RPC 함수
+- [x] `supabase/migrations/004_recalc_epic_progress.sql` 작성 — RPC 함수
+- [x] `supabase/migrations/005_realtime_publication.sql` 작성 — publication 등록
 
 ## 구현 세부사항
 
@@ -114,11 +118,11 @@ alter publication supabase_realtime add table profile, category, epic_issue, sub
 
 ## 검증 체크리스트
 
-- [ ] `ls supabase/migrations/003_carry_over_todos.sql supabase/migrations/004_recalc_epic_progress.sql supabase/migrations/005_realtime_publication.sql` — 3개 파일 존재
-- [ ] `grep -l "security definer" supabase/migrations/003_carry_over_todos.sql supabase/migrations/004_recalc_epic_progress.sql` — 양쪽 매치
-- [ ] `grep -c "auth.uid()" supabase/migrations/003_carry_over_todos.sql` — 2건 이상 (`uid := auth.uid()` + WHERE)
-- [ ] `grep -c "auth.uid()" supabase/migrations/004_recalc_epic_progress.sql` — 2건 이상
-- [ ] `grep -l "raise exception 'unauthorized'" supabase/migrations/003_carry_over_todos.sql supabase/migrations/004_recalc_epic_progress.sql` — 양쪽 매치
-- [ ] `grep -l "grant execute" supabase/migrations/003_carry_over_todos.sql supabase/migrations/004_recalc_epic_progress.sql` — 양쪽 매치
-- [ ] `grep -l "revoke all" supabase/migrations/003_carry_over_todos.sql supabase/migrations/004_recalc_epic_progress.sql` — 양쪽 매치
-- [ ] `grep -n "add table" supabase/migrations/005_realtime_publication.sql` 결과 1줄에 `profile`, `category`, `epic_issue`, `sub_issue` 4개 모두 포함
+- [x] `ls supabase/migrations/003_carry_over_todos.sql supabase/migrations/004_recalc_epic_progress.sql supabase/migrations/005_realtime_publication.sql` — 3개 파일 존재
+- [x] `grep -l "security definer"` — 003·004 양쪽 매치
+- [x] `grep -c "auth.uid()" supabase/migrations/003_carry_over_todos.sql` — 4건 (≥2)
+- [x] `grep -c "auth.uid()" supabase/migrations/004_recalc_epic_progress.sql` — 3건 (≥2)
+- [x] `grep -l "raise exception 'unauthorized'"` — 003·004 양쪽 매치
+- [x] `grep -l "grant execute"` — 003·004 양쪽 매치
+- [x] `grep -l "revoke all"` — 003·004 양쪽 매치
+- [x] 005 의 `add table` 줄에 4개 테이블 모두 포함 (`profile, category, epic_issue, sub_issue`)

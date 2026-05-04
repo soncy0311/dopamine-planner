@@ -9,10 +9,14 @@
   - `supabase/migrations/002_rls_policies.sql`
 - **참조 파일**: `main-prd-stack-pivot.md`, `sub-prd-03-feat-supabase-infra.md`, `docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md` (§3 ERD — SoT), `docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md`
 
+## 상태
+
+- 2026-05-04: **완료** — `detail-todo-service-initialize.md` §3 ERD 갱신본 (epic_issue.user_id/progress, sub_issue.user_id/epic_id/due_date) 기반으로 두 마이그레이션 작성. 로컬 reset 검증은 03-04 에서 수행.
+
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `supabase/migrations/001_initial_schema.sql` 작성 — 4개 테이블 + RLS 활성화
-- [ ] `supabase/migrations/002_rls_policies.sql` 작성 — 테이블별 정책
+- [x] `supabase/migrations/001_initial_schema.sql` 작성 — 4개 테이블 + RLS 활성화
+- [x] `supabase/migrations/002_rls_policies.sql` 작성 — 테이블별 정책 (15건)
 
 ## 구현 세부사항
 
@@ -98,9 +102,9 @@ create policy "category_delete_self" on category
 
 ## 검증 체크리스트
 
-- [ ] `ls supabase/migrations/001_initial_schema.sql supabase/migrations/002_rls_policies.sql` — 두 파일 모두 존재
-- [ ] `grep -c "create table" supabase/migrations/001_initial_schema.sql` — 4건 (`profile`, `category`, `epic_issue`, `sub_issue`)
-- [ ] `grep -c "enable row level security" supabase/migrations/001_initial_schema.sql` — 4건 (테이블별 활성화)
-- [ ] `grep -c "create policy" supabase/migrations/002_rls_policies.sql` — 15건 (4 테이블 × 4 액션 - `profile` DELETE 1건)
-- [ ] `grep -c "auth.uid()" supabase/migrations/002_rls_policies.sql` — 15건 이상 (모든 정책에 포함)
-- [ ] 002 의 정책명에 `profile_delete` 가 없음 (`grep -n "profile_delete" supabase/migrations/002_rls_policies.sql` → 0건)
+- [x] `ls supabase/migrations/001_initial_schema.sql supabase/migrations/002_rls_policies.sql` — 두 파일 모두 존재
+- [x] `grep -c "create table" supabase/migrations/001_initial_schema.sql` — 4건
+- [x] `grep -c "enable row level security" supabase/migrations/001_initial_schema.sql` — 4건
+- [x] `grep -c "create policy" supabase/migrations/002_rls_policies.sql` — 15건
+- [x] `grep -c "auth.uid()" supabase/migrations/002_rls_policies.sql` — 20건 (≥15)
+- [x] `grep -n "profile_delete" supabase/migrations/002_rls_policies.sql` — 0건

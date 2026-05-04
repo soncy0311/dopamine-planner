@@ -8,11 +8,15 @@
   - `packages/shared/src/database.ts` (자동 생성 산출물 — 기존 placeholder 덮어쓰기)
 - **참조 파일**: `main-prd-stack-pivot.md`, `sub-prd-03-feat-supabase-infra.md`, `sub-prd-02-feat-core-package.md` (Task 02-02 가 본 산출물에 의존)
 
+## 상태
+
+- 2026-05-04: **사용자 환경 작업 — 미실행** — Supabase CLI / Docker 미설치(`command -v supabase` not found). 본 task 의 모든 체크리스트는 사용자가 로컬 환경에서 직접 실행해야 한다. 실행 후 `packages/shared/src/database.ts` placeholder (`export type Database = any;`) 가 자동 생성 타입으로 덮어써진다. Sub-04 / Sub-05 가 이 산출물을 import 하므로 빠른 시기에 실행 권장.
+
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `supabase db reset` 로컬 검증 (무에러 통과)
-- [ ] SQL Studio 에서 `select carry_over_todos('2026-05-02')` 직접 호출 (anonymous → unauthorized, authenticated → moved_count 반환)
-- [ ] `supabase gen types typescript --local > packages/shared/src/database.ts`
+- [ ] `supabase db reset` 로컬 검증 (무에러 통과) *(❌ 사용자 환경)*
+- [ ] SQL Studio 에서 `select carry_over_todos('2026-05-02')` 직접 호출 *(❌ 사용자 환경)*
+- [ ] `supabase gen types typescript --local > packages/shared/src/database.ts` *(❌ 사용자 환경)*
 
 ## 구현 세부사항
 

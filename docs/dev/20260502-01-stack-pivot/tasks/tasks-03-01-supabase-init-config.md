@@ -10,10 +10,14 @@
   - `supabase/.gitignore`
 - **참조 파일**: `main-prd-stack-pivot.md`, `sub-prd-03-feat-supabase-infra.md`
 
+## 상태
+
+- 2026-05-04: **부분 완료** — 골격 파일 수동 작성 완료. CLI 검증(`supabase --version`)은 사용자 환경에서 수행 필요.
+
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `supabase init` 실행 (루트에 `supabase/` 생성)
-- [ ] `supabase/config.toml` 검토 (project_id, db.port 등 기본값 유지)
+- [x] `supabase init` 실행 (루트에 `supabase/` 생성) *(수동 작성 — `supabase/config.toml` + `.gitignore` + `seed.sql` + `migrations/.gitkeep`)*
+- [x] `supabase/config.toml` 검토 (project_id `dopamine-planner`, 기본 포트 유지)
 
 ## 구현 세부사항
 
@@ -63,8 +67,8 @@ seed.sql
 
 ## 검증 체크리스트
 
-- [ ] `ls supabase/config.toml` — 파일 존재
-- [ ] `ls -d supabase/migrations` — 디렉토리 존재 (비어 있어도 무방)
-- [ ] `cat supabase/.gitignore` — `.env`, `seed.sql`, `temp/` 항목 포함
-- [ ] `grep -n "project_id" supabase/config.toml` — 1건 매치 (값 비어있지 않음)
-- [ ] `supabase --version` 실행 가능 (CLI 설치 확인)
+- [x] `ls supabase/config.toml` — 파일 존재
+- [x] `ls -d supabase/migrations` — 디렉토리 존재 (`.gitkeep` 보존)
+- [x] `cat supabase/.gitignore` — `.env`, `seed.sql`, `.temp`, `.branches` 항목 포함
+- [x] `grep -n "project_id" supabase/config.toml` — 1건 매치 (`dopamine-planner`)
+- [ ] `supabase --version` 실행 가능 (CLI 설치 확인) *(❌ 사용자 환경 — `brew install supabase/tap/supabase`)*

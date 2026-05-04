@@ -9,10 +9,14 @@
   - `env/.env.mobile.example`
 - **참조 파일**: `main-prd-stack-pivot.md` (§1 — 자체 서버 0 / WebView 폐기), `sub-prd-03-feat-supabase-infra.md` (§4 환경 변수 갱신)
 
+## 상태
+
+- 2026-05-04: **완료** — web 은 SERVICE_ROLE_KEY 줄 제거, mobile 은 WEBVIEW_URL 제거 + SUPABASE_URL/ANON_KEY 추가. `.env.*.local` 미수정 (gitignore).
+
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `env/.env.web.example` 갱신 (SERVICE_ROLE_KEY 제거)
-- [ ] `env/.env.mobile.example` 갱신 (EXPO_PUBLIC_SUPABASE_URL/ANON_KEY 추가, WEBVIEW_URL 제거)
+- [x] `env/.env.web.example` 갱신 (SERVICE_ROLE_KEY 제거)
+- [x] `env/.env.mobile.example` 갱신 (EXPO_PUBLIC_SUPABASE_URL/ANON_KEY 추가, WEBVIEW_URL 제거)
 
 ## 구현 세부사항
 
@@ -73,11 +77,11 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "SUPABASE_SERVICE_ROLE_KEY" env/.env.web.example` 결과 0건
-- [ ] `grep -n "NEXT_PUBLIC_SUPABASE_URL" env/.env.web.example` 결과 1건
-- [ ] `grep -n "NEXT_PUBLIC_SUPABASE_ANON_KEY" env/.env.web.example` 결과 1건
-- [ ] `grep -n "EXPO_PUBLIC_WEBVIEW_URL" env/.env.mobile.example` 결과 0건
-- [ ] `grep -n "EXPO_PUBLIC_SUPABASE_URL" env/.env.mobile.example` 결과 1건
-- [ ] `grep -n "EXPO_PUBLIC_SUPABASE_ANON_KEY" env/.env.mobile.example` 결과 1건
-- [ ] `wc -l env/.env.web.example` — 2줄 (또는 trailing newline 포함 3줄)
-- [ ] `wc -l env/.env.mobile.example` — 2줄 (또는 trailing newline 포함 3줄)
+- [x] `grep -n "SUPABASE_SERVICE_ROLE_KEY" env/.env.web.example` — 0건
+- [x] `grep -n "NEXT_PUBLIC_SUPABASE_URL" env/.env.web.example` — 1건
+- [x] `grep -n "NEXT_PUBLIC_SUPABASE_ANON_KEY" env/.env.web.example` — 1건
+- [x] `grep -n "EXPO_PUBLIC_WEBVIEW_URL" env/.env.mobile.example` — 0건
+- [x] `grep -n "EXPO_PUBLIC_SUPABASE_URL" env/.env.mobile.example` — 1건
+- [x] `grep -n "EXPO_PUBLIC_SUPABASE_ANON_KEY" env/.env.mobile.example` — 1건
+- [x] `wc -l env/.env.web.example` — 헤더 1줄 + 변수 2줄
+- [x] `wc -l env/.env.mobile.example` — 헤더 1줄 + 변수 2줄

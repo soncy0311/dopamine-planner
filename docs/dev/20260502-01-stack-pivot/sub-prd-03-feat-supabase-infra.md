@@ -7,7 +7,7 @@
 - **시작일**: 2026-05-04
 - **종료일**: 2026-05-04
 - **최신 업데이트**: 2026-05-04
-- **상태**: 진행전
+- **상태**: 부분 완료 — 코드/문서 산출물 작성 완료. 로컬 reset/타입 자동생성(03-04) 및 Dashboard·원격 적용(03-06) 은 사용자 환경 작업으로 분리.
 
 ## 배경 및 목적
 
@@ -175,33 +175,43 @@ RLS (002) 가 RPC (003·004) 보다 먼저 적용되어야 함수 본문의 `aut
 
 ## 작업
 
-- [ ] `supabase init` 실행 (루트에 `supabase/` 생성)
-- [ ] `supabase/config.toml` 검토 (project_id, db.port 등 기본값 유지)
-- [ ] `supabase/migrations/001_initial_schema.sql` 작성 — 4개 테이블 + RLS 활성화
-- [ ] `supabase/migrations/002_rls_policies.sql` 작성 — 테이블별 정책
-- [ ] `supabase/migrations/003_carry_over_todos.sql` 작성 — RPC 함수
-- [ ] `supabase/migrations/004_recalc_epic_progress.sql` 작성 — RPC 함수
-- [ ] `supabase/migrations/005_realtime_publication.sql` 작성 — publication 등록
-- [ ] `supabase db reset` 로컬 검증 (무에러 통과)
-- [ ] SQL Studio 에서 `select carry_over_todos('2026-05-02')` 직접 호출 (anonymous → unauthorized, authenticated → moved_count 반환)
-- [ ] `supabase gen types typescript --local > packages/shared/src/database.ts`
-- [ ] `env/.env.web.example` 갱신 (SERVICE_ROLE_KEY 제거)
-- [ ] `env/.env.mobile.example` 갱신 (EXPO_PUBLIC_SUPABASE_URL/ANON_KEY 추가, WEBVIEW_URL 제거)
+- [x] `supabase init` 실행 (루트에 `supabase/` 생성) — 수동 골격 작성 (`config.toml`, `.gitignore`, `seed.sql`, `migrations/.gitkeep`)
+- [x] `supabase/config.toml` 검토 (project_id `dopamine-planner`, 기본 포트 유지)
+- [x] `supabase/migrations/001_initial_schema.sql` 작성 — 4개 테이블 + enum 4종 + 트리거 + RLS 활성화
+- [x] `supabase/migrations/002_rls_policies.sql` 작성 — 테이블별 정책 15건
+- [x] `supabase/migrations/003_carry_over_todos.sql` 작성 — RPC 함수 (carry_over_count + 1 동시 갱신)
+- [x] `supabase/migrations/004_recalc_epic_progress.sql` 작성 — RPC 함수
+- [x] `supabase/migrations/005_realtime_publication.sql` 작성 — publication 존재 검사 + 4개 테이블 등록
+- [ ] `supabase db reset` 로컬 검증 (무에러 통과) *(❌ 사용자 환경 — CLI/Docker 미설치)*
+- [ ] SQL Studio 에서 `select carry_over_todos('2026-05-02')` 직접 호출 *(❌ 사용자 환경)*
+- [ ] `supabase gen types typescript --local > packages/shared/src/database.ts` *(❌ 사용자 환경 — 현재 placeholder `Database = any` 유지)*
+- [x] `env/.env.web.example` 갱신 (SERVICE_ROLE_KEY 제거)
+- [x] `env/.env.mobile.example` 갱신 (EXPO_PUBLIC_SUPABASE_URL/ANON_KEY 추가, WEBVIEW_URL 제거)
 - [ ] **(사용자 작업)** Supabase Dashboard 에서 Site URL + Redirect URLs 화이트리스트 설정
 - [ ] **(사용자 작업)** Supabase Dashboard 에서 Google Provider 활성화
 - [ ] **(사용자 작업)** `supabase link` + `supabase db push` 로 원격 적용
 
 ## 검증 기준
 
-- [ ] `supabase db reset` 무에러 통과
-- [ ] SQL Studio 에서 anonymous 로 `select carry_over_todos('2026-05-02')` 호출 시 `unauthorized` 에러 발생
-- [ ] SQL Studio 에서 authenticated 로 동일 호출 시 `moved_count` 반환 (값 ≥ 0)
-- [ ] `select * from pg_publication_tables where pubname = 'supabase_realtime';` 결과에 `profile`, `category`, `epic_issue`, `sub_issue` 4개 모두 포함
-- [ ] `packages/shared/src/database.ts` 가 `Database` 타입을 export 하며 4개 테이블 + 2개 RPC 시그니처 포함
-- [ ] `grep -n "SUPABASE_SERVICE_ROLE_KEY" env/.env.web.example` 결과 0건
-- [ ] `grep -n "EXPO_PUBLIC_WEBVIEW_URL" env/.env.mobile.example` 결과 0건
-- [ ] Supabase Dashboard Authentication → URL Configuration 에 두 redirect URL 등록 확인 (스크린샷 또는 설정 확인)
-- [ ] Supabase Dashboard Authentication → Providers 에 Google 만 활성화 (Kakao 비활성)
+- [ ] `supabase db reset` 무에러 통과 *(❌ 사용자 환경)*
+- [ ] SQL Studio 에서 anonymous 로 `select carry_over_todos('2026-05-02')` 호출 시 `unauthorized` 에러 발생 *(❌ 사용자 환경)*
+- [ ] SQL Studio 에서 authenticated 로 동일 호출 시 `moved_count` 반환 (값 ≥ 0) *(❌ 사용자 환경)*
+- [ ] `select * from pg_publication_tables where pubname = 'supabase_realtime';` 결과에 `profile`, `category`, `epic_issue`, `sub_issue` 4개 모두 포함 *(❌ 사용자 환경)*
+- [ ] `packages/shared/src/database.ts` 가 `Database` 타입을 export 하며 4개 테이블 + 2개 RPC 시그니처 포함 *(❌ 사용자 환경 — `supabase gen types` 실행 후 자동 충족)*
+- [x] `grep -n "SUPABASE_SERVICE_ROLE_KEY" env/.env.web.example` 결과 0건
+- [x] `grep -n "EXPO_PUBLIC_WEBVIEW_URL" env/.env.mobile.example` 결과 0건
+- [ ] Supabase Dashboard Authentication → URL Configuration 에 두 redirect URL 등록 확인 *(❌ 사용자 작업)*
+- [ ] Supabase Dashboard Authentication → Providers 에 Google 만 활성화 (Kakao 비활성) *(❌ 사용자 작업)*
+
+### 에이전트 작성 산출물 추가 검증 (2026-05-04 통과)
+
+- [x] `grep -c "create table" supabase/migrations/001_initial_schema.sql` = 4
+- [x] `grep -c "enable row level security" supabase/migrations/001_initial_schema.sql` = 4
+- [x] `grep -c "create policy" supabase/migrations/002_rls_policies.sql` = 15
+- [x] `grep -c "auth.uid()" supabase/migrations/002_rls_policies.sql` = 20 (≥15)
+- [x] `grep -n "profile_delete" supabase/migrations/002_rls_policies.sql` = 0건
+- [x] 003·004 양쪽에 `security definer`, `raise exception 'unauthorized'`, `revoke all`, `grant execute` 매치
+- [x] 005 의 `add table` 줄에 4개 테이블 모두 포함
 
 ---
 

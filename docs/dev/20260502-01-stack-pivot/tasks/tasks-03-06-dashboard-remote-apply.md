@@ -8,6 +8,10 @@
 - **대상 파일**: 없음 (Supabase Dashboard + 원격 DB)
 - **참조 파일**: `main-prd-stack-pivot.md`, `sub-prd-03-feat-supabase-infra.md` (§5 Dashboard 작업), `docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md`
 
+## 상태
+
+- 2026-05-04: **사용자 작업 — 미실행** — task 정의상 Claude 자동 실행 금지(§주의사항 1). 03-01 ~ 03-05 까지 코드/문서 작업이 완료된 상태에서 사용자가 직접 Dashboard + CLI 수행.
+
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
 - [ ] **(사용자 작업)** Supabase Dashboard 에서 Site URL + Redirect URLs 화이트리스트 설정
