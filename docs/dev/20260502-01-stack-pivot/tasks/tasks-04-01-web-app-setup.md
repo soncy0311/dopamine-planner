@@ -13,10 +13,10 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/web/next.config.ts` 갱신 — `output: 'export'`, `transpilePackages`, `images.unoptimized`
-- [ ] `apps/web/src/lib/supabase/client.ts` 신설 (`@todo-list/core/supabase/createClient` 사용)
-- [ ] `apps/web/src/app/layout.tsx` — QueryClientProvider 셋업, `globals.css` import
-- [ ] `apps/web/src/app/globals.css` — Tailwind directive + design-system 토큰 import
+- [x] `apps/web/next.config.ts` 갱신 — `output: 'export'`, `transpilePackages`, `images.unoptimized`
+- [x] `apps/web/src/lib/supabase/client.ts` 신설 (`@todo-list/core/supabase/createClient` 사용)
+- [x] `apps/web/src/app/layout.tsx` — QueryClientProvider 셋업, `globals.css` import
+- [x] `apps/web/src/app/globals.css` — Tailwind directive + design-system 토큰 import
 
 ## 구현 세부사항
 
@@ -114,10 +114,10 @@ Tailwind v3 directive + design-system 토큰 CSS import.
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "output: 'export'" apps/web/next.config.ts` 결과 1건
-- [ ] `grep -n "@todo-list/core" apps/web/next.config.ts` 결과 1건 (transpilePackages 안)
-- [ ] `grep -n "unoptimized" apps/web/next.config.ts` 결과 1건
-- [ ] `ls apps/web/src/lib/supabase/client.ts apps/web/src/app/globals.css` 양쪽 존재
-- [ ] `grep -n "QueryClientProvider" apps/web/src/app/layout.tsx apps/web/src/app/providers.tsx` 1건 이상 (또는 Providers import)
-- [ ] `grep -n "@tailwind base" apps/web/src/app/globals.css` 1건
-- [ ] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/web/` 0건
+- [x] `grep -n "output: 'export'" apps/web/next.config.ts` 결과 1건
+- [x] `grep -n "@todo-list/core" apps/web/next.config.ts` 결과 1건 (transpilePackages 안)
+- [x] `grep -n "unoptimized" apps/web/next.config.ts` 결과 1건
+- [x] `ls apps/web/src/lib/supabase/client.ts apps/web/src/app/globals.css` 양쪽 존재
+- [x] `grep -n "QueryClientProvider" apps/web/src/app/layout.tsx apps/web/src/app/providers.tsx` 1건 이상 (또는 Providers import)
+- [x] `grep -n "@tailwind base" apps/web/src/app/globals.css` 1건
+- [x] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/web/` 0건

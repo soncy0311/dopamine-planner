@@ -58,7 +58,7 @@ type Workspace = "life" | "work";
 
 type Priority = "high" | "medium" | "low";
 
-type TodoStatus = "todo" | "in_progress" | "done";
+type TodoStatus = "todo" | "done";
 
 type EpicStatus = "active" | "completed" | "archived";
 
@@ -237,10 +237,14 @@ const { data, error } = await supabase
 ```typescript
 interface EpicIssue {
   id: string;
+  user_id: string;
   category_id: string;
   title: string;
   description: string | null;
   status: EpicStatus;
+  registered_date: string | null;
+  completed_date: string | null;
+  progress: number;
   created_at: string;
   updated_at: string;
 }
@@ -296,18 +300,18 @@ const { data, error } = await supabase
   .from('sub_issue')
   .select(`
     *,
-    epic_issue!inner (
+    epic:epic_issue!inner (
       id, title,
-      category!inner (
+      category:category!inner (
         id, name, color, workspace
       )
     )
   `)
-  .eq('scheduled_date', '2026-05-01')
-  .eq('epic_issue.category.workspace', 'life');
+  .eq('due_date', '2026-05-01')
+  .eq('epic.category.workspace', 'life');
 ```
 
-> 클라이언트에서 `status`로 `done` / `inProgress` 섹션을 분리한다.
+> 클라이언트에서 `status`로 `done` / `todo` 섹션을 분리한다.
 
 #### 투두 생성
 
@@ -315,11 +319,11 @@ const { data, error } = await supabase
 const { data, error } = await supabase
   .from('sub_issue')
   .insert({
-    epic_issue_id: epicId,
+    epic_id: epicId,
     title: '장보기',
     description: '우유, 계란, 빵',
     priority: 'low',
-    scheduled_date: '2026-05-01',
+    due_date: '2026-05-01',
   })
   .select()
   .single();
@@ -384,7 +388,7 @@ const { error } = await supabase
 ### 4.1 carry_over_todos(target_date date) → { moved_count integer }
 
 - **입력**: `target_date date` (오늘 날짜 등 일괄 이월할 기준일)
-- **처리**: 미완료 sub_issue (`status` 가 `todo` 또는 `in_progress`) 의 `scheduled_date` 를 `target_date` 로 일괄 갱신, `carry_over_count` +1. 단일 트랜잭션 내에서 처리
+- **처리**: 미완료 sub_issue (`status <> 'done'` — 즉 `todo`) 의 `due_date` 를 `target_date` 로 일괄 갱신, `carry_over_count` +1. 단일 트랜잭션 내에서 처리
 - **반환**: `{ moved_count integer }` (이월된 행 수)
 - **권한**: `authenticated` 만 실행 가능 (`SECURITY DEFINER` + `auth.uid()` null 체크)
 
@@ -487,47 +491,21 @@ CREATE POLICY "Users can manage own categories"
 ### 6.3 epic_issue
 
 ```sql
--- 본인 카테고리에 속한 Epic만 CRUD 가능
+-- 본인 epic 만 CRUD 가능 (user_id 비정규화 기반 — 002 마이그레이션 참고)
 CREATE POLICY "Users can manage own epics"
   ON public.epic_issue FOR ALL
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.category
-      WHERE category.id = epic_issue.category_id
-        AND category.user_id = auth.uid()
-    )
-  )
-  WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM public.category
-      WHERE category.id = epic_issue.category_id
-        AND category.user_id = auth.uid()
-    )
-  );
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
 ```
 
 ### 6.4 sub_issue
 
 ```sql
--- 본인 카테고리 → Epic에 속한 Sub Issue만 CRUD 가능
+-- 본인 sub_issue 만 CRUD 가능 (user_id 비정규화 기반 — 002 마이그레이션 참고)
 CREATE POLICY "Users can manage own sub issues"
   ON public.sub_issue FOR ALL
-  USING (
-    EXISTS (
-      SELECT 1 FROM public.epic_issue
-      JOIN public.category ON category.id = epic_issue.category_id
-      WHERE epic_issue.id = sub_issue.epic_issue_id
-        AND category.user_id = auth.uid()
-    )
-  )
-  WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM public.epic_issue
-      JOIN public.category ON category.id = epic_issue.category_id
-      WHERE epic_issue.id = sub_issue.epic_issue_id
-        AND category.user_id = auth.uid()
-    )
-  );
+  USING (auth.uid() = user_id)
+  WITH CHECK (auth.uid() = user_id);
 ```
 
 ---
@@ -542,7 +520,7 @@ DB의 snake_case를 camelCase로 변환한 형태이다.
 
 type Workspace = "life" | "work";
 type Priority = "high" | "medium" | "low";
-type TodoStatus = "todo" | "in_progress" | "done";
+type TodoStatus = "todo" | "done";
 type EpicStatus = "active" | "completed" | "archived";
 type AuthProvider = "google" | "kakao";
 
@@ -563,6 +541,7 @@ interface Profile {
 
 interface Category {
   id: string;
+  userId: string;
   workspace: Workspace;
   name: string;
   color: string;
@@ -573,29 +552,27 @@ interface Category {
 
 interface EpicIssue {
   id: string;
+  userId: string;
   categoryId: string;
   title: string;
   description: string | null;
   status: EpicStatus;
+  registeredDate: string | null;
+  completedDate: string | null;
+  progress: number;
   createdAt: string;
   updatedAt: string;
 }
 
-interface EpicIssueWithProgress extends EpicIssue {
-  progress: {
-    total: number;
-    done: number;
-  };
-}
-
 interface SubIssue {
   id: string;
-  epicIssueId: string;
+  userId: string;
+  epicId: string;
   title: string;
   description: string | null;
   priority: Priority;
   status: TodoStatus;
-  scheduledDate: string;
+  dueDate: string | null;
   completedDate: string | null;
   carryOverCount: number;
   createdAt: string;
@@ -610,7 +587,7 @@ interface TodoDailyView {
     epic: Pick<EpicIssue, "id" | "title">;
     category: Pick<Category, "id" | "name" | "color">;
   })[];
-  inProgress: (SubIssue & {
+  todo: (SubIssue & {
     epic: Pick<EpicIssue, "id" | "title">;
     category: Pick<Category, "id" | "name" | "color">;
   })[];

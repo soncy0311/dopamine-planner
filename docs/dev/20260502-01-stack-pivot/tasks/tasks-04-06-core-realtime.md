@@ -10,7 +10,7 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `packages/core/src/realtime/subscribeTodos.ts` 실 구현 (`channel.on('postgres_changes', …)`)
+- [x] `packages/core/src/realtime/subscribeTodos.ts` 실 구현 (`channel.on('postgres_changes', …)`)
 
 ## 구현 세부사항
 
@@ -26,7 +26,7 @@ export function subscribeTodos(
 
 ### 2. 본문
 
-채널명에 workspace 포함하여 구분. `postgres_changes` 이벤트로 `sub_issue` 테이블 감지. payload 에서 workspace 일치 여부 확인 후 `onChange()` 호출. cleanup 함수 반환 필수.
+채널명에 workspace 포함하여 구분. `postgres_changes` 이벤트로 `sub_issue` 테이블 감지. **workspace payload 필터는 적용하지 않는다** — `sub_issue` 테이블에는 `workspace` 칼럼이 없고 (workspace 는 `category` 에만 존재), payload 에서 이를 검사하려면 추가 DB round-trip 이 필요하므로 비효율. RLS 가 1차 보안을 제공하고, `['todos']` prefix 광역 invalidate 의 비용은 작음 (date 별 캐시 엔트리 ~2개).
 
 ```ts
 import type { AppSupabaseClient } from '../supabase/types';
@@ -39,16 +39,12 @@ export function subscribeTodos(
   onChange: () => void,
 ): () => void {
   const channel = client
-    .channel(`todos-${workspace}`)
+    .channel(`todos:${workspace}`)
     .on(
-      'postgres_changes',
+      'postgres_changes' as any,
       { event: '*', schema: 'public', table: 'sub_issue' },
-      (payload) => {
-        const newRow = (payload.new ?? {}) as { workspace?: Workspace };
-        const oldRow = (payload.old ?? {}) as { workspace?: Workspace };
-        if (newRow.workspace === workspace || oldRow.workspace === workspace) {
-          onChange();
-        }
+      () => {
+        onChange();
       },
     )
     .subscribe();
@@ -62,17 +58,17 @@ export function subscribeTodos(
 ## 주의사항
 
 1. **시그니처 불변** — Sub-05 mobile 도 동일 import. `(client, workspace, onChange) => unsubscribe` 변경 시 양쪽 깨짐 (Sub-PRD §주의사항 4)
-2. **workspace 필터 — RLS + payload 이중 검사** — RLS 가 1차 차단하지만 클라이언트 측에서도 `payload.new.workspace === workspace` 확인하여 다른 workspace 변경 시 불필요한 invalidation 방지
-3. **DELETE 이벤트** — `payload.new` 가 없을 수 있음 → `payload.old.workspace` 도 검사 (위 코드 참고)
+2. **workspace payload 필터 미적용** — `sub_issue` 에 `workspace` 칼럼 부재. RLS 가 1차 차단(본인 데이터만 통과). 광역 invalidate (`['todos']` prefix) 비용이 작아 옵션 A 채택
+3. **DELETE 이벤트** — payload 형태 무관하게 `onChange()` 호출 (광역 invalidate 정책)
 4. **cleanup 반환 필수** — `useEffect` 에서 unsubscribe. `client.removeChannel(channel)` 호출
 5. **플랫폼 독립** — `react-native`, `next/`, `window.` 등 import 금지 (Sub-PRD §8)
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "channel.on('postgres_changes'" packages/core/src/realtime/subscribeTodos.ts` 1건 (또는 chained `.on(`)
-- [ ] `grep -n "table: 'sub_issue'" packages/core/src/realtime/subscribeTodos.ts` 1건
-- [ ] `grep -n "removeChannel" packages/core/src/realtime/subscribeTodos.ts` 1건
-- [ ] `grep -n "subscribe()" packages/core/src/realtime/subscribeTodos.ts` 1건
-- [ ] `grep -RIn "from 'react-native'" packages/core/src/realtime/` 0건
-- [ ] `grep -RIn "from 'next/" packages/core/src/realtime/` 0건
-- [ ] `pnpm --filter @todo-list/core typecheck` exit code 0
+- [x] `grep -n "postgres_changes" packages/core/src/realtime/subscribeTodos.ts` 1건 이상 (chained `.on(`)
+- [x] `grep -n "table: 'sub_issue'" packages/core/src/realtime/subscribeTodos.ts` 1건
+- [x] `grep -n "removeChannel" packages/core/src/realtime/subscribeTodos.ts` 1건
+- [x] `grep -n "subscribe()" packages/core/src/realtime/subscribeTodos.ts` 1건
+- [x] `grep -RIn "from 'react-native'" packages/core/src/realtime/` 0건
+- [x] `grep -RIn "from 'next/" packages/core/src/realtime/` 0건
+- [ ] **(사용자 환경)** `pnpm --filter @todo-list/core typecheck` exit code 0

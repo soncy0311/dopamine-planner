@@ -13,32 +13,46 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `packages/core/src/hooks/useTodos.ts` 실 구현 (TanStack Query useQuery)
-- [ ] `packages/core/src/hooks/useCreateTodo.ts`, `useUpdateTodo.ts`, `useDeleteTodo.ts` 실 구현 (useMutation)
+- [x] `packages/core/src/hooks/useTodos.ts` 실 구현 (TanStack Query useQuery — JOIN 패턴 + `due_date` + `epic.category.workspace` 필터)
+- [x] `packages/core/src/hooks/useCreateTodo.ts`, `useUpdateTodo.ts`, `useDeleteTodo.ts` 실 구현 (useMutation + `['todos']` 광역 invalidate)
 
 ## 구현 세부사항
 
 ### 1. `useTodos.ts`
 
-`workspace` + `date` 별 조회. queryKey 는 `['todos', { workspace, date }]` — Realtime invalidation 과 동일 키.
+`workspace` + `date` 별 조회. queryKey 는 `['todos', { workspace, date }]` — Realtime invalidation 과 동일 prefix (`['todos']`) 공유.
+
+> **중요**: `sub_issue` 테이블에는 `workspace` 칼럼이 없다. workspace 는 `category` 에만 존재하므로 `epic_issue` → `category` 로 JOIN 한 후 nested filter (`epic.category.workspace`) 를 사용해야 한다 (API_CONTRACT.md §3.3 정합).
 
 ```ts
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { AppSupabaseClient } from '../supabase/types';
+import type { TodoView } from '../domain/todo';
 
-type Workspace = 'life' | 'work';
+export type UseTodosArgs = {
+  client: AppSupabaseClient;
+  workspace: 'life' | 'work';
+  date: string;
+};
 
-export function useTodos(client: AppSupabaseClient, workspace: Workspace, date: string) {
-  return useQuery({
+export function useTodos(args: UseTodosArgs): UseQueryResult<TodoView[]> {
+  const { client, workspace, date } = args;
+  return useQuery<TodoView[]>({
     queryKey: ['todos', { workspace, date }],
     queryFn: async () => {
       const { data, error } = await client
         .from('sub_issue')
-        .select('*, epic:epic_issue(*), category:category(*)')
-        .eq('workspace', workspace)
-        .eq('due_date', date);
+        .select(
+          `*,
+           epic:epic_issue!inner (
+             id, title,
+             category:category!inner ( id, name, color, workspace )
+           )`,
+        )
+        .eq('due_date', date)
+        .eq('epic.category.workspace', workspace);
       if (error) throw error;
-      return data ?? [];
+      return (data ?? []) as TodoView[];
     },
   });
 }
@@ -135,10 +149,10 @@ export function useDeleteTodo(client: AppSupabaseClient) {
 
 ## 검증 체크리스트
 
-- [ ] `ls packages/core/src/hooks/useTodos.ts packages/core/src/hooks/useCreateTodo.ts packages/core/src/hooks/useUpdateTodo.ts packages/core/src/hooks/useDeleteTodo.ts` — 4개 모두 존재
-- [ ] `grep -l "useQuery" packages/core/src/hooks/useTodos.ts` 매치
-- [ ] `grep -l "useMutation" packages/core/src/hooks/useCreateTodo.ts packages/core/src/hooks/useUpdateTodo.ts packages/core/src/hooks/useDeleteTodo.ts` — 3개 모두 매치
-- [ ] `grep -RIn "from 'react-native'" packages/core/src/hooks/` 0건
-- [ ] `grep -RIn "from 'next/" packages/core/src/hooks/` 0건
-- [ ] `grep -RIn "invalidateQueries" packages/core/src/hooks/` 3건 이상 (mutation 훅 3개)
-- [ ] `pnpm --filter @todo-list/core typecheck` exit code 0
+- [x] `ls packages/core/src/hooks/useTodos.ts packages/core/src/hooks/useCreateTodo.ts packages/core/src/hooks/useUpdateTodo.ts packages/core/src/hooks/useDeleteTodo.ts` — 4개 모두 존재
+- [x] `grep -l "useQuery" packages/core/src/hooks/useTodos.ts` 매치
+- [x] `grep -l "useMutation" packages/core/src/hooks/useCreateTodo.ts packages/core/src/hooks/useUpdateTodo.ts packages/core/src/hooks/useDeleteTodo.ts` — 3개 모두 매치
+- [x] `grep -RIn "from 'react-native'" packages/core/src/hooks/` 0건
+- [x] `grep -RIn "from 'next/" packages/core/src/hooks/` 0건
+- [x] `grep -RIn "invalidateQueries" packages/core/src/hooks/` 3건 이상 (mutation 훅 3개)
+- [ ] **(사용자 환경)** `pnpm --filter @todo-list/core typecheck` exit code 0

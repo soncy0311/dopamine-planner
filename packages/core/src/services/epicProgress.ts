@@ -1,13 +1,14 @@
 import type { AppSupabaseClient } from '../supabase/types';
 
 export type RecalcEpicProgressArgs = { epic_id: string };
-export type RecalcEpicProgressResult = {
-  /* Database['public']['Functions']['recalc_epic_progress']['Returns'] — Sub-04 에서 채움 */
-};
+export type RecalcEpicProgressResult = { progress: number };
 
 export async function recalcEpicProgress(
-  _client: AppSupabaseClient,
-  _args: RecalcEpicProgressArgs,
+  client: AppSupabaseClient,
+  args: RecalcEpicProgressArgs,
 ): Promise<RecalcEpicProgressResult> {
-  throw new Error('not implemented in sub-02');
+  const { data, error } = await client.rpc('recalc_epic_progress', { epic_id: args.epic_id });
+  if (error) throw error;
+  const row = Array.isArray(data) ? data[0] : data;
+  return { progress: row?.progress ?? 0 };
 }

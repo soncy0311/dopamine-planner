@@ -7,7 +7,7 @@
 - **시작일**: 2026-05-04
 - **종료일**: 2026-05-04
 - **최신 업데이트**: 2026-05-04
-- **상태**: 진행전
+- **상태**: 코드 완료 / 사용자 환경 검증 대기 (`pnpm install` + `pnpm --filter @todo-list/web build` + Vercel 배포)
 
 ## 배경 및 목적
 
@@ -164,36 +164,36 @@ export function useLifeRealtime() {
 
 ## 작업
 
-- [ ] `apps/web/next.config.ts` 갱신 — `output: 'export'`, `transpilePackages`, `images.unoptimized`
-- [ ] `apps/web/src/lib/supabase/client.ts` 신설 (`@todo-list/core/supabase/createClient` 사용)
-- [ ] `apps/web/src/app/layout.tsx` — QueryClientProvider 셋업, `globals.css` import
-- [ ] `apps/web/src/app/globals.css` — Tailwind directive + design-system 토큰 import
-- [ ] `apps/web/src/app/(auth)/login/page.tsx` — Google OAuth 버튼 1개
-- [ ] `apps/web/src/app/(auth)/login/OAuthButton.tsx` — `signInWithOAuth({ provider: 'google' })`
-- [ ] `apps/web/src/app/auth/callback/route.ts` — code 교환 + `/life` redirect
-- [ ] `apps/web/src/app/(main)/layout.tsx` — client-side 인증 가드
-- [ ] `apps/web/src/app/(main)/life/page.tsx` — Realtime 구독 훅 포함 stub
-- [ ] `apps/web/src/app/(main)/work/page.tsx` — stub
-- [ ] `packages/core/src/services/carryOver.ts` 실 구현 (`supabase.rpc('carry_over_todos', ...)`)
-- [ ] `packages/core/src/services/epicProgress.ts` 실 구현 (`supabase.rpc('recalc_epic_progress', ...)`)
-- [ ] `packages/core/src/hooks/useTodos.ts` 실 구현 (TanStack Query useQuery)
-- [ ] `packages/core/src/hooks/useCreateTodo.ts`, `useUpdateTodo.ts`, `useDeleteTodo.ts` 실 구현 (useMutation)
-- [ ] `packages/core/src/realtime/subscribeTodos.ts` 실 구현 (channel.on('postgres_changes', …))
-- [ ] `apps/web/src/app/api/**` 디렉토리에 `auth/callback` 외 파일 없음 확인
-- [ ] `pnpm --filter @todo-list/web build` 통과 (정적 export 성공)
+- [x] `apps/web/next.config.ts` 갱신 — `output: 'export'`, `transpilePackages`, `images.unoptimized`
+- [x] `apps/web/src/lib/supabase/client.ts` 신설 (`@todo-list/core` 의 `createClient` 사용)
+- [x] `apps/web/src/app/layout.tsx` — `Providers` 분리 + `globals.css` import
+- [x] `apps/web/src/app/globals.css` — Tailwind directive (디자인 토큰 CSS 파일 부재 — 후속 sprint)
+- [x] `apps/web/src/app/(auth)/login/page.tsx` — Google OAuth 버튼 1개
+- [x] `apps/web/src/app/(auth)/login/OAuthButton.tsx` — `signInWithOAuth({ provider: 'google' })`
+- [x] `apps/web/src/app/auth/callback/route.ts` — code 교환 + `/life` redirect
+- [x] `apps/web/src/app/(main)/layout.tsx` — client-side 인증 가드
+- [x] `apps/web/src/app/(main)/life/page.tsx` — Realtime 구독 훅 포함 stub
+- [x] `apps/web/src/app/(main)/work/page.tsx` — stub
+- [x] `packages/core/src/services/carryOver.ts` 실 구현 (`supabase.rpc('carry_over_todos', ...)`)
+- [x] `packages/core/src/services/epicProgress.ts` 실 구현 (`supabase.rpc('recalc_epic_progress', ...)`)
+- [x] `packages/core/src/hooks/useTodos.ts` 실 구현 (TanStack Query useQuery — JOIN 패턴 + `due_date`/workspace 필터)
+- [x] `packages/core/src/hooks/useCreateTodo.ts`, `useUpdateTodo.ts`, `useDeleteTodo.ts` 실 구현 (useMutation + `['todos']` 광역 invalidate)
+- [x] `packages/core/src/realtime/subscribeTodos.ts` 실 구현 — `onChange: () => void` 시그니처 + workspace 필터 제거 (RLS 가 1차 보안)
+- [x] `apps/web/src/app/api/**` 디렉토리 부재 확인 (`find apps/web/src/app/api -type f` = 0)
+- [ ] **(사용자 환경)** `pnpm install` + `pnpm --filter @todo-list/web build` 통과 (정적 export 성공)
 - [ ] **(사용자 작업)** Vercel 대시보드에서 본 레포 연결 (Production: main, Preview: dev + 작업 브랜치)
 - [ ] **(사용자 작업)** Vercel 환경 변수 주입 (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`)
 
 ## 검증 기준
 
-- [ ] `pnpm --filter @todo-list/web build` 성공 (`output: 'export'` 정적 export — `out/` 디렉토리 생성)
-- [ ] `pnpm --filter @todo-list/web dev` 후 브라우저 `/login` 진입 → Google OAuth 버튼 클릭 → 동의 화면 → `/auth/callback` → `/life` redirect
-- [ ] `/life` 마운트 후 Supabase SQL Studio 에서 `sub_issue` 직접 INSERT → 화면에 즉시 반영 (Realtime)
-- [ ] 미인증 상태로 `/life` 접근 시 `/login` 으로 redirect
-- [ ] `find apps/web/src/app/api -type f` 결과가 `auth/callback/route.ts` 하나뿐
-- [ ] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/web/` 결과 0건
-- [ ] Vercel 대시보드: `dev` push → preview URL 자동 생성, `main` push → production 자동 배포
-- [ ] Vercel preview 빌드 로그에 `output: 'export'` 적용 흔적 (정적 페이지 export 메시지) 확인
+- [ ] **(사용자 환경)** `pnpm --filter @todo-list/web build` 성공 (`output: 'export'` 정적 export — `out/` 디렉토리 생성)
+- [ ] **(사용자 환경)** `pnpm --filter @todo-list/web dev` 후 브라우저 `/login` 진입 → Google OAuth 버튼 클릭 → 동의 화면 → `/auth/callback` → `/life` redirect
+- [ ] **(사용자 환경)** `/life` 마운트 후 Supabase SQL Studio 에서 `sub_issue` 직접 INSERT → 화면에 즉시 반영 (Realtime)
+- [ ] **(사용자 환경)** 미인증 상태로 `/life` 접근 시 `/login` 으로 redirect
+- [x] `find apps/web/src/app/api -type f` 결과 0 (api 디렉토리 부재 — `auth/callback` 은 `apps/web/src/app/auth/callback/` 에 위치)
+- [x] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/web/` 결과 0건
+- [ ] **(사용자 작업)** Vercel 대시보드: `dev` push → preview URL 자동 생성, `main` push → production 자동 배포
+- [ ] **(사용자 작업)** Vercel preview 빌드 로그에 `output: 'export'` 적용 흔적 (정적 페이지 export 메시지) 확인
 
 ---
 

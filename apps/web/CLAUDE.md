@@ -2,18 +2,19 @@
 
 ## 개요
 
-Next.js 15 + React 19 기반 **정적 SPA** (`output: 'export'`). 비즈니스 로직은 클라이언트에서 **Supabase 직접 호출 + Postgres RPC 함수** 로 처리한다 (자체 서버 운영 안 함). OAuth 콜백 라우트(`src/app/api/auth/callback/route.ts`) 만 동적으로 동작한다. **모바일 우선 설계**를 따른다.
+Next.js 15 + React 19 기반 **정적 SPA** (`output: 'export'`). 비즈니스 로직은 클라이언트에서 **Supabase 직접 호출 + Postgres RPC 함수** 로 처리한다 (자체 서버 운영 안 함). OAuth 콜백 라우트(`src/app/auth/callback/route.ts`) 만 동적으로 동작한다 (api 디렉토리 밖). **모바일 우선 설계**를 따른다.
 
 ## 기술 스택
 
 - Next.js 15 (App Router, `output: 'export'` 정적 SPA)
 - React 19
-- Tailwind CSS v4 (스타일링)
+- Tailwind CSS v3 (`packages/config/tailwind.config.js` 공유 preset)
 - shadcn/ui + Radix Primitives (UI 컴포넌트)
 - Lucide Icons (아이콘)
 - Pretendard (폰트)
 - @supabase/supabase-js (Supabase SDK)
 - @supabase/ssr (OAuth 콜백 Route Handler 한정)
+- @tanstack/react-query (데이터 페칭·캐시)
 - `@todo-list/core` (Supabase 클라이언트·서비스·Realtime 훅 공유)
 
 ## 디자인 시스템
@@ -29,11 +30,16 @@ Next.js 15 + React 19 기반 **정적 SPA** (`output: 'export'`). 비즈니스 �
 apps/web/
 ├── src/
 │   ├── app/              # Next.js App Router (페이지·레이아웃)
-│   │   ├── api/          # OAuth 콜백 Route Handler 전용 (`api/auth/callback/route.ts`). 비즈니스 로직은 클라이언트에서 Supabase / RPC 직접 호출
-│   │   └── auth/         # OAuth 콜백 진입 페이지
+│   │   ├── (auth)/       # 인증 라우트 그룹 (`login/`)
+│   │   ├── (main)/       # 메인 라우트 그룹 (`life/`, `work/`) — client-side 인증 가드
+│   │   ├── auth/         # OAuth 콜백 Route Handler (`auth/callback/route.ts`) — Vercel 함수로 분리 배포
+│   │   ├── globals.css   # Tailwind directive
+│   │   └── providers.tsx # QueryClientProvider 등 클라이언트 Provider 컴포넌트
 │   └── lib/
 │       └── supabase/     # 브라우저 SDK 래퍼 (필요 시) — 핵심은 `@todo-list/core` 사용
 ├── next.config.ts
+├── postcss.config.mjs
+├── tailwind.config.ts
 ├── tsconfig.json
 └── package.json
 ```
@@ -55,23 +61,26 @@ apps/web/
 const nextConfig = {
   output: 'export',
   transpilePackages: ['@todo-list/core', '@todo-list/ui', '@todo-list/shared'],
+  images: { unoptimized: true },
 };
 ```
 
 - `output: 'export'` 로 정적 빌드 후 Vercel 정적 호스팅
 - `transpilePackages` 로 monorepo 내부 패키지를 Next 가 직접 트랜스파일
+- `images.unoptimized` 로 export 모드와 `next/image` 호환
 
 ## Realtime
 
 Realtime 구독 로직은 `@todo-list/core` 단일 위치에서 관리한다 (web/mobile 공유). 컴포넌트는 훅을 import 해서 사용만 한다.
 
 ```ts
-import { subscribeTodos } from '@todo-list/core/realtime/subscribeTodos';
+import { subscribeTodos } from '@todo-list/core';
+import { supabase } from '@/lib/supabase/client';
 
 useEffect(() => {
-  const unsub = subscribeTodos({ userId, onChange: handleChange });
-  return () => unsub();
-}, [userId]);
+  const unsub = subscribeTodos(supabase, 'life', () => qc.invalidateQueries({ queryKey: ['todos'] }));
+  return unsub;
+}, [qc]);
 ```
 
 ## 반응형 기준

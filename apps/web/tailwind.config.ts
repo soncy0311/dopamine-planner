@@ -1,9 +1,14 @@
 import type { Config } from 'tailwindcss';
-import shared from '../../packages/config/tailwind.config.js';
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const sharedPreset = require('../../packages/config/tailwind.config.js');
 
 const config: Config = {
-  ...shared,
-  content: ['./src/**/*.{ts,tsx}', '../../packages/ui/src/**/*.{ts,tsx}'],
+  presets: [sharedPreset],
+  content: [
+    './src/**/*.{ts,tsx}',
+    '../../packages/ui/src/**/*.{ts,tsx}',
+    '../../packages/core/src/**/*.{ts,tsx}',
+  ],
 };
 
 export default config;

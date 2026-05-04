@@ -1,21 +1,24 @@
-import type { SupabaseClient } from '@supabase/supabase-js';
-import type { Database } from '@todo-list/shared/database';
+import type { AppSupabaseClient } from '../supabase/types';
+
+type Workspace = 'life' | 'work';
 
 export function subscribeTodos(
-  client: SupabaseClient<Database>,
-  workspace: 'life' | 'work',
-  onChange: (event: 'INSERT' | 'UPDATE' | 'DELETE') => void,
+  client: AppSupabaseClient,
+  workspace: Workspace,
+  onChange: () => void,
 ): () => void {
   const channel = client
     .channel(`todos:${workspace}`)
     .on(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       'postgres_changes' as any,
       { event: '*', schema: 'public', table: 'sub_issue' },
-      (payload: { eventType: 'INSERT' | 'UPDATE' | 'DELETE' }) => {
-        onChange(payload.eventType);
+      () => {
+        onChange();
       },
     )
     .subscribe();
+
   return () => {
     client.removeChannel(channel);
   };

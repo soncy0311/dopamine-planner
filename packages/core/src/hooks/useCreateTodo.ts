@@ -1,4 +1,4 @@
-import { useMutation, type UseMutationResult } from '@tanstack/react-query';
+import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query';
 import type { AppSupabaseClient } from '../supabase/types';
 import type { TodoInsert, TodoView } from '../domain/todo';
 
@@ -9,11 +9,22 @@ export type UseCreateTodoArgs = {
 export type CreateTodoInput = TodoInsert;
 
 export function useCreateTodo(
-  _args: UseCreateTodoArgs,
+  args: UseCreateTodoArgs,
 ): UseMutationResult<TodoView, Error, CreateTodoInput> {
+  const { client } = args;
+  const qc = useQueryClient();
   return useMutation<TodoView, Error, CreateTodoInput>({
-    mutationFn: async (_input) => {
-      throw new Error('not implemented in sub-02');
+    mutationFn: async (input) => {
+      const { data, error } = await client
+        .from('sub_issue')
+        .insert(input)
+        .select()
+        .single();
+      if (error) throw error;
+      return data as TodoView;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['todos'] });
     },
   });
 }

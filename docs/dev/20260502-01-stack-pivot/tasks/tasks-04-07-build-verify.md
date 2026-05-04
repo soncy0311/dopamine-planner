@@ -9,8 +9,8 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/web/src/app/api/**` 디렉토리에 `auth/callback` 외 파일 없음 확인
-- [ ] `pnpm --filter @todo-list/web build` 통과 (정적 export 성공)
+- [x] `apps/web/src/app/api/**` 디렉토리 부재 확인 (auth/callback 은 `apps/web/src/app/auth/callback/` 에 위치, api 디렉토리 자체 없음)
+- [ ] **(사용자 환경)** `pnpm --filter @todo-list/web build` 통과 (정적 export 성공)
 
 ## 구현 세부사항
 
@@ -60,9 +60,9 @@ grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/web/   # 결과: 0건
 
 ## 검증 체크리스트
 
-- [ ] `find apps/web/src/app/api -type f 2>/dev/null | wc -l` 결과 0 (또는 디렉토리 자체 부재)
-- [ ] `pnpm --filter @todo-list/web build` exit code 0
-- [ ] `ls -d apps/web/out` 디렉토리 존재
-- [ ] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/web/` 결과 0건
-- [ ] 빌드 로그에 정적 export 메시지 (`Generating static pages` 또는 `Exporting (static)`) 확인
-- [ ] `find apps/web/out -name 'index.html' | head -1` 1건 이상 (정적 페이지 export 결과)
+- [x] `find apps/web/src/app/api -type f 2>/dev/null | wc -l` 결과 0 (디렉토리 자체 부재 확인)
+- [ ] **(사용자 환경)** `pnpm install` 후 `pnpm --filter @todo-list/web build` exit code 0
+- [ ] **(사용자 환경)** `ls -d apps/web/out` 디렉토리 존재
+- [x] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/web/` 결과 0건
+- [ ] **(사용자 환경)** 빌드 로그에 정적 export 메시지 (`Generating static pages` 또는 `Exporting (static)`) 확인
+- [ ] **(사용자 환경)** `find apps/web/out -name 'index.html' | head -1` 1건 이상 (정적 페이지 export 결과)

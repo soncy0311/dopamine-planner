@@ -12,9 +12,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/web/src/app/(main)/layout.tsx` — client-side 인증 가드
-- [ ] `apps/web/src/app/(main)/life/page.tsx` — Realtime 구독 훅 포함 stub
-- [ ] `apps/web/src/app/(main)/work/page.tsx` — stub
+- [x] `apps/web/src/app/(main)/layout.tsx` — client-side 인증 가드
+- [x] `apps/web/src/app/(main)/life/page.tsx` — Realtime 구독 훅 포함 stub
+- [x] `apps/web/src/app/(main)/work/page.tsx` — stub
 
 ## 구현 세부사항
 
@@ -105,10 +105,10 @@ export default function WorkPage() {
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "'use client'" apps/web/src/app/\(main\)/layout.tsx` 1건
-- [ ] `grep -n "router.replace('/login')" apps/web/src/app/\(main\)/layout.tsx` 1건 이상
-- [ ] `grep -n "onAuthStateChange" apps/web/src/app/\(main\)/layout.tsx` 1건
-- [ ] `grep -n "subscribeTodos" apps/web/src/app/\(main\)/life/page.tsx` 1건
-- [ ] `grep -n "invalidateQueries" apps/web/src/app/\(main\)/life/page.tsx` 1건
-- [ ] `ls apps/web/src/app/\(main\)/work/page.tsx` 존재
-- [ ] `grep -RIn "middleware" apps/web/src/` 0건 (또는 본 task 범위 내 신규 추가 0건)
+- [x] `grep -n "'use client'" apps/web/src/app/\(main\)/layout.tsx` 1건
+- [x] `grep -n "router.replace('/login')" apps/web/src/app/\(main\)/layout.tsx` 1건 이상
+- [x] `grep -n "onAuthStateChange" apps/web/src/app/\(main\)/layout.tsx` 1건
+- [x] `grep -n "subscribeTodos" apps/web/src/app/\(main\)/life/page.tsx` 1건
+- [x] `grep -n "invalidateQueries" apps/web/src/app/\(main\)/life/page.tsx` 1건
+- [x] `ls apps/web/src/app/\(main\)/work/page.tsx` 존재
+- [x] `grep -RIn "middleware" apps/web/src/` 0건 (또는 본 task 범위 내 신규 추가 0건)

@@ -11,8 +11,8 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `packages/core/src/services/carryOver.ts` 실 구현 (`supabase.rpc('carry_over_todos', ...)`)
-- [ ] `packages/core/src/services/epicProgress.ts` 실 구현 (`supabase.rpc('recalc_epic_progress', ...)`)
+- [x] `packages/core/src/services/carryOver.ts` 실 구현 (`supabase.rpc('carry_over_todos', ...)`)
+- [x] `packages/core/src/services/epicProgress.ts` 실 구현 (`supabase.rpc('recalc_epic_progress', ...)`)
 
 ## 구현 세부사항
 
@@ -62,10 +62,10 @@ export async function recalcEpicProgress(
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "rpc('carry_over_todos'" packages/core/src/services/carryOver.ts` 1건
-- [ ] `grep -n "rpc('recalc_epic_progress'" packages/core/src/services/epicProgress.ts` 1건
-- [ ] `grep -RIn "from 'react-native'" packages/core/src/services/` 0건
-- [ ] `grep -RIn "from 'next/" packages/core/src/services/` 0건
-- [ ] `grep -RIn "window\." packages/core/src/services/` 0건
-- [ ] `pnpm --filter @todo-list/core typecheck` exit code 0 (또는 `pnpm --filter @todo-list/core build`)
-- [ ] `grep -n "throw error" packages/core/src/services/carryOver.ts packages/core/src/services/epicProgress.ts` 각 1건
+- [x] `grep -n "rpc('carry_over_todos'" packages/core/src/services/carryOver.ts` 1건
+- [x] `grep -n "rpc('recalc_epic_progress'" packages/core/src/services/epicProgress.ts` 1건
+- [x] `grep -RIn "from 'react-native'" packages/core/src/services/` 0건
+- [x] `grep -RIn "from 'next/" packages/core/src/services/` 0건
+- [x] `grep -RIn "window\." packages/core/src/services/` 0건
+- [ ] **(사용자 환경)** `pnpm --filter @todo-list/core typecheck` exit code 0 (또는 `pnpm --filter @todo-list/core build`)
+- [x] `grep -n "throw error" packages/core/src/services/carryOver.ts packages/core/src/services/epicProgress.ts` 각 1건

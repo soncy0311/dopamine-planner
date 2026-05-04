@@ -9,10 +9,23 @@ export type UseTodosArgs = {
 };
 
 export function useTodos(args: UseTodosArgs): UseQueryResult<TodoView[]> {
+  const { client, workspace, date } = args;
   return useQuery<TodoView[]>({
-    queryKey: ['todos', { workspace: args.workspace, date: args.date }],
+    queryKey: ['todos', { workspace, date }],
     queryFn: async () => {
-      throw new Error('not implemented in sub-02');
+      const { data, error } = await client
+        .from('sub_issue')
+        .select(
+          `*,
+           epic:epic_issue!inner (
+             id, title,
+             category:category!inner ( id, name, color, workspace )
+           )`,
+        )
+        .eq('due_date', date)
+        .eq('epic.category.workspace', workspace);
+      if (error) throw error;
+      return (data ?? []) as TodoView[];
     },
   });
 }

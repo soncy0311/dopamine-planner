@@ -12,9 +12,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/web/src/app/(auth)/login/page.tsx` — Google OAuth 버튼 1개
-- [ ] `apps/web/src/app/(auth)/login/OAuthButton.tsx` — `signInWithOAuth({ provider: 'google' })`
-- [ ] `apps/web/src/app/auth/callback/route.ts` — code 교환 + `/life` redirect
+- [x] `apps/web/src/app/(auth)/login/page.tsx` — Google OAuth 버튼 1개
+- [x] `apps/web/src/app/(auth)/login/OAuthButton.tsx` — `signInWithOAuth({ provider: 'google' })`
+- [x] `apps/web/src/app/auth/callback/route.ts` — code 교환 + `/life` redirect
 
 ## 구현 세부사항
 
@@ -105,10 +105,10 @@ export async function GET(request: Request) {
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "signInWithOAuth" apps/web/src/app/\(auth\)/login/OAuthButton.tsx` 1건
-- [ ] `grep -n "provider: 'google'" apps/web/src/app/\(auth\)/login/OAuthButton.tsx` 1건
-- [ ] `grep -n "exchangeCodeForSession" apps/web/src/app/auth/callback/route.ts` 1건
-- [ ] `grep -n "/life" apps/web/src/app/auth/callback/route.ts` 1건 (redirect 대상)
-- [ ] `grep -RIn "kakao" apps/web/src/app/\(auth\)/` 0건
-- [ ] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/web/src/app/auth/callback/` 0건
-- [ ] `ls apps/web/src/app/\(auth\)/login/page.tsx apps/web/src/app/\(auth\)/login/OAuthButton.tsx apps/web/src/app/auth/callback/route.ts` 모두 존재
+- [x] `grep -n "signInWithOAuth" apps/web/src/app/\(auth\)/login/OAuthButton.tsx` 1건
+- [x] `grep -n "provider: 'google'" apps/web/src/app/\(auth\)/login/OAuthButton.tsx` 1건
+- [x] `grep -n "exchangeCodeForSession" apps/web/src/app/auth/callback/route.ts` 1건
+- [x] `grep -n "/life" apps/web/src/app/auth/callback/route.ts` 1건 (redirect 대상)
+- [x] `grep -RIn "kakao" apps/web/src/app/\(auth\)/` 0건
+- [x] `grep -RIn "SUPABASE_SERVICE_ROLE_KEY" apps/web/src/app/auth/callback/` 0건
+- [x] `ls apps/web/src/app/\(auth\)/login/page.tsx apps/web/src/app/\(auth\)/login/OAuthButton.tsx apps/web/src/app/auth/callback/route.ts` 모두 존재

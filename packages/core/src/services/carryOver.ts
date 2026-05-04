@@ -1,13 +1,14 @@
 import type { AppSupabaseClient } from '../supabase/types';
 
 export type CarryOverArgs = { target_date: string };
-export type CarryOverResult = {
-  /* Database['public']['Functions']['carry_over_todos']['Returns'] — Sub-04 에서 채움 */
-};
+export type CarryOverResult = { moved_count: number };
 
 export async function carryOverTodos(
-  _client: AppSupabaseClient,
-  _args: CarryOverArgs,
+  client: AppSupabaseClient,
+  args: CarryOverArgs,
 ): Promise<CarryOverResult> {
-  throw new Error('not implemented in sub-02');
+  const { data, error } = await client.rpc('carry_over_todos', { target_date: args.target_date });
+  if (error) throw error;
+  const row = Array.isArray(data) ? data[0] : data;
+  return { moved_count: row?.moved_count ?? 0 };
 }
