@@ -9,10 +9,10 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/web/CLAUDE.md` 라인 3~5 개요 갱신 (모바일 WebView 로드 표현 제거 → 정적 SPA)
-- [ ] `apps/web/CLAUDE.md` 라인 31 `api/` 설명을 OAuth 콜백 전용으로 한정
-- [ ] `apps/web/CLAUDE.md` 에 `output: 'export'` 및 `transpilePackages: ['@todo-list/core', '@todo-list/ui', '@todo-list/shared']` 명시
-- [ ] `apps/web/CLAUDE.md` 에 Realtime 구독 훅(`@todo-list/core/realtime/subscribeTodos`) 사용 안내 추가
+- [x] `apps/web/CLAUDE.md` 라인 3~5 개요 갱신 (모바일 WebView 로드 표현 제거 → 정적 SPA)
+- [x] `apps/web/CLAUDE.md` 라인 31 `api/` 설명을 OAuth 콜백 전용으로 한정
+- [x] `apps/web/CLAUDE.md` 에 `output: 'export'` 및 `transpilePackages: ['@todo-list/core', '@todo-list/ui', '@todo-list/shared']` 명시
+- [x] `apps/web/CLAUDE.md` 에 Realtime 구독 훅(`@todo-list/core/realtime/subscribeTodos`) 사용 안내 추가
 
 ## 구현 세부사항
 
@@ -72,9 +72,9 @@ useEffect(() => {
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "WebView" apps/web/CLAUDE.md` 결과 0건
-- [ ] `grep -n "SUPABASE_SERVICE_ROLE_KEY" apps/web/CLAUDE.md` 결과 0건
-- [ ] `grep -n "output: 'export'" apps/web/CLAUDE.md` 결과 1건 이상
-- [ ] `grep -n "transpilePackages" apps/web/CLAUDE.md` 결과 1건 이상
-- [ ] `grep -n "@todo-list/core/realtime/subscribeTodos" apps/web/CLAUDE.md` 결과 1건 이상
-- [ ] `api/` 설명 단락에 "OAuth 콜백" 키워드가 명시되어 있다
+- [x] `grep -n "WebView" apps/web/CLAUDE.md` 결과 0건
+- [x] `grep -n "SUPABASE_SERVICE_ROLE_KEY" apps/web/CLAUDE.md` 결과 0건
+- [x] `grep -n "output: 'export'" apps/web/CLAUDE.md` 결과 1건 이상
+- [x] `grep -n "transpilePackages" apps/web/CLAUDE.md` 결과 1건 이상
+- [x] `grep -n "@todo-list/core/realtime/subscribeTodos" apps/web/CLAUDE.md` 결과 1건 이상
+- [x] `api/` 설명 단락에 "OAuth 콜백" 키워드가 명시되어 있다

@@ -10,19 +10,19 @@
 
 ### 1.1 접근 방식
 
-이 프로젝트는 **Supabase + Next.js API Routes 하이브리드** 구조를 사용한다.
+이 프로젝트는 **Supabase 직접 호출 + Postgres RPC 함수** 의 이중 채널 구조를 사용한다. 자체 서버(Node 백엔드 / API Routes 비즈니스 로직) 는 운영하지 않는다.
 
 | 접근 방식 | 용도 |
 |---|---|
 | **Supabase SDK 직접 호출** | 단순 CRUD (Category, Epic, Sub Issue) — RLS로 보안 처리 |
-| **Next.js API Routes** | 복합 비즈니스 로직 (이월, 집계 등 트랜잭션 필요 작업) |
+| **Postgres RPC 함수** | 복합 비즈니스 로직 (이월, 집계 등 트랜잭션 필요 작업) — `supabase.rpc(<fn>)` 호출, `SECURITY DEFINER` 로 권한 한정 |
 
 ### 1.2 인증
 
 - Supabase Auth가 인증을 전담한다.
-- 클라이언트는 `@supabase/ssr`을 통해 쿠키 기반 세션을 유지한다.
+- 클라이언트는 `@supabase/ssr`을 통해 쿠키 기반 세션을 유지한다 (웹 SPA — OAuth 콜백 Route Handler 한정).
 - Supabase SDK 호출 시 인증 헤더를 자동으로 포함한다 (별도 토큰 관리 불필요).
-- Next.js API Routes에서는 `createClient`로 요청별 Supabase 클라이언트를 생성하여 사용자를 인증한다.
+- Postgres RPC 호출 시 SDK 가 세션 토큰을 자동 첨부한다. RPC 본문에서 `auth.uid()` null 체크로 본인 데이터만 조작한다.
 
 ### 1.3 에러 형식
 
@@ -35,25 +35,21 @@ if (error) {
 }
 ```
 
-**Next.js API Routes 에러**
+**Postgres RPC 에러**
 
-```json
-{
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "message": "이월 대상 날짜는 필수 항목입니다."
-  }
+```typescript
+const { data, error } = await supabase.rpc('carry_over_todos', { target_date: '2026-05-01' });
+if (error) {
+  // error.message, error.code (PostgreSQL SQLSTATE), error.details
 }
 ```
 
-| HTTP Status | code | 설명 |
-|---|---|---|
-| 400 | `VALIDATION_ERROR` | 요청 값 유효성 검증 실패 |
-| 401 | `UNAUTHORIZED` | 인증되지 않은 요청 |
-| 403 | `FORBIDDEN` | 해당 리소스에 대한 접근 권한 없음 |
-| 404 | `NOT_FOUND` | 리소스를 찾을 수 없음 |
-| 409 | `CONFLICT` | 리소스 충돌 (중복, 하위 데이터 존재 등) |
-| 500 | `INTERNAL_ERROR` | 서버 내부 오류 |
+| SQLSTATE | 의미 |
+|---|---|
+| `42501` | 권한 부족 (`auth.uid()` null 또는 RLS 거부) |
+| `23503` | FK 위반 |
+| `23505` | UNIQUE 제약 위반 |
+| `P0001` | RPC 본문 `raise exception` (사용자 정의 메시지) |
 
 ### 1.4 공통 Enum
 
@@ -380,71 +376,40 @@ const { error } = await supabase
 
 ---
 
-## 4. Next.js API Routes (복합 비즈니스 로직)
+## 4. Postgres RPC 함수
 
-### 4.1 미완료 투두 일괄 이월
+`SECURITY DEFINER` + `auth.uid()` null 체크로 본인 데이터만 조작한다.
+모든 RPC 는 `grant execute … to authenticated`, `revoke … from anon, public` 을 적용한다.
 
-```
-POST /api/todos/carry-over
-```
+### 4.1 carry_over_todos(target_date date) → { moved_count integer }
 
-**Request Body**
+- **입력**: `target_date date` (오늘 날짜 등 일괄 이월할 기준일)
+- **처리**: 미완료 sub_issue (`status` 가 `todo` 또는 `in_progress`) 의 `scheduled_date` 를 `target_date` 로 일괄 갱신, `carry_over_count` +1. 단일 트랜잭션 내에서 처리
+- **반환**: `{ moved_count integer }` (이월된 행 수)
+- **권한**: `authenticated` 만 실행 가능 (`SECURITY DEFINER` + `auth.uid()` null 체크)
 
-| 필드 | 타입 | 필수 | 설명 |
-|---|---|---|---|
-| fromDate | `string` | Y | 이월 대상 날짜 (`YYYY-MM-DD`) |
-| toDate | `string` | Y | 이월 목표 날짜 (`YYYY-MM-DD`) |
-
-```json
-{
-  "fromDate": "2026-04-30",
-  "toDate": "2026-05-01"
-}
+```typescript
+const { data, error } = await supabase.rpc('carry_over_todos', {
+  target_date: '2026-05-01',
+});
+// data: { moved_count: 3 }
 ```
 
-**Response 200**
+### 4.2 recalc_epic_progress(epic_id uuid) → { progress numeric }
 
-```json
-{
-  "carriedOverCount": 3
-}
+- **입력**: `epic_id uuid`
+- **처리**: 해당 epic 의 sub_issue 진행률 (완료/전체) 을 재계산해 `epic_issue.progress` 컬럼에 저장
+- **반환**: `{ progress numeric }` (0~1 범위)
+- **권한**: `authenticated` 만 실행 가능 (`SECURITY DEFINER` + `auth.uid()` null 체크)
+
+```typescript
+const { data, error } = await supabase.rpc('recalc_epic_progress', {
+  epic_id: epicId,
+});
+// data: { progress: 0.3 }
 ```
 
-**동작**
-
-1. 사용자 인증 확인 (`createClient`로 세션 검증)
-2. `fromDate`에 `status`가 `todo` 또는 `in_progress`인 투두 조회 (RLS 적용)
-3. 해당 투두들의 `scheduled_date`를 `toDate`로 변경, `carry_over_count`를 1 증가
-4. 트랜잭션으로 일괄 처리
-
-**구현 위치**: `apps/web/src/app/api/todos/carry-over/route.ts`
-
----
-
-### 4.2 Epic 진행률 조회
-
-```
-GET /api/epics/{id}/progress
-```
-
-**Response 200**
-
-```json
-{
-  "epicId": "uuid",
-  "total": 10,
-  "done": 3,
-  "percentage": 30
-}
-```
-
-**동작**
-
-1. 사용자 인증 확인
-2. Epic에 속한 Sub Issue의 총 개수와 `done` 상태 개수 집계
-3. 백분율 계산
-
-**구현 위치**: `apps/web/src/app/api/epics/[id]/progress/route.ts`
+> 정확한 컬럼/타입은 Sub-03 의 SQL 정의 시 본 섹션과 1:1 정합되도록 갱신한다. 함수명·인자명·반환 타입은 `main-prd-stack-pivot.md` §데이터베이스 스키마 마이그레이션 4·5 와 동일하게 유지한다.
 
 ---
 
@@ -651,16 +616,13 @@ interface TodoDailyView {
   })[];
 }
 
-// --- API Route Response ---
+// --- Postgres RPC Response ---
 
-interface CarryOverResponse {
-  carriedOverCount: number;
+interface CarryOverTodosResult {
+  moved_count: number;
 }
 
-interface EpicProgressResponse {
-  epicId: string;
-  total: number;
-  done: number;
-  percentage: number;
+interface RecalcEpicProgressResult {
+  progress: number;
 }
 ```

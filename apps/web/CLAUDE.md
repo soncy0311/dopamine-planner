@@ -2,18 +2,19 @@
 
 ## 개요
 
-Next.js 15 + React 19 기반 웹 클라이언트. 모바일 WebView에서도 로드되므로 **모바일 우선 설계**를 따른다.
+Next.js 15 + React 19 기반 **정적 SPA** (`output: 'export'`). 비즈니스 로직은 클라이언트에서 **Supabase 직접 호출 + Postgres RPC 함수** 로 처리한다 (자체 서버 운영 안 함). OAuth 콜백 라우트(`src/app/api/auth/callback/route.ts`) 만 동적으로 동작한다. **모바일 우선 설계**를 따른다.
 
 ## 기술 스택
 
-- Next.js 15 (App Router)
+- Next.js 15 (App Router, `output: 'export'` 정적 SPA)
 - React 19
 - Tailwind CSS v4 (스타일링)
 - shadcn/ui + Radix Primitives (UI 컴포넌트)
 - Lucide Icons (아이콘)
 - Pretendard (폰트)
 - @supabase/supabase-js (Supabase SDK)
-- @supabase/ssr (서버 사이드 인증)
+- @supabase/ssr (OAuth 콜백 Route Handler 한정)
+- `@todo-list/core` (Supabase 클라이언트·서비스·Realtime 훅 공유)
 
 ## 디자인 시스템
 
@@ -28,13 +29,10 @@ Next.js 15 + React 19 기반 웹 클라이언트. 모바일 WebView에서도 로
 apps/web/
 ├── src/
 │   ├── app/              # Next.js App Router (페이지·레이아웃)
-│   │   ├── api/          # API Routes (비즈니스 로직)
-│   │   └── auth/         # OAuth 콜백 라우트
+│   │   ├── api/          # OAuth 콜백 Route Handler 전용 (`api/auth/callback/route.ts`). 비즈니스 로직은 클라이언트에서 Supabase / RPC 직접 호출
+│   │   └── auth/         # OAuth 콜백 진입 페이지
 │   └── lib/
-│       └── supabase/     # Supabase 클라이언트 설정
-│           ├── client.ts # 브라우저용 클라이언트
-│           ├── server.ts # 서버 컴포넌트/API Routes용 클라이언트
-│           └── middleware.ts # 미들웨어용 클라이언트
+│       └── supabase/     # 브라우저 SDK 래퍼 (필요 시) — 핵심은 `@todo-list/core` 사용
 ├── next.config.ts
 ├── tsconfig.json
 └── package.json
@@ -45,8 +43,36 @@ apps/web/
 - 경로 alias: `@/*` → `./src/*`
 - 공유 컴포넌트는 `packages/ui`에서 가져온다 (`@todo-list/ui`)
 - 공유 타입은 `packages/shared`에서 가져온다 (`@todo-list/shared`)
+- 비즈니스 로직(Supabase 클라이언트, 서비스, RPC 호출, Realtime 훅) 은 `packages/core`에서 가져온다 (`@todo-list/core`)
 - `next.config.ts`에 `transpilePackages`로 내부 패키지를 등록한다
 - 컴포넌트는 Atomic Design 계층(Atoms → Molecules → Organisms → Templates)을 따른다
+
+## 빌드 / 설정
+
+`next.config.ts` 요지:
+
+```ts
+const nextConfig = {
+  output: 'export',
+  transpilePackages: ['@todo-list/core', '@todo-list/ui', '@todo-list/shared'],
+};
+```
+
+- `output: 'export'` 로 정적 빌드 후 Vercel 정적 호스팅
+- `transpilePackages` 로 monorepo 내부 패키지를 Next 가 직접 트랜스파일
+
+## Realtime
+
+Realtime 구독 로직은 `@todo-list/core` 단일 위치에서 관리한다 (web/mobile 공유). 컴포넌트는 훅을 import 해서 사용만 한다.
+
+```ts
+import { subscribeTodos } from '@todo-list/core/realtime/subscribeTodos';
+
+useEffect(() => {
+  const unsub = subscribeTodos({ userId, onChange: handleChange });
+  return () => unsub();
+}, [userId]);
+```
 
 ## 반응형 기준
 

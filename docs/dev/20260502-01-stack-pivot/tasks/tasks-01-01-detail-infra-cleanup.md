@@ -9,7 +9,7 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md` Infra 항목 정리 (도메인 제거 + 주석 보강)
+- [x] `docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md` Infra 항목 정리 (도메인 제거 + 주석 보강)
 
 ## 구현 세부사항
 
@@ -39,6 +39,6 @@
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "기본 도메인" docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md` 결과 0건 (legacy 인용 외)
-- [ ] 라인 360 주변에 Vercel `<slug>.vercel.app` 표현 주석이 추가되어 있다
-- [ ] 변경 외 섹션은 diff 가 발생하지 않는다 (`git diff` 로 확인)
+- [x] `grep -n "기본 도메인" docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md` 결과 0건 (legacy 인용 외)
+- [x] 라인 360 주변에 Vercel `<slug>.vercel.app` 표현 주석이 추가되어 있다
+- [x] 변경 외 섹션은 diff 가 발생하지 않는다 (`git diff` 로 확인)

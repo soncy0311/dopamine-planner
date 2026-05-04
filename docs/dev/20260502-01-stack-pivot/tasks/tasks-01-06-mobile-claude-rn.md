@@ -9,11 +9,11 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/mobile/CLAUDE.md` 라인 29~34 WebView 핵심 동작 블록 삭제
-- [ ] `apps/mobile/CLAUDE.md` 라인 3~6 개요 갱신 (WebView 래퍼 → RN 네이티브)
-- [ ] `apps/mobile/CLAUDE.md` 기술 스택에서 `react-native-webview` 제거, expo-auth-session / Nativewind v4 / @todo-list/core 추가
-- [ ] `apps/mobile/CLAUDE.md` 디렉토리 구조 항목을 expo-router `(auth)/`, `(main)/{life,work,settings}/` 로 갱신
-- [ ] `apps/mobile/CLAUDE.md` 신규 섹션 "OAuth (expo-auth-session)" 및 "Nativewind v4 설정" 추가
+- [x] `apps/mobile/CLAUDE.md` 라인 29~34 WebView 핵심 동작 블록 삭제
+- [x] `apps/mobile/CLAUDE.md` 라인 3~6 개요 갱신 (WebView 래퍼 → RN 네이티브)
+- [x] `apps/mobile/CLAUDE.md` 기술 스택에서 `react-native-webview` 제거, expo-auth-session / Nativewind v4 / @todo-list/core 추가
+- [x] `apps/mobile/CLAUDE.md` 디렉토리 구조 항목을 expo-router `(auth)/`, `(main)/{life,work,settings}/` 로 갱신
+- [x] `apps/mobile/CLAUDE.md` 신규 섹션 "OAuth (expo-auth-session)" 및 "Nativewind v4 설정" 추가
 
 ## 구현 세부사항
 
@@ -84,10 +84,10 @@ apps/mobile/src/app/
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "react-native-webview" apps/mobile/CLAUDE.md` 결과 0건
-- [ ] `grep -n "WebView 래퍼" apps/mobile/CLAUDE.md` 결과 0건
-- [ ] `grep -n "expo-auth-session" apps/mobile/CLAUDE.md` 결과 1건 이상
-- [ ] `grep -n "nativewind" apps/mobile/CLAUDE.md` (대소문자 무시) 결과 1건 이상
-- [ ] `grep -n "@todo-list/core" apps/mobile/CLAUDE.md` 결과 1건 이상
-- [ ] 디렉토리 구조 블록에 `(auth)` / `(main)/life` / `(main)/work` / `(main)/settings` 모두 존재
-- [ ] "OAuth (expo-auth-session)" / "Nativewind v4 설정" 신규 섹션이 모두 존재
+- [x] `grep -n "react-native-webview" apps/mobile/CLAUDE.md` 결과 0건
+- [x] `grep -n "WebView 래퍼" apps/mobile/CLAUDE.md` 결과 0건
+- [x] `grep -n "expo-auth-session" apps/mobile/CLAUDE.md` 결과 1건 이상
+- [x] `grep -n "nativewind" apps/mobile/CLAUDE.md` (대소문자 무시) 결과 1건 이상
+- [x] `grep -n "@todo-list/core" apps/mobile/CLAUDE.md` 결과 1건 이상
+- [x] 디렉토리 구조 블록에 `(auth)` / `(main)/life` / `(main)/work` / `(main)/settings` 모두 존재
+- [x] "OAuth (expo-auth-session)" / "Nativewind v4 설정" 신규 섹션이 모두 존재

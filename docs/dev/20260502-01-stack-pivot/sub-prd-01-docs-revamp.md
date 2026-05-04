@@ -7,7 +7,7 @@
 - **시작일**: 2026-05-04
 - **종료일**: 2026-05-04
 - **최신 업데이트**: 2026-05-04
-- **상태**: 진행전
+- **상태**: 완료
 
 ## 배경 및 목적
 
@@ -87,36 +87,36 @@ main-prd-stack-pivot.md §책임 경계 규칙 표를 그대로 인용하고 "�
 
 ## 작업
 
-- [ ] `docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md` Infra 항목 정리 (도메인 제거 + 주석 보강)
-- [ ] `docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` §1.2 라인 25 갱신 (Next.js API Routes 표현 제거)
-- [ ] `API_CONTRACT.md` §1.1 표에서 "Next.js API Routes" 행을 "Postgres RPC 함수" 로 교체
-- [ ] `API_CONTRACT.md` §4 (라인 383~448) 전체 삭제
-- [ ] `API_CONTRACT.md` 신규 §4 "Postgres RPC 함수" 섹션 추가 (`carry_over_todos`, `recalc_epic_progress` 시그니처 + SECURITY DEFINER 원칙)
-- [ ] 루트 `CLAUDE.md` 라인 31 web/mobile 설명에서 WebView 표현 제거
-- [ ] 루트 `CLAUDE.md` "프로젝트 구조" 표에 `packages/core` 행 추가
-- [ ] 루트 `CLAUDE.md` "기술 스택" 표 Mobile 행 (`+WebView` 제거), API 행 (Next.js API Routes → Supabase RPC), Nativewind v4 행 추가
-- [ ] `docs/CLAUDE.md` 신규 섹션 "책임 경계 규칙 (v2)" 추가 (main PRD 표 인용 + source of truth 명시)
-- [ ] `apps/web/CLAUDE.md` 라인 3~5 개요 갱신 (모바일 WebView 로드 표현 제거 → 정적 SPA)
-- [ ] `apps/web/CLAUDE.md` 라인 31 `api/` 설명을 OAuth 콜백 전용으로 한정
-- [ ] `apps/web/CLAUDE.md` 에 `output: 'export'` 및 `transpilePackages: ['@todo-list/core', '@todo-list/ui', '@todo-list/shared']` 명시
-- [ ] `apps/web/CLAUDE.md` 에 Realtime 구독 훅(`@todo-list/core/realtime/subscribeTodos`) 사용 안내 추가
-- [ ] `apps/mobile/CLAUDE.md` 라인 29~34 WebView 핵심 동작 블록 삭제
-- [ ] `apps/mobile/CLAUDE.md` 라인 3~6 개요 갱신 (WebView 래퍼 → RN 네이티브)
-- [ ] `apps/mobile/CLAUDE.md` 기술 스택에서 `react-native-webview` 제거, expo-auth-session / Nativewind v4 / @todo-list/core 추가
-- [ ] `apps/mobile/CLAUDE.md` 디렉토리 구조 항목을 expo-router `(auth)/`, `(main)/{life,work,settings}/` 로 갱신
-- [ ] `apps/mobile/CLAUDE.md` 신규 섹션 "OAuth (expo-auth-session)" 및 "Nativewind v4 설정" 추가
-- [ ] grep 으로 6개 문서 내 잔존 표현 0건 확인 (`react-native-webview`, `WebView 래퍼`, `Next.js API Routes (비즈니스 로직)`, `SERVICE_ROLE_KEY` 클라이언트 노출)
+- [x] `docs/dev/20260502-02-todo-list-initialize/detail-todo-service-initialize.md` Infra 항목 정리 (도메인 제거 + 주석 보강)
+- [x] `docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` §1.2 라인 25 갱신 (Next.js API Routes 표현 제거)
+- [x] `API_CONTRACT.md` §1.1 표에서 "Next.js API Routes" 행을 "Postgres RPC 함수" 로 교체
+- [x] `API_CONTRACT.md` §4 (라인 383~448) 전체 삭제
+- [x] `API_CONTRACT.md` 신규 §4 "Postgres RPC 함수" 섹션 추가 (`carry_over_todos`, `recalc_epic_progress` 시그니처 + SECURITY DEFINER 원칙)
+- [x] 루트 `CLAUDE.md` 라인 31 web/mobile 설명에서 WebView 표현 제거
+- [x] 루트 `CLAUDE.md` "프로젝트 구조" 표에 `packages/core` 행 추가
+- [x] 루트 `CLAUDE.md` "기술 스택" 표 Mobile 행 (`+WebView` 제거), API 행 (Next.js API Routes → Supabase RPC), Nativewind v4 행 추가
+- [x] `docs/CLAUDE.md` 신규 섹션 "책임 경계 규칙 (v2)" 추가 (main PRD 표 인용 + source of truth 명시)
+- [x] `apps/web/CLAUDE.md` 라인 3~5 개요 갱신 (모바일 WebView 로드 표현 제거 → 정적 SPA)
+- [x] `apps/web/CLAUDE.md` 라인 31 `api/` 설명을 OAuth 콜백 전용으로 한정
+- [x] `apps/web/CLAUDE.md` 에 `output: 'export'` 및 `transpilePackages: ['@todo-list/core', '@todo-list/ui', '@todo-list/shared']` 명시
+- [x] `apps/web/CLAUDE.md` 에 Realtime 구독 훅(`@todo-list/core/realtime/subscribeTodos`) 사용 안내 추가
+- [x] `apps/mobile/CLAUDE.md` 라인 29~34 WebView 핵심 동작 블록 삭제
+- [x] `apps/mobile/CLAUDE.md` 라인 3~6 개요 갱신 (WebView 래퍼 → RN 네이티브)
+- [x] `apps/mobile/CLAUDE.md` 기술 스택에서 `react-native-webview` 제거, expo-auth-session / Nativewind v4 / @todo-list/core 추가
+- [x] `apps/mobile/CLAUDE.md` 디렉토리 구조 항목을 expo-router `(auth)/`, `(main)/{life,work,settings}/` 로 갱신
+- [x] `apps/mobile/CLAUDE.md` 신규 섹션 "OAuth (expo-auth-session)" 및 "Nativewind v4 설정" 추가
+- [x] grep 으로 6개 문서 내 잔존 표현 0건 확인 (`react-native-webview`, `WebView 래퍼`, `Next.js API Routes (비즈니스 로직)`, `SERVICE_ROLE_KEY` 클라이언트 노출). `apps/mobile/package.json` / `apps/mobile/src/app/index.tsx` 의 `react-native-webview` 참조는 Sub-PRD 05 범위 (코드 변경 0건 원칙)
 
 ## 검증 기준
 
-- [ ] `grep -rn "react-native-webview" CLAUDE.md docs/CLAUDE.md apps/ docs/dev/20260502-02-todo-list-initialize/` 결과 0건 (의존성 제거 안내 외)
-- [ ] `grep -rn "WebView 래퍼" CLAUDE.md apps/` 결과 0건
-- [ ] `grep -rn "Next.js API Routes" docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` 결과 0건 (legacy 인용 외)
-- [ ] `grep -rn "SUPABASE_SERVICE_ROLE_KEY" apps/web/CLAUDE.md apps/mobile/CLAUDE.md` 결과 0건
-- [ ] `API_CONTRACT.md` §4 의 RPC 함수 시그니처가 main PRD §데이터베이스 스키마 의 마이그레이션 4·5와 동일 함수명·인자명 사용
-- [ ] `docs/CLAUDE.md` 의 책임 경계 표가 `main-prd-stack-pivot.md` §책임 경계 규칙 표와 1:1 일치 (행 수, 영역, 책임 PRD 유형)
-- [ ] 6개 문서의 상대 경로 링크가 유효 (수동 클릭 또는 `find` 로 대상 파일 존재 확인)
-- [ ] 루트 `CLAUDE.md` 프로젝트 구조 표에 `packages/core` 항목 존재 (`grep -n "packages/core" CLAUDE.md`)
+- [x] `grep -rn "react-native-webview" CLAUDE.md docs/CLAUDE.md apps/ docs/dev/20260502-02-todo-list-initialize/` 결과 0건 (의존성 제거 안내 외)
+- [x] `grep -rn "WebView 래퍼" CLAUDE.md apps/` 결과 0건
+- [x] `grep -rn "Next.js API Routes" docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` 결과 0건 (legacy 인용 외)
+- [x] `grep -rn "SUPABASE_SERVICE_ROLE_KEY" apps/web/CLAUDE.md apps/mobile/CLAUDE.md` 결과 0건
+- [x] `API_CONTRACT.md` §4 의 RPC 함수 시그니처가 main PRD §데이터베이스 스키마 의 마이그레이션 4·5와 동일 함수명·인자명 사용
+- [x] `docs/CLAUDE.md` 의 책임 경계 표가 `main-prd-stack-pivot.md` §책임 경계 규칙 표와 1:1 일치 (행 수, 영역, 책임 PRD 유형)
+- [x] 6개 문서의 상대 경로 링크가 유효 (수동 클릭 또는 `find` 로 대상 파일 존재 확인)
+- [x] 루트 `CLAUDE.md` 프로젝트 구조 표에 `packages/core` 항목 존재 (`grep -n "packages/core" CLAUDE.md`)
 
 ---
 

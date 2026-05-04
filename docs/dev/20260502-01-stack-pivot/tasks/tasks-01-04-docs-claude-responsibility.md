@@ -9,7 +9,7 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `docs/CLAUDE.md` 신규 섹션 "책임 경계 규칙 (v2)" 추가 (main PRD 표 인용 + source of truth 명시)
+- [x] `docs/CLAUDE.md` 신규 섹션 "책임 경계 규칙 (v2)" 추가 (main PRD 표 인용 + source of truth 명시)
 
 ## 구현 세부사항
 
@@ -46,8 +46,8 @@
 
 ## 검증 체크리스트
 
-- [ ] `docs/CLAUDE.md` 에 `## 책임 경계 규칙 (v2)` 섹션이 존재한다
-- [ ] 표가 main-prd-stack-pivot.md §책임 경계 규칙 의 표와 행 수 / 영역 / 책임 PRD 유형 1:1 일치
-- [ ] 인용 블록에 main PRD 의 상대 경로 (`docs/dev/20260502-01-stack-pivot/main-prd-stack-pivot.md`) 가 포함되어 있다
-- [ ] 인용 블록에 "single source of truth" 문구가 포함되어 있다
-- [ ] 기존 다른 섹션(폴더 구조, 문서 유형, 작업 순서 등) 에 diff 가 발생하지 않는다
+- [x] `docs/CLAUDE.md` 에 `## 책임 경계 규칙 (v2)` 섹션이 존재한다
+- [x] 표가 main-prd-stack-pivot.md §책임 경계 규칙 의 표와 행 수 / 영역 / 책임 PRD 유형 1:1 일치
+- [x] 인용 블록에 main PRD 의 상대 경로 (`docs/dev/20260502-01-stack-pivot/main-prd-stack-pivot.md`) 가 포함되어 있다
+- [x] 인용 블록에 "single source of truth" 문구가 포함되어 있다
+- [x] 기존 다른 섹션(폴더 구조, 문서 유형, 작업 순서 등) 에 diff 가 발생하지 않는다

@@ -27,9 +27,10 @@
 ```
 todo-list/                  (Monorepo — pnpm + Turborepo)
 ├── apps/
-│   ├── web/                Next.js 15 (React 19) — 메인 클라이언트 + API Routes
-│   └── mobile/             Expo 52 (React Native) — WebView 래퍼
+│   ├── web/                Next.js 15 (React 19) — 정적 SPA (`output: 'export'`, OAuth 콜백 Route Handler 한정)
+│   └── mobile/             Expo 52 (React Native) — 네이티브 클라이언트
 ├── packages/
+│   ├── core/               Supabase 클라이언트·도메인 로직·Realtime 훅 (web/mobile 공유)
 │   ├── ui/                 공유 UI 컴포넌트 (shadcn/ui + Radix)
 │   ├── shared/             공유 타입·유틸
 │   └── config/             공유 설정
@@ -40,10 +41,11 @@ todo-list/                  (Monorepo — pnpm + Turborepo)
 
 | 영역 | 기술 |
 |---|---|
-| Frontend | Next.js 15 (App Router), React 19, TypeScript |
-| Mobile | Expo 52 (React Native) + WebView |
+| Frontend | Next.js 15 (App Router, `output: 'export'` SPA), React 19, TypeScript |
+| Mobile | Expo 52 (React Native 네이티브) |
 | Backend (BaaS) | Supabase (PostgreSQL + Auth + Realtime) |
-| API | Next.js API Routes (Vercel Serverless) |
+| API | Supabase 직접 호출 + Postgres RPC 함수 (`SECURITY DEFINER`) — `packages/core` 의 services 가 단일 호출 진입점. 자체 서버 운영 안 함 — Next.js API Route Handler 는 OAuth 콜백 (`apps/web/src/app/api/auth/callback`) 한정 |
+| 스타일 | Tailwind v4 (web), Nativewind v4 (mobile) — `packages/config/tailwind.config.js` 단일 SoT |
 | SDK | @supabase/supabase-js, @supabase/ssr |
 | Monorepo | pnpm workspaces + Turborepo |
 | Infra | Vercel (프론트엔드) + Supabase (백엔드) |

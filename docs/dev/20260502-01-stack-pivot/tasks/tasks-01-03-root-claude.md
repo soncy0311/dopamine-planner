@@ -9,9 +9,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] 루트 `CLAUDE.md` 라인 31 web/mobile 설명에서 WebView 표현 제거
-- [ ] 루트 `CLAUDE.md` "프로젝트 구조" 표에 `packages/core` 행 추가
-- [ ] 루트 `CLAUDE.md` "기술 스택" 표 Mobile 행 (`+WebView` 제거), API 행 (Next.js API Routes → Supabase RPC), Nativewind v4 행 추가
+- [x] 루트 `CLAUDE.md` 라인 31 web/mobile 설명에서 WebView 표현 제거
+- [x] 루트 `CLAUDE.md` "프로젝트 구조" 표에 `packages/core` 행 추가
+- [x] 루트 `CLAUDE.md` "기술 스택" 표 Mobile 행 (`+WebView` 제거), API 행 (Next.js API Routes → Supabase RPC), Nativewind v4 행 추가
 
 ## 구현 세부사항
 
@@ -55,8 +55,8 @@
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "WebView" CLAUDE.md` 결과 0건
-- [ ] `grep -n "packages/core" CLAUDE.md` 결과 1건 이상 (프로젝트 구조 표)
-- [ ] `grep -n "Nativewind" CLAUDE.md` 결과 1건 이상 (기술 스택 표)
-- [ ] `grep -n "Next.js API Routes" CLAUDE.md` 결과 0건 (OAuth 콜백 등 명시적 한정 표현 외)
-- [ ] 기술 스택 Mobile 행에 `WebView` 단어가 없다
+- [x] `grep -n "WebView" CLAUDE.md` 결과 0건
+- [x] `grep -n "packages/core" CLAUDE.md` 결과 1건 이상 (프로젝트 구조 표)
+- [x] `grep -n "Nativewind" CLAUDE.md` 결과 1건 이상 (기술 스택 표)
+- [x] `grep -n "Next.js API Routes" CLAUDE.md` 결과 0건 (OAuth 콜백 등 명시적 한정 표현 외)
+- [x] 기술 스택 Mobile 행에 `WebView` 단어가 없다

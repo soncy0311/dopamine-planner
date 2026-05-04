@@ -9,7 +9,7 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] grep 으로 6개 문서 내 잔존 표현 0건 확인 (`react-native-webview`, `WebView 래퍼`, `Next.js API Routes (비즈니스 로직)`, `SERVICE_ROLE_KEY` 클라이언트 노출)
+- [x] grep 으로 6개 문서 내 잔존 표현 0건 확인 (`react-native-webview`, `WebView 래퍼`, `Next.js API Routes (비즈니스 로직)`, `SERVICE_ROLE_KEY` 클라이언트 노출)
 
 ## 구현 세부사항
 
@@ -77,11 +77,11 @@ grep -n "packages/core" CLAUDE.md
 
 ## 검증 체크리스트
 
-- [ ] `grep -rn "react-native-webview" CLAUDE.md docs/CLAUDE.md apps/ docs/dev/20260502-02-todo-list-initialize/` 결과 0건 (의존성 제거 안내 외)
-- [ ] `grep -rn "WebView 래퍼" CLAUDE.md apps/` 결과 0건
-- [ ] `grep -rn "Next.js API Routes" docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` 결과 0건 (legacy 인용 외)
-- [ ] `grep -rn "SUPABASE_SERVICE_ROLE_KEY" apps/web/CLAUDE.md apps/mobile/CLAUDE.md` 결과 0건
-- [ ] `API_CONTRACT.md` §4 의 RPC 함수 시그니처가 main PRD §데이터베이스 스키마 마이그레이션 4·5 와 동일 함수명·인자명 사용
-- [ ] `docs/CLAUDE.md` 책임 경계 표가 main PRD 와 1:1 일치 (행 수, 영역, 책임 PRD 유형)
-- [ ] 6개 문서의 상대 경로 링크가 모두 유효 (`find` 또는 수동 점검)
-- [ ] 루트 `CLAUDE.md` 프로젝트 구조 표에 `packages/core` 항목 존재 (`grep -n "packages/core" CLAUDE.md`)
+- [x] `grep -rn "react-native-webview" CLAUDE.md docs/CLAUDE.md apps/ docs/dev/20260502-02-todo-list-initialize/` 결과 0건 (의존성 제거 안내 외)
+- [x] `grep -rn "WebView 래퍼" CLAUDE.md apps/` 결과 0건
+- [x] `grep -rn "Next.js API Routes" docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` 결과 0건 (legacy 인용 외)
+- [x] `grep -rn "SUPABASE_SERVICE_ROLE_KEY" apps/web/CLAUDE.md apps/mobile/CLAUDE.md` 결과 0건
+- [x] `API_CONTRACT.md` §4 의 RPC 함수 시그니처가 main PRD §데이터베이스 스키마 마이그레이션 4·5 와 동일 함수명·인자명 사용
+- [x] `docs/CLAUDE.md` 책임 경계 표가 main PRD 와 1:1 일치 (행 수, 영역, 책임 PRD 유형)
+- [x] 6개 문서의 상대 경로 링크가 모두 유효 (`find` 또는 수동 점검)
+- [x] 루트 `CLAUDE.md` 프로젝트 구조 표에 `packages/core` 항목 존재 (`grep -n "packages/core" CLAUDE.md`)

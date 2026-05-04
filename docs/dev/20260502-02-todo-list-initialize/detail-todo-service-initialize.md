@@ -354,10 +354,10 @@ supabase
 | 공통 패키지 | `@todo-list/shared` (타입), `@todo-list/core` (비즈로직), `@todo-list/ui` (React) | ✅ |
 | **디자인 토큰** | **Tailwind (`packages/config/tailwind.config.js`) + Nativewind v4** — web/mobile className 단일 source of truth (마이그레이션 §4.2) | ✅ |
 | Monorepo | pnpm workspaces + Turborepo | ✅ |
-| Infra | Vercel (웹 SPA 정적 호스팅, 기본 도메인, **git 연동 자동 배포**) + Supabase (DB·Auth·Realtime·RPC) | ✅ |
+| Infra | Vercel (웹 SPA 정적 호스팅, `<slug>.vercel.app` 자동 호스트, **git 연동 자동 배포**) + Supabase (DB·Auth·Realtime·RPC) | ✅ |
 | Desktop (apps/desktop) 🔮 | Electron — 동일 웹 SPA wrapping (`<slug>.vercel.app` loadURL 또는 번들) | 후속 |
 
-> 자체 서버(Node/Next.js API Routes)는 운영하지 않는다. Vercel 은 정적 SPA + OAuth 콜백 Route Handler 만 호스팅.
+> 자체 서버(Node/Next.js API Routes)는 운영하지 않는다. Vercel 은 정적 SPA + OAuth 콜백 Route Handler 만 호스팅. 배포 호스트는 `<slug>.vercel.app` 형태의 Vercel 자동 생성 도메인을 사용한다 — **별도 도메인 구매·연동(커스텀 도메인)은 v2 MVP 범위에 포함하지 않는다**.
 
 ### 6.1 무료 티어 범위
 

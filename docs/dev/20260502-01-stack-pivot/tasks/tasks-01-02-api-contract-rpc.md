@@ -9,10 +9,10 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` §1.2 라인 25 갱신 (Next.js API Routes 표현 제거)
-- [ ] `API_CONTRACT.md` §1.1 표에서 "Next.js API Routes" 행을 "Postgres RPC 함수" 로 교체
-- [ ] `API_CONTRACT.md` §4 (라인 383~448) 전체 삭제
-- [ ] `API_CONTRACT.md` 신규 §4 "Postgres RPC 함수" 섹션 추가 (`carry_over_todos`, `recalc_epic_progress` 시그니처 + SECURITY DEFINER 원칙)
+- [x] `docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` §1.2 라인 25 갱신 (Next.js API Routes 표현 제거)
+- [x] `API_CONTRACT.md` §1.1 표에서 "Next.js API Routes" 행을 "Postgres RPC 함수" 로 교체
+- [x] `API_CONTRACT.md` §4 (라인 383~448) 전체 삭제
+- [x] `API_CONTRACT.md` 신규 §4 "Postgres RPC 함수" 섹션 추가 (`carry_over_todos`, `recalc_epic_progress` 시그니처 + SECURITY DEFINER 원칙)
 
 ## 구현 세부사항
 
@@ -67,7 +67,7 @@
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "Next.js API Routes" docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` 결과 0건 (legacy 인용 외)
-- [ ] §4 첫 문단에 `SECURITY DEFINER` + `auth.uid()` null 체크 + `grant execute … to authenticated` 문구 모두 존재
-- [ ] §4.1 / §4.2 함수 시그니처가 main-prd-stack-pivot.md §데이터베이스 스키마 와 1:1 일치 (함수명, 인자명, 반환 타입)
-- [ ] §1.1 표에 "Postgres RPC 함수" 행이 추가되었고, "Next.js API Routes" 행이 제거되었다
+- [x] `grep -n "Next.js API Routes" docs/dev/20260502-02-todo-list-initialize/API_CONTRACT.md` 결과 0건 (legacy 인용 외)
+- [x] §4 첫 문단에 `SECURITY DEFINER` + `auth.uid()` null 체크 + `grant execute … to authenticated` 문구 모두 존재
+- [x] §4.1 / §4.2 함수 시그니처가 main-prd-stack-pivot.md §데이터베이스 스키마 와 1:1 일치 (함수명, 인자명, 반환 타입)
+- [x] §1.1 표에 "Postgres RPC 함수" 행이 추가되었고, "Next.js API Routes" 행이 제거되었다

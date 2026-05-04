@@ -55,6 +55,22 @@ docs/
 - 구현 명세: `base/design-system/` (README, components, accessibility, tokens)
 - 실제 구현은 `packages/ui/src/`에 위치하며, 이 문서는 설계 명세 역할을 한다
 
+## 책임 경계 규칙 (v2)
+
+> 본 표는 [`docs/dev/20260502-01-stack-pivot/main-prd-stack-pivot.md`](dev/20260502-01-stack-pivot/main-prd-stack-pivot.md) §책임 경계 규칙 의 single source of truth 사본이다. 변경 시 main PRD 부터 갱신한 뒤 본 문서로 전파한다.
+
+| 영역 | 책임 PRD 유형 |
+|---|---|
+| `supabase/migrations/**`, `supabase/**` | DB PRD (이전 "서버 PRD" 의 후신) |
+| `packages/shared/**` (타입·enum) | DB PRD (스키마 변경의 결과물) |
+| `packages/core/**` (비즈니스 로직) | 공통 클라이언트 PRD |
+| `packages/ui/**` (`packages/ui-mobile/**` 미신설 — 모바일 RN 컴포넌트는 `apps/mobile/src/components/**`) | UI PRD 또는 공통 클라이언트 PRD |
+| `apps/web/**` | 웹 PRD |
+| `apps/mobile/**` | 모바일 PRD |
+| `apps/desktop/**` 🔮 후속 | 데스크탑 PRD (MVP 범위 밖) |
+
+→ "Vercel Serverless 백엔드" 가 사라지므로 기존 "서버 vs 클라이언트" 경계가 무의미. **DB / 공통 클라이언트 / 플랫폼별 클라이언트** 3계층으로 재정립.
+
 ## 네이밍 규칙
 
 - 폴더명: `yyyymmdd-nn-{project-name}` (kebab-case 영문, nn은 순번)
