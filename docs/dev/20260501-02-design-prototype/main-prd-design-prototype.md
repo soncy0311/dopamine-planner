@@ -310,7 +310,7 @@ docs/base/prototype/
 ```
 
 - **단일 HTML 파일**: 외부 의존성 없이 브라우저에서 바로 열 수 있다
-- **CSS Custom Properties**: `docs/base/design-system/tokens/*.css`에 정의된 토큰을 그대로 사용
+- **CSS Custom Properties**: `docs/base/design-system/tokens.md` 의 명세를 따라 `:root` 에 직접 정의
 - **Lucide Icons**: CDN 또는 인라인 SVG로 포함
 - **Pretendard 폰트**: CDN으로 로드
 
@@ -404,13 +404,12 @@ SubIssue (오늘):
 - 디자인 시스템 상세: `docs/dev/20260501-01-design-system/detail-design-system.md`
 - 컴포넌트 명세: `docs/base/design-system/components.md`
 - 접근성 가이드: `docs/base/design-system/accessibility.md`
-- 디자인 토큰: `docs/base/design-system/tokens/`
-  - `colors.css` — Primitive Color Tokens
-  - `semantic.css` — Semantic Color Tokens
-  - `components.css` — Component Tokens
-  - `typography.css` — Typography Tokens
-  - `spacing.css` — Spacing & Layout Tokens
-  - `motion.css` — Motion Tokens
+- 디자인 토큰 명세:
+  - `docs/base/design-system/tokens.md` — Primitive / Semantic / Component 컬러 토큰 + 토큰 요약
+  - `docs/base/design-system/color-system.md` — 팔레트 도출 근거 + WCAG 검증
+  - `docs/base/design-system/typography.md` — 폰트 / 타입 스케일 / 가중치
+  - `docs/base/design-system/spacing.md` — 간격 / 반경 / 브레이크포인트
+  - `docs/base/design-system/motion.md` — duration / easing
 - 컬러 팔레트 원본: `docs/dev/20260501-01-design-system/colors/`
 
 ---

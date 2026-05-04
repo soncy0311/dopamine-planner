@@ -304,7 +304,7 @@ Lucide Icons 10개를 인라인 SVG로 포함한다.
 
 ### 토큰 정의 방식
 
-`<style>` 내에 `:root`로 모든 토큰을 정의한다. `docs/base/design-system/tokens/*.css`의 값을 그대로 옮긴다.
+`<style>` 내에 `:root`로 모든 토큰을 정의한다. 토큰 값은 `docs/base/design-system/tokens.md` (Primitive/Semantic/Component) 와 `docs/base/design-system/{typography,spacing,motion}.md` 의 표 값을 그대로 옮긴다.
 
 ```css
 :root {
@@ -328,7 +328,7 @@ Lucide Icons 10개를 인라인 SVG로 포함한다.
 
 ## 구현 시 주의사항
 
-1. **토큰 값 정확성**: `docs/base/design-system/tokens/*.css`에 정의된 값과 정확히 일치해야 한다. 값을 임의로 변경하지 않는다
+1. **토큰 값 정확성**: `docs/base/design-system/tokens.md`, `typography.md`, `spacing.md`, `motion.md` 의 표에 정의된 값과 정확히 일치해야 한다. 값을 임의로 변경하지 않는다
 2. **계층 참조 유지**: Semantic 토큰은 반드시 Primitive 토큰의 `var()` 참조를 사용한다. Component 토큰은 Semantic 토큰을 참조한다. 직접 HEX 값을 쓰지 않는다
 3. **SVG 심볼 재사용**: 아이콘 SVG는 `<defs>` 내 `<symbol>`로 정의하고 `<use href="#icon-name">`으로 참조한다. 동일 아이콘을 여러 곳에서 사용할 때 마크업 중복을 방지한다
 4. **프로토타입 스타일 분리**: 프로토타입 자체의 레이아웃 스타일(섹션 배경, 그리드 등)은 `proto-` 접두사 클래스를 사용하여 디자인 시스템 토큰/스타일과 구분한다

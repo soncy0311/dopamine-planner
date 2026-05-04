@@ -5,7 +5,7 @@
 - **Sub-PRD**: `sub-prd-01-feat-tokens-icons.md`
 - **의존성**: 없음 (기반 작업)
 - **대상 파일**: `docs/base/prototype/index.html`
-- **참조 파일**: `docs/base/design-system/tokens/*.css` (모든 토큰 값)
+- **참조 파일**: `docs/base/design-system/tokens.md`, `color-system.md`, `typography.md`, `spacing.md`, `motion.md` (모든 토큰 값 — 표 기준)
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
@@ -71,9 +71,9 @@ Pretendard Variable과 JetBrains Mono를 CDN으로 로드한다. 폴백 폰트�
 
 ### 4. 토큰 정의 (:root)
 
-`<style>` 내 `:root`에 아래 6개 토큰 그룹을 정의한다. 값은 `docs/base/design-system/tokens/*.css`에서 **정확히** 복사한다.
+`<style>` 내 `:root`에 아래 6개 토큰 그룹을 정의한다. 값은 `docs/base/design-system/tokens.md` (Primitive/Semantic/Component) 와 `typography.md` / `spacing.md` / `motion.md` 의 표에서 **정확히** 복사한다.
 
-#### 4.1 Primitive Color Tokens (`colors.css`)
+#### 4.1 Primitive Color Tokens (`tokens.md` § Primitive)
 
 ```css
 :root {
@@ -296,7 +296,7 @@ Semantic 토큰의 `var()` 참조를 사용한다.
 
 ## 주의사항
 
-1. **토큰 값 정확성**: `docs/base/design-system/tokens/*.css`에 정의된 값과 정확히 일치해야 한다
+1. **토큰 값 정확성**: `docs/base/design-system/tokens.md`, `typography.md`, `spacing.md`, `motion.md` 의 표에 정의된 값과 정확히 일치해야 한다
 2. **계층 참조 유지**: Semantic → Primitive `var()` 참조, Component → Semantic `var()` 참조. 직접 HEX 값을 쓰지 않는다
 3. **프로토타입 스타일 분리**: 프로토타입 레이아웃용 스타일은 `proto-` 접두사 클래스를 사용한다
 4. **폰트 폴백**: CDN 로딩 실패를 대비하여 시스템 폰트 폴백을 지정한다

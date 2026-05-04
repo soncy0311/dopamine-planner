@@ -1,7 +1,17 @@
 # 컴포넌트 명세
 
 > Atomic Design 방법론에 따라 Atoms → Molecules → Organisms → Templates 순으로 구성.
-> 모든 컴포넌트는 shadcn/ui + Radix Primitives 기반으로 구현하며, `packages/ui/src/components/` 에 위치한다.
+
+## 이 문서의 역할
+
+본 문서는 컴포넌트의 **명세**이며 구현체가 아니다.
+
+| 플랫폼 | 구현 위치 | 기반 |
+|---|---|---|
+| Web | `packages/ui/src/components/` | shadcn/ui + Radix Primitives + Tailwind |
+| Mobile (RN) | `apps/mobile/src/components/` | RN 네이티브 + Nativewind v4 (재사용 누적 시 `packages/ui-mobile` 추출) |
+
+각 컴포넌트의 토큰 참조는 [`tokens.md`](./tokens.md) 의 Component 섹션과 1:1 일치한다.
 
 ---
 

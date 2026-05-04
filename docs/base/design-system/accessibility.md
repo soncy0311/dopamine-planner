@@ -1,6 +1,6 @@
 # 접근성 가이드라인
 
-> WCAG 2.1 AA 기준 준수. Radix Primitives의 내장 접근성 지원을 기반으로 한다.
+> WCAG 2.1 AA 기준 준수. Web 은 Radix Primitives 의 내장 접근성, Mobile(RN) 은 React Native Accessibility API + Expo `expo-accessibility` 를 기반으로 구현한다.
 
 ---
 
@@ -40,7 +40,7 @@
 | 인라인 링크 | 충분한 패딩으로 44px 확보 |
 | 아이콘 버튼 | 아이콘 24px + 패딩으로 44px 이상 |
 
-> 모바일 WebView 환경에서 필수. 시각적 크기가 작아도 터치 영역은 44px 이상이어야 한다.
+> 모바일 RN 네이티브 환경에서 필수. 시각적 크기가 작아도 터치 영역은 44px 이상이어야 한다.
 
 ---
 
