@@ -12,9 +12,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `packages/core/package.json` 작성 (name=`@todo-list/core`, exports, deps, peerDeps)
-- [ ] `packages/core/tsconfig.json` 작성 (`extends: @todo-list/config/tsconfig.base.json`, strict)
-- [ ] `packages/core/src/index.ts` 신설 (하위 모듈 re-export)
+- [x] `packages/core/package.json` 작성 (name=`@todo-list/core`, exports, deps, peerDeps)
+- [x] `packages/core/tsconfig.json` 작성 (`extends: @todo-list/config/tsconfig.base.json`, strict)
+- [x] `packages/core/src/index.ts` 신설 (하위 모듈 re-export)
 
 ## 구현 세부사항
 
@@ -66,8 +66,8 @@
 
 ## 검증 체크리스트
 
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `packages/core/package.json` 에 `exports` / `peerDependencies` 필드 존재
-- [ ] `packages/core/package.json` `dependencies` 에 `react` / `react-native` / `next` 0건 (`grep -n` 확인)
-- [ ] `packages/core/tsconfig.json` 의 `extends` 가 `@todo-list/config/tsconfig.base.json`
-- [ ] `packages/core/src/index.ts` 존재 (빈 파일 또는 re-export)
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 — 로컬에 node/pnpm 미설치, 02-06 에서 사용자 환경에서 검증 필요
+- [x] `packages/core/package.json` 에 `exports` / `peerDependencies` 필드 존재
+- [x] `packages/core/package.json` `dependencies` 에 `react` / `react-native` / `next` 0건 (`grep -n` 확인)
+- [x] `packages/core/tsconfig.json` 의 `extends` 가 `@todo-list/config/tsconfig.base.json`
+- [x] `packages/core/src/index.ts` 존재 (빈 파일 또는 re-export)

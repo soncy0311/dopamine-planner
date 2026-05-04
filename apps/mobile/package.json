@@ -11,15 +11,17 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@todo-list/core": "workspace:*",
     "@todo-list/shared": "workspace:*",
     "expo": "~52.0.0",
     "expo-router": "~4.0.0",
     "expo-status-bar": "~2.0.0",
+    "nativewind": "^4.0.0",
     "react": "^19.0.0",
     "react-native": "~0.76.0",
     "react-native-safe-area-context": "~5.0.0",
     "react-native-screens": "~4.4.0",
-    "react-native-webview": "^13.12.0"
+    "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

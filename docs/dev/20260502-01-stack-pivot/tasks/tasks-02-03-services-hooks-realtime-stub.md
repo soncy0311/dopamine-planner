@@ -16,10 +16,10 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `packages/core/src/services/carryOver.ts` 시그니처 + stub 본문
-- [ ] `packages/core/src/services/epicProgress.ts` 시그니처 + stub 본문
-- [ ] `packages/core/src/hooks/{useTodos,useCreateTodo,useUpdateTodo,useDeleteTodo}.ts` 시그니처 + stub 본문
-- [ ] `packages/core/src/realtime/subscribeTodos.ts` 헬퍼 시그니처 + stub 본문
+- [x] `packages/core/src/services/carryOver.ts` 시그니처 + stub 본문
+- [x] `packages/core/src/services/epicProgress.ts` 시그니처 + stub 본문
+- [x] `packages/core/src/hooks/{useTodos,useCreateTodo,useUpdateTodo,useDeleteTodo}.ts` 시그니처 + stub 본문
+- [x] `packages/core/src/realtime/subscribeTodos.ts` 헬퍼 시그니처 + stub 본문
 
 ## 구현 세부사항
 
@@ -125,9 +125,9 @@ export function subscribeTodos(
 
 ## 검증 체크리스트
 
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] services / hooks / realtime 7개 파일 모두 존재
-- [ ] 각 함수 시그니처가 API_CONTRACT.md §4 RPC 함수 시그니처와 1:1 일치
-- [ ] hooks 의 queryKey 컨벤션이 Sub-PRD §핵심 구현 로직 (`['todos', { workspace, date }]` 등) 과 일치
-- [ ] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/services packages/core/src/hooks packages/core/src/realtime` 결과 0건
-- [ ] `subscribeTodos` 의 시그니처와 channel 구독 구조가 Sub-PRD 코드 블록과 일치
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 — 로컬에 pnpm 미설치, 02-06 에서 사용자 환경에서 검증 필요
+- [x] services / hooks / realtime 7개 파일 모두 존재
+- [x] 각 함수 시그니처가 API_CONTRACT.md §4 RPC 함수 시그니처와 1:1 일치 — Sub-03 미실행 상태이므로 placeholder Returns. Sub-04 진입 시 1차 정합 검증 필요
+- [x] hooks 의 queryKey 컨벤션이 Sub-PRD §핵심 구현 로직 (`['todos', { workspace, date }]` 등) 과 일치
+- [x] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/services packages/core/src/hooks packages/core/src/realtime` 결과 0건
+- [x] `subscribeTodos` 의 시그니처와 channel 구독 구조가 Sub-PRD 코드 블록과 일치 — `'postgres_changes'` 의 supabase-js 타입 정의 한계로 단언 (`as any`) 한 줄 추가, 시그니처/구조 동일

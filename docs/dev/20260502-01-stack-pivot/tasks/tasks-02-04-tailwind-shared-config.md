@@ -12,9 +12,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `packages/config/tailwind.config.js` 신설 — design-system tokens 매핑 (color/spacing/radius/motion)
-- [ ] `apps/web/tailwind.config.ts` 신설 (`packages/config/tailwind.config.js` import + content paths)
-- [ ] `apps/mobile/tailwind.config.js` 신설 (동일 import + content paths)
+- [x] `packages/config/tailwind.config.js` 신설 — design-system tokens 매핑 (color/spacing/radius/motion)
+- [x] `apps/web/tailwind.config.ts` 신설 (`packages/config/tailwind.config.js` import + content paths)
+- [x] `apps/mobile/tailwind.config.js` 신설 (동일 import + content paths)
 
 ## 구현 세부사항
 
@@ -107,9 +107,9 @@ module.exports = {
 
 ## 검증 체크리스트
 
-- [ ] `node -e "require('./packages/config/tailwind.config.js')"` 에러 없음
+- [ ] `node -e "require('./packages/config/tailwind.config.js')"` 에러 없음 — 로컬에 node 미설치, 02-06 에서 사용자 환경에서 검증 필요
 - [ ] `node -e "require('./apps/mobile/tailwind.config.js')"` 에러 없음 (Nativewind 미설치 상태에서는 02-06 의 install 후 검증)
-- [ ] `apps/web/tailwind.config.ts` 의 `content` 가 `./src/**/*.{ts,tsx}` 와 `packages/ui/src/**/*.{ts,tsx}` 양쪽 포함
-- [ ] `packages/config/tailwind.config.js` 의 color HEX 값이 `docs/base/design-system/tokens.md` § Primitive 컬러 토큰 표와 일치 (수동 비교)
-- [ ] `apps/mobile/tailwind.config.js` 가 CommonJS (`module.exports`) 형식
-- [ ] `packages/config/tailwind.config.js` 의 `content` 가 빈 배열
+- [x] `apps/web/tailwind.config.ts` 의 `content` 가 `./src/**/*.{ts,tsx}` 와 `packages/ui/src/**/*.{ts,tsx}` 양쪽 포함
+- [x] `packages/config/tailwind.config.js` 의 color HEX 값이 `docs/base/design-system/tokens.md` § Primitive 컬러 토큰 표와 일치 (수동 비교)
+- [x] `apps/mobile/tailwind.config.js` 가 CommonJS (`module.exports`) 형식
+- [x] `packages/config/tailwind.config.js` 의 `content` 가 빈 배열

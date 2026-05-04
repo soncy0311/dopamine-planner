@@ -11,9 +11,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] 루트에서 `pnpm install` 실행 → workspace 의존성 해소
-- [ ] `pnpm -r build` 통과 확인
-- [ ] grep 으로 `packages/core/src/` 내 `window` / `AsyncStorage` / `react-native` import 0건 확인
+- [ ] 루트에서 `pnpm install` 실행 → workspace 의존성 해소 — 로컬에 pnpm 미설치, 사용자 환경에서 실행 필요
+- [ ] `pnpm -r build` 통과 확인 — 로컬에 pnpm 미설치, 사용자 환경에서 실행 필요
+- [x] grep 으로 `packages/core/src/` 내 `window` / `AsyncStorage` / `react-native` import 0건 확인
 
 ## 구현 세부사항
 
@@ -61,12 +61,12 @@ grep -n "@todo-list/core" apps/web/package.json apps/mobile/package.json
 
 ## 검증 체크리스트
 
-- [ ] `pnpm install` 정상 종료 (exit code 0)
-- [ ] `pnpm -r build` 정상 종료 (exit code 0)
-- [ ] `pnpm --filter @todo-list/core typecheck` 정상 종료
-- [ ] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/` 결과 0건
-- [ ] `grep -n "react-native-webview" apps/mobile/package.json` 결과 0건
-- [ ] `grep -n "@todo-list/core" apps/web/package.json` 매치 1건 이상
-- [ ] `grep -n "@todo-list/core" apps/mobile/package.json` 매치 1건 이상
-- [ ] `packages/core/package.json` 의 `peerDependencies` 에 `react` 명시 확인
-- [ ] `pnpm-lock.yaml` 에 nativewind / tailwindcss / @todo-list/core 항목 존재
+- [ ] `pnpm install` 정상 종료 (exit code 0) — 로컬 node/pnpm 미설치, 사용자 환경에서 실행 필요
+- [ ] `pnpm -r build` 정상 종료 (exit code 0) — 동일
+- [ ] `pnpm --filter @todo-list/core typecheck` 정상 종료 — 동일
+- [x] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/` 결과 0건
+- [x] `grep -n "react-native-webview" apps/mobile/package.json` 결과 0건
+- [x] `grep -n "@todo-list/core" apps/web/package.json` 매치 1건 이상
+- [x] `grep -n "@todo-list/core" apps/mobile/package.json` 매치 1건 이상
+- [x] `packages/core/package.json` 의 `peerDependencies` 에 `react` 명시 확인
+- [ ] `pnpm-lock.yaml` 에 nativewind / tailwindcss / @todo-list/core 항목 존재 — `pnpm install` 후 자동 갱신, 사용자 환경에서 확인 필요

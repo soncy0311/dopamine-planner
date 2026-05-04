@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@todo-list/core": "workspace:*",
     "@todo-list/shared": "workspace:*",
     "@todo-list/ui": "workspace:*",
     "next": "^15.1.0",

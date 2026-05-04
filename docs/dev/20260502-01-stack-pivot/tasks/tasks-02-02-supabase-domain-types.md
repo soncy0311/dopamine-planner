@@ -14,9 +14,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `packages/core/src/supabase/createClient.ts` 팩토리 시그니처 + 기본 구현
-- [ ] `packages/core/src/supabase/types.ts` (`SupabaseClient<Database>` alias)
-- [ ] `packages/core/src/domain/{todo,epic,category}.ts` 타입 alias stub
+- [x] `packages/core/src/supabase/createClient.ts` 팩토리 시그니처 + 기본 구현
+- [x] `packages/core/src/supabase/types.ts` (`SupabaseClient<Database>` alias)
+- [x] `packages/core/src/domain/{todo,epic,category}.ts` 타입 alias stub
 
 ## 구현 세부사항
 
@@ -87,8 +87,8 @@ export type TodoView = TodoRow;
 
 ## 검증 체크리스트
 
-- [ ] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/supabase packages/core/src/domain` 결과 0건
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `createClient` 의 시그니처가 Sub-PRD §핵심 구현 로직 코드와 1:1 일치
-- [ ] `supabase/types.ts` 가 `SupabaseClient<Database>` alias 노출
-- [ ] `domain/{todo,epic,category}.ts` 3개 파일 모두 존재 + Row/Insert/Update alias 정의
+- [x] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/supabase packages/core/src/domain` 결과 0건
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 — 로컬에 pnpm 미설치, 02-06 에서 사용자 환경에서 검증 필요
+- [x] `createClient` 의 시그니처가 Sub-PRD §핵심 구현 로직 코드와 1:1 일치
+- [x] `supabase/types.ts` 가 `SupabaseClient<Database>` alias 노출
+- [x] `domain/{todo,epic,category}.ts` 3개 파일 모두 존재 + Row/Insert/Update alias 정의

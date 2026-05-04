@@ -11,9 +11,9 @@
 
 ## 대상 체크리스트 (Sub-PRD 매핑)
 
-- [ ] `apps/web/package.json` 에 `@todo-list/core: workspace:*` 추가
-- [ ] `apps/mobile/package.json` 에 `@todo-list/core: workspace:*`, `nativewind: ^4.0.0`, `tailwindcss: ^3.4.0` 추가
-- [ ] `apps/mobile/package.json` 에서 `react-native-webview` 제거
+- [x] `apps/web/package.json` 에 `@todo-list/core: workspace:*` 추가
+- [x] `apps/mobile/package.json` 에 `@todo-list/core: workspace:*`, `nativewind: ^4.0.0`, `tailwindcss: ^3.4.0` 추가
+- [x] `apps/mobile/package.json` 에서 `react-native-webview` 제거
 
 ## 구현 세부사항
 
@@ -71,11 +71,11 @@
 
 ## 검증 체크리스트
 
-- [ ] `grep -n "@todo-list/core" apps/web/package.json` 매치 1건 이상
-- [ ] `grep -n "@todo-list/core" apps/mobile/package.json` 매치 1건 이상
-- [ ] `grep -n "nativewind" apps/mobile/package.json` 매치 1건 이상
-- [ ] `grep -n "tailwindcss" apps/mobile/package.json` 매치 1건 이상
-- [ ] `grep -n "react-native-webview" apps/mobile/package.json` 결과 0건
-- [ ] `apps/web/package.json` 의 `@todo-list/core` 버전이 `workspace:*`
-- [ ] `apps/mobile/package.json` 의 `@todo-list/core` 버전이 `workspace:*`
-- [ ] JSON 문법 유효 (`node -e "require('./apps/web/package.json')"`, `node -e "require('./apps/mobile/package.json')"` 에러 없음)
+- [x] `grep -n "@todo-list/core" apps/web/package.json` 매치 1건 이상
+- [x] `grep -n "@todo-list/core" apps/mobile/package.json` 매치 1건 이상
+- [x] `grep -n "nativewind" apps/mobile/package.json` 매치 1건 이상
+- [x] `grep -n "tailwindcss" apps/mobile/package.json` 매치 1건 이상
+- [x] `grep -n "react-native-webview" apps/mobile/package.json` 결과 0건
+- [x] `apps/web/package.json` 의 `@todo-list/core` 버전이 `workspace:*`
+- [x] `apps/mobile/package.json` 의 `@todo-list/core` 버전이 `workspace:*`
+- [x] JSON 문법 유효 (python3 `json.load` 로 5개 package.json 검증 — 로컬 node 미설치로 대체)

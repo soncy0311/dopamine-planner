@@ -7,7 +7,7 @@
 - **시작일**: 2026-05-04
 - **종료일**: 2026-05-04
 - **최신 업데이트**: 2026-05-04
-- **상태**: 진행전
+- **상태**: 구현 완료 (코드 변경 적용됨, `pnpm install` / build / typecheck 는 사용자 환경에서 실행 필요)
 
 ## 배경 및 목적
 
@@ -158,35 +158,35 @@ export function subscribeTodos(
 
 ## 작업
 
-- [ ] `packages/core/package.json` 작성 (name=`@todo-list/core`, exports, deps, peerDeps)
-- [ ] `packages/core/tsconfig.json` 작성 (`extends: @todo-list/config/tsconfig.base.json`, strict)
-- [ ] `packages/core/src/index.ts` 신설 (하위 모듈 re-export)
-- [ ] `packages/core/src/supabase/createClient.ts` 팩토리 시그니처 + 기본 구현
-- [ ] `packages/core/src/supabase/types.ts` (`SupabaseClient<Database>` alias)
-- [ ] `packages/core/src/domain/{todo,epic,category}.ts` 타입 alias stub
-- [ ] `packages/core/src/services/carryOver.ts` 시그니처 + stub 본문
-- [ ] `packages/core/src/services/epicProgress.ts` 시그니처 + stub 본문
-- [ ] `packages/core/src/hooks/{useTodos,useCreateTodo,useUpdateTodo,useDeleteTodo}.ts` 시그니처 + stub 본문
-- [ ] `packages/core/src/realtime/subscribeTodos.ts` 헬퍼 시그니처 + stub 본문
-- [ ] `packages/config/tailwind.config.js` 신설 — design-system tokens 매핑 (color/spacing/radius/motion)
-- [ ] `apps/web/package.json` 에 `@todo-list/core: workspace:*` 추가
-- [ ] `apps/mobile/package.json` 에 `@todo-list/core: workspace:*`, `nativewind: ^4.0.0`, `tailwindcss: ^3.4.0` 추가
-- [ ] `apps/mobile/package.json` 에서 `react-native-webview` 제거
-- [ ] `apps/web/tailwind.config.ts` 신설 (`packages/config/tailwind.config.js` import + content paths)
-- [ ] `apps/mobile/tailwind.config.js` 신설 (동일 import + content paths)
-- [ ] 루트에서 `pnpm install` 실행 → workspace 의존성 해소
-- [ ] `pnpm -r build` 통과 확인
-- [ ] grep 으로 `packages/core/src/` 내 `window` / `AsyncStorage` / `react-native` import 0건 확인
+- [x] `packages/core/package.json` 작성 (name=`@todo-list/core`, exports, deps, peerDeps)
+- [x] `packages/core/tsconfig.json` 작성 (`extends: @todo-list/config/tsconfig.base.json`, strict)
+- [x] `packages/core/src/index.ts` 신설 (하위 모듈 re-export)
+- [x] `packages/core/src/supabase/createClient.ts` 팩토리 시그니처 + 기본 구현
+- [x] `packages/core/src/supabase/types.ts` (`SupabaseClient<Database>` alias)
+- [x] `packages/core/src/domain/{todo,epic,category}.ts` 타입 alias stub
+- [x] `packages/core/src/services/carryOver.ts` 시그니처 + stub 본문
+- [x] `packages/core/src/services/epicProgress.ts` 시그니처 + stub 본문
+- [x] `packages/core/src/hooks/{useTodos,useCreateTodo,useUpdateTodo,useDeleteTodo}.ts` 시그니처 + stub 본문
+- [x] `packages/core/src/realtime/subscribeTodos.ts` 헬퍼 시그니처 + stub 본문
+- [x] `packages/config/tailwind.config.js` 신설 — design-system tokens 매핑 (color/spacing/radius/motion)
+- [x] `apps/web/package.json` 에 `@todo-list/core: workspace:*` 추가
+- [x] `apps/mobile/package.json` 에 `@todo-list/core: workspace:*`, `nativewind: ^4.0.0`, `tailwindcss: ^3.4.0` 추가
+- [x] `apps/mobile/package.json` 에서 `react-native-webview` 제거
+- [x] `apps/web/tailwind.config.ts` 신설 (`packages/config/tailwind.config.js` import + content paths)
+- [x] `apps/mobile/tailwind.config.js` 신설 (동일 import + content paths)
+- [ ] 루트에서 `pnpm install` 실행 → workspace 의존성 해소 — 로컬 node/pnpm 미설치, 사용자 환경에서 실행 필요
+- [ ] `pnpm -r build` 통과 확인 — 동일
+- [x] grep 으로 `packages/core/src/` 내 `window` / `AsyncStorage` / `react-native` import 0건 확인
 
 ## 검증 기준
 
-- [ ] `pnpm -r build` 통과 (`packages/core` 가 빈 export 라도 컴파일 성공)
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `apps/mobile/package.json` 에 `react-native-webview` 의존성 없음 (`grep -n "react-native-webview" apps/mobile/package.json` 결과 0건)
-- [ ] `packages/config/tailwind.config.js` 가 `apps/web/tailwind.config.ts` 와 `apps/mobile/tailwind.config.js` 양쪽에서 require 가능 (각 config 파일을 node 로 require 시 에러 없음)
-- [ ] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/` 결과 0건
-- [ ] `apps/web/package.json` 과 `apps/mobile/package.json` 양쪽에 `@todo-list/core: workspace:*` 존재
-- [ ] `packages/core/package.json` 의 `peerDependencies` 에 React 명시 (`react`, mobile 측은 `react-native` 도)
+- [ ] `pnpm -r build` 통과 (`packages/core` 가 빈 export 라도 컴파일 성공) — 로컬 미설치, 사용자 환경에서 실행 필요
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 — 동일
+- [x] `apps/mobile/package.json` 에 `react-native-webview` 의존성 없음 (`grep -n "react-native-webview" apps/mobile/package.json` 결과 0건)
+- [ ] `packages/config/tailwind.config.js` 가 `apps/web/tailwind.config.ts` 와 `apps/mobile/tailwind.config.js` 양쪽에서 require 가능 (각 config 파일을 node 로 require 시 에러 없음) — 로컬 node 미설치, 정적 검증 (CommonJS 형식 / `module.exports` 존재) 만 수행
+- [x] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/` 결과 0건
+- [x] `apps/web/package.json` 과 `apps/mobile/package.json` 양쪽에 `@todo-list/core: workspace:*` 존재
+- [x] `packages/core/package.json` 의 `peerDependencies` 에 React 명시 (`react`, mobile 측은 `react-native` 도) — `react` 명시 완료, `react-native` 는 후속 RN 도입 시점에 추가 예약
 
 ---
 
