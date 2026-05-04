@@ -105,11 +105,23 @@ useEffect(() => {
 
 ## 실행 명령어
 
+루트 `Makefile` 을 단일 진입점으로 사용한다. web dev 는 docker-compose 컨테이너로 동작 (호스트 Node/pnpm 버전 영향 안 받음).
+
 ```bash
-pnpm --filter @todo-list/web dev     # 개발 서버 (localhost:3000)
-pnpm --filter @todo-list/web build   # 프로덕션 빌드
-pnpm --filter @todo-list/web lint    # 린트
+make up           # supabase + web container 한 번에 기동 (http://localhost:3000)
+make down         # 전체 종료
+
+make web-up       # web 컨테이너만 기동
+make web-down     # web 컨테이너만 중지
+make web-logs     # web 컨테이너 log tail
+make web-shell    # web 컨테이너 sh 진입 (디버깅)
+make web-build    # 이미지 강제 rebuild (lockfile 변경 후)
+
+make build        # turbo build (정적 export)
+make lint         # turbo lint
 ```
+
+> `pnpm install` 을 호스트에서 한 뒤에는 `make web-build` 로 컨테이너 이미지를 재빌드해야 lockfile 변경이 반영된다 (node_modules 는 anonymous volume 으로 격리됨).
 
 ## 참고 문서
 

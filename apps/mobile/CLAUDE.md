@@ -73,11 +73,16 @@ apps/mobile/src/app/         # expo-router (그룹 라우팅)
 
 ## 실행 명령어
 
+루트 `Makefile` 을 단일 진입점으로 사용한다. Expo metro / 시뮬레이터는 호스트 macOS 의존이라 docker 미사용.
+
 ```bash
-pnpm --filter @todo-list/mobile dev       # Expo 개발 서버
-pnpm --filter @todo-list/mobile ios       # iOS 시뮬레이터 실행
-pnpm --filter @todo-list/mobile android   # Android 에뮬레이터 실행
+make mobile-dev       # Expo 개발 서버
+make mobile-ios       # iOS 시뮬레이터
+make mobile-android   # Android 에뮬레이터
+make mobile-build     # 프로덕션 빌드 안내 (eas build)
 ```
+
+> Supabase 가 필요하면 사전에 `make sb-start` (또는 `make up`) 로 기동.
 
 ## 주의사항
 
