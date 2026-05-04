@@ -26,7 +26,7 @@ endif
 
 WEB_FILTER    := --filter @todo-list/web
 MOBILE_FILTER := --filter @todo-list/mobile
-COMPOSE       := docker compose
+COMPOSE       := docker compose -f scripts/docker-compose.yml --project-directory .
 
 .PHONY: help doctor install clean \
 	dev build lint test typecheck format \
