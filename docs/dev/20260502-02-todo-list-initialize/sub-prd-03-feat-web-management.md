@@ -6,8 +6,8 @@
 - **작업 유형**: `feat` (새로운 기능 추가)
 - **시작일**: 2026-05-05
 - **종료일**: TBD
-- **최신 업데이트**: 2026-05-05
-- **상태**: 진행전
+- **최신 업데이트**: 2026-05-05 (task 14 완료 — 정적 검증 + grep 정책 통과 / 수동 시나리오는 사용자 확인 대기)
+- **상태**: 완료 (자동 검증) / 수동 시나리오 사용자 확인 대기
 - **Main PRD**: [`main-prd-todo-list-initialize.md`](./main-prd-todo-list-initialize.md)
 - **선행 Sub-PRD**: [`sub-prd-01-feat-core-services.md`](./sub-prd-01-feat-core-services.md), [`sub-prd-02-feat-web-main-view.md`](./sub-prd-02-feat-web-main-view.md)
 
@@ -156,38 +156,40 @@ async function logout() {
 
 ## 작업
 
-- [ ] `apps/web/src/components/modals/CreateTodoModal.tsx` 신설
-- [ ] `apps/web/src/components/modals/TodoDetailModal.tsx` 신설 (수정·삭제 통합)
-- [ ] `apps/web/src/components/modals/CategoryFormModal.tsx` 신설 (생성·수정)
-- [ ] `apps/web/src/components/modals/EpicFormModal.tsx` 신설 (생성·수정)
-- [ ] `apps/web/src/components/modals/ConfirmDeleteDialog.tsx` 신설 (공용 confirm)
-- [ ] `apps/web/src/app/(main)/life/categories/page.tsx` 신설
-- [ ] `apps/web/src/app/(main)/work/categories/page.tsx` 신설
-- [ ] `apps/web/src/app/(main)/life/epics/page.tsx` 신설
-- [ ] `apps/web/src/app/(main)/work/epics/page.tsx` 신설
-- [ ] `apps/web/src/app/(main)/settings/page.tsx` 신설
-- [ ] `apps/web/src/components/SideNav.tsx` 수정 — `설정` 항목 추가
-- [ ] `apps/web/src/components/MainDailyView.tsx` 수정 — FAB onClick 에 `<CreateTodoModal>` open 연결
-- [ ] `apps/web/src/components/TodoItem.tsx` 수정 — 클릭 시 `<TodoDetailModal>` open
-- [ ] `apps/web/src/lib/forms/schemas.ts` 신설 (Zod 스키마)
-- [ ] `apps/web/src/lib/auth/logout.ts` 신설 (`signOut + qc.clear + redirect`)
-- [ ] FK 에러 친화 토스트 처리
-- [ ] `pnpm --filter @todo-list/web build` 통과
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
-- [ ] `pnpm --filter @todo-list/web lint` 통과
+- [x] `apps/web/src/components/modals/CreateTodoModal.tsx` 신설
+- [x] `apps/web/src/components/modals/TodoDetailModal.tsx` 신설 (수정·삭제 통합)
+- [x] `apps/web/src/components/modals/CategoryFormModal.tsx` 신설 (생성·수정)
+- [x] `apps/web/src/components/modals/EpicFormModal.tsx` 신설 (생성·수정)
+- [x] `apps/web/src/components/modals/ConfirmDeleteDialog.tsx` 신설 (공용 confirm)
+- [x] `apps/web/src/app/(main)/life/categories/page.tsx` 신설
+- [x] `apps/web/src/app/(main)/work/categories/page.tsx` 신설
+- [x] `apps/web/src/app/(main)/life/epics/page.tsx` 신설
+- [x] `apps/web/src/app/(main)/work/epics/page.tsx` 신설
+- [x] `apps/web/src/app/(main)/settings/page.tsx` 신설
+- [x] `apps/web/src/components/SideNav.tsx` 수정 — `설정` 항목 추가 (sub-02 산출로 이미 적용)
+- [x] `apps/web/src/components/MainDailyView.tsx` 수정 — FAB onClick 에 `<CreateTodoModal>` open 연결
+- [x] `apps/web/src/components/TodoItem.tsx` 수정 — 클릭 시 `<TodoDetailModal>` open (sub-02 가 onPress 콜백 prop 으로 분리, host 인 MainDailyView 에서 setDetailTodoId 연결)
+- [x] `apps/web/src/lib/forms/schemas.ts` 신설 (Zod 스키마)
+- [x] `apps/web/src/lib/auth/logout.ts` 신설 (`signOut + qc.clear + redirect`)
+- [x] FK 에러 친화 토스트 처리
+- [x] `pnpm --filter @todo-list/web build` 통과 ✅ 2026-05-05
+- [x] `pnpm --filter @todo-list/web typecheck` 통과 ✅ 2026-05-05
+- [x] `pnpm --filter @todo-list/web lint` 통과 ✅ 2026-05-05
 
 ## 검증 기준
 
-- [ ] 신규 사용자 시뮬레이션 — `/life/categories` 진입 → 분류 1개 생성 → `/life/epics` 에서 Epic 1개 생성 → `/life` 에서 FAB → Sub 1개 생성 → 토글 → 완료 섹션 이동 (5단계 시나리오 통과)
-- [ ] 분류 삭제 시 하위 Epic 존재하면 친화 토스트 (`이 분류에 Epic 이 있어 삭제할 수 없어요`)
-- [ ] Epic 메인 체크박스 토글 시 하위 Sub 일괄 토글 + 진행률 100% 또는 0% 즉시 반영
-- [ ] 설정 화면 로그아웃 → `/login` 으로 redirect + 이후 `/life` 직접 진입 시 다시 로그인 화면
-- [ ] 다른 계정으로 재로그인 시 이전 계정의 데이터가 캐시에 남지 않음 (`qc.clear()` 검증)
-- [ ] 모달 ESC / overlay 클릭으로 닫기 동작
-- [ ] 데스크톱 뷰포트에서 모달은 카드, 모바일 뷰포트(<640px) 에서 모달은 풀스크린
-- [ ] cascading select — 분류 변경 시 Epic 선택값이 null 로 초기화
-- [ ] `pnpm --filter @todo-list/web build` 통과
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+> **수동 항목** (브라우저 시나리오 8종) 은 agent 직접 수행 불가로 사용자 확인 후 [x] 마킹 필요. **자동 항목** (build / typecheck) 은 task 14 에서 통과 확인 완료.
+
+- [ ] 신규 사용자 시뮬레이션 — `/life/categories` 진입 → 분류 1개 생성 → `/life/epics` 에서 Epic 1개 생성 → `/life` 에서 FAB → Sub 1개 생성 → 토글 → 완료 섹션 이동 (5단계 시나리오 통과) — **수동 확인 필요**
+- [ ] 분류 삭제 시 하위 Epic 존재하면 친화 토스트 (`이 분류에 Epic 이 있어 삭제할 수 없어요`) — **수동 확인 필요**
+- [ ] Epic 메인 체크박스 토글 시 하위 Sub 일괄 토글 + 진행률 100% 또는 0% 즉시 반영 — **수동 확인 필요**
+- [ ] 설정 화면 로그아웃 → `/login` 으로 redirect + 이후 `/life` 직접 진입 시 다시 로그인 화면 — **수동 확인 필요**
+- [ ] 다른 계정으로 재로그인 시 이전 계정의 데이터가 캐시에 남지 않음 (`qc.clear()` 검증) — **수동 확인 필요**
+- [ ] 모달 ESC / overlay 클릭으로 닫기 동작 — **수동 확인 필요**
+- [ ] 데스크톱 뷰포트에서 모달은 카드, 모바일 뷰포트(<640px) 에서 모달은 풀스크린 — **수동 확인 필요**
+- [ ] cascading select — 분류 변경 시 Epic 선택값이 null 로 초기화 — **수동 확인 필요**
+- [x] `pnpm --filter @todo-list/web build` 통과 ✅ 2026-05-05
+- [x] `pnpm --filter @todo-list/web typecheck` 통과 ✅ 2026-05-05
 
 ---
 

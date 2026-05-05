@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 02
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (zod / @hookform/resolvers 설치 완료)
 
 ## 작업 목표
@@ -58,11 +58,11 @@ export type EpicFormValues = z.infer<typeof EpicFormSchema>;
 
 ## 검증 과정
 
-- [ ] `apps/web/src/lib/forms/schemas.ts` 파일 존재
-- [ ] `TodoFormSchema`, `CategoryFormSchema`, `EpicFormSchema` 3 종 export
-- [ ] 추론 타입 `TodoFormValues` / `CategoryFormValues` / `EpicFormValues` 함께 export
-- [ ] 모든 검증 메시지 한글
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/lib/forms/schemas.ts` 파일 존재
+- [x] `TodoFormSchema`, `CategoryFormSchema`, `EpicFormSchema` 3 종 export
+- [x] 추론 타입 `TodoFormValues` / `CategoryFormValues` / `EpicFormValues` 함께 export
+- [x] 모든 검증 메시지 한글
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
 
 ## 주의사항
 

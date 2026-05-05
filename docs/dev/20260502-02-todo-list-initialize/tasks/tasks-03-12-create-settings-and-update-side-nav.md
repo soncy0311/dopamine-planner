@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 12
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 11 (useLogout)
 
 ## 작업 목표
@@ -93,14 +93,14 @@ export default function SettingsPage() {
 
 ## 검증 과정
 
-- [ ] `apps/web/src/app/(main)/settings/page.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브 + 동적 라우트 미사용 (export 호환)
-- [ ] 계정 정보 (email / displayName) 표시
-- [ ] 분류·Epic 관리 진입 링크 4 개
-- [ ] 로그아웃 버튼 → `useLogout()` 호출
-- [ ] `apps/web/src/components/SideNav.tsx` 에 `/settings` 메뉴 항목 추가
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
-- [ ] `pnpm --filter @todo-list/web build` 통과 (export 정합)
+- [x] `apps/web/src/app/(main)/settings/page.tsx` 파일 존재
+- [x] `'use client'` 디렉티브 + 동적 라우트 미사용 (export 호환)
+- [x] 계정 정보 (email / displayName) 표시
+- [x] 분류·Epic 관리 진입 링크 4 개
+- [x] 로그아웃 버튼 → `useLogout()` 호출
+- [x] `apps/web/src/components/SideNav.tsx` 에 `/settings` 메뉴 항목 추가 (sub-02 산출로 이미 존재 — 본 task 추가 수정 0)
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `pnpm --filter @todo-list/web build` 통과 (export 정합)
 
 ## 주의사항
 

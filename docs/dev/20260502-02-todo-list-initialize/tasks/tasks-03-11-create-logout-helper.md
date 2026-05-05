@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 11
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음 — 공용 helper)
 
 ## 작업 목표
@@ -57,11 +57,11 @@ export async function logout(qc: QueryClient, router: AppRouterInstance) {
 
 ## 검증 과정
 
-- [ ] `apps/web/src/lib/auth/logout.ts` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] `signOut()` → `qc.clear()` → `router.replace('/login')` 순서
-- [ ] `useLogout` 또는 등가 named export
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/lib/auth/logout.ts` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] `signOut()` → `qc.clear()` → `router.replace('/login')` 순서
+- [x] `useLogout` 또는 등가 named export
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
 
 ## 주의사항
 

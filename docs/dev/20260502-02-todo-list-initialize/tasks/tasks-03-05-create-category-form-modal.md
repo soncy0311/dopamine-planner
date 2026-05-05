@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 05
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (의존성), 02 (CategoryFormSchema), 03 (FK toast helper)
 
 ## 작업 목표
@@ -89,15 +89,15 @@ export function CategoryFormModal({ open, onOpenChange, workspace, initial }: Ca
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/modals/CategoryFormModal.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] `CategoryFormSchema` 사용 (task 02)
-- [ ] Radix Dialog `modal={true}` + 풀스크린 모바일 / 카드 데스크톱
-- [ ] 8색 swatch UI + 자유 입력 금지 (input type=color 미사용)
-- [ ] 생성·수정 분기 (`initial` 존재 여부)
-- [ ] `useCreateCategory` / `useUpdateCategory` (Sub-01) 호출
-- [ ] 성공 시 토스트 + 닫기
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/components/modals/CategoryFormModal.tsx` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] `CategoryFormSchema` 사용 (task 02)
+- [x] Radix Dialog `modal={true}` + 풀스크린 모바일 / 카드 데스크톱
+- [x] 8색 swatch UI + 자유 입력 금지 (input type=color 미사용)
+- [x] 생성·수정 분기 (`initial` 존재 여부)
+- [x] `useCreateCategory` / `useUpdateCategory` (Sub-01) 호출
+- [x] 성공 시 토스트 + 닫기
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
 
 ## 주의사항
 

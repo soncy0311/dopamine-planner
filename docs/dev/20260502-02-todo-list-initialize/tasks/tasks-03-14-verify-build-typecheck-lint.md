@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 14
-- **상태**: 대기중
+- **상태**: 완료 (자동 검증 통과 / 수동 시나리오는 사용자 확인 대기)
 - **의존성**: 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13 (이전 모든 task)
 
 ## 작업 목표
@@ -66,15 +66,15 @@ grep -RIn "qc.clear\(\)" apps/web/src/
 
 ### 자동
 
-- [ ] `pnpm --filter @todo-list/ui typecheck` 0 exit
-- [ ] `pnpm --filter @todo-list/web typecheck` 0 exit
-- [ ] `pnpm --filter @todo-list/web lint` 0 exit
-- [ ] `pnpm --filter @todo-list/web build` 0 exit (`output: 'export'` 정합 — 신설 5 페이지 export)
-- [ ] `grep -RIn "supabase.auth.signOut" apps/web/src/` → 1건 (logout.ts)
-- [ ] `grep -RIn "qc.clear\(\)" apps/web/src/` → 1건 (logout.ts)
-- [ ] `grep -RIn "23503" apps/web/src/lib/errors/fkErrorToast.ts` → 1건
+- [x] `pnpm --filter @todo-list/ui typecheck` 0 exit (lint 명령이 tsc --noEmit 으로 동일)
+- [x] `pnpm --filter @todo-list/web typecheck` 0 exit
+- [x] `pnpm --filter @todo-list/web lint` 0 exit
+- [x] `pnpm --filter @todo-list/web build` 0 exit (`output: 'export'` 정합 — 신설 5 페이지 export: `/life/categories`, `/work/categories`, `/life/epics`, `/work/epics`, `/settings`)
+- [x] `grep -RIn "supabase.auth.signOut" apps/web/src/` → 1건 (logout.ts)
+- [x] `grep -RIn "qc.clear\(\)" apps/web/src/` → 1건 (logout.ts)
+- [x] `grep -RIn "23503" apps/web/src/lib/errors/fkErrorToast.ts` → 1건
 
-### 수동 (브라우저)
+### 수동 (브라우저) — **수동 확인 필요** (사용자 책임, agent 직접 수행 불가)
 
 - [ ] 5단계 시나리오 통과 (분류 → Epic → Sub → 토글 → 재진입)
 - [ ] 분류 삭제 FK 23503 → 친화 토스트

@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 01
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음 — Sub-03 의 모든 후속 task 의 기반)
 
 ## 작업 목표
@@ -76,12 +76,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 ## 검증 과정
 
-- [ ] `apps/web/package.json` 에 `react-hook-form`, `@hookform/resolvers`, `zod`, `sonner` 모두 존재
-- [ ] `packages/ui/package.json` 에 `@radix-ui/react-dialog` 존재
-- [ ] `pnpm-lock.yaml` 갱신 (4 종 + 1 종 최소 5 개 버전 lock 추가)
-- [ ] `apps/web/src/app/layout.tsx` 에 `<Toaster />` 등록 + `sonner` import
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
-- [ ] `pnpm --filter @todo-list/web build` 통과 (`output: 'export'` 정합)
+- [x] `apps/web/package.json` 에 `react-hook-form`, `@hookform/resolvers`, `zod`, `sonner` 모두 존재
+- [x] `packages/ui/package.json` 에 `@radix-ui/react-dialog` 존재
+- [x] `pnpm-lock.yaml` 갱신 (4 종 + 1 종 최소 5 개 버전 lock 추가)
+- [x] `apps/web/src/app/layout.tsx` 에 `<Toaster />` 등록 + `sonner` import
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `pnpm --filter @todo-list/web build` 통과 (`output: 'export'` 정합)
 
 ## 주의사항
 

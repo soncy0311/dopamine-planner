@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 10
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 04 (ConfirmDeleteDialog), 06 (EpicFormModal), 03 (FK toast helper)
 
 ## 작업 목표
@@ -111,16 +111,16 @@ export default function Page() {
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/EpicsView.tsx` 파일 존재
-- [ ] `/life/epics/page.tsx` + `/work/epics/page.tsx` 신설
-- [ ] 두 페이지 모두 `'use client'` + 동적 라우트 미사용 (export 호환)
-- [ ] 분류별 그룹 렌더
-- [ ] `<EpicProgressBar>` (Sub-02 task 04) 사용
-- [ ] 메인 체크박스 → 일괄 토글 호출
-- [ ] 삭제 → ConfirmDeleteDialog → useDeleteEpic → FK 23503 친화 토스트
-- [ ] 추가/수정 → EpicFormModal
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
-- [ ] `pnpm --filter @todo-list/web build` 통과 (export 정합)
+- [x] `apps/web/src/components/EpicsView.tsx` 파일 존재
+- [x] `/life/epics/page.tsx` + `/work/epics/page.tsx` 신설
+- [x] 두 페이지 모두 `'use client'` + 동적 라우트 미사용 (export 호환)
+- [x] 분류별 그룹 렌더
+- [x] `<EpicProgressBar>` (Sub-02 task 04) 사용
+- [x] 메인 체크박스 → 일괄 토글 호출 (인라인 mutation, `from('sub_issue').update().in('id', subIds)` 단일 트랜잭션)
+- [x] 삭제 → ConfirmDeleteDialog → useDeleteEpic → FK 23503 친화 토스트
+- [x] 추가/수정 → EpicFormModal
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `pnpm --filter @todo-list/web build` 통과 (export 정합)
 
 ## 주의사항
 

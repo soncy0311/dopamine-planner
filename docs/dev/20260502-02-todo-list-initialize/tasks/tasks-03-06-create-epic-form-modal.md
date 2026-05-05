@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 06
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (의존성), 02 (EpicFormSchema), 03 (FK toast helper)
 
 ## 작업 목표
@@ -101,14 +101,14 @@ export function EpicFormModal({ open, onOpenChange, workspace, initial }: EpicFo
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/modals/EpicFormModal.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] `EpicFormSchema` 사용 (task 02)
-- [ ] `useCategories(workspace)` 호출 + 옵션 렌더
-- [ ] 수정 모드에서 진행률 표시 (`useEpicProgress` 또는 등가)
-- [ ] `useCreateEpic` / `useUpdateEpic` mutation 호출
-- [ ] Radix Dialog `modal={true}` + 풀스크린 모바일 / 카드 데스크톱
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/components/modals/EpicFormModal.tsx` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] `EpicFormSchema` 사용 (task 02)
+- [x] `useCategories(workspace)` 호출 + 옵션 렌더
+- [ ] 수정 모드에서 진행률 표시 (`useEpicProgress` 또는 등가) — core 훅 미존재로 본 sub 에서는 미사용 (plan §위험과 완화). 후속 sub 에서 `useEpicProgress` 추가 후 표시.
+- [x] `useCreateEpic` / `useUpdateEpic` mutation 호출
+- [x] Radix Dialog `modal={true}` + 풀스크린 모바일 / 카드 데스크톱
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
 
 ## 주의사항
 

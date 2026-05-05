@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 13
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 07 (CreateTodoModal), 08 (TodoDetailModal), Sub-02 task 03 (`<TodoItem>`) + Sub-02 task 08 (`<MainDailyView>`)
 
 ## 작업 목표
@@ -99,13 +99,13 @@ export function MainDailyView({ workspace }: { workspace: Workspace }) {
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/MainDailyView.tsx` 에 `<CreateTodoModal>` + `<TodoDetailModal>` import + 렌더
-- [ ] FAB onClick 이 `setCreateOpen(true)` 트리거
-- [ ] TodoItem 클릭 → onPress → `setDetailTodoId(id)`
-- [ ] `defaultDate={date}` 전달 (현재 선택일 = 메인 뷰의 ?date)
-- [ ] `apps/web/src/components/TodoItem.tsx` 의 클릭 영역 / 토글 체크박스 영역 분리
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
-- [ ] `grep -n "import.*CreateTodoModal\|import.*TodoDetailModal" apps/web/src/components/MainDailyView.tsx` → 2 건
+- [x] `apps/web/src/components/MainDailyView.tsx` 에 `<CreateTodoModal>` + `<TodoDetailModal>` import + 렌더
+- [x] FAB onClick 이 `setCreateOpen(true)` 트리거
+- [x] TodoItem 클릭 → onPress → `setDetailTodoId(id)`
+- [x] `defaultDate={date}` 전달 (현재 선택일 = 메인 뷰의 ?date)
+- [x] `apps/web/src/components/TodoItem.tsx` 의 클릭 영역 / 토글 체크박스 영역 분리 (sub-02 산출 — packages/ui/src/TodoItem.tsx 가 이미 onToggle / onPress 분리. 본 task 추가 수정 0)
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `grep -n "import.*CreateTodoModal\|import.*TodoDetailModal" apps/web/src/components/MainDailyView.tsx` → 2 건
 
 ## 주의사항
 

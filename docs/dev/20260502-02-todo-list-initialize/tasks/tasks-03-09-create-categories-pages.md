@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 09
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 04 (ConfirmDeleteDialog), 05 (CategoryFormModal), 03 (FK toast helper)
 
 ## 작업 목표
@@ -99,15 +99,15 @@ export function CategoriesView({ workspace }: { workspace: 'life' | 'work' }) {
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/CategoriesView.tsx` 파일 존재
-- [ ] `apps/web/src/app/(main)/life/categories/page.tsx` 신설 + `<CategoriesView workspace="life" />`
-- [ ] `apps/web/src/app/(main)/work/categories/page.tsx` 신설 + `<CategoriesView workspace="work" />`
-- [ ] 두 페이지 모두 `'use client'` + 동적 라우트 미사용 (`output: 'export'` 호환)
-- [ ] `useCategories(workspace)` 호출
-- [ ] 추가/수정/삭제 3 인터랙션 연결
-- [ ] 삭제 mutation `onError` 가 `showFkOrDefaultError` 사용 (task 03)
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
-- [ ] `pnpm --filter @todo-list/web build` 통과 (export 정합)
+- [x] `apps/web/src/components/CategoriesView.tsx` 파일 존재
+- [x] `apps/web/src/app/(main)/life/categories/page.tsx` 신설 + `<CategoriesView workspace="life" />`
+- [x] `apps/web/src/app/(main)/work/categories/page.tsx` 신설 + `<CategoriesView workspace="work" />`
+- [x] 두 페이지 모두 `'use client'` + 동적 라우트 미사용 (`output: 'export'` 호환)
+- [x] `useCategories(workspace)` 호출
+- [x] 추가/수정/삭제 3 인터랙션 연결
+- [x] 삭제 mutation `onError` 가 `showFkOrDefaultError` 사용 (task 03)
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `pnpm --filter @todo-list/web build` 통과 (export 정합)
 
 ## 주의사항
 

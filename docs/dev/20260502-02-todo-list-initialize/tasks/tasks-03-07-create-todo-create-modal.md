@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 07
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (의존성), 02 (TodoFormSchema), 03 (FK toast helper)
 
 ## 작업 목표
@@ -95,16 +95,16 @@ export function CreateTodoModal({ open, onOpenChange, workspace, defaultDate }: 
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/modals/CreateTodoModal.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] `TodoFormSchema` 사용 (task 02)
-- [ ] `useCategories(workspace)` + `useEpics(categoryId)` cascading
-- [ ] 분류 변경 → Epic 선택값 reset (`useEffect` 또는 `onChange`)
-- [ ] Epic select 는 categoryId 없을 때 disabled
-- [ ] dueDate 기본값 = `defaultDate` prop (today 가 아님)
-- [ ] `useCreateTodo` mutation 호출
-- [ ] Radix Dialog `modal={true}` + 풀스크린 모바일 / 카드 데스크톱
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/components/modals/CreateTodoModal.tsx` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] `TodoFormSchema` 사용 (task 02)
+- [x] `useCategories(workspace)` + `useEpics(categoryId)` cascading
+- [x] 분류 변경 → Epic 선택값 reset (`useEffect` 또는 `onChange`)
+- [x] Epic select 는 categoryId 없을 때 disabled
+- [x] dueDate 기본값 = `defaultDate` prop (today 가 아님)
+- [x] `useCreateTodo` mutation 호출
+- [x] Radix Dialog `modal={true}` + 풀스크린 모바일 / 카드 데스크톱
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
 
 ## 주의사항
 

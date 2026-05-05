@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 04
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (@radix-ui/react-dialog 설치 완료)
 
 ## 작업 목표
@@ -83,13 +83,13 @@ export function ConfirmDeleteDialog({
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/modals/ConfirmDeleteDialog.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] Radix `Dialog.Root` 의 `modal={true}` 명시
-- [ ] 모바일 풀스크린 + 데스크톱 카드 (`sm:max-w-sm sm:rounded-lg`)
-- [ ] confirm 버튼 destructive 톤
-- [ ] `loading` 상태 시 disabled + 한글 처리 중 라벨
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/components/modals/ConfirmDeleteDialog.tsx` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] Radix `Dialog.Root` 의 `modal={true}` 명시
+- [x] 모바일 풀스크린 + 데스크톱 카드 (`sm:max-w-sm sm:rounded-lg`)
+- [x] confirm 버튼 destructive 톤 (`bg-red-500 text-white` — 토큰 미정의로 red-500 사용)
+- [x] `loading` 상태 시 disabled + 한글 처리 중 라벨
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
 
 ## 주의사항
 

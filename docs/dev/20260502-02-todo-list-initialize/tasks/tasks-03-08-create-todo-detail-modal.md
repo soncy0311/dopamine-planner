@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 08
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (의존성), 02 (TodoFormSchema), 03 (FK toast helper), 04 (ConfirmDeleteDialog)
 
 ## 작업 목표
@@ -119,15 +119,15 @@ export function TodoDetailModal({ open, onOpenChange, workspace, todoId }: TodoD
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/modals/TodoDetailModal.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] `TodoFormSchema` + RHF `values` prop 으로 detail 도착 시 자동 동기화
-- [ ] cascading select (분류 변경 시 Epic reset)
-- [ ] `useUpdateTodo` / `useDeleteTodo` 호출
-- [ ] `<ConfirmDeleteDialog>` (task 04) 사용
-- [ ] 삭제 실패 시 `showFkOrDefaultError` 사용
-- [ ] Radix Dialog `modal={true}` + 풀스크린 모바일 / 카드 데스크톱
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/components/modals/TodoDetailModal.tsx` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] `TodoFormSchema` + RHF `values` prop 으로 detail 도착 시 자동 동기화
+- [x] cascading select (분류 변경 시 Epic reset, 초기값 진입 시점은 reset 제외)
+- [x] `useUpdateTodo` / `useDeleteTodo` 호출
+- [x] `<ConfirmDeleteDialog>` (task 04) 사용
+- [x] 삭제 실패 시 `showFkOrDefaultError` 사용
+- [x] Radix Dialog `modal={true}` + 풀스크린 모바일 / 카드 데스크톱
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
 
 ## 주의사항
 

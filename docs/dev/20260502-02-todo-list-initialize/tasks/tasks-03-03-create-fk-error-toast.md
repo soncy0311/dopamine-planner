@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-03-feat-web-management.md`](../sub-prd-03-feat-web-management.md)
 - **작업 번호**: 03
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (sonner 설치 완료)
 
 ## 작업 목표
@@ -56,11 +56,11 @@ const remove = useMutation({
 
 ## 검증 과정
 
-- [ ] `apps/web/src/lib/errors/fkErrorToast.ts` 파일 존재
-- [ ] `showFkOrDefaultError` named export
-- [ ] `err.code === '23503'` 분기 존재
-- [ ] sonner `toast.error` 호출
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/lib/errors/fkErrorToast.ts` 파일 존재
+- [x] `showFkOrDefaultError` named export
+- [x] `err.code === '23503'` 분기 존재
+- [x] sonner `toast.error` 호출
+- [x] `pnpm --filter @todo-list/web typecheck` 통과
 
 ## 주의사항
 
