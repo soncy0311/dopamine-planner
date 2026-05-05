@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-08-feat-auth-and-empty-state.md`](../sub-prd-08-feat-auth-and-empty-state.md)
 - **작업 번호**: 05
-- **상태**: 미착수
+- **상태**: 완료 (2026-05-06) — 30 tests 전부 통과 (EmptyState 5 + Spinner 6 신규)
 - **의존성**: TASK-08-02 (`<EmptyState>`) + TASK-08-03 (`<Spinner>`) 머지 후. TASK-08-04 와 병렬 가능
 
 ## 작업 목표

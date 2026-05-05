@@ -22,6 +22,8 @@ import { supabase } from '@/lib/supabase';
 import { DateHeaderMobile } from './DateHeaderMobile';
 import { TodoItem } from './TodoItem';
 import { EpicAccordionCard } from './EpicAccordionCard';
+import { EmptyState } from './EmptyState';
+import { Spinner } from './Spinner';
 
 type Props = { workspace: Workspace };
 
@@ -207,6 +209,11 @@ export function MainDailyViewMobile({ workspace }: Props) {
 
   const todoCount = epicSections.todo.length + standaloneTodo.length;
   const doneCount = epicSections.done.length + standaloneDone.length;
+  const isEmpty = !isLoading && todoCount === 0 && doneCount === 0;
+
+  const handleCreate = useCallback(() => {
+    router.push(`/create-todo?workspace=${workspace}&date=${date}`);
+  }, [router, workspace, date]);
 
   const rows: Row[] = [
     { type: 'header', key: 'h-todo', label: `진행 중 (${todoCount})` },
@@ -222,7 +229,17 @@ export function MainDailyViewMobile({ workspace }: Props) {
       <View className="flex-1 bg-background">
         <DateHeaderMobile date={date} onDateChange={setDate} />
         {isLoading ? (
-          <Text className="px-4 py-3 text-sm text-muted-foreground">불러오는 중…</Text>
+          <View className="flex-1 items-center justify-center py-12">
+            <Spinner variant="inline" size="md" />
+          </View>
+        ) : isEmpty ? (
+          <View className="flex-1 items-center justify-center">
+            <EmptyState
+              title="아직 할 일이 없어요"
+              description="새 투두를 만들어 시작해보세요"
+              action={{ label: '새 투두 만들기', onClick: handleCreate }}
+            />
+          </View>
         ) : (
           <FlatList
             data={rows}
@@ -270,9 +287,7 @@ export function MainDailyViewMobile({ workspace }: Props) {
           />
         )}
         <Pressable
-          onPress={() =>
-            router.push(`/create-todo?workspace=${workspace}&date=${date}`)
-          }
+          onPress={handleCreate}
           className="absolute bottom-6 right-6 h-14 w-14 items-center justify-center rounded-full bg-primary shadow-lg"
           accessibilityRole="button"
           accessibilityLabel="새 투두 추가"

@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" className={pretendard.variable}>
       <body>
         <Providers>{children}</Providers>
-        <Toaster position="top-center" richColors />
+        <Toaster position="top-right" richColors closeButton />
       </body>
     </html>
   );

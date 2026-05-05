@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-08-feat-auth-and-empty-state.md`](../sub-prd-08-feat-auth-and-empty-state.md)
 - **작업 번호**: 02
-- **상태**: 미착수
+- **상태**: 완료 (2026-05-06)
 - **의존성**: TASK-08-01 (디자인 시스템 SoT 머지 후), TASK-08-03 과 병렬 가능
 
 ## 작업 목표

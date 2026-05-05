@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-08-feat-auth-and-empty-state.md`](../sub-prd-08-feat-auth-and-empty-state.md)
 - **작업 번호**: 01
-- **상태**: 미착수
+- **상태**: 완료 (2026-05-06)
 - **의존성**: 없음 (sub-prd-08 의 가장 선행 작업)
 
 ## 작업 목표

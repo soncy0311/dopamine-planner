@@ -4,10 +4,10 @@
 
 - **작업명**: `Empty state·Loading·Toast 디자인 SoT + 컴포넌트` `auth-and-empty-state`
 - **작업 유형**: `feat` + `docs` (디자인 결정 SoT 등재 + 공유 컴포넌트 신설 + 호출 측 리팩터)
-- **시작일**: TBD (디자인 결정자 합류 시 In Progress)
-- **종료일**: TBD
-- **최신 업데이트**: 2026-05-05
-- **상태**: Draft
+- **시작일**: 2026-05-06
+- **종료일**: 2026-05-06
+- **최신 업데이트**: 2026-05-06
+- **상태**: 완료
 - **Main PRD**: [`main-prd-todo-list-initialize.md`](./main-prd-todo-list-initialize.md)
 - **선행 Sub-PRD**: 없음 (Sub-06 / Sub-07 와 독립적으로 진행 가능)
 
@@ -145,41 +145,62 @@ toast.error('저장에 실패했어요. 다시 시도해주세요.');
 
 ### 디자인 시스템 SoT
 
-- [ ] `docs/base/design-system/components/empty-state.md` 신설
-- [ ] `docs/base/design-system/components/spinner.md` 신설
-- [ ] `docs/base/design-system/components/toast.md` 신설
-- [ ] `docs/base/design-system/components.md` 보강 — 3건 링크 정합
+- [x] `docs/base/design-system/components/empty-state.md` 신설
+- [x] `docs/base/design-system/components/spinner.md` 신설
+- [x] `docs/base/design-system/components/toast.md` 신설
+- [x] `docs/base/design-system/components.md` 보강 — 3건 링크 정합
 
 ### 컴포넌트 신설
 
-- [ ] `packages/ui/src/EmptyState.tsx` 신설 + `index.ts` re-export
-- [ ] `packages/ui/src/Spinner.tsx` 신설 + `index.ts` re-export
+- [x] `packages/ui/src/EmptyState.tsx` 신설 + `index.ts` re-export
+- [x] `packages/ui/src/Spinner.tsx` 신설 + `index.ts` re-export
 
 ### 호출 측 리팩터
 
-- [ ] `apps/web/src/components/{TodoSection,DoneSection,MainDailyView}.tsx` — 신 컴포넌트로 리팩터
+- [x] `apps/web/src/app/layout.tsx` — Toaster props 명세 정합 (`position="top-right" richColors closeButton`)
+- [x] `apps/web/src/components/MainDailyView.tsx` — `isLoading` 분기 + 진행 중 / 완료 빈 상태 신 컴포넌트로 교체
+  > TodoSection / DoneSection 은 sub-prd-07 통합 후 dead code (호출처 없음) — 본 sub 변경 없음
 
 ### 단위 테스트
 
-- [ ] 단위 테스트 — EmptyState / Spinner 렌더 + a11y attr + variant 분기
+- [x] 단위 테스트 — EmptyState / Spinner 렌더 + a11y attr + variant 분기 (`packages/ui/__tests__/{EmptyState,Spinner}.test.tsx` — 11 cases)
+
+### (사용자 결정 추가) mobile 정합
+
+- [x] `apps/mobile/src/components/EmptyState.tsx` 신설 (RN + Nativewind)
+- [x] `apps/mobile/src/components/Spinner.tsx` 신설 (RN `ActivityIndicator`)
+- [x] `apps/mobile/src/components/MainDailyViewMobile.tsx` — isLoading + 빈 상태 신 컴포넌트로 교체
 
 ## 검증 기준
 
-### 자동
+### 자동 (2026-05-06 통과)
 
-- `EmptyState` 단위 테스트: title 만 / + description / + action 케이스 + `role="status"` 노출
-- `Spinner` 단위 테스트: variant 분기 + label + `prefers-reduced-motion` 폴백
-- `make lint` / `make build` / `make test` 통과
+- [x] `EmptyState` 단위 테스트 5 케이스 (title 만 / + description / + action onClick / icon aria-hidden / role="status")
+- [x] `Spinner` 단위 테스트 6 케이스 (default md / size sm / size lg / variant fullscreen / custom label / motion-reduce className)
+- [x] `pnpm --filter @todo-list/{core,ui,web} run lint` 통과
+- [x] `pnpm --filter @todo-list/{core,ui} run test` 통과 (core 33 / ui 30)
+- [x] `pnpm --filter @todo-list/web run build` 통과
+- [x] `pnpm --filter @todo-list/web run typecheck` 통과
+- [x] `pnpm --filter @todo-list/mobile run typecheck` 통과 (TASK-08-08 후)
 
-### 수동
+### 수동 (사용자 확인 항목 — TASK-08-06 시나리오 참조)
 
 - 빈 워크스페이스 / 빈 일자에 `<EmptyState>` 노출 (CTA 클릭 시 새 투두 모달 진입)
 - 데이터 페칭 중 `<Spinner variant="inline" />` 노출 → 결과 도착 후 사라짐
-- 투두 저장 → `toast.success` / 네트워크 에러 → `toast.error`
+- 투두 저장 → `toast.success` (top-right, 4초, 색 토큰 정합) / 네트워크 에러 → `toast.error`
 - 키보드 only 로 토스트 닫기 가능 + Tab 포커스 이동
 - `prefers-reduced-motion` 켠 상태에서 spinner 정적
+- 회귀 0건: sub-prd-06 chip / sub-prd-07 Epic 카드 / DateNavigator
 
 ## 미해결 / 사용자 결정 필요
 
-- 빈 상태 일러스트 / 아이콘 / 문구 디자인 결정자 — TASK-08-01 docs 작성 시 잠정안으로 진행, 디자인 결정자 합류 시 docs 갱신
-- 토스트 위치 / 자동 닫힘 시간 / 동시 노출 개수 — TASK-08-01 docs 에서 잠정안 명세 (sonner 기본값 채택, top-right / 4초 / 3개)
+### 결정된 항목 (2026-05-06)
+
+- **Toaster 위치 / closeButton**: 명세대로 코드 변경 (`position="top-right" richColors closeButton`) — TASK-08-04 에서 적용
+- **호출 측 리팩터 범위**: MainDailyView 만. TodoSection / DoneSection 은 sub-prd-07 통합 후 dead code 로 본 sub 변경 없음 (후속 정리 sub 에서 일괄 제거 권장)
+- **mobile 정합**: 본 sub 동시 진행 (sub-prd-07 패턴) — TASK-08-07 / 08-08 신설. 기존 §주의사항 5 ("mobile 분리") 정책 변경됨
+
+### 잠정안 유지 (디자인 결정자 합류 시 갱신)
+
+- 빈 상태 일러스트 / 아이콘 선택 — `empty-state.md` 에 잠정 Lucide 아이콘 채택, 합류 시 일러스트로 갱신 가능
+- 토스트 자동 닫힘 시간 / 동시 노출 개수 — sonner 기본값 (4초 / 3개) 채택, 향후 4종별 분리 검토

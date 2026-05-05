@@ -4,7 +4,43 @@
 
 - **Sub-PRD**: [`../sub-prd-08-feat-auth-and-empty-state.md`](../sub-prd-08-feat-auth-and-empty-state.md)
 - **작업 번호**: 06
-- **상태**: 미착수
+- **상태**: 자동 완료 (2026-05-06) / 수동 검증은 사용자 확인 항목
+
+## 자동 검증 결과 (2026-05-06)
+
+| 명령 | 결과 |
+|---|---|
+| `pnpm --filter @todo-list/{core,ui,web} run lint` | ✅ pass (core 는 typecheck 스크립트만 존재 — 별도 호출로 0 error) |
+| `pnpm --filter @todo-list/{core,ui} run test` | ✅ core 33 tests / ui 30 tests (EmptyState 5 + Spinner 6 신규 포함) |
+| `pnpm --filter @todo-list/web run build` | ✅ static export 성공 (13 routes) |
+| `pnpm --filter @todo-list/web run typecheck` | ✅ 0 error |
+
+> Next 의 metadata viewport 경고는 본 sub 와 무관한 기존 이슈 (sub-prd-06 / 07 빌드에도 동일 경고 존재).
+
+## 수동 검증 (사용자 확인 항목)
+
+> 본 task 는 코드 변경 0건. 아래 항목은 사용자가 `make web-up` 후 직접 확인.
+
+1. **EmptyState — 빈 일자 / 빈 워크스페이스**
+   - 새 워크스페이스 또는 데이터가 없는 일자에서 진행 중 섹션의 EmptyState 노출 (title "아직 할 일이 없어요" + description + CTA "새 투두 만들기")
+   - CTA 클릭 → CreateTodoModal 진입
+   - 완료 섹션은 EmptyState (title "완료된 일이 없어요", CTA 없음)
+2. **Spinner — 페칭 중**
+   - DateNavigator 로 일자 변경 시 isLoading 동안 `<Spinner variant="inline" size="md" />` 노출
+   - 데이터 도착 시 사라지고 EpicAccordionCard / TodoItem 정상 표시
+3. **Toast — 위치 / 시간 / 색**
+   - 투두 저장 → `toast.success` 가 화면 우측 상단 (top-right) 에 4초 동안 노출
+   - 네트워크 에러 → `toast.error` 가 빨강 색 토큰 (4종 색 정합) + closeButton 노출
+   - 동시 4개 호출 → 3개만 표시 + 가장 오래된 것 큐잉
+4. **키보드 only — 토스트 닫기**
+   - 토스트 노출 후 Tab 키로 closeButton 포커스 → focus-visible outline 가시성 확인
+   - Enter / Space 로 닫기
+5. **`prefers-reduced-motion` — Spinner 정적**
+   - macOS 시스템 설정 → 손쉬운 사용 → 디스플레이 → "동작 줄이기" ON, 또는 Chrome DevTools Rendering 탭에서 `prefers-reduced-motion: reduce` 시뮬레이트
+   - Spinner 가 회전하지 않고 정적 표시
+6. **회귀 — sub-prd-06 / 07**
+   - CategoryFilterChips 토글, FAB 신규 투두 모달, EpicAccordionCard 펼침 / cascade 토글 / 진행률 갱신 정상
+   - DateNavigator 일자 이동 + 월간 모드 정상
 - **의존성**: TASK-08-01 ~ TASK-08-05 모두 완료
 
 ## 작업 목표

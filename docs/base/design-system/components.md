@@ -157,6 +157,33 @@ Atoms를 조합하여 하나의 기능 단위를 구성한다.
 | **레이아웃** | 라벨-입력 간격 `--spacing-2`, 입력 필드 `--radius-md` |
 | **접근성** | `<label>` 연결, 에러 시 `aria-invalid`, `aria-describedby` |
 
+### EmptyState
+
+| 구성 | (Icon) + Title + (Description) + (Action Button) |
+|------|------|
+| **설명** | 데이터 0건 화면의 표준 빈 상태 표현 — 잠정안 (디자인 결정자 합류 전) |
+| **상세 명세** | [`./components/empty-state.md`](./components/empty-state.md) |
+| **사용** | 빈 워크스페이스 / 빈 일자 / 검색 결과 0건 |
+| **접근성** | `role="status"`, 아이콘 `aria-hidden`, CTA 버튼 단수 |
+
+### Spinner
+
+| 구성 | (Wrapper) + 회전 SVG / ActivityIndicator |
+|------|------|
+| **변형** | `inline` (섹션·리스트), `fullscreen` (라우트 전환·부트스트랩) |
+| **사이즈** | `sm` 16 / `md` 24 / `lg` 40 |
+| **상세 명세** | [`./components/spinner.md`](./components/spinner.md) |
+| **접근성** | `role="status"`, `aria-label` 기본 "로딩 중", `prefers-reduced-motion` 폴백 |
+
+### Toast
+
+| 구성 | sonner `<Toaster />` 등록 + `toast.{success,error,info,warning}(msg)` 호출 |
+|------|------|
+| **설명** | 비동기 결과 알림. sonner 라이브러리 wrapping |
+| **상세 명세** | [`./components/toast.md`](./components/toast.md) |
+| **위치 / 시간 / 개수** | top-right / 4초 / 3개 (sonner 기본값 채택) |
+| **접근성** | sonner 의 `aria-live` 자동 관리, `closeButton` 활성 |
+
 ---
 
 ## 3. Organisms (유기체)

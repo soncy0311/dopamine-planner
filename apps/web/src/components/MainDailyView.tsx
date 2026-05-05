@@ -15,7 +15,14 @@ import {
   type SubIssueWithJoins,
   type Workspace,
 } from '@todo-list/core';
-import { DateNavigator, EpicAccordionCard, FAB, TodoItem } from '@todo-list/ui';
+import {
+  DateNavigator,
+  EmptyState,
+  EpicAccordionCard,
+  FAB,
+  Spinner,
+  TodoItem,
+} from '@todo-list/ui';
 import { supabase } from '@/lib/supabase/client';
 import { useDateQuery } from '@/hooks/useDateQuery';
 import { CategoryFilterChips } from './CategoryFilterChips';
@@ -216,7 +223,9 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         onSelect={setSelectedCategoryId}
       />
       {isLoading ? (
-        <p className="px-2 text-sm text-periwinkle-300">불러오는 중…</p>
+        <div className="flex items-center justify-center py-12">
+          <Spinner variant="inline" size="md" />
+        </div>
       ) : (
         <div className="flex flex-1 flex-col gap-6">
           <section className="flex flex-col gap-2">
@@ -227,7 +236,11 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
               </h3>
             </header>
             {todoSectionEmpty ? (
-              <p className="px-2 py-3 text-sm text-periwinkle-300">진행 중인 일이 없어요</p>
+              <EmptyState
+                title="아직 할 일이 없어요"
+                description="새 투두를 만들어 시작해보세요"
+                action={{ label: '새 투두 만들기', onClick: handleCreate }}
+              />
             ) : (
               <div className="flex flex-col gap-2">
                 {epicsByDoneSection.todo.map(renderEpicCard)}
@@ -265,7 +278,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
               </h3>
             </header>
             {doneSectionEmpty ? (
-              <p className="px-2 py-3 text-sm text-periwinkle-300">완료된 일이 없어요</p>
+              <EmptyState title="완료된 일이 없어요" />
             ) : (
               <div className="flex flex-col gap-2">
                 {epicsByDoneSection.done.map(renderEpicCard)}

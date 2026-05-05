@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-08-feat-auth-and-empty-state.md`](../sub-prd-08-feat-auth-and-empty-state.md)
 - **작업 번호**: 04
-- **상태**: 미착수
+- **상태**: 완료 (2026-05-06) — 사용자 결정 정합 (MainDailyView 만, Toaster props 변경 포함, TodoSection / DoneSection 은 dead code 로 변경 없음)
 - **의존성**: TASK-08-02 (`<EmptyState>`) + TASK-08-03 (`<Spinner>`) 머지 후
 
 ## 작업 목표
