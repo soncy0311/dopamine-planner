@@ -172,17 +172,28 @@ function useDateQuery(): [string, (d: string) => void] {
 
 ## 검증 기준
 
-- [ ] `pnpm --filter @todo-list/web build` 통과 (`output: 'export'` 정합)
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
-- [ ] `make web-up` 실행 → 브라우저에서 `/login` → Google OAuth → `/life` 로 redirect 성공
-- [ ] DB 에 sub_issue 시드 후 `/life` 진입 시 일자 뷰 렌더 (완료/진행 중 두 섹션, 카운트 정확)
-- [ ] DB Studio 에서 sub_issue.status 직접 변경 시 1~2초 내 UI 반영 (Realtime 구독 동작)
-- [ ] 키보드 `←` `→` 로 일자 이동, URL `?date=` 갱신
-- [ ] life ↔ work 워크스페이스 전환 시 데이터 분리 (life 의 todo 가 work 에 보이지 않음)
-- [ ] 자동 이월 — `due_date` 가 어제이고 `status='todo'` 인 sub_issue 가 있는 상태로 `/life` 진입 시 오늘 뷰에 자동 이동
-- [ ] 자동 이월 시 토스트·알림 없음 (조용한 이월)
-- [ ] 미로그인 상태로 `/life` 직접 접근 시 `/login` 으로 redirect
-- [ ] `grep -RIn "import.*Modal" apps/web/src/app/(main)/(life|work)/` 결과 0건 (CRUD 모달은 Sub-03)
+### 자동 (모두 통과 — task 13)
+
+- [x] `pnpm --filter @todo-list/web build` 통과 (`output: 'export'` 정합, 6 routes 모두 static prerender) ✅ 2026-05-05
+- [x] `pnpm --filter @todo-list/web typecheck` 통과 (`tsc --noEmit`) ✅ 2026-05-05
+- [x] `pnpm --filter @todo-list/web lint` 통과 (`tsc --noEmit`) ✅ 2026-05-05
+- [x] `pnpm --filter @todo-list/ui lint` 통과 ✅ 2026-05-05
+- [x] `pnpm turbo lint typecheck build --filter=@todo-list/web --filter=@todo-list/ui` → 7/7 successful ✅ 2026-05-05
+- [x] `grep -RIn "import.*Modal" "apps/web/src/app/(main)/"` 결과 0건 (CRUD 모달은 Sub-03) ✅ 2026-05-05
+- [x] `grep -RIn "from 'next/server'\|middleware" "apps/web/src/app/(main)/"` 결과 0건 (export 모드 정합) ✅ 2026-05-05
+- [x] `grep -RIn "carryOverTodos\b" apps/web/src/` 결과 0건 (자동 이월 트리거는 useTodos 단일 진입점) ✅ 2026-05-05
+- [x] `grep -RIln "from '@todo-list/core'" apps/web/src/` ≥ 1 (3건 — 코어 훅 사용 확인) ✅ 2026-05-05
+
+### 수동 (브라우저) — 사용자 책임
+
+- [ ] `make web-up` 실행 → 브라우저에서 `/login` → Google OAuth → `/life` 로 redirect 성공 — **수동 확인 필요**
+- [ ] DB 에 sub_issue 시드 후 `/life` 진입 시 일자 뷰 렌더 (완료/진행 중 두 섹션, 카운트 정확) — **수동 확인 필요**
+- [ ] DB Studio 에서 sub_issue.status 직접 변경 시 1~2초 내 UI 반영 (Realtime 구독 동작) — **수동 확인 필요**
+- [ ] 키보드 `←` `→` 로 일자 이동, URL `?date=` 갱신 — **수동 확인 필요**
+- [ ] life ↔ work 워크스페이스 전환 시 데이터 분리 (life 의 todo 가 work 에 보이지 않음) — **수동 확인 필요**
+- [ ] 자동 이월 — `due_date` 가 어제이고 `status='todo'` 인 sub_issue 가 있는 상태로 `/life` 진입 시 오늘 뷰에 자동 이동 — **수동 확인 필요**
+- [ ] 자동 이월 시 토스트·알림 없음 (조용한 이월) — **수동 확인 필요**
+- [ ] 미로그인 상태로 `/life` 직접 접근 시 `/login` 으로 redirect — **수동 확인 필요**
 
 ---
 
