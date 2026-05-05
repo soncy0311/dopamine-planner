@@ -112,12 +112,17 @@ describe('mapTodoDailyView', () => {
         epic: {
           id: 'ep-1',
           title: '5월 정리',
+          progress: 0.5,
           category: { id: 'cat-1', name: '집안일', color: '#ff0000' },
         },
       },
     ];
     const view = mapTodoDailyView(rows, '2026-05-05');
-    expect(view.todo[0]?.epic).toEqual({ id: 'ep-1', title: '5월 정리' });
+    expect(view.todo[0]?.epic).toEqual({
+      id: 'ep-1',
+      title: '5월 정리',
+      progress: 0.5,
+    });
     expect(view.todo[0]?.category).toEqual({
       id: 'cat-1',
       name: '집안일',

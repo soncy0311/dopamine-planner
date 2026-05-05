@@ -5,9 +5,9 @@
 - **작업명**: `Epic 아코디언 카드` `epic-accordion-card`
 - **작업 유형**: `feat` (컴포넌트 신설 + 메인 뷰 통합)
 - **시작일**: 2026-05-05
-- **종료일**: TBD
-- **최신 업데이트**: 2026-05-05
-- **상태**: Draft
+- **종료일**: 2026-05-06
+- **최신 업데이트**: 2026-05-06
+- **상태**: 완료
 - **Main PRD**: [`main-prd-todo-list-initialize.md`](./main-prd-todo-list-initialize.md)
 - **선행 Sub-PRD**:
   - [`sub-prd-01-feat-core-services.md`](./sub-prd-01-feat-core-services.md) (`useTodos` / `useEpics` 의 select 자산)
@@ -198,14 +198,16 @@ async function cascadeToggleEpic(
 
 ## 작업
 
-- [ ] `packages/core` 의 `useTodos` / `useEpics` select 가 epic 진행률 + sub-issue 그룹핑 호환인지 검증 (필요 시 보강)
-- [ ] `packages/ui/src/EpicAccordionCard.tsx` 신설
-- [ ] (선택) `packages/ui/src/EpicSubIssueRow.tsx` 신설 또는 TodoItem 재사용 결정
-- [ ] `packages/core/src/services/todos.ts` — `cascadeToggleEpic` 함수 신설
-- [ ] `apps/web/src/components/MainDailyView.tsx` — `groupByEpic` + 혼재 렌더
-- [ ] Realtime 채널이 epic 진행률 변경을 invalidate 하는지 검증
-- [ ] 단위 테스트 — `groupByEpic`, `cascadeToggleEpic`, EpicAccordionCard 렌더 / expand / cascade
-- [ ] (선택) e2e (Playwright) — epic 펼치기 → sub 토글 → 진행률 갱신 시나리오
+- [x] `packages/core` 의 `useTodos` / `useEpics` select 가 epic 진행률 + sub-issue 그룹핑 호환인지 검증 (필요 시 보강)
+- [x] `packages/ui/src/EpicAccordionCard.tsx` 신설
+- [x] (선택) `packages/ui/src/EpicSubIssueRow.tsx` 신설 또는 TodoItem 재사용 결정 → TodoItem 재사용 채택
+- [x] `packages/core/src/services/todos.ts` — `cascadeToggleEpic` 함수 신설
+- [x] `apps/web/src/components/MainDailyView.tsx` — `groupByEpic` + 혼재 렌더
+- [x] Realtime 채널이 epic 진행률 변경을 invalidate 하는지 검증
+- [x] 단위 테스트 — `groupByEpic`, `cascadeToggleEpic`, EpicAccordionCard 렌더 / expand / cascade
+- [ ] (선택) e2e (Playwright) — epic 펼치기 → sub 토글 → 진행률 갱신 시나리오 (본 sub 범위 외 — 수동 시나리오로 대체)
+- [x] (사용자 결정 추가) apps/mobile RN EpicAccordionCard 신설 + 메인 뷰 통합
+- [x] (사용자 결정 추가) mobile expand state AsyncStorage 영속화
 
 ## 검증 기준
 
@@ -231,8 +233,11 @@ async function cascadeToggleEpic(
 - 다른 디바이스에서 동일 워크스페이스 열어두면 Realtime 으로 epic 진행률 반영
 - 키보드 only 로 chevron 토글 + sub-issue 토글 가능
 
-## 미해결 / 사용자 결정 필요
+## 미해결 / 사용자 결정 필요 → 결정 결과 (2026-05-06)
 
-- cascade 토글 시 mutation 일괄(단일 RPC) vs 개별(Promise.all) — race / 일관성 trade-off
-- expand 상태 localStorage 영속화 여부 (UX)
-- mobile 정합 동시 진행 / 후속 분리
+- ~~cascade 토글 시 mutation 일괄(단일 RPC) vs 개별(Promise.all) — race / 일관성 trade-off~~
+  → **결정: Promise.all 개별 mutate** (단일 RPC 트랜잭션은 후속 sub 로 이관)
+- ~~expand 상태 localStorage 영속화 여부 (UX)~~
+  → **결정: 영속화 적용** (web=localStorage, mobile=AsyncStorage. 키: `epic-accordion-expand:${workspace}`)
+- ~~mobile 정합 동시 진행 / 후속 분리~~
+  → **결정: 본 sub 동시 진행** (task-07-09 / 07-10 추가)

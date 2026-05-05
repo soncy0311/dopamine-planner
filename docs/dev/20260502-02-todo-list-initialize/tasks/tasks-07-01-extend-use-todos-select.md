@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-07-feat-epic-accordion-card.md`](../sub-prd-07-feat-epic-accordion-card.md)
 - **작업 번호**: 01
-- **상태**: 미착수
+- **상태**: 완료 (2026-05-06)
 - **의존성**: 없음 (sub-prd-07 의 가장 선행 task)
 
 ## 작업 목표

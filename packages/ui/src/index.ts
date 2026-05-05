@@ -3,6 +3,12 @@ export { TodoItem, priorityBadgeClass } from './TodoItem';
 export type { TodoItemProps, TodoItemCategory, TodoItemPriority } from './TodoItem';
 export { EpicProgressBar } from './EpicProgressBar';
 export type { EpicProgressBarProps } from './EpicProgressBar';
+export { EpicAccordionCard } from './EpicAccordionCard';
+export type {
+  EpicAccordionCardProps,
+  EpicAccordionSegment,
+  EpicAccordionSubIssue,
+} from './EpicAccordionCard';
 export { DateNavigator } from './DateNavigator';
 export type { DateNavigatorProps } from './DateNavigator';
 export { FAB } from './FAB';

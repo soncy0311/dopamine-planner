@@ -9,6 +9,7 @@ import {
   type TodoUpdate,
 } from '../domain/todo';
 import type { Workspace } from '../domain/category';
+import { recalcEpicProgress } from './epicProgress';
 
 export async function listByDate(
   client: AppSupabaseClient,
@@ -20,7 +21,7 @@ export async function listByDate(
     .select(
       `*,
        epic:epic_issue!inner (
-         id, title,
+         id, title, progress,
          category:category!inner ( id, name, color, workspace )
        )`,
     )
@@ -83,4 +84,22 @@ export async function toggle(
   return mapSubIssueRow(data);
 }
 
-export const todoService = { listByDate, create, update, remove, toggle };
+export async function cascadeToggleEpic(
+  client: AppSupabaseClient,
+  epic: { id: string },
+  subs: ReadonlyArray<{ id: string; status: TodoStatus }>,
+  target: TodoStatus,
+): Promise<void> {
+  const targets = subs.filter((s) => s.status !== target);
+  await Promise.all(targets.map((s) => toggle(client, s.id, target)));
+  await recalcEpicProgress(client, epic.id);
+}
+
+export const todoService = {
+  listByDate,
+  create,
+  update,
+  remove,
+  toggle,
+  cascadeToggleEpic,
+};

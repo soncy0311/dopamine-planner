@@ -4,7 +4,17 @@
 
 - **Sub-PRD**: [`../sub-prd-07-feat-epic-accordion-card.md`](../sub-prd-07-feat-epic-accordion-card.md)
 - **작업 번호**: 06
-- **상태**: 미착수
+- **상태**: 완료 (2026-05-06) — 코드 변경 0건, 기존 흐름 정합 확인
+
+## 검증 결과 (2026-05-06)
+
+코드 추적 결과 sub-prd-07 의 Realtime invalidation 흐름은 본 sub 의 추가 보강 없이 이미 정합:
+
+- `packages/core/src/realtime/subscribeTodos.ts` — `sub_issue`, `epic_issue`, `category`, `profile` 4개 테이블의 `postgres_changes` 를 구독하고 `invalidateByTable` 로 각각 `['todos']`/`['epics']`/`['categories']`/`['profile']` query 를 invalidate. epic 진행률 갱신 (`recalc_epic_progress` 의 epic_issue UPDATE) 이 자동으로 `['epics']` invalidate 를 트리거.
+- `packages/core/src/hooks/useToggleTodo.ts` — onSuccess 에서 `debounceByEpic(200ms)` 로 `recalcEpicProgress` 호출 → epic_issue UPDATE → Realtime postgres_changes → `['epics']` invalidate. onSettled 에서 `['todos']` + `['epics']` 직접 invalidate (낙관적 업데이트 보호).
+- `cascadeToggleEpic` — `Promise.all` 후 `recalcEpicProgress` 1회 호출. 호출 측 `MainDailyView` 의 `handleCascadeToggle` 가 finally 에서 `queryKeys.todos(workspace, date)` / `queryKeys.epics(workspace)` 둘 다 invalidate.
+
+추가 코드 변경 없음. 다중 디바이스 sync 수동 검증은 TASK-07-08 게이트의 시나리오 4·5번에서 수행.
 - **의존성**: TASK-07-02 (cascade 함수 머지 후 검증 가능)
 
 ## 작업 목표

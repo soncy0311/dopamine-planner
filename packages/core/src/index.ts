@@ -14,6 +14,7 @@ export * from './domain/todo';
 export * as categoryService from './services/category';
 export * as epicService from './services/epic';
 export * as todoService from './services/todo';
+export { cascadeToggleEpic } from './services/todo';
 export { carryOverTodos } from './services/carryOver';
 export { recalcEpicProgress } from './services/epicProgress';
 
@@ -38,3 +39,6 @@ export * from './hooks/useToggleTodo';
 
 // Realtime
 export * from './realtime/subscribeTodos';
+
+// Utils
+export * from './utils';

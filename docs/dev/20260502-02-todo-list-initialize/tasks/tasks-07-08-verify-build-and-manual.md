@@ -4,7 +4,27 @@
 
 - **Sub-PRD**: [`../sub-prd-07-feat-epic-accordion-card.md`](../sub-prd-07-feat-epic-accordion-card.md)
 - **작업 번호**: 08
-- **상태**: 미착수
+- **상태**: 자동 검증 완료 (2026-05-06) — 수동 시각 검증은 dev 환경 기동 후 사용자 확인 항목
+
+## 자동 검증 결과 (2026-05-06)
+
+- `pnpm --filter @todo-list/{core,ui,web,shared} run lint` ✅ 통과 (4 packages)
+- `pnpm --filter @todo-list/{core,ui,web} run test` ✅ 통과
+  - core: 6 files / 33 tests
+  - ui: 3 files / 19 tests (EpicAccordionCard 8 tests 신규 포함)
+  - web: 3 files / 14 tests
+- TypeScript strict 모드 통과
+
+## 수동 검증 시나리오 (dev 기동 후 사용자 확인)
+
+`make up` 으로 dev 기동 후 다음 시나리오 확인:
+
+1. 메인 뷰에서 epic 카드 + 일반 카드 혼재 노출 (sub-prd-07 §검증 기준 §수동 1)
+2. chevron 클릭 → sub-issue 펼침 + 90deg 회전 (§수동 2)
+3. epic 메인 체크 토글 → cascade 일괄 + 진행률 텍스트 200ms 후 갱신 (§수동 3)
+4. 다중 디바이스 (web ↔ web 또는 web ↔ mobile) 에서 Realtime 진행률 동기 (§수동 4)
+5. 키보드 only 로 chevron + sub-issue 토글 (§수동 5)
+6. DevTools Application 탭 > Local Storage > `epic-accordion-expand:life` (또는 `:work`) 키가 epic 토글 시 갱신되는지 확인
 - **의존성**: TASK-07-01 ~ TASK-07-07 모두 완료
 
 ## 작업 목표

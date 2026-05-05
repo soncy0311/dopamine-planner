@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-07-feat-epic-accordion-card.md`](../sub-prd-07-feat-epic-accordion-card.md)
 - **작업 번호**: 03
-- **상태**: 미착수
+- **상태**: 완료 (2026-05-06)
 - **의존성**: TASK-07-01 (Todo / Epic 도메인 타입 확정 후)
 
 ## 작업 목표
