@@ -269,9 +269,11 @@ ERD 상세는 [`detail-todo-service-initialize.md`](./detail-todo-service-initia
 - 모바일 화면 작성 시 Tailwind className 그대로 사용 (`<View className="bg-purple-500 p-4">`)
 - Sub-04 검증 시 디자인 시스템 토큰(`docs/base/design-system/`) 의 색·간격이 시뮬레이터 화면에 일치하는지 시각 비교
 
-## Sub-PRD 구조 (5개 — 후속 `/generate-sub-prd` 진입점)
+## Sub-PRD 구조 (8개 — Sub-01~05 = 1차 / Sub-06~08 = prototype 정합 후속)
 
 본 PRD 승인 후 `/generate-sub-prd` 로 Sub-01 부터 순차 생성한다. 분할은 1차 제안이며, 후속 시점에 작업 흐름 보면서 재분할 가능하다.
+
+Sub-06~08 은 Sub-02·03 머지 후 `docs/base/prototype/` 와의 시각·UX 격차를 해소하기 위해 추가된 후속 묶음이다.
 
 | Sub-PRD | 범위 | 산출물 | 의존 |
 |---|---|---|---|
@@ -280,8 +282,12 @@ ERD 상세는 [`detail-todo-service-initialize.md`](./detail-todo-service-initia
 | [**Sub-03: `feat/web-management`**](./sub-prd-03-feat-web-management.md) | apps/web 분류·Epic·Sub 생성/수정/삭제 모달·페이지 + 설정 화면 + 로그아웃 | `apps/web/src/app/(main)/...` 추가 라우트, 모달 컴포넌트 | Sub-01, Sub-02 |
 | [**Sub-04: `feat/mobile-core`**](./sub-prd-04-feat-mobile-core.md) | apps/mobile RN 화면 (로그인, Life/Work 탭, 메인 일자 뷰, 투두 생성, 설정) + Nativewind className 매핑 검증 + OAuth deep link | `apps/mobile/src/components/*`, expo-router 라우트 | Sub-01 |
 | [**Sub-05: `test/integration-multi-device`**](./sub-prd-05-test-integration-multi-device.md) | 다중 디바이스 sync (web + iOS 시뮬레이터 동시 접속) / 자동 이월 / Epic 진행률 갱신 / 회귀 시나리오 + EAS Build profile=preview 산출물 빌드 검증 | 검증 체크리스트 + 회귀 시나리오 문서 | Sub-02, Sub-03, Sub-04 |
+| [**Sub-06: `feat/web-prototype-visual-alignment`**](./sub-prd-06-feat-web-prototype-visual-alignment.md) | 사이드바 (로고·아이콘·그룹 헤더·분리선) + 카테고리 chip 필터 + DateNavigator 월간 토글 + TodoItem priority badge / carry-over 뱃지 + 모달 priority radiogroup / 분류 combobox + FAB 데스크탑 노출 + Pretendard Variable | `apps/web/src/components/*`, `packages/ui/src/{TodoItem,DateNavigator}.tsx`, `apps/web/src/app/layout.tsx` | Sub-02, Sub-03 |
+| [**Sub-07: `feat/epic-accordion-card`**](./sub-prd-07-feat-epic-accordion-card.md) | Epic 아코디언 카드 신설 (`EpicAccordionCard`) + MainDailyView 일반·Epic 혼재 렌더 + cascade 메인 토글 + Realtime 진행률 갱신 | `packages/ui/src/EpicAccordionCard.tsx` 신설, `apps/web/src/components/MainDailyView.tsx`, `packages/core/src/services/todos.ts` (`cascadeToggleEpic`) | Sub-01, Sub-06 |
+| [**Sub-08: `feat/auth-and-empty-state`**](./sub-prd-08-feat-auth-and-empty-state.md) | Empty state·Spinner·Toast 디자인 SoT 등재 + 공유 컴포넌트 신설 + 호출 측 리팩터 | `packages/ui/src/{EmptyState,Spinner}.tsx`, `docs/base/design-system/components/*.md`, `apps/web/src/components/{TodoSection,DoneSection,MainDailyView}.tsx` | (디자인 결정 의존) |
 
 > **분할 원칙**: stack-pivot 의 Phase 4·5 (웹 SPA 골격 / 모바일 골격) 가 끝난 시점부터 시작한다고 가정. 본 PRD 의 sub 들은 골격을 늘여 실 화면들로 확장한다.
+> **Sub-06~08 추가 사유**: Sub-02·03 머지 후 prototype 의도와 시각·UX 격차 9건이 누적. Sub-06 (시각·UX 일괄) / Sub-07 (Epic 카드 단일 큰 작업) / Sub-08 (디자인 결정 의존 — Empty/Loading/Toast SoT) 로 책임 분리.
 
 ## 리스크 및 완화 방안
 
@@ -311,7 +317,7 @@ ERD 상세는 [`detail-todo-service-initialize.md`](./detail-todo-service-initia
 
 | 항목 | 설명 | 우선순위 |
 |---|---|---|
-| Kakao OAuth | 사업자 등록 검토 후 Supabase Dashboard Provider 활성화 | P3 |
+| Kakao OAuth | MVP 미포함. Supabase Kakao provider + 로그인 버튼 + KakaoIcon. sub-prd-08 에서 분리되어 후속 sub 로 진행 | P3 |
 | 모바일 푸시 알림 | 이월·완료 리마인드 (expo-notifications) | P3 |
 | Web Push (PWA) | 데스크톱·모바일 브라우저 알림 | P3 |
 | 데스크탑(Electron) | stack-pivot Future Scope 와 통합 — `apps/desktop` 신설 후 동일 SPA wrapping | P3 |
