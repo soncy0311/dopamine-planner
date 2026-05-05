@@ -1,0 +1,98 @@
+import type { MouseEvent } from 'react';
+
+export type TodoItemCategory = {
+  name: string;
+  color: string;
+};
+
+export type TodoItemProps = {
+  id: string;
+  title: string;
+  status: 'todo' | 'done';
+  category?: TodoItemCategory;
+  onToggle: () => void;
+  onPress?: () => void;
+};
+
+export function TodoItem({ title, status, category, onToggle, onPress }: TodoItemProps) {
+  const done = status === 'done';
+
+  const handleCheckboxClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onToggle();
+  };
+
+  const handleRowClick = () => {
+    onPress?.();
+  };
+
+  return (
+    <div
+      role={onPress ? 'button' : undefined}
+      tabIndex={onPress ? 0 : -1}
+      onClick={handleRowClick}
+      onKeyDown={(e) => {
+        if (onPress && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          onPress();
+        }
+      }}
+      className="flex items-center gap-3 rounded-md px-2 py-1 hover:bg-periwinkle-100 transition-colors"
+    >
+      <button
+        type="button"
+        aria-pressed={done}
+        aria-label={done ? '완료 해제' : '완료'}
+        onClick={handleCheckboxClick}
+        className="flex h-11 w-11 items-center justify-center rounded-full"
+      >
+        <span
+          className={
+            done
+              ? 'flex h-5 w-5 items-center justify-center rounded-full border-2 border-purple-500 bg-purple-500 text-white'
+              : 'flex h-5 w-5 items-center justify-center rounded-full border-2 border-periwinkle-400'
+          }
+        >
+          {done ? (
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M2 6.5L4.5 9L10 3"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          ) : null}
+        </span>
+      </button>
+
+      <span
+        className={
+          done
+            ? 'flex-1 truncate text-sm text-periwinkle-400 line-through'
+            : 'flex-1 truncate text-sm text-periwinkle-500'
+        }
+      >
+        {title}
+      </span>
+
+      {category ? (
+        <span className="flex items-center gap-1 text-xs text-periwinkle-400">
+          <span
+            aria-hidden="true"
+            className="h-2 w-2 rounded-full"
+            style={{ backgroundColor: category.color }}
+          />
+          <span className="truncate max-w-[7rem]">{category.name}</span>
+        </span>
+      ) : null}
+    </div>
+  );
+}

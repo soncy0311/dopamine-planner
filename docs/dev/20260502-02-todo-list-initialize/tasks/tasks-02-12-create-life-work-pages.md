@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 12
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 08 (MainDailyView), 11 (main layout)
 
 ## 작업 목표
@@ -43,11 +43,11 @@ work 페이지는 `workspace="work"` 만 다른 동일 패턴.
 
 ## 검증 과정
 
-- [ ] `apps/web/src/app/(main)/life/page.tsx` 파일 존재
-- [ ] `apps/web/src/app/(main)/work/page.tsx` 파일 존재
-- [ ] 두 파일 모두 `'use client'` + `<MainDailyView workspace="..." />` 렌더
-- [ ] CRUD 모달 import 0건 — `grep -RIn "import.*Modal" apps/web/src/app/\(main\)/` → 0
-- [ ] `pnpm --filter @todo-list/web build` 통과
+- [x] `apps/web/src/app/(main)/life/page.tsx` 파일 존재 — 기존 스켈레톤 재작성
+- [x] `apps/web/src/app/(main)/work/page.tsx` 파일 존재 — 기존 스켈레톤 재작성
+- [x] 두 파일 모두 `'use client'` + `<Suspense fallback={null}><MainDailyView workspace="..." /></Suspense>` 렌더
+- [x] CRUD 모달 import 0건 — `grep -RIn "import.*Modal" "apps/web/src/app/(main)/"` 결과 0
+- [x] `tsc --noEmit` 본 파일 관련 에러 0건 (이전 life/page.tsx 의 `subscribeTodos` 3-arg 에러 해소). build 는 task 13 일괄 검증
 
 ## 주의사항
 

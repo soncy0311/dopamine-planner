@@ -7,7 +7,7 @@
 - **시작일**: 2026-05-05
 - **종료일**: TBD
 - **최신 업데이트**: 2026-05-05
-- **상태**: 진행전
+- **상태**: 진행중 (코드 산출물 12 task 완료. task 13 정적 검증 일부는 stack-pivot 사전 결함으로 미통과 — 후속 plan)
 - **Main PRD**: [`main-prd-todo-list-initialize.md`](./main-prd-todo-list-initialize.md)
 - **선행 Sub-PRD**: [`sub-prd-01-feat-core-services.md`](./sub-prd-01-feat-core-services.md)
 - **선행 Sprint**: stack-pivot Sub-04 (`(auth)/login` + `auth/callback` 머지 완료)
@@ -152,23 +152,23 @@ function useDateQuery(): [string, (d: string) => void] {
 
 ## 작업
 
-- [ ] `apps/web/src/app/(main)/layout.tsx` 신설 (클라이언트 가드 + 사이드 네비)
-- [ ] `apps/web/src/app/(main)/life/page.tsx` 신설 (`<MainDailyView workspace="life" />`)
-- [ ] `apps/web/src/app/(main)/work/page.tsx` 신설 (`<MainDailyView workspace="work" />`)
-- [ ] `apps/web/src/lib/supabase/client.ts` 신설 (`createClient` 호출)
-- [ ] `apps/web/src/components/MainDailyView.tsx` 신설 (`useTodos` + `subscribeTodos` + 섹션)
-- [ ] `apps/web/src/components/DoneSection.tsx` / `TodoSection.tsx` 신설
-- [ ] `apps/web/src/components/SideNav.tsx` 신설 (사이드 네비 — 데스크톱)
-- [ ] `apps/web/src/components/MobileTabBar.tsx` 신설 (하단 탭 바 — 모바일 뷰포트)
-- [ ] `apps/web/src/hooks/useDateQuery.ts` 신설 (URL ?date 동기화)
-- [ ] `packages/ui/src/TodoItem.tsx` 신설 (체크박스 + 제목 + 분류 라벨)
-- [ ] `packages/ui/src/EpicProgressBar.tsx` 신설 (세그먼트 프로그레스바)
-- [ ] `packages/ui/src/DateNavigator.tsx` 신설 (월 타이틀 + 주간 뷰)
-- [ ] `packages/ui/src/FAB.tsx` 신설 (모바일 + 버튼)
-- [ ] 키보드 단축키 (`←` `→`) 핸들러 추가
-- [ ] `pnpm --filter @todo-list/web build` 통과
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
-- [ ] `pnpm --filter @todo-list/web lint` 통과
+- [x] `apps/web/src/app/(main)/layout.tsx` 신설 (클라이언트 가드 + 사이드 네비 + 모바일 탭 바) ✅ 2026-05-05
+- [x] `apps/web/src/app/(main)/life/page.tsx` 신설 (`<Suspense><MainDailyView workspace="life" /></Suspense>`) ✅ 2026-05-05
+- [x] `apps/web/src/app/(main)/work/page.tsx` 신설 (`<Suspense><MainDailyView workspace="work" /></Suspense>`) ✅ 2026-05-05
+- [x] `apps/web/src/lib/supabase/client.ts` 정합 검증 (`'use client'` 디렉티브 보정) ✅ 2026-05-05
+- [x] `apps/web/src/components/MainDailyView.tsx` 신설 (`useTodos` + `subscribeTodos` + 섹션) ✅ 2026-05-05
+- [x] `apps/web/src/components/DoneSection.tsx` / `TodoSection.tsx` 신설 ✅ 2026-05-05
+- [x] `apps/web/src/components/SideNav.tsx` 신설 (사이드 네비 — 데스크톱) ✅ 2026-05-05
+- [x] `apps/web/src/components/MobileTabBar.tsx` 신설 (하단 탭 바 — 모바일 뷰포트) ✅ 2026-05-05
+- [x] `apps/web/src/hooks/useDateQuery.ts` 신설 (URL ?date 동기화) ✅ 2026-05-05
+- [x] `packages/ui/src/TodoItem.tsx` 신설 (체크박스 + 제목 + 분류 라벨) ✅ 2026-05-05
+- [x] `packages/ui/src/EpicProgressBar.tsx` 신설 (세그먼트 프로그레스바) ✅ 2026-05-05
+- [x] `packages/ui/src/DateNavigator.tsx` 신설 (월 타이틀 + 주간 뷰 + ←/→ 단축키) ✅ 2026-05-05
+- [x] `packages/ui/src/FAB.tsx` 신설 (모바일 + 버튼) ✅ 2026-05-05
+- [x] 키보드 단축키 (`←` `→`) 핸들러 추가 — DateNavigator 에 흡수 ✅ 2026-05-05
+- [ ] `pnpm --filter @todo-list/web build` 통과 — ❌ stack-pivot Sub-04 산출물(`auth/callback/route.ts`)이 `output: 'export'` 와 비호환. 본 sub 의 신규 산출물 자체는 export 호환. 후속 plan 으로 분리
+- [x] `apps/web` 의 `tsc --noEmit` 통과 (`auth/callback` implicit-any 4건 보정 포함) — `package.json` 에 `typecheck` 스크립트 추가는 후속 plan 으로 분리
+- [ ] `pnpm --filter @todo-list/web lint` 통과 — ❌ `next lint` ESLint 초기 설정 인터랙티브 요구. ESLint config 부재. 후속 plan 으로 분리
 
 ## 검증 기준
 

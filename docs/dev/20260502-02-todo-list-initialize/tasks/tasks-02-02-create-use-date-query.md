@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 02
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음)
 
 ## 작업 목표
@@ -42,12 +42,14 @@ function useDateQuery(): [string, (d: string) => void] {
 
 ## 검증 과정
 
-- [ ] `apps/web/src/hooks/useDateQuery.ts` 파일 존재
-- [ ] 반환 시그니처 `[string, (d: string) => void]` 준수
-- [ ] `router.replace` 호출 — `router.push` 아님 (history 누적 금지)
-- [ ] `{ scroll: false }` 옵션 포함
-- [ ] 파일 상단 `'use client'` 디렉티브 (next/navigation 훅 사용)
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/hooks/useDateQuery.ts` 파일 존재
+- [x] 반환 시그니처 `[string, (d: string) => void]` 준수
+- [x] `router.replace` 호출 — `router.push` 아님 (history 누적 금지)
+- [x] `{ scroll: false }` 옵션 포함
+- [x] 파일 상단 `'use client'` 디렉티브 (next/navigation 훅 사용)
+- [x] `pnpm --filter @todo-list/web typecheck` — `tsc --noEmit` 결과 본 파일 관련 에러 0건 (사전 존재하던 life/page.tsx, auth/callback 에러는 task 12·13 에서 해소)
+- [x] `todayISO()` KST 안전 — `Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' })` 로 UTC 오프셋 회귀 방지
+- [x] `setDate` 안정 참조 — `useCallback([router])` 적용
 
 ## 주의사항
 

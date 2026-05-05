@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 07
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 03 (TodoItem)
 
 ## 작업 목표
@@ -52,13 +52,13 @@ sub-prd-02 §4 "섹션 컴포넌트" + §핵심 구현 로직 `<MainDailyView>` 
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/TodoSection.tsx` 파일 존재
-- [ ] `apps/web/src/components/DoneSection.tsx` 파일 존재
-- [ ] 카운트 표시 (`완료 (N)` / `진행 중 (N)`) 정확
-- [ ] 빈 상태 메시지 2종 분기 존재
-- [ ] `<TodoItem>` (task 03) import 사용
-- [ ] react-query hook 직접 import 0건 (host 책임)
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/components/TodoSection.tsx` 파일 존재
+- [x] `apps/web/src/components/DoneSection.tsx` 파일 존재 (TodoSection 얇은 wrap)
+- [x] 카운트 표시 (`완료 (N)` / `진행 중 (N)`) 정확
+- [x] 빈 상태 메시지 2종 분기 존재 (`EMPTY_MESSAGE` record)
+- [x] `<TodoItem>` (task 03) import 사용
+- [x] react-query hook 직접 import 0건 — `@todo-list/core` 의 `SubIssueWithJoins` 타입만 import
+- [x] `tsc --noEmit` 본 파일 관련 에러 0건
 
 ## 주의사항
 

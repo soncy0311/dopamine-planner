@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 10
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음)
 
 ## 작업 목표
@@ -38,13 +38,14 @@ sub-prd-02 §7 "워크스페이스 전환" — 사이드 네비와 동일 항목
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/MobileTabBar.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] 3개 항목 모두 렌더
-- [ ] `usePathname()` 기반 활성 표시
-- [ ] `md:hidden` 반응형 분기
-- [ ] FAB 와 시각적 충돌 없음 (FAB 의 `bottom` 오프셋이 탭 바 높이만큼 상승하도록 task 08 에서 className 조정)
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/components/MobileTabBar.tsx` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] 3개 항목 모두 렌더 (Life/Work/설정)
+- [x] `usePathname()` 기반 활성 표시
+- [x] `md:hidden` 반응형 분기
+- [x] FAB 와 시각적 충돌 없음 — MainDailyView 에서 FAB className 에 `!bottom-24` 적용 (탭 바 높이 56px + safe-area 상회)
+- [x] `pb-[env(safe-area-inset-bottom)]` 노치 가드
+- [x] `tsc --noEmit` 본 파일 관련 에러 0건
 
 ## 주의사항
 

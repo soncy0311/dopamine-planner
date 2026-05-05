@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 05
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음)
 
 ## 작업 목표
@@ -47,13 +47,13 @@ sub-prd-02 §3 "`<DateHeader>` 컴포넌트" 명세 + §작업 14 키보드 단�
 
 ## 검증 과정
 
-- [ ] `packages/ui/src/DateNavigator.tsx` 파일 존재
-- [ ] `packages/ui/src/index.ts` 재-export 추가
-- [ ] `←` `→` keydown 리스너 등록·해제
-- [ ] input/textarea focus 시 단축키 비활성 분기 존재
-- [ ] 월 타이틀 / 7일 주간 뷰 / 좌우 화살표 3요소 모두 렌더
-- [ ] 외부 date 라이브러리 의존 0건
-- [ ] `pnpm --filter @todo-list/ui typecheck` 통과
+- [x] `packages/ui/src/DateNavigator.tsx` 파일 존재
+- [x] `packages/ui/src/index.ts` 재-export 추가
+- [x] `←` `→` keydown 리스너 등록·해제 (`useEffect` cleanup)
+- [x] input/textarea/contentEditable focus 시 단축키 비활성 + meta/ctrl/alt 모디파이어 가드
+- [x] 월 타이틀 / 7일 주간 뷰 / 좌우 화살표 3요소 모두 렌더
+- [x] 외부 date 라이브러리 의존 0건 — 자체 `Date` 산술
+- [x] `pnpm --filter @todo-list/ui lint` (=`tsc --noEmit`) 통과
 
 ## 주의사항
 

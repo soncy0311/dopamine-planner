@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 08
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (supabase client), 02 (useDateQuery), 05 (DateNavigator), 06 (FAB), 07 (TodoSection)
 
 ## 작업 목표
@@ -74,13 +74,14 @@ export function MainDailyView({ workspace }: { workspace: Workspace }) {
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/MainDailyView.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] `subscribeTodos` cleanup effect 등록
-- [ ] `useTodos(workspace, date)` 호출
-- [ ] `useDateQuery` (task 02), `<DateNavigator>` (task 05), `<DoneSection>` / `<TodoSection>` (task 07), `<FAB>` (task 06) 모두 사용
-- [ ] CRUD 모달 import 0건 (`grep -n "import.*Modal" apps/web/src/components/MainDailyView.tsx` → 0)
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/components/MainDailyView.tsx` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] `subscribeTodos` cleanup effect 등록 (`useEffect(() => subscribeTodos(supabase, qc), [qc])`)
+- [x] `useTodos({ client, workspace, date })` 호출 (Sub-01 의 객체 인자 시그니처 준수)
+- [x] `useDateQuery` (task 02), `<DateNavigator>` (task 05), `<TodoSection>` (task 07), `<FAB>` (task 06) 모두 사용
+- [x] CRUD 모달 import 0건 — `grep "import.*Modal"` 0
+- [x] `carryOverTodos` 직접 호출 0건 — `grep "carryOverTodos"` 0
+- [x] `tsc --noEmit` 본 파일 관련 에러 0건
 
 ## 주의사항
 

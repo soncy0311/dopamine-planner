@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 03
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음 — host 가 react-query 훅 호출 후 콜백 주입)
 
 ## 작업 목표
@@ -47,12 +47,12 @@ sub-prd-02 §4 "5. `<TodoItem>` 컴포넌트" 명세 그대로.
 
 ## 검증 과정
 
-- [ ] `packages/ui/src/TodoItem.tsx` 파일 존재
-- [ ] `packages/ui/src/index.ts` 에 재-export 추가
-- [ ] `onToggle` / `onPress` prop 시그니처 일치
-- [ ] react-query 직접 import 0건 (`grep -n "react-query" packages/ui/src/TodoItem.tsx` → 0)
-- [ ] `@todo-list/core` 직접 import 0건 (host 책임)
-- [ ] `pnpm --filter @todo-list/ui typecheck` 통과
+- [x] `packages/ui/src/TodoItem.tsx` 파일 존재
+- [x] `packages/ui/src/index.ts` 에 재-export 추가 (`TodoItem`, `TodoItemProps`, `TodoItemCategory`)
+- [x] `onToggle` / `onPress` prop 시그니처 일치
+- [x] react-query 직접 import 0건
+- [x] `@todo-list/core` 직접 import 0건 (host 책임)
+- [x] `pnpm --filter @todo-list/ui lint` (=`tsc --noEmit`) 통과
 
 ## 주의사항
 

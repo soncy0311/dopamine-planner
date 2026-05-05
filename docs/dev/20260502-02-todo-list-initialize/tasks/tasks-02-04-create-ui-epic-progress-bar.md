@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 04
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음)
 
 ## 작업 목표
@@ -44,12 +44,12 @@ type EpicProgressBarProps = {
 
 ## 검증 과정
 
-- [ ] `packages/ui/src/EpicProgressBar.tsx` 파일 존재
-- [ ] `packages/ui/src/index.ts` 재-export 추가
-- [ ] `total=0` 케이스에서 div by zero 없이 정상 렌더
-- [ ] `done > total` 방어 (clamp) 처리
-- [ ] aria-* 속성 4개 (`role`, `valuenow`, `valuemin`, `valuemax`) 부여
-- [ ] `pnpm --filter @todo-list/ui typecheck` 통과
+- [x] `packages/ui/src/EpicProgressBar.tsx` 파일 존재
+- [x] `packages/ui/src/index.ts` 재-export 추가
+- [x] `total=0` 케이스에서 div by zero 없이 정상 렌더 (segments 분기에서 0 totals 시 fall-through)
+- [x] `done > total` 방어 (clamp) 처리 — `Math.min(Math.max(0, done), safeTotal)`
+- [x] aria-* 속성 4개 (`role`, `valuenow`, `valuemin`, `valuemax`) 부여
+- [x] `pnpm --filter @todo-list/ui lint` (=`tsc --noEmit`) 통과
 
 ## 주의사항
 

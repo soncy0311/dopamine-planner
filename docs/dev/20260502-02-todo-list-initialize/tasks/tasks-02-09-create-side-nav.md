@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 09
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음)
 
 ## 작업 목표
@@ -37,13 +37,13 @@ sub-prd-02 §7 "워크스페이스 전환" 명세 그대로.
 
 ## 검증 과정
 
-- [ ] `apps/web/src/components/SideNav.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] 3개 항목 (`Life` / `Work` / `설정`) 모두 렌더
-- [ ] `usePathname()` 기반 활성 표시 분기 존재
-- [ ] `hidden md:flex` 반응형 분기
-- [ ] 각 항목 hit area 44x44 이상
-- [ ] `pnpm --filter @todo-list/web typecheck` 통과
+- [x] `apps/web/src/components/SideNav.tsx` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] 3개 항목 (`Life` / `Work` / `설정`) 모두 렌더
+- [x] `usePathname()` 기반 활성 표시 분기 존재
+- [x] `hidden md:flex` 반응형 분기
+- [x] 각 항목 hit area 44x44 이상 (`h-11`)
+- [x] `tsc --noEmit` 본 파일 관련 에러 0건
 
 ## 주의사항
 

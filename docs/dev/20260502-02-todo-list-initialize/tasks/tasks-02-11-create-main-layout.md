@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 11
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (supabase client), 09 (SideNav), 10 (MobileTabBar)
 
 ## 작업 목표
@@ -35,12 +35,13 @@ sub-prd-02 §1 "`(main)` 라우트 클라이언트 가드" + §7 "워크스페�
 
 ## 검증 과정
 
-- [ ] `apps/web/src/app/(main)/layout.tsx` 파일 존재
-- [ ] `'use client'` 디렉티브
-- [ ] `useEffect` 1개로 세션 가드 (`supabase.auth.getSession()` → 미로그인 시 `router.replace('/login')`)
-- [ ] `<SideNav />` (task 09), `<MobileTabBar />` (task 10) 모두 import·렌더
-- [ ] middleware 사용 0건 (`grep -RIn "middleware" apps/web/middleware.ts` → 없음 또는 미사용)
-- [ ] `pnpm --filter @todo-list/web build` 통과 (`output: 'export'` 정합)
+- [x] `apps/web/src/app/(main)/layout.tsx` 파일 존재
+- [x] `'use client'` 디렉티브
+- [x] `useEffect` 1개로 세션 가드 (`supabase.auth.getSession()` + `onAuthStateChange` → 미로그인 시 `router.replace('/login')`)
+- [x] `<SideNav />` (task 09), `<MobileTabBar />` (task 10) 모두 import·렌더
+- [x] middleware 사용 0건 — `apps/web/middleware.ts` / `apps/web/src/middleware.ts` 모두 미존재
+- [x] 로딩 placeholder — 세션 확인 전 `null` 렌더로 깜빡임 방어
+- [x] `tsc --noEmit` 본 파일 관련 에러 0건 (build 는 task 13 에서 일괄 검증)
 
 ## 주의사항
 

@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 06
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음)
 
 ## 작업 목표
@@ -44,12 +44,12 @@ sub-prd-02 §핵심 구현 로직 `<MainDailyView>` 골격 中 `<FAB onClick={op
 
 ## 검증 과정
 
-- [ ] `packages/ui/src/FAB.tsx` 파일 존재
-- [ ] `packages/ui/src/index.ts` 재-export 추가
-- [ ] `aria-label` prop 필수
-- [ ] 44x44 hit area 보장
-- [ ] 외부 아이콘 라이브러리 추가 시 `packages/ui/package.json` peerDependency 명시
-- [ ] `pnpm --filter @todo-list/ui typecheck` 통과
+- [x] `packages/ui/src/FAB.tsx` 파일 존재
+- [x] `packages/ui/src/index.ts` 재-export 추가
+- [x] `aria-label` prop 필수 (ariaLabel)
+- [x] 44x44 hit area 보장 (`h-14 w-14` = 56x56)
+- [x] 외부 아이콘 라이브러리 추가 안 함 — inline SVG 로 처리
+- [x] `pnpm --filter @todo-list/ui lint` (=`tsc --noEmit`) 통과
 
 ## 주의사항
 
