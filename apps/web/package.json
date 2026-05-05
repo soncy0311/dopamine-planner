@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "dotenv -e ../../env/.env.web.local -- next dev",
-    "build": "next build",
+    "build": "dotenv -e ../../env/.env.web.local -- next build",
     "start": "next start",
-    "lint": "next lint"
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.0",

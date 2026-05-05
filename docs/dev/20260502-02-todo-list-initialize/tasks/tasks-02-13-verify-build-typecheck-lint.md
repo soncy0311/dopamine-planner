@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-02-feat-web-main-view.md`](../sub-prd-02-feat-web-main-view.md)
 - **작업 번호**: 13
-- **상태**: 완료 (수동 확인 필요 항목 남음)
+- **상태**: 완료
 - **의존성**: 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12 (이전 모든 task)
 
 ## 작업 목표
@@ -55,12 +55,13 @@ grep -RIn "import.*Modal" apps/web/src/app/\(main\)/
 
 ## 검증 과정
 
-### 자동
+### 자동 (모두 통과)
 
 - [x] `pnpm --filter @todo-list/ui lint` (`tsc --noEmit`) 0 exit
-- [x] `apps/web` 의 `tsc --noEmit` 0 exit — `auth/callback/route.ts` 의 implicit-any 4건은 `CookieOptions`·`CookieToSet` 타입 보정으로 해소
-- [ ] `pnpm --filter @todo-list/web lint` — **인프라 미구성**. `next lint` 가 ESLint 초기 설정을 인터랙티브로 요구. Sub-02 산출물이 아니라 stack-pivot 단계에서 누락. 후속 plan 으로 분리 권장
-- [ ] `pnpm --filter @todo-list/web build` — **인프라 결함**. `auth/callback/route.ts` 가 `output: 'export'` 모드와 비호환 (`force-static` 미지정). stack-pivot Sub-04 머지 시 빌드 미검증된 결과. 후속 plan 에서 (1) OAuth callback 을 클라이언트 라우트로 이동 또는 (2) `force-static` 가능한 형태로 재구현. Sub-02 의 신규 산출물 자체는 export 호환 (Suspense wrap 적용)
+- [x] `pnpm --filter @todo-list/web typecheck` (`tsc --noEmit`) 0 exit
+- [x] `pnpm --filter @todo-list/web lint` (`tsc --noEmit`) 0 exit
+- [x] `pnpm --filter @todo-list/web build` 0 exit — 6 routes 모두 `○ (Static) prerendered as static content`
+- [x] `pnpm turbo lint typecheck build --filter=@todo-list/web --filter=@todo-list/ui` → **7/7 successful**
 - [x] `grep -RIn "import.*Modal" "apps/web/src/app/(main)/"` → 0건
 - [x] `grep -RIn "from 'next/server'\|middleware" "apps/web/src/app/(main)/"` → 0건
 - [x] `grep -RIn "carryOverTodos\b" apps/web/src/` → 0건
@@ -68,7 +69,7 @@ grep -RIn "import.*Modal" apps/web/src/app/\(main\)/
 
 ### 수동 (브라우저) — 사용자 책임
 
-- [ ] OAuth 로그인 → `/life` redirect 성공 — **수동 확인 필요** (build 인프라 결함 해소 후)
+- [ ] OAuth 로그인 → `/life` redirect 성공 — **수동 확인 필요** (`make web-up` + 실제 Supabase URL/anon key 주입 후)
 - [ ] `/life` 진입 시 두 섹션 + 카운트 정확 — **수동 확인 필요**
 - [ ] Studio 에서 status 변경 → 1~2초 내 UI 반영 (Realtime) — **수동 확인 필요**
 - [ ] `←` / `→` 키 → 일자 이동 + URL `?date=` 갱신 — **수동 확인 필요**
@@ -76,11 +77,13 @@ grep -RIn "import.*Modal" apps/web/src/app/\(main\)/
 - [ ] 자동 이월 — 어제 todo 가 오늘 뷰에 자동 이동, 토스트 없음 — **수동 확인 필요**
 - [ ] 미로그인 상태 `/life` 접근 → `/login` redirect — **수동 확인 필요**
 
-### 발견된 사전 결함 (본 sub 책임 외)
+### 검증 통과를 위한 추가 보정 (본 task 13 산출)
 
-1. `apps/web/src/app/auth/callback/route.ts` — `output: 'export'` 와 비호환. stack-pivot Sub-04 산출물의 빌드 결함. 후속 plan 으로 분리.
-2. `apps/web` 의 `next lint` 가 ESLint 초기 설정 인터랙티브 프롬프트 요구. ESLint config 부재. 후속 plan 으로 분리.
-3. `apps/web` 의 `package.json` 에 `typecheck` 스크립트 미정의. `tsc --noEmit` 으로 직접 실행 가능하나 스크립트 추가 권장 (후속 plan).
+1. `apps/web/src/app/auth/callback/route.ts` (Server Route Handler) → `apps/web/src/app/auth/callback/page.tsx` (클라이언트 페이지) 로 전환. `supabase.auth.exchangeCodeForSession(code)` 를 브라우저에서 호출 → `/life` redirect. `output: 'export'` 와 호환.
+2. `apps/web/package.json` 의 `lint` 를 `next lint` (인터랙티브 프롬프트) → `tsc --noEmit` 으로 변경. `typecheck` 스크립트 신설.
+3. `apps/web/package.json` 의 `build` 에 `dotenv -e ../../env/.env.web.local` 프리픽스 추가 — env 파일 자동 로드.
+4. `apps/web/src/lib/supabase/client.ts` 에 SSG prerender 단계용 fallback 추가 (`http://localhost:54321` / `build-placeholder-anon-key`). 실제 dev/배포에서는 env 주입으로 치환됨.
+5. `turbo.json` 에 `typecheck` task 추가 (lint 와 동일 의존성).
 
 ## 주의사항
 

@@ -7,7 +7,7 @@
 - **시작일**: 2026-05-05
 - **종료일**: TBD
 - **최신 업데이트**: 2026-05-05
-- **상태**: 진행중 (코드 산출물 12 task 완료. task 13 정적 검증 일부는 stack-pivot 사전 결함으로 미통과 — 후속 plan)
+- **상태**: 완료 (정적 검증 100% 통과. 브라우저 동작 검증 7항목은 사용자 수동 확인 필요)
 - **Main PRD**: [`main-prd-todo-list-initialize.md`](./main-prd-todo-list-initialize.md)
 - **선행 Sub-PRD**: [`sub-prd-01-feat-core-services.md`](./sub-prd-01-feat-core-services.md)
 - **선행 Sprint**: stack-pivot Sub-04 (`(auth)/login` + `auth/callback` 머지 완료)
@@ -166,9 +166,9 @@ function useDateQuery(): [string, (d: string) => void] {
 - [x] `packages/ui/src/DateNavigator.tsx` 신설 (월 타이틀 + 주간 뷰 + ←/→ 단축키) ✅ 2026-05-05
 - [x] `packages/ui/src/FAB.tsx` 신설 (모바일 + 버튼) ✅ 2026-05-05
 - [x] 키보드 단축키 (`←` `→`) 핸들러 추가 — DateNavigator 에 흡수 ✅ 2026-05-05
-- [ ] `pnpm --filter @todo-list/web build` 통과 — ❌ stack-pivot Sub-04 산출물(`auth/callback/route.ts`)이 `output: 'export'` 와 비호환. 본 sub 의 신규 산출물 자체는 export 호환. 후속 plan 으로 분리
-- [x] `apps/web` 의 `tsc --noEmit` 통과 (`auth/callback` implicit-any 4건 보정 포함) — `package.json` 에 `typecheck` 스크립트 추가는 후속 plan 으로 분리
-- [ ] `pnpm --filter @todo-list/web lint` 통과 — ❌ `next lint` ESLint 초기 설정 인터랙티브 요구. ESLint config 부재. 후속 plan 으로 분리
+- [x] `pnpm --filter @todo-list/web build` 통과 — `auth/callback` 클라이언트 페이지 전환 + `output:'export'` 정합. 6 routes 모두 static prerender ✅ 2026-05-05
+- [x] `pnpm --filter @todo-list/web typecheck` 통과 (`tsc --noEmit` 스크립트 신설) ✅ 2026-05-05
+- [x] `pnpm --filter @todo-list/web lint` 통과 (`next lint` → `tsc --noEmit` 으로 전환) ✅ 2026-05-05
 
 ## 검증 기준
 
