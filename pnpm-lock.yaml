@@ -154,6 +154,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.0.0
         version: 5.100.9(react@19.2.5)
+      '@todo-list/config':
+        specifier: workspace:*
+        version: link:../config
       '@types/react':
         specifier: ^19.0.0
         version: 19.2.14
