@@ -27,9 +27,10 @@
 ```
 todo-list/                  (Monorepo — pnpm + Turborepo)
 ├── apps/
-│   ├── web/                Next.js 15 (React 19) — 메인 클라이언트 + API Routes
-│   └── mobile/             Expo 52 (React Native) — WebView 래퍼
+│   ├── web/                Next.js 15 (React 19) — 정적 SPA (`output: 'export'`, OAuth 콜백 Route Handler 한정)
+│   └── mobile/             Expo 52 (React Native) — 네이티브 클라이언트
 ├── packages/
+│   ├── core/               Supabase 클라이언트·도메인 로직·Realtime 훅 (web/mobile 공유)
 │   ├── ui/                 공유 UI 컴포넌트 (shadcn/ui + Radix)
 │   ├── shared/             공유 타입·유틸
 │   └── config/             공유 설정
@@ -40,10 +41,11 @@ todo-list/                  (Monorepo — pnpm + Turborepo)
 
 | 영역 | 기술 |
 |---|---|
-| Frontend | Next.js 15 (App Router), React 19, TypeScript |
-| Mobile | Expo 52 (React Native) + WebView |
+| Frontend | Next.js 15 (App Router, `output: 'export'` SPA), React 19, TypeScript |
+| Mobile | Expo 52 (React Native 네이티브) |
 | Backend (BaaS) | Supabase (PostgreSQL + Auth + Realtime) |
-| API | Next.js API Routes (Vercel Serverless) |
+| API | Supabase 직접 호출 + Postgres RPC 함수 (`SECURITY DEFINER`) — `packages/core` 의 services 가 단일 호출 진입점. 자체 서버 운영 안 함 — Next.js API Route Handler 는 OAuth 콜백 (`apps/web/src/app/api/auth/callback`) 한정 |
+| 스타일 | Tailwind v4 (web), Nativewind v4 (mobile) — `packages/config/tailwind.config.js` 단일 SoT |
 | SDK | @supabase/supabase-js, @supabase/ssr |
 | Monorepo | pnpm workspaces + Turborepo |
 | Infra | Vercel (프론트엔드) + Supabase (백엔드) |
@@ -91,8 +93,15 @@ todo-list/                  (Monorepo — pnpm + Turborepo)
 - TypeScript strict 모드 사용
 - Prettier 적용: semi, singleQuote, trailingComma: all, printWidth: 100, tabWidth: 2
 - 패키지 간 의존: `workspace:*` 프로토콜 사용
-- 실행 / 빌드 / 린트 등 모든 커맨드는 `turbo` 또는 `package.json scripts`로 관리한다
-- 주요 커맨드: `pnpm dev`, `pnpm build`, `pnpm lint`, `pnpm test`
+- 실행 / 빌드 / 린트 등 모든 커맨드는 루트 `Makefile` 을 단일 진입점으로 사용한다 (`pnpm`/`turbo`/`supabase`/`docker compose` 를 wrap)
+- 카탈로그 확인: `make help` / 환경 검증: `make doctor`
+- 자주 쓰는 명령:
+  - `make up` / `make down` — 전체 dev 환경 (supabase + web container) 기동/중지
+  - `make dev` — 호스트에서 turbo dev (컨테이너 미사용 시)
+  - `make web-up` / `make web-down` / `make web-logs` / `make web-shell` — web 컨테이너 개별 제어
+  - `make mobile-dev` / `make mobile-ios` / `make mobile-android` — Expo 시뮬레이터 (호스트)
+  - `make sb-reset` / `make sb-gen-types` — Supabase DB 재적용 / 타입 생성
+  - `make build` / `make lint` / `make test` — turbo 빌드/린트/테스트
 
 ## 환경 변수 관리
 
@@ -136,5 +145,5 @@ env/
 
 ## 참고 문서
 
-- `docs/client/design-system/` — 디자인 시스템 명세
-- `docs/client/20260501-01-design-system/detail-design-system.md` — 디자인 시스템 상세 요구사항
+- `docs/base/design-system/` — 디자인 시스템 명세 (토큰, 컴포넌트, 접근성)
+- `docs/base/prototype/` — HTML/CSS 프로토타입
