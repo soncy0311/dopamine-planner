@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 01
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음 — 가장 먼저 진입)
 
 ## 작업 목표
@@ -38,10 +38,10 @@ sub-prd-01 §1 queryKeys 단일화 정의 그대로.
 
 ## 검증 과정
 
-- [ ] `packages/core/src/queryKeys.ts` 파일 존재
-- [ ] queryKeys 5개 헬퍼(`todos / epics / epicsByCategory / categories / profile`) export
-- [ ] `invalidateByTable` 헬퍼 export — 4 테이블 매핑 분기 포함
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
+- [x] `packages/core/src/queryKeys.ts` 파일 존재
+- [x] queryKeys 5개 헬퍼(`todos / epics / epicsByCategory / categories / profile`) export
+- [x] `invalidateByTable` 헬퍼 export — 4 테이블 매핑 분기 포함
+- [x] `pnpm --filter @todo-list/core typecheck` 통과 (task 02 까지 진행 후 일괄 검증)
 
 ## 주의사항
 

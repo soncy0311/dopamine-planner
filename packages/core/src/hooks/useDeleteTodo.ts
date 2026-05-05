@@ -1,10 +1,12 @@
-import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  type UseMutationResult,
+} from '@tanstack/react-query';
 import type { AppSupabaseClient } from '../supabase/types';
+import { todoService } from '../services/todo';
 
-export type UseDeleteTodoArgs = {
-  client: AppSupabaseClient;
-};
-
+export type UseDeleteTodoArgs = { client: AppSupabaseClient };
 export type DeleteTodoInput = { id: string };
 
 export function useDeleteTodo(
@@ -13,12 +15,10 @@ export function useDeleteTodo(
   const { client } = args;
   const qc = useQueryClient();
   return useMutation<void, Error, DeleteTodoInput>({
-    mutationFn: async ({ id }) => {
-      const { error } = await client.from('sub_issue').delete().eq('id', id);
-      if (error) throw error;
-    },
+    mutationFn: ({ id }) => todoService.remove(client, id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['todos'] });
+      qc.invalidateQueries({ queryKey: ['epics'] });
     },
   });
 }

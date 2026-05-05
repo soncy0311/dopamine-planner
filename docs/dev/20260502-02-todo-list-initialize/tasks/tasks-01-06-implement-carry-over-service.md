@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 06
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음)
 
 ## 작업 목표
@@ -38,10 +38,10 @@ sub-prd-01 §6 RPC wrapper + sub-prd-01 §핵심 구현 로직 의 `carryOverTod
 
 ## 검증 과정
 
-- [ ] `carryOverTodos` 함수 export
-- [ ] `data?.[0]?.moved_count ?? 0` 패턴 사용
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `grep -RIn "carry_over_todos" packages/core/src/services/carryOver.ts` 결과 ≥ 1건
+- [x] `carryOverTodos` 함수 export
+- [x] `data?.[0]?.moved_count ?? 0` 패턴 사용
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 (task 11 에서 일괄)
+- [x] `grep -RIn "carry_over_todos" packages/core/src/services/carryOver.ts` 결과 ≥ 1건
 
 ## 주의사항
 

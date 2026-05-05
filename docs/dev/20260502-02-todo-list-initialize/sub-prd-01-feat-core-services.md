@@ -5,9 +5,9 @@
 - **작업명**: `코어 서비스·훅 구현`
 - **작업 유형**: `feat` (새로운 기능 추가)
 - **시작일**: 2026-05-05
-- **종료일**: TBD
+- **종료일**: 2026-05-05
 - **최신 업데이트**: 2026-05-05
-- **상태**: 진행전
+- **상태**: 완료
 - **Main PRD**: [`main-prd-todo-list-initialize.md`](./main-prd-todo-list-initialize.md)
 - **선행 Sub-PRD**: 없음 (본 sprint 내 가장 먼저)
 - **선행 Sprint**: [`../20260502-01-stack-pivot/sub-prd-02-feat-core-package.md`](../20260502-01-stack-pivot/sub-prd-02-feat-core-package.md) (stub 골격 머지 완료)
@@ -181,38 +181,38 @@ export async function carryOverTodos(
 
 ## 작업
 
-- [ ] `packages/core/src/queryKeys.ts` 신설 (헬퍼 함수 + `invalidateByTable` 추가)
-- [ ] `packages/core/src/domain/category.ts` 매퍼 실 구현 (`mapCategoryRow`)
-- [ ] `packages/core/src/domain/epic.ts` 매퍼 실 구현 (`mapEpicRow`)
-- [ ] `packages/core/src/domain/todo.ts` 매퍼 실 구현 (`mapSubIssueRow`, `mapTodoDailyView`)
-- [ ] `packages/core/src/services/category.ts` CRUD 4종 본문 작성
-- [ ] `packages/core/src/services/epic.ts` CRUD 4종 + `listByWorkspace` 본문 작성
-- [ ] `packages/core/src/services/todo.ts` CRUD + `toggle` + `listByDate` 본문 작성
-- [ ] `packages/core/src/services/carryOver.ts` 본문 작성 (배열 추출)
-- [ ] `packages/core/src/services/epicProgress.ts` 본문 작성 (배열 추출)
-- [ ] `packages/core/src/hooks/useTodos.ts` 본문 작성 + 자동 이월 effect
-- [ ] `packages/core/src/hooks/useCreateTodo.ts` / `useUpdateTodo.ts` / `useDeleteTodo.ts` 본문 작성
-- [ ] `packages/core/src/hooks/useToggleTodo.ts` 본문 작성 (optimistic + 200ms debounce)
-- [ ] `packages/core/src/hooks/useEpics.ts` / `useCreateEpic.ts` / `useUpdateEpic.ts` / `useDeleteEpic.ts` 본문 작성
-- [ ] `packages/core/src/hooks/useCategories.ts` / `useCreateCategory.ts` / `useUpdateCategory.ts` / `useDeleteCategory.ts` 본문 작성
-- [ ] `packages/core/src/realtime/subscribeTodos.ts` 4 테이블 통합 구독 본문 작성
-- [ ] `packages/core/src/index.ts` 에 신규 export 추가
-- [ ] `packages/core/src/__tests__/` 단위 테스트 작성 (매퍼 round-trip, queryKeys 헬퍼, RPC 배열 추출)
-- [ ] `pnpm --filter @todo-list/core build` 통과
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `pnpm --filter @todo-list/core test` 통과
+- [x] `packages/core/src/queryKeys.ts` 신설 (헬퍼 함수 + `invalidateByTable` 추가)
+- [x] `packages/core/src/domain/category.ts` 매퍼 실 구현 (`mapCategoryRow`)
+- [x] `packages/core/src/domain/epic.ts` 매퍼 실 구현 (`mapEpicRow`)
+- [x] `packages/core/src/domain/todo.ts` 매퍼 실 구현 (`mapSubIssueRow`, `mapTodoDailyView`)
+- [x] `packages/core/src/services/category.ts` CRUD 4종 본문 작성
+- [x] `packages/core/src/services/epic.ts` CRUD 4종 + `listByWorkspace` 본문 작성
+- [x] `packages/core/src/services/todo.ts` CRUD + `toggle` + `listByDate` 본문 작성
+- [x] `packages/core/src/services/carryOver.ts` 본문 작성 (배열 추출)
+- [x] `packages/core/src/services/epicProgress.ts` 본문 작성 (배열 추출)
+- [x] `packages/core/src/hooks/useTodos.ts` 본문 작성 + 자동 이월 effect
+- [x] `packages/core/src/hooks/useCreateTodo.ts` / `useUpdateTodo.ts` / `useDeleteTodo.ts` 본문 작성
+- [x] `packages/core/src/hooks/useToggleTodo.ts` 본문 작성 (optimistic + 200ms debounce)
+- [x] `packages/core/src/hooks/useEpics.ts` / `useCreateEpic.ts` / `useUpdateEpic.ts` / `useDeleteEpic.ts` 본문 작성
+- [x] `packages/core/src/hooks/useCategories.ts` / `useCreateCategory.ts` / `useUpdateCategory.ts` / `useDeleteCategory.ts` 본문 작성
+- [x] `packages/core/src/realtime/subscribeTodos.ts` 4 테이블 통합 구독 본문 작성
+- [x] `packages/core/src/index.ts` 에 신규 export 추가
+- [x] `packages/core/src/__tests__/` 단위 테스트 작성 (매퍼 round-trip, queryKeys 헬퍼, RPC 배열 추출)
+- [x] `pnpm --filter @todo-list/core build` 통과
+- [x] `pnpm --filter @todo-list/core typecheck` 통과
+- [x] `pnpm --filter @todo-list/core test` 통과
 
 ## 검증 기준
 
-- [ ] `pnpm --filter @todo-list/core build` 통과
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `pnpm --filter @todo-list/core test` 통과 (단위 테스트 — 매퍼 / queryKeys / RPC 배열 추출 / debounce)
-- [ ] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/` 결과 0건
-- [ ] `grep -RIn "queryKeys\." packages/core/src/` 결과 ≥ 7건 (헬퍼 통과 정책 명시 — 7개 영역의 invalidate 위치)
-- [ ] `grep -RIn "carry_over_todos\|recalc_epic_progress" packages/core/src/` 결과 ≥ 2건 (RPC 시그니처 언급 — services 본문 + 호출처)
-- [ ] `grep -RIn "data?.\[0\]" packages/core/src/services/` 결과 ≥ 2건 (RPC 단일 row 배열 추출 패턴)
-- [ ] `grep -RIn "\.eq('user_id'" packages/core/src/` 결과 0건 (RLS 이중 필터 금지)
-- [ ] `useToggleTodo` 디바운스 검증 — 동일 epic 의 sub 5개를 200ms 내 토글했을 때 `recalc_epic_progress` 호출이 1회로 합쳐지는지 단위 테스트로 확인
+- [x] `pnpm --filter @todo-list/core build` 통과
+- [x] `pnpm --filter @todo-list/core typecheck` 통과
+- [x] `pnpm --filter @todo-list/core test` 통과 (단위 테스트 — 매퍼 / queryKeys / RPC 배열 추출 / debounce, 24 tests)
+- [x] `grep -RIn "from 'react-native'\|from 'next/\|window\.\|AsyncStorage" packages/core/src/` 결과 0건
+- [x] `grep -RIn "queryKeys\." packages/core/src/` 결과 13건 (≥ 7)
+- [x] `grep -RIn "carry_over_todos\|recalc_epic_progress" packages/core/src/` 결과 2건 (≥ 2)
+- [x] `grep -RIn "data?.\[0\]" packages/core/src/services/` 결과 2건 (≥ 2)
+- [x] `grep -RIn "\.eq('user_id'" packages/core/src/` 결과 0건 (RLS 이중 필터 금지)
+- [x] `useToggleTodo` 디바운스 검증 — 동일 epic 의 sub 5개를 200ms 내 토글했을 때 `recalc_epic_progress` 호출이 1회로 합쳐지는지 단위 테스트로 확인
 
 ---
 

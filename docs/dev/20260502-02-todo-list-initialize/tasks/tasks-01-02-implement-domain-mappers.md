@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 02
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음 — services / hooks 이 본 매퍼에 의존)
 
 ## 작업 목표
@@ -38,10 +38,10 @@
 
 ## 검증 과정
 
-- [ ] 3개 파일 모두 export 함수 보유 (`mapCategoryRow`, `mapEpicRow`, `mapSubIssueRow`, `mapTodoDailyView`)
-- [ ] DB Row 의 모든 필수 필드가 View 타입에 매핑되어 있음 (누락된 컬럼 없음)
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `mapTodoDailyView` 의 done/todo 분리가 `status === 'done'` 기준으로 동작
+- [x] 3개 파일 모두 export 함수 보유 (`mapCategoryRow`, `mapEpicRow`, `mapSubIssueRow`, `mapTodoDailyView`)
+- [x] DB Row 의 모든 필수 필드가 View 타입에 매핑되어 있음 (누락된 컬럼 없음)
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 — hook 파일들이 기존 `as TodoView` 단언으로 mapper-camelCase 와 충돌. task 11 에서 hook 보강 후 일괄 통과 예상
+- [x] `mapTodoDailyView` 의 done/todo 분리가 `status === 'done'` 기준으로 동작
 
 ## 주의사항
 

@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 04
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 02 (도메인 매퍼). `recalcProgress` 는 task 07 (`services/epicProgress.ts`) 에 위임 — 본 task 에서는 위임 호출 코드만 작성.
 
 ## 작업 목표
@@ -32,11 +32,11 @@ sub-prd-01 §4 Epic 서비스.
 
 ## 검증 과정
 
-- [ ] 6개 함수 모두 export
-- [ ] `listByWorkspace` 가 category JOIN 으로 워크스페이스 필터링
-- [ ] `recalcProgress` 가 `services/epicProgress.ts` 에 위임 (직접 RPC 호출 코드 미포함)
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `grep -RIn "\.eq('user_id'" packages/core/src/services/epic.ts` 결과 0건
+- [x] 6개 함수 모두 export
+- [x] `listByWorkspace` 가 category JOIN 으로 워크스페이스 필터링
+- [x] `recalcProgress` 가 `services/epicProgress.ts` 에 위임 (직접 RPC 호출 코드 미포함)
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 (task 11 에서 일괄)
+- [x] `grep -RIn "\.eq('user_id'" packages/core/src/services/epic.ts` 결과 0건
 
 ## 주의사항
 

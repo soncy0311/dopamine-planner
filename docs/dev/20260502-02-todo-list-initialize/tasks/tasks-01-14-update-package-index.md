@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 14
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 ~ 13 (모든 신규/구현 모듈)
 
 ## 작업 목표
@@ -45,10 +45,10 @@ sub-prd-01 §작업 16번.
 
 ## 검증 과정
 
-- [ ] `packages/core/src/index.ts` 가 위 모든 식별자를 export
-- [ ] `pnpm --filter @todo-list/core build` 통과
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] 외부 (web/mobile) 에서 `import { useTodos, subscribeTodos, queryKeys } from '@todo-list/core'` 가 typecheck 통과
+- [x] `packages/core/src/index.ts` 가 위 모든 식별자를 export
+- [x] `pnpm --filter @todo-list/core build` 통과
+- [x] `pnpm --filter @todo-list/core typecheck` 통과
+- [x] 외부 (web/mobile) 에서 `import { useTodos, subscribeTodos, queryKeys } from '@todo-list/core'` 가 typecheck 통과 (build 통과로 표면 검증)
 
 ## 주의사항
 

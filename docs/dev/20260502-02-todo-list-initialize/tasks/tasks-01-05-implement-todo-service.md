@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 05
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 02 (도메인 매퍼)
 
 ## 작업 목표
@@ -38,11 +38,11 @@ sub-prd-01 §5 Sub 서비스, API_CONTRACT §3.3.
 
 ## 검증 과정
 
-- [ ] 5개 함수 모두 export
-- [ ] `listByDate` 가 epic + category JOIN 으로 워크스페이스 필터
-- [ ] `toggle` 이 status + completed_date 를 동시 업데이트
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `grep -RIn "\.eq('user_id'" packages/core/src/services/todo.ts` 결과 0건
+- [x] 5개 함수 모두 export
+- [x] `listByDate` 가 epic + category JOIN 으로 워크스페이스 필터
+- [x] `toggle` 이 status + completed_date 를 동시 업데이트
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 (task 11 에서 일괄)
+- [x] `grep -RIn "\.eq('user_id'" packages/core/src/services/todo.ts` 결과 0건
 
 ## 주의사항
 

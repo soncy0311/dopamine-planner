@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 07
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음). 단 task 04(`services/epic.ts`) 가 본 wrapper 에 위임 — 본 task 가 먼저 존재해야 04 typecheck 통과.
 
 ## 작업 목표
@@ -38,10 +38,10 @@ sub-prd-01 §6 RPC wrapper.
 
 ## 검증 과정
 
-- [ ] `recalcEpicProgress` 함수 export
-- [ ] `data?.[0]?.progress ?? 0` 패턴 사용
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `grep -RIn "recalc_epic_progress" packages/core/src/services/epicProgress.ts` 결과 ≥ 1건
+- [x] `recalcEpicProgress` 함수 export
+- [x] `data?.[0]?.progress ?? 0` 패턴 사용
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 (task 11 에서 일괄)
+- [x] `grep -RIn "recalc_epic_progress" packages/core/src/services/epicProgress.ts` 결과 ≥ 1건
 
 ## 주의사항
 

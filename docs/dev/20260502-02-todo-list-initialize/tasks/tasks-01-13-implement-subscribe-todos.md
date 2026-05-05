@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 13
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (queryKeys / `invalidateByTable`)
 
 ## 작업 목표
@@ -46,11 +46,11 @@ sub-prd-01 §8 Realtime 헬퍼 + §핵심 구현 로직 §subscribeTodos.
 
 ## 검증 과정
 
-- [ ] `subscribeTodos` export — `(client, qc) => () => void` 시그니처
-- [ ] 4 테이블 모두 `.on('postgres_changes', ...)` 등록
-- [ ] payload 라우팅이 `invalidateByTable` 통과
-- [ ] unsubscribe 함수가 `client.removeChannel(channel)` 호출
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
+- [x] `subscribeTodos` export — `(client, qc) => () => void` 시그니처
+- [x] 4 테이블 모두 `.on('postgres_changes', ...)` 등록
+- [x] payload 라우팅이 `invalidateByTable` 통과
+- [x] unsubscribe 함수가 `client.removeChannel(channel)` 호출
+- [x] `pnpm --filter @todo-list/core typecheck` 통과
 
 ## 주의사항
 

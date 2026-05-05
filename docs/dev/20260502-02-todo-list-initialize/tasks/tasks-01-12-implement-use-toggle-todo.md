@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 12
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (queryKeys), 05 (services/todo), 07 (services/epicProgress)
 
 ## 작업 목표
@@ -46,13 +46,13 @@ sub-prd-01 §핵심 구현 로직 의 `useToggleTodo` 예시 코드.
 
 ## 검증 과정
 
-- [ ] `useToggleTodo` export
-- [ ] `debounceByEpic` 내부 헬퍼 (또는 동등 로직) 존재 — epicId 키 기반 Map<string, Timeout>
-- [ ] `onMutate` 에 snapshot/optimistic 갱신 로직 포함
-- [ ] `onError` 에 rollback 로직 포함
-- [ ] `onSuccess` 에서 debounced `recalcEpicProgress` 호출
-- [ ] `onSettled` 에서 todos / epics invalidate
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
+- [x] `useToggleTodo` export
+- [x] `debounceByEpic` 내부 헬퍼 (또는 동등 로직) 존재 — epicId 키 기반 Map<string, Timeout>
+- [x] `onMutate` 에 snapshot/optimistic 갱신 로직 포함
+- [x] `onError` 에 rollback 로직 포함
+- [x] `onSuccess` 에서 debounced `recalcEpicProgress` 호출
+- [x] `onSettled` 에서 todos / epics invalidate
+- [x] `pnpm --filter @todo-list/core typecheck` 통과
 
 ## 주의사항
 

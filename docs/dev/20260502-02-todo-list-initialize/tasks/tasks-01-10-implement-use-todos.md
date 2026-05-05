@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 10
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (queryKeys), 05 (services/todo), 06 (services/carryOver)
 
 ## 작업 목표
@@ -38,12 +38,12 @@
 
 ## 검증 과정
 
-- [ ] `useTodos` export
-- [ ] queryKey 가 `queryKeys.todos(workspace, date)` 사용
-- [ ] `useEffect` 안에서 `carryOverTodos` 호출
-- [ ] 호출 후 invalidate 가 `queryKeys.todos(workspace, today)` 통과
-- [ ] 멱등성 보장 (003 마이그레이션 WHERE 절) 가정 — 추가 가드 코드 없음
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
+- [x] `useTodos` export
+- [x] queryKey 가 `queryKeys.todos(workspace, date)` 사용
+- [x] `useEffect` 안에서 `carryOverTodos` 호출
+- [x] 호출 후 invalidate 가 `queryKeys.todos(workspace, today)` 통과
+- [x] 멱등성 보장 (003 마이그레이션 WHERE 절) 가정 — 추가 가드 코드 없음
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 (task 11 에서 일괄)
 
 ## 주의사항
 

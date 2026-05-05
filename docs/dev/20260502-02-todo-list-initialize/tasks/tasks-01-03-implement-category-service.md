@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 03
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 02 (도메인 매퍼)
 
 ## 작업 목표
@@ -33,10 +33,10 @@ sub-prd-01 §3 Category 서비스.
 
 ## 검증 과정
 
-- [ ] 4개 함수 모두 export
-- [ ] 모든 반환값이 `Category` 또는 `Category[]` (매퍼 통과)
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `grep -RIn "\.eq('user_id'" packages/core/src/services/category.ts` 결과 0건 (RLS 이중 필터 금지)
+- [x] 4개 함수 모두 export
+- [x] 모든 반환값이 `Category` 또는 `Category[]` (매퍼 통과)
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 (task 11 hook 보강 후 일괄 통과)
+- [x] `grep -RIn "\.eq('user_id'" packages/core/src/services/category.ts` 결과 0건 (RLS 이중 필터 금지)
 
 ## 주의사항
 

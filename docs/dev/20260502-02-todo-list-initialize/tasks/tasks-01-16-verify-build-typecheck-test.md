@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 16
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 14 (index export), 15 (단위 테스트)
 
 ## 작업 목표
@@ -61,15 +61,15 @@ grep -RIn "\.eq('user_id'" packages/core/src/
 
 ## 검증 과정
 
-- [ ] `pnpm --filter @todo-list/core build` 통과
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
-- [ ] `pnpm --filter @todo-list/core test` 통과
-- [ ] grep (a) 플랫폼 의존 — 0건
-- [ ] grep (b) queryKeys 헬퍼 — ≥ 7건
-- [ ] grep (c) RPC 시그니처 — ≥ 2건
-- [ ] grep (d) `data?.[0]` 패턴 — ≥ 2건
-- [ ] grep (e) RLS 이중 필터 — 0건
-- [ ] `useToggleTodo` debounce 테스트 PASS
+- [x] `pnpm --filter @todo-list/core build` 통과
+- [x] `pnpm --filter @todo-list/core typecheck` 통과
+- [x] `pnpm --filter @todo-list/core test` 통과 (24 tests, 4 files)
+- [x] grep (a) 플랫폼 의존 — 0건
+- [x] grep (b) queryKeys 헬퍼 — 13건 (≥ 7)
+- [x] grep (c) RPC 시그니처 — 2건 (≥ 2)
+- [x] grep (d) `data?.[0]` 패턴 — 2건 (≥ 2)
+- [x] grep (e) RLS 이중 필터 — 0건
+- [x] `useToggleTodo` debounce 테스트 PASS (5회→1회 합쳐짐)
 
 ## 주의사항
 

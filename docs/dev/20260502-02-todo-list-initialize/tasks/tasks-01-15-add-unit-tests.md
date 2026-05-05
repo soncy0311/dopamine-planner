@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 15
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 ~ 13 (모든 구현 task 완료)
 
 ## 작업 목표
@@ -55,10 +55,10 @@
 
 ## 검증 과정
 
-- [ ] 4개 테스트 파일 모두 존재
-- [ ] `pnpm --filter @todo-list/core test` 전부 통과
-- [ ] 각 테스트가 sub-prd 의 검증 기준 항목과 1:1 대응 (매퍼 / queryKeys / RPC 배열 추출 / debounce)
-- [ ] `useToggleTodo` debounce 테스트가 RPC 호출 횟수 단언
+- [x] 4개 테스트 파일 모두 존재
+- [x] `pnpm --filter @todo-list/core test` 전부 통과 (24 tests passed)
+- [x] 각 테스트가 sub-prd 의 검증 기준 항목과 1:1 대응 (매퍼 / queryKeys / RPC 배열 추출 / debounce)
+- [x] `useToggleTodo` debounce 테스트가 RPC 호출 횟수 단언 (debounceByEpic 5회→1회)
 
 ## 주의사항
 

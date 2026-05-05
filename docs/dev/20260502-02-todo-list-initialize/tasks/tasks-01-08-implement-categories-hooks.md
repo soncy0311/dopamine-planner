@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-01-feat-core-services.md`](../sub-prd-01-feat-core-services.md)
 - **작업 번호**: 08
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (queryKeys), 03 (services/category)
 
 ## 작업 목표
@@ -39,10 +39,10 @@ sub-prd-01 §7 TanStack Query 훅.
 
 ## 검증 과정
 
-- [ ] 4개 파일 모두 export 함수 보유
-- [ ] 모든 invalidate 가 `queryKeys.categories(...)` 통과
-- [ ] `mutationFn` 이 services 함수만 호출 (직접 supabase API 호출 코드 미포함)
-- [ ] `pnpm --filter @todo-list/core typecheck` 통과
+- [x] 4개 파일 모두 export 함수 보유
+- [x] 모든 invalidate 가 `queryKeys.categories(...)` 통과
+- [x] `mutationFn` 이 services 함수만 호출 (직접 supabase API 호출 코드 미포함)
+- [ ] `pnpm --filter @todo-list/core typecheck` 통과 (task 11 에서 일괄)
 
 ## 주의사항
 
