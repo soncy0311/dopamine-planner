@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   subscribeTodos,
+  useCategories,
   useTodos,
   useToggleTodo,
   type SubIssueWithJoins,
@@ -12,6 +13,7 @@ import {
 import { DateNavigator, FAB } from '@todo-list/ui';
 import { supabase } from '@/lib/supabase/client';
 import { useDateQuery } from '@/hooks/useDateQuery';
+import { CategoryFilterChips } from './CategoryFilterChips';
 import { TodoSection } from './TodoSection';
 import { CreateTodoModal } from './modals/CreateTodoModal';
 import { TodoDetailModal } from './modals/TodoDetailModal';
@@ -27,10 +29,28 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   useEffect(() => subscribeTodos(supabase, qc), [qc]);
 
   const { data, isLoading } = useTodos({ client: supabase, workspace, date });
+  const { data: categories = [] } = useCategories({ client: supabase, workspace });
   const toggle = useToggleTodo(supabase);
 
   const [createOpen, setCreateOpen] = useState(false);
   const [detailTodoId, setDetailTodoId] = useState<string | null>(null);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+
+  const filterByCategory = (items: SubIssueWithJoins[]) =>
+    selectedCategoryId === null
+      ? items
+      : items.filter((t) => t.category?.id === selectedCategoryId);
+
+  const todoItems = useMemo(
+    () => filterByCategory(data?.todo ?? []),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data?.todo, selectedCategoryId],
+  );
+  const doneItems = useMemo(
+    () => filterByCategory(data?.done ?? []),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [data?.done, selectedCategoryId],
+  );
 
   const handleToggle = (item: SubIssueWithJoins) => {
     toggle.mutate({
@@ -51,6 +71,11 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   return (
     <div className="flex h-full flex-col gap-4 px-4 py-4">
       <DateNavigator date={date} onChange={setDate} />
+      <CategoryFilterChips
+        categories={categories.map((c) => ({ id: c.id, name: c.name, color: c.color }))}
+        selectedId={selectedCategoryId}
+        onSelect={setSelectedCategoryId}
+      />
       {isLoading ? (
         <p className="px-2 text-sm text-periwinkle-300">불러오는 중…</p>
       ) : (
@@ -58,24 +83,20 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
           <TodoSection
             title="진행 중"
             status="todo"
-            items={data?.todo ?? []}
+            items={todoItems}
             onToggle={handleToggle}
             onPress={handlePress}
           />
           <TodoSection
             title="완료"
             status="done"
-            items={data?.done ?? []}
+            items={doneItems}
             onToggle={handleToggle}
             onPress={handlePress}
           />
         </div>
       )}
-      <FAB
-        onClick={handleCreate}
-        ariaLabel="새 일 추가"
-        className="md:hidden !bottom-24"
-      />
+      <FAB onClick={handleCreate} ariaLabel="새 일 추가" className="!bottom-24 md:!bottom-6" />
       <CreateTodoModal
         open={createOpen}
         onOpenChange={setCreateOpen}

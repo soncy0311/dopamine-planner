@@ -16,6 +16,8 @@ import {
 import { TodoFormSchema, type TodoFormValues } from '@/lib/forms/schemas';
 import { showFkOrDefaultError } from '@/lib/errors/fkErrorToast';
 import { supabase } from '@/lib/supabase/client';
+import { Combobox } from '@/components/ui/Combobox';
+import { PriorityRadioGroup } from '@/components/ui/PriorityRadioGroup';
 import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
 
 type TodoDetailModalProps = {
@@ -178,61 +180,59 @@ export function TodoDetailModal({
                     className="rounded-md border border-lavender-gray-300 bg-white px-3 py-2 text-sm text-black-900 outline-none focus:border-purple-500"
                   />
                 </label>
-                <label className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1">
                   <span className="text-sm text-black-900">우선순위</span>
-                  <select
-                    {...form.register('priority')}
-                    className="rounded-md border border-lavender-gray-300 bg-white px-3 py-2 text-sm text-black-900 outline-none focus:border-purple-500"
-                  >
-                    <option value="high">높음</option>
-                    <option value="medium">보통</option>
-                    <option value="low">낮음</option>
-                  </select>
-                </label>
-                <label className="flex flex-col gap-1">
+                  <PriorityRadioGroup
+                    value={form.watch('priority')}
+                    onChange={(p) => form.setValue('priority', p, { shouldDirty: true })}
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
                   <span className="text-sm text-black-900">분류</span>
-                  <select
-                    {...form.register('categoryId')}
-                    className="rounded-md border border-lavender-gray-300 bg-white px-3 py-2 text-sm text-black-900 outline-none focus:border-purple-500"
-                  >
-                    <option value="">분류를 선택해주세요</option>
-                    {categories?.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.name}
-                      </option>
-                    ))}
-                  </select>
+                  <Combobox
+                    ariaLabel="분류"
+                    options={categories ?? []}
+                    value={(categories ?? []).find((c) => c.id === categoryId) ?? null}
+                    onChange={(c) =>
+                      form.setValue('categoryId', c ? c.id : EMPTY_UUID, { shouldDirty: true })
+                    }
+                    getId={(c) => c.id}
+                    getLabel={(c) => c.name}
+                    placeholder="분류를 선택해주세요"
+                  />
                   {form.formState.errors.categoryId && (
                     <span className="text-xs text-red-500">
                       {form.formState.errors.categoryId.message}
                     </span>
                   )}
-                </label>
-                <label className="flex flex-col gap-1">
+                </div>
+                <div className="flex flex-col gap-1">
                   <span className="text-sm text-black-900">Epic</span>
-                  <select
-                    {...form.register('epicId')}
-                    disabled={epicSelectDisabled}
-                    className="rounded-md border border-lavender-gray-300 bg-white px-3 py-2 text-sm text-black-900 outline-none focus:border-purple-500 disabled:bg-gray-50 disabled:text-lavender-gray-300"
-                  >
-                    <option value="">
-                      {epicSelectDisabled ? '먼저 분류를 선택해주세요' : 'Epic 을 선택해주세요'}
-                    </option>
-                    {!epicSelectDisabled &&
-                      epics?.map((e) => (
-                        <option key={e.id} value={e.id}>
-                          {e.title}
-                        </option>
-                      ))}
-                  </select>
+                  {epicSelectDisabled ? (
+                    <p className="rounded-md border border-lavender-gray-300 bg-gray-50 px-3 py-2 text-sm text-lavender-gray-300">
+                      먼저 분류를 선택해주세요
+                    </p>
+                  ) : (
+                    <Combobox
+                      ariaLabel="Epic"
+                      options={epics ?? []}
+                      value={(epics ?? []).find((e) => e.id === form.watch('epicId')) ?? null}
+                      onChange={(e) =>
+                        form.setValue('epicId', e ? e.id : EMPTY_UUID, { shouldDirty: true })
+                      }
+                      getId={(e) => e.id}
+                      getLabel={(e) => e.title}
+                      placeholder="Epic 을 선택해주세요"
+                    />
+                  )}
                   {form.formState.errors.epicId && (
                     <span className="text-xs text-red-500">
                       {form.formState.errors.epicId.message}
                     </span>
                   )}
-                </label>
+                </div>
                 <label className="flex flex-col gap-1">
-                  <span className="text-sm text-black-900">기한</span>
+                  <span className="text-sm text-black-900">등록일</span>
                   <input
                     type="date"
                     {...form.register('dueDate')}

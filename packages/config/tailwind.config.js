@@ -3,7 +3,32 @@ module.exports = {
   content: [],
   theme: {
     extend: {
+      fontFamily: {
+        sans: [
+          'var(--font-pretendard)',
+          'Pretendard Variable',
+          'Pretendard',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'system-ui',
+          'Roboto',
+          'Helvetica Neue',
+          'Segoe UI',
+          'Apple SD Gothic Neo',
+          'Noto Sans KR',
+          'Malgun Gothic',
+          'Apple Color Emoji',
+          'Segoe UI Emoji',
+          'Segoe UI Symbol',
+          'sans-serif',
+        ],
+      },
       colors: {
+        priority: {
+          high: { DEFAULT: '#EF4444', bg: 'rgba(239, 68, 68, 0.15)' },
+          medium: { DEFAULT: '#F59E0B', bg: 'rgba(245, 158, 11, 0.15)' },
+          low: { DEFAULT: '#6B7280', bg: '#F2F2F2' },
+        },
         purple: {
           100: '#D7AEF2',
           200: '#C599F2',

@@ -5,16 +5,42 @@ export type TodoItemCategory = {
   color: string;
 };
 
+export type TodoItemPriority = 'high' | 'medium' | 'low';
+
 export type TodoItemProps = {
   id: string;
   title: string;
   status: 'todo' | 'done';
   category?: TodoItemCategory;
+  priority?: TodoItemPriority | null;
+  carryOverCount?: number;
   onToggle: () => void;
   onPress?: () => void;
 };
 
-export function TodoItem({ title, status, category, onToggle, onPress }: TodoItemProps) {
+const PRIORITY_LABEL: Record<TodoItemPriority, string> = {
+  high: 'High',
+  medium: 'Medium',
+  low: 'Low',
+};
+
+export function priorityBadgeClass(p: TodoItemPriority): string {
+  const base =
+    'inline-flex h-5 items-center rounded-md px-2 text-[10px] font-medium uppercase tracking-wide';
+  if (p === 'high') return `${base} bg-priority-high-bg text-priority-high`;
+  if (p === 'medium') return `${base} bg-priority-medium-bg text-priority-medium`;
+  return `${base} bg-priority-low-bg text-priority-low`;
+}
+
+export function TodoItem({
+  title,
+  status,
+  category,
+  priority,
+  carryOverCount,
+  onToggle,
+  onPress,
+}: TodoItemProps) {
   const done = status === 'done';
 
   const handleCheckboxClick = (e: MouseEvent<HTMLButtonElement>) => {
@@ -73,15 +99,33 @@ export function TodoItem({ title, status, category, onToggle, onPress }: TodoIte
         </span>
       </button>
 
-      <span
-        className={
-          done
-            ? 'flex-1 truncate text-sm text-periwinkle-400 line-through'
-            : 'flex-1 truncate text-sm text-periwinkle-500'
-        }
-      >
-        {title}
-      </span>
+      <div className="flex flex-1 items-center gap-2 min-w-0">
+        <span
+          className={
+            done
+              ? 'truncate text-sm text-periwinkle-400 line-through'
+              : 'truncate text-sm text-periwinkle-500'
+          }
+        >
+          {title}
+        </span>
+        {priority ? (
+          <span
+            className={priorityBadgeClass(priority)}
+            aria-label={`우선순위 ${PRIORITY_LABEL[priority]}`}
+          >
+            {PRIORITY_LABEL[priority]}
+          </span>
+        ) : null}
+        {carryOverCount && carryOverCount > 0 ? (
+          <span
+            className="inline-flex h-5 items-center rounded-full bg-periwinkle-100 px-2 text-[10px] font-medium text-periwinkle-500"
+            aria-label={`이월 ${carryOverCount}회`}
+          >
+            +{carryOverCount}
+          </span>
+        ) : null}
+      </div>
 
       {category ? (
         <span className="flex items-center gap-1 text-xs text-periwinkle-400">

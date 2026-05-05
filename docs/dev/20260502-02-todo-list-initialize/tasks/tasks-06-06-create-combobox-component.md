@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-06-feat-web-prototype-visual-alignment.md`](../sub-prd-06-feat-web-prototype-visual-alignment.md)
 - **작업 번호**: 06
-- **상태**: 미착수 (사용자 결정 필요: `cmdk` 도입 vs 자체 구현)
+- **상태**: 완료 (구현 결정: 자체 구현 — cmdk 가 aria-expanded 를 내부적으로 강제 설정해 외부 prop 와 충돌. 자체 구현으로 WAI-ARIA 1.2 패턴 직접 정합)
 - **의존성**: (없음 — TASK-06-01 ~ 05 와 병렬 가능)
 
 ## 작업 목표
@@ -94,15 +94,15 @@ const onKeyDown = (e: React.KeyboardEvent) => {
 
 ## 검증 과정
 
-- [ ] Combobox 신설 + props 시그니처 일치
-- [ ] input 입력 시 옵션 필터링 동작
-- [ ] ArrowUp/Down + Enter + Esc 키보드 모두 동작
-- [ ] 외부 클릭 시 close
-- [ ] input 에 `role="combobox"` + `aria-expanded` + `aria-activedescendant` 부여
-- [ ] listbox 에 `role="listbox"` + 옵션에 `role="option"` + `aria-selected`
-- [ ] generic 타입 — `Combobox<Category>` 처럼 호출 측에서 타입 안전하게 사용 가능
-- [ ] 매칭 없을 때 `emptyText` 노출
-- [ ] `pnpm --filter @todo-list/web lint` 통과
+- [x] Combobox 신설 + props 시그니처 일치
+- [x] input 입력 시 옵션 필터링 동작
+- [x] ArrowUp/Down + Enter + Esc 키보드 모두 동작
+- [x] 외부 클릭 시 close
+- [x] input 에 `role="combobox"` + `aria-expanded` + `aria-activedescendant` 부여
+- [x] listbox 에 `role="listbox"` + 옵션에 `role="option"` + `aria-selected`
+- [x] generic 타입 — `Combobox<Category>` 처럼 호출 측에서 타입 안전하게 사용 가능
+- [x] 매칭 없을 때 `emptyText` 노출
+- [x] `pnpm --filter @todo-list/web lint` 통과
 
 ## 주의사항
 

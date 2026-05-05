@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-06-feat-web-prototype-visual-alignment.md`](../sub-prd-06-feat-web-prototype-visual-alignment.md)
 - **작업 번호**: 03
-- **상태**: 미착수
+- **상태**: 완료
 - **의존성**: (없음 — TASK-06-01 / 02 와 병렬 가능)
 
 ## 작업 목표
@@ -58,15 +58,15 @@ function buildMonthGrid(anchor: Date): Date[] {
 
 ## 검증 과정
 
-- [ ] 헤더 클릭 시 월간 그리드 펼침 / 접힘
-- [ ] `aria-expanded` 가 state 와 동기화
-- [ ] chevron 이 펼침 시 180deg 회전
-- [ ] 6주 × 7열 = 42 셀, 이전·다음 달 셀 dimmed
-- [ ] 셀 클릭 시 해당 일자로 이동 (selectedDate 변경)
-- [ ] Esc 키로 닫힘
-- [ ] prev/next 버튼 의미 단위 (주간 ±7일, 월간 ±1개월)
-- [ ] 키보드 only 로 토글 + 셀 선택 + Esc 모두 가능
-- [ ] `pnpm --filter @todo-list/ui lint` 통과
+- [x] 헤더 클릭 시 월간 그리드 펼침 / 접힘
+- [x] `aria-expanded` 가 state 와 동기화
+- [x] chevron 이 펼침 시 180deg 회전
+- [x] 6주 × 7열 = 42 셀, 이전·다음 달 셀 dimmed
+- [x] 셀 클릭 시 해당 일자로 이동 (selectedDate 변경)
+- [x] Esc 키로 닫힘
+- [x] prev/next 버튼 의미 단위 (주간 ±7일, 월간 ±1개월)
+- [x] 키보드 only 로 토글 + 셀 선택 + Esc 모두 가능
+- [x] `pnpm --filter @todo-list/ui lint` 통과
 
 ## 주의사항
 

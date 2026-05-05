@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-06-feat-web-prototype-visual-alignment.md`](../sub-prd-06-feat-web-prototype-visual-alignment.md)
 - **작업 번호**: 02
-- **상태**: 미착수
+- **상태**: 완료
 - **의존성**: TASK-06-01 (Pretendard 폰트 적용된 텍스트로 시각 검증)
 
 ## 작업 목표
@@ -50,14 +50,14 @@ active 상태: `aria-current="page"` + 활성 토큰 (`bg-*` / `text-*`).
 
 ## 검증 과정
 
-- [ ] 로고 아이콘 + 텍스트 노출
-- [ ] 그룹 헤더 "워크스페이스" 노출
-- [ ] Life / Work 메뉴에 각각 `Home` / `Briefcase` 아이콘 노출
-- [ ] spacer 로 인해 설정 그룹이 사이드바 하단에 fix
-- [ ] 그룹 사이에 `border-t` 분리선 노출
-- [ ] 활성 메뉴에 `aria-current="page"` 부여
-- [ ] 키보드 Tab 으로 모든 링크 탐색 가능
-- [ ] `make lint` 통과
+- [x] 로고 아이콘 + 텍스트 노출
+- [x] 그룹 헤더 "워크스페이스" 노출
+- [x] Life / Work 메뉴에 각각 `Home` / `Briefcase` 아이콘 노출
+- [x] spacer 로 인해 설정 그룹이 사이드바 하단에 fix
+- [x] 그룹 사이에 `border-t` 분리선 노출
+- [x] 활성 메뉴에 `aria-current="page"` 부여
+- [x] 키보드 Tab 으로 모든 링크 탐색 가능
+- [x] `make lint` 통과
 
 ## 주의사항
 

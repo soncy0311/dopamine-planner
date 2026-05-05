@@ -19,10 +19,12 @@ const EMPTY_MESSAGE: Record<TodoSectionStatus, string> = {
 };
 
 export function TodoSection({ title, status, items, onToggle, onPress }: TodoSectionProps) {
+  const sectionClass =
+    status === 'done' ? 'flex flex-col gap-2 opacity-50' : 'flex flex-col gap-2';
   return (
-    <section className="flex flex-col gap-2">
+    <section className={sectionClass}>
       <header className="flex items-center justify-between px-2">
-        <h3 className="text-sm font-semibold text-periwinkle-500">
+        <h3 className="text-sm font-semibold text-black-900">
           {title} ({items.length})
         </h3>
       </header>
@@ -36,6 +38,8 @@ export function TodoSection({ title, status, items, onToggle, onPress }: TodoSec
                 id={item.id}
                 title={item.title}
                 status={status}
+                priority={item.priority}
+                carryOverCount={item.carryOverCount}
                 category={
                   item.category
                     ? { name: item.category.name, color: item.category.color }

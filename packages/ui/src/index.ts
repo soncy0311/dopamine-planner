@@ -1,6 +1,6 @@
 export { Button } from './components/Button';
-export { TodoItem } from './TodoItem';
-export type { TodoItemProps, TodoItemCategory } from './TodoItem';
+export { TodoItem, priorityBadgeClass } from './TodoItem';
+export type { TodoItemProps, TodoItemCategory, TodoItemPriority } from './TodoItem';
 export { EpicProgressBar } from './EpicProgressBar';
 export type { EpicProgressBarProps } from './EpicProgressBar';
 export { DateNavigator } from './DateNavigator';

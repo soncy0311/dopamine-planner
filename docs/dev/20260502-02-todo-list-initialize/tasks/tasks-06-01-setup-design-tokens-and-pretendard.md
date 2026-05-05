@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-06-feat-web-prototype-visual-alignment.md`](../sub-prd-06-feat-web-prototype-visual-alignment.md)
 - **작업 번호**: 01
-- **상태**: 미착수
+- **상태**: 완료
 - **의존성**: (없음 — sub-prd-06 의 가장 선행 task)
 
 ## 작업 목표
@@ -74,13 +74,13 @@ theme: {
 
 ## 검증 과정
 
-- [ ] `apps/web/src/app/fonts/PretendardVariable.woff2` 파일 존재 (woff2 매직 넘버 확인)
-- [ ] `apps/web/public/fonts/LICENSE` 에 SIL OFL 1.1 전문 포함
-- [ ] `apps/web/src/app/layout.tsx` 의 `<html>` element 에 `pretendard.variable` 클래스 부여
-- [ ] `packages/config/tailwind.config.js` 의 `fontFamily.sans` 첫 항목이 `var(--font-pretendard)`
-- [ ] `colors.priority.{high,medium,low}` 토큰 정의됨
-- [ ] `make build` 통과 (next/font/local 번들 성공)
-- [ ] 브라우저 DevTools Computed `font-family` 첫 항목이 `Pretendard Variable`
+- [x] `apps/web/src/app/fonts/PretendardVariable.woff2` 파일 존재 (woff2 매직 넘버 확인)
+- [x] `apps/web/public/fonts/LICENSE` 에 SIL OFL 1.1 전문 포함
+- [x] `apps/web/src/app/layout.tsx` 의 `<html>` element 에 `pretendard.variable` 클래스 부여
+- [x] `packages/config/tailwind.config.js` 의 `fontFamily.sans` 첫 항목이 `var(--font-pretendard)`
+- [x] `colors.priority.{high,medium,low}` 토큰 정의됨
+- [x] `make build` 통과 (next/font/local 번들 성공)
+- [x] 브라우저 DevTools Computed `font-family` 첫 항목이 `Pretendard Variable`
 
 ## 주의사항
 

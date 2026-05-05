@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-06-feat-web-prototype-visual-alignment.md`](../sub-prd-06-feat-web-prototype-visual-alignment.md)
 - **작업 번호**: 07
-- **상태**: 미착수 (사용자 결정 필요: 라벨 정합 — "등록일" vs "기한")
+- **상태**: 완료 (사용자 결정: 라벨 "등록일")
 - **의존성**: TASK-06-01 (priority 색 토큰), TASK-06-06 (Combobox)
 
 ## 작업 목표
@@ -75,16 +75,16 @@ CreateTodoModal / TodoDetailModal 의 우선순위 native `<select>` 를 3색 ba
 
 ## 검증 과정
 
-- [ ] CreateTodoModal: priority `<select>` → radio group 교체
-- [ ] CreateTodoModal: 분류 `<select>` → Combobox 교체
-- [ ] TodoDetailModal: 동일 정합
-- [ ] priority radio 키보드 ArrowLeft/Right 로 이동 + Enter/Space 로 선택
-- [ ] roving tabindex (`tabIndex={0/-1}`) 적용
-- [ ] Combobox 선택 결과가 hidden input 의 `categoryId` 에 반영
-- [ ] 폼 제출 시 zod schema 통과 (priority enum + categoryId UUID)
-- [ ] 라벨 텍스트 "기한" (또는 사용자 결정 결과)
-- [ ] 키보드 only 로 모달 전체 작성/제출 가능
-- [ ] `pnpm --filter @todo-list/web lint` 통과
+- [x] CreateTodoModal: priority `<select>` → radio group 교체
+- [x] CreateTodoModal: 분류 `<select>` → Combobox 교체
+- [x] TodoDetailModal: 동일 정합
+- [x] priority radio 키보드 ArrowLeft/Right 로 이동 + Enter/Space 로 선택
+- [x] roving tabindex (`tabIndex={0/-1}`) 적용
+- [x] Combobox 선택 결과가 hidden input 의 `categoryId` 에 반영
+- [x] 폼 제출 시 zod schema 통과 (priority enum + categoryId UUID)
+- [x] 라벨 텍스트 "기한" (또는 사용자 결정 결과)
+- [x] 키보드 only 로 모달 전체 작성/제출 가능
+- [x] `pnpm --filter @todo-list/web lint` 통과
 
 ## 주의사항
 

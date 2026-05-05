@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-06-feat-web-prototype-visual-alignment.md`](../sub-prd-06-feat-web-prototype-visual-alignment.md)
 - **작업 번호**: 04
-- **상태**: 미착수
+- **상태**: 완료
 - **의존성**: TASK-06-01 (priority 색 토큰 필요)
 
 ## 작업 목표
@@ -84,13 +84,13 @@ type TodoItemProps = {
 
 ## 검증 과정
 
-- [ ] `TodoItem` props 에 `priority` / `carryOverCount` 추가
-- [ ] priority 3 case (high/medium/low) 모두 시각 분기
-- [ ] `carryOverCount === 0` 또는 `undefined` 일 때 뱃지 미노출
-- [ ] DoneSection 헤더가 50% opacity (`opacity-50` 또는 `text-foreground/50`)
-- [ ] TodoSection 헤더는 활성 톤 (검정 / 기본 foreground)
-- [ ] MainDailyView 가 todo 의 priority / carry_over_count 를 정확히 전달
-- [ ] `pnpm --filter @todo-list/ui lint` / `pnpm --filter @todo-list/web lint` 통과
+- [x] `TodoItem` props 에 `priority` / `carryOverCount` 추가
+- [x] priority 3 case (high/medium/low) 모두 시각 분기
+- [x] `carryOverCount === 0` 또는 `undefined` 일 때 뱃지 미노출
+- [x] DoneSection 헤더가 50% opacity (`opacity-50` 또는 `text-foreground/50`)
+- [x] TodoSection 헤더는 활성 톤 (검정 / 기본 foreground)
+- [x] MainDailyView 가 todo 의 priority / carry_over_count 를 정확히 전달
+- [x] `pnpm --filter @todo-list/ui lint` / `pnpm --filter @todo-list/web lint` 통과
 
 ## 주의사항
 

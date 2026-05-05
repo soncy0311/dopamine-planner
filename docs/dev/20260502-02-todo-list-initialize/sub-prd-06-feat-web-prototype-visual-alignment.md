@@ -5,9 +5,9 @@
 - **작업명**: `웹 prototype 시각·UX 정합` `web-prototype-visual-alignment`
 - **작업 유형**: `feat` (UI 시각·UX 정합)
 - **시작일**: 2026-05-05
-- **종료일**: TBD
-- **최신 업데이트**: 2026-05-05
-- **상태**: Draft
+- **종료일**: 2026-05-06
+- **최신 업데이트**: 2026-05-06
+- **상태**: 완료
 - **Main PRD**: [`main-prd-todo-list-initialize.md`](./main-prd-todo-list-initialize.md)
 - **선행 Sub-PRD**: [`sub-prd-02-feat-web-main-view.md`](./sub-prd-02-feat-web-main-view.md), [`sub-prd-03-feat-web-management.md`](./sub-prd-03-feat-web-management.md) (머지 완료)
 
@@ -241,43 +241,43 @@ fontFamily: {
 
 ### 사이드바 + chip 필터 + FAB
 
-- [ ] `apps/web/src/components/SideNav.tsx` — 로고 아이콘 + 그룹 헤더 + 메뉴별 아이콘 + 분리선 정합
-- [ ] `apps/web/src/components/CategoryFilterChips.tsx` 신설
-- [ ] `apps/web/src/components/MainDailyView.tsx` — chip 필터 통합 + FAB `md:hidden` wrap 제거
-- [ ] (선택) `packages/core/src/hooks/useCategories.ts` 검증 / 신설
+- [x] `apps/web/src/components/SideNav.tsx` — 로고 아이콘 + 그룹 헤더 + 메뉴별 아이콘 + 분리선 정합
+- [x] `apps/web/src/components/CategoryFilterChips.tsx` 신설
+- [x] `apps/web/src/components/MainDailyView.tsx` — chip 필터 통합 + FAB `md:hidden` wrap 제거
+- [x] (선택) `packages/core/src/hooks/useCategories.ts` 검증 / 신설
 
 ### DateNavigator 월간 토글
 
-- [ ] `packages/ui/src/DateNavigator.tsx` — 헤더 토글 버튼 + 월간 그리드 + chevron 회전 + Esc 핸들러
-- [ ] `buildMonthGrid(date)` 함수 (6주 × 7열, 이전/다음 달 padding)
-- [ ] prev/next 의미 단위 (주/월) 변경
+- [x] `packages/ui/src/DateNavigator.tsx` — 헤더 토글 버튼 + 월간 그리드 + chevron 회전 + Esc 핸들러
+- [x] `buildMonthGrid(date)` 함수 (6주 × 7열, 이전/다음 달 padding)
+- [x] prev/next 의미 단위 (주/월) 변경
 
 ### 카드 메타
 
-- [ ] `packages/ui/src/TodoItem.tsx` — `priority` / `carryOverCount` props 확장 + badge 렌더
-- [ ] `apps/web/src/components/{TodoSection,DoneSection}.tsx` — 섹션 헤더 시각 (완료 50% opacity)
-- [ ] `apps/web/src/components/MainDailyView.tsx` — TodoItem 호출 측 props 전달
-- [ ] priority 색 토큰 (`packages/config/tailwind.config.js` 또는 `globals.css`)
+- [x] `packages/ui/src/TodoItem.tsx` — `priority` / `carryOverCount` props 확장 + badge 렌더
+- [x] `apps/web/src/components/{TodoSection,DoneSection}.tsx` — 섹션 헤더 시각 (완료 50% opacity)
+- [x] `apps/web/src/components/MainDailyView.tsx` — TodoItem 호출 측 props 전달
+- [x] priority 색 토큰 (`packages/config/tailwind.config.js` 또는 `globals.css`)
 
 ### 모달 revamp
 
-- [ ] `apps/web/src/components/ui/Combobox.tsx` 신설 (또는 `cmdk` 도입)
-- [ ] `apps/web/src/components/modals/CreateTodoModal.tsx` — priority radio group + 분류 combobox
-- [ ] `apps/web/src/components/modals/TodoDetailModal.tsx` — 동일 정합
+- [x] `apps/web/src/components/ui/Combobox.tsx` 신설 (또는 `cmdk` 도입)
+- [x] `apps/web/src/components/modals/CreateTodoModal.tsx` — priority radio group + 분류 combobox
+- [x] `apps/web/src/components/modals/TodoDetailModal.tsx` — 동일 정합
 
 ### 폰트
 
-- [ ] Pretendard Variable woff2 번들 (`apps/web/src/app/fonts/`)
-- [ ] `apps/web/src/app/layout.tsx` — `next/font/local`
-- [ ] `packages/config/tailwind.config.js` — `fontFamily.sans` 토큰 정합
-- [ ] `apps/web/public/fonts/LICENSE` — SIL OFL 동봉
+- [x] Pretendard Variable woff2 번들 (`apps/web/src/app/fonts/`)
+- [x] `apps/web/src/app/layout.tsx` — `next/font/local`
+- [x] `packages/config/tailwind.config.js` — `fontFamily.sans` 토큰 정합
+- [x] `apps/web/public/fonts/LICENSE` — SIL OFL 동봉
 
 ### 테스트
 
-- [ ] DateNavigator 단위 테스트 — 토글 + 월간 셀 클릭 + Esc
-- [ ] TodoItem 단위 테스트 — priority badge / carry-over 분기
-- [ ] Combobox 단위 테스트 — 자동완성 + 키보드
-- [ ] Priority radio group 단위 테스트 — 키보드 ArrowLeft/Right
+- [x] DateNavigator 단위 테스트 — 토글 + 월간 셀 클릭 + Esc
+- [x] TodoItem 단위 테스트 — priority badge / carry-over 분기
+- [x] Combobox 단위 테스트 — 자동완성 + 키보드
+- [x] Priority radio group 단위 테스트 — 키보드 ArrowLeft/Right
 
 ## 검증 기준
 

@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-06-feat-web-prototype-visual-alignment.md`](../sub-prd-06-feat-web-prototype-visual-alignment.md)
 - **작업 번호**: 08
-- **상태**: 미착수
+- **상태**: 완료
 - **의존성**: TASK-06-03, TASK-06-04, TASK-06-05, TASK-06-06, TASK-06-07 (모두 머지 후 진입)
 
 ## 작업 목표
@@ -87,12 +87,12 @@ export default defineConfig({
 
 ## 검증 과정
 
-- [ ] 5개 테스트 파일 모두 신설/갱신
-- [ ] `pnpm --filter @todo-list/ui test` 통과
-- [ ] `pnpm --filter @todo-list/web test` 통과
-- [ ] `make test` 통과 (turbo 통합)
-- [ ] 각 테스트 케이스 명세 (위) 모두 커버
-- [ ] CI 환경에서도 안정적 통과 (timezone / locale 의존성 회피)
+- [x] 5개 테스트 파일 모두 신설/갱신
+- [x] `pnpm --filter @todo-list/ui test` 통과
+- [x] `pnpm --filter @todo-list/web test` 통과
+- [x] `make test` 통과 (turbo 통합)
+- [x] 각 테스트 케이스 명세 (위) 모두 커버
+- [x] CI 환경에서도 안정적 통과 (timezone / locale 의존성 회피)
 
 ## 주의사항
 

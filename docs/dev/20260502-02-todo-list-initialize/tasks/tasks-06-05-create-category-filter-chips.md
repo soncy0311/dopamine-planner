@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-06-feat-web-prototype-visual-alignment.md`](../sub-prd-06-feat-web-prototype-visual-alignment.md)
 - **작업 번호**: 05
-- **상태**: 미착수
+- **상태**: 완료
 - **의존성**: TASK-06-04 (MainDailyView 동시 수정 회피 — TodoItem props 전달 먼저)
 
 ## 작업 목표
@@ -67,16 +67,16 @@ const filteredTodos = useMemo(
 
 ## 검증 과정
 
-- [ ] `CategoryFilterChips.tsx` 신설 + props 시그니처 일치
-- [ ] "전체" chip 노출 + 초기 활성
-- [ ] `useCategories(workspace)` 결과를 chip 으로 렌더
-- [ ] chip 클릭 시 todos 클라이언트 필터링 동작
-- [ ] 활성 chip 에 `aria-pressed="true"`
-- [ ] 가로 스크롤바 미노출 (`[&::-webkit-scrollbar]:hidden`)
-- [ ] 키보드 Tab + Enter/Space 로 선택 가능
-- [ ] FAB 의 `md:hidden` wrap 제거 → 데스크탑에서도 우측 하단 fixed 노출
-- [ ] 모바일 (`<md:`) 에서도 FAB / chip 정상 노출 (regression 0)
-- [ ] `pnpm --filter @todo-list/web lint` 통과
+- [x] `CategoryFilterChips.tsx` 신설 + props 시그니처 일치
+- [x] "전체" chip 노출 + 초기 활성
+- [x] `useCategories(workspace)` 결과를 chip 으로 렌더
+- [x] chip 클릭 시 todos 클라이언트 필터링 동작
+- [x] 활성 chip 에 `aria-pressed="true"`
+- [x] 가로 스크롤바 미노출 (`[&::-webkit-scrollbar]:hidden`)
+- [x] 키보드 Tab + Enter/Space 로 선택 가능
+- [x] FAB 의 `md:hidden` wrap 제거 → 데스크탑에서도 우측 하단 fixed 노출
+- [x] 모바일 (`<md:`) 에서도 FAB / chip 정상 노출 (regression 0)
+- [x] `pnpm --filter @todo-list/web lint` 통과
 
 ## 주의사항
 
