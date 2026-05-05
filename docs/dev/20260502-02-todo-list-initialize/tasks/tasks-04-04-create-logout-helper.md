@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 04
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음 — 공용 helper)
 
 ## 작업 목표
@@ -47,10 +47,10 @@ export function useLogout() {
 
 ## 검증 과정
 
-- [ ] `apps/mobile/src/lib/auth/logout.ts` 파일 존재
-- [ ] `useLogout` named export
-- [ ] `signOut()` → `qc.clear()` → `router.replace('/(auth)/login')` 순서
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
+- [x] `apps/mobile/src/lib/auth/logout.ts` 파일 존재
+- [x] `useLogout` named export
+- [x] `signOut()` → `qc.clear()` → `router.replace('/(auth)/login')` 순서
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 본 task 신규 에러 0건
 
 ## 주의사항
 

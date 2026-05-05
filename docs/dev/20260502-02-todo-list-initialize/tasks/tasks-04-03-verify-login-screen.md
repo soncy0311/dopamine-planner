@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 03
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (deps), 02 (root deep link 폴백)
 
 ## 작업 목표
@@ -83,14 +83,14 @@ export default function LoginScreen() {
 
 ## 검증 과정
 
-- [ ] `(auth)/login.tsx` 에 try/catch + `Alert.alert` 존재
-- [ ] 사용자 취소 시 silent (Alert 미표시)
-- [ ] 버튼 라벨 "Google 로 계속하기"
-- [ ] `router.replace('/(main)/life')` 유지
-- [ ] `accessibilityRole="button"` + `accessibilityLabel`
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] iOS 시뮬레이터에서 로그인 버튼 탭 → 브라우저 launch (실제 OAuth 는 Supabase 콘솔 redirect URI 설정 필요)
-- [ ] OAuth 거부 시 Alert 표시
+- [x] `(auth)/login.tsx` 에 try/catch + `Alert.alert` 존재
+- [x] 사용자 취소 시 silent (Alert 미표시)
+- [x] 버튼 라벨 "Google 로 계속하기"
+- [x] `router.replace('/(main)/life')` 유지
+- [x] `accessibilityRole="button"` + `accessibilityLabel`
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — login 본 task 신규 에러 0건. `AuthSession.startAsync` deprecated 회귀 fix 완료(`WebBrowser.openAuthSessionAsync` 로 교체). 남은 life/index 회귀는 task 09 책임.
+- [ ] iOS 시뮬레이터에서 로그인 버튼 탭 → 브라우저 launch (실제 OAuth 는 Supabase 콘솔 redirect URI 설정 필요) — **수동 확인 필요**
+- [ ] OAuth 거부 시 Alert 표시 — **수동 확인 필요**
 
 ## 주의사항
 

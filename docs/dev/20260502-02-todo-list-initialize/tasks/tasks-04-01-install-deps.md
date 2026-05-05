@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 01
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음 — Sub-04 의 모든 후속 task 의 기반)
 
 ## 작업 목표
@@ -87,14 +87,14 @@ grep -RIn "AsyncStorage" packages/core/src/
 
 ## 검증 과정
 
-- [ ] `apps/mobile/package.json` 에 6 종 dependencies 모두 존재
-- [ ] `apps/mobile/babel.config.js` plugins 에 `react-native-reanimated/plugin` 등록 (last)
-- [ ] `pnpm-lock.yaml` 갱신
-- [ ] `apps/mobile/src/lib/supabase.ts` 가 sub-prd-04 §핵심 구현 로직 코드와 1:1 정합
-- [ ] `grep -RIn "AsyncStorage" packages/core/src/` 결과 0건 (storage adapter 누설 금지)
-- [ ] `grep -RIn "react-native-webview" apps/mobile/` 결과 0건 (sub-prd §주의사항 2)
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] `pnpm --filter @todo-list/mobile dev` 부팅 시 reanimated 워닝 없음
+- [x] `apps/mobile/package.json` 에 6 종 dependencies 모두 존재
+- [x] `apps/mobile/babel.config.js` plugins 에 `react-native-reanimated/plugin` 등록 (last)
+- [x] `pnpm-lock.yaml` 갱신
+- [x] `apps/mobile/src/lib/supabase.ts` 가 sub-prd-04 §핵심 구현 로직 코드와 1:1 정합
+- [x] `grep -RIn "AsyncStorage" packages/core/src/` 결과 0건 (storage adapter 누설 금지)
+- [x] `grep -RIn "react-native-webview" apps/mobile/` 결과 0건 (sub-prd §주의사항 2)
+- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과 — 후속 task 03·09 의 기존 회귀(AuthSession.startAsync, life wrapper 인자) 해결 후 통과
+- [ ] `pnpm --filter @todo-list/mobile dev` 부팅 시 reanimated 워닝 없음 — **수동 확인 필요**
 
 ## 주의사항
 

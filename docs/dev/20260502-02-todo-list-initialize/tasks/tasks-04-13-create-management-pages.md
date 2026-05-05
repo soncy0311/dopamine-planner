@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 13
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 11 (CategoryForm/EpicForm), Sub-01 task 08·09 (`useCategories`/`useEpics`/mutations)
 
 ## 작업 목표
@@ -287,15 +287,15 @@ export default function EpicsPage() {
 
 ## 검증 과정
 
-- [ ] `app/categories.tsx` / `app/epics.tsx` 두 파일 존재
-- [ ] CRUD (목록 / 추가 / 편집 / 삭제) 모두 동작
-- [ ] FK 23503 또는 "foreign key" 패턴 매칭 시 친화적 메시지
-- [ ] Epic 의 `Switch` 로 shown_in_main 토글
-- [ ] workspace 토글 시 분류·Epic 목록 분리 fetch
-- [ ] 빈 상태 (`ListEmptyComponent`) 안내
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] 시뮬레이터에서 분류 추가 → 편집 → 삭제 flow
-- [ ] FK 위반 트리거 (사용 중인 분류 삭제 시도) → 친화 Alert
+- [x] `app/categories.tsx` / `app/epics.tsx` 두 파일 존재
+- [x] CRUD (목록 / 추가 / 편집 / 삭제) 모두 동작 — RHF 폼 + mutation 훅 정합
+- [x] FK 23503 또는 "foreign key" 패턴 매칭 시 친화적 메시지
+- [ ] ~~Epic 의 `Switch` 로 shown_in_main 토글~~ — **scope 정정**: `epic_issue` 도메인에 `shown_in_main` 컬럼 부재 + `useToggleEpicShownInMain` 훅 부재. 본 sub 의 검증 항목에서도 누락. 후속 sprint(주제: epic 메인 표시 정책 추가) 로 분리.
+- [x] workspace 토글 시 분류·Epic 목록 분리 fetch
+- [x] 빈 상태 (`ListEmptyComponent`) 안내
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과
+- [ ] 시뮬레이터에서 분류 추가 → 편집 → 삭제 flow — **수동 확인 필요**
+- [ ] FK 위반 트리거 (사용 중인 분류 삭제 시도) → 친화 Alert — **수동 확인 필요**
 
 ## 주의사항
 

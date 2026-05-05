@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 07
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (deps), Sub-01 task 12 (`useToggleTodo`)
 
 ## 작업 목표
@@ -128,15 +128,15 @@ export function TodoItem({ todo, onToggle, onPress }: Props) {
 
 ## 검증 과정
 
-- [ ] `TodoItem.tsx` 새 Props 시그니처 (`todo`, `onToggle`, `onPress`)
-- [ ] 체크박스와 본문 Pressable 분리 — onPress 별도
-- [ ] 각 Pressable `min-h-11` (44px) + hitSlop
-- [ ] 분류 라벨 + 색 점 렌더 (category 존재 시)
-- [ ] 우선순위 high 시각 강조
-- [ ] 완료 시 line-through + muted color
-- [ ] `accessibilityRole`, `accessibilityState`, `accessibilityLabel`
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] 시뮬레이터에서 체크박스 탭과 본문 탭이 별도 동작
+- [x] `TodoItem.tsx` 새 Props 시그니처 (`todo`, `onToggle`, `onPress`) — `SubIssueWithJoins` 도메인 그대로 사용 (카멜케이스 정합)
+- [x] 체크박스와 본문 Pressable 분리 — onPress 별도
+- [x] 각 Pressable `min-h-11` (44px) + hitSlop
+- [x] 분류 라벨 + 색 점 렌더 (category 존재 시)
+- [x] 우선순위 high 시각 강조
+- [x] 완료 시 line-through + muted color
+- [x] `accessibilityRole`, `accessibilityState`, `accessibilityLabel`
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 본 task 신규 에러 0건
+- [ ] 시뮬레이터에서 체크박스 탭과 본문 탭이 별도 동작 — **수동 확인 필요**
 
 ## 주의사항
 

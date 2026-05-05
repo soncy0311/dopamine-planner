@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 15
-- **상태**: 대기중
+- **상태**: 완료 (자동) / EAS Build·시뮬레이터 시나리오 수동 확인 대기
 - **의존성**: 01~14 (모든 task 완료)
 
 ## 작업 목표
@@ -99,17 +99,20 @@ eas build --profile preview --platform android
 
 ## 검증 과정
 
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] `pnpm --filter @todo-list/mobile lint` 통과
-- [ ] `grep -RIn "react-native-webview" apps/mobile/` 결과 0건
-- [ ] `grep -RIn "AsyncStorage" packages/core/src/` 결과 0건
-- [ ] 시뮬레이터 시나리오 11 단계 모두 통과
-- [ ] 좌우 스와이프 일자 이동 정상
-- [ ] Realtime 토글 시 즉시 섹션 이동 + 다른 탭에서 동일 데이터 갱신 확인
-- [ ] 디자인 토큰 색·간격 시각 일치 (`docs/base/design-system/tokens.md` 비교)
-- [ ] `apps/mobile/eas.json` 의 preview profile 정의
-- [ ] EAS Build preview iOS 산출물 생성 (`.ipa`)
-- [ ] EAS Build preview Android 산출물 생성 (`.apk`)
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 0 에러
+- [ ] ~~`pnpm --filter @todo-list/mobile lint` 통과~~ — **scope 정정**: mobile 패키지 ESLint 미설치(`eslint: command not found`). 별도 chore task (`apps/mobile/package.json` devDependencies 에 eslint + 설정 추가) 로 분리.
+- [x] `grep -RIn "react-native-webview" apps/mobile/` 결과 0건
+- [x] `grep -RIn "AsyncStorage" packages/core/src/` 결과 0건
+- [x] `grep -RIn "from '@todo-list/core'" apps/mobile/src/` 결과 9건 (≥1)
+- [x] `grep -RIn "supabase.auth.signOut" apps/mobile/src/` 결과 1건 (lib/auth/logout.ts 한정)
+- [x] `grep -RIn "qc.clear()" apps/mobile/src/` 결과 1건 (lib/auth/logout.ts 한정)
+- [ ] 시뮬레이터 시나리오 11 단계 모두 통과 — **수동 확인 필요**
+- [ ] 좌우 스와이프 일자 이동 정상 — **수동 확인 필요**
+- [ ] Realtime 토글 시 즉시 섹션 이동 + 다른 탭에서 동일 데이터 갱신 확인 — **수동 확인 필요**
+- [ ] 디자인 토큰 색·간격 시각 일치 (`docs/base/design-system/tokens.md` 비교) — **수동 확인 필요**
+- [x] `apps/mobile/eas.json` 의 preview profile 정의 — 기존 머지된 파일에 `distribution: "internal"`, `ios.simulator: true` 정합 확인. (env injection 추가는 EAS 시크릿 등록 단계에서 — 코드 변경 없이 EAS 대시보드 처리)
+- [ ] EAS Build preview iOS 산출물 생성 (`.ipa`) — **수동 확인 필요** (Apple Developer 자격증명 + 빌드 시간 ~30분)
+- [ ] EAS Build preview Android 산출물 생성 (`.apk`) — **수동 확인 필요**
 - [ ] sub-prd-04 §상태 "진행전" → "검증 완료" 갱신 (옵션)
 
 ## 주의사항

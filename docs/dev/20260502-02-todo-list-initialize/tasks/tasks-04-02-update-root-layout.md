@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 02
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (deps 설치 완료)
 
 ## 작업 목표
@@ -73,13 +73,13 @@ export default function RootLayout() {
 
 ## 검증 과정
 
-- [ ] `_layout.tsx` 에 `GestureHandlerRootView` 로 root 래핑
-- [ ] `_layout.tsx` 에 `Linking.getInitialURL()` + `Linking.addEventListener('url', ...)` 등록
-- [ ] cleanup 에서 `sub.remove()` 호출 (메모리 누수 방지)
-- [ ] `'react-native-gesture-handler'` import 가 entry 최상단
-- [ ] QueryClientProvider 는 그대로 유지 (회귀 없음)
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] iOS 시뮬레이터 부팅 + 로그인 화면 표시 (회귀 없음)
+- [x] `_layout.tsx` 에 `GestureHandlerRootView` 로 root 래핑
+- [x] `_layout.tsx` 에 `Linking.getInitialURL()` + `Linking.addEventListener('url', ...)` 등록
+- [x] cleanup 에서 `sub.remove()` 호출 (메모리 누수 방지)
+- [x] `'react-native-gesture-handler'` import 가 entry 최상단
+- [x] QueryClientProvider 는 그대로 유지 (회귀 없음)
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 본 task 신규 에러 0건. (기존 회귀는 후속 task 03·09 책임)
+- [ ] iOS 시뮬레이터 부팅 + 로그인 화면 표시 (회귀 없음) — **수동 확인 필요**
 
 ## 주의사항
 

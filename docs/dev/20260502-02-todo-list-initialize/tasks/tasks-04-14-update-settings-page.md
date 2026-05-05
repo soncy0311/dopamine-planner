@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 14
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 04 (`useLogout`), 13 (categories/epics 페이지)
 
 ## 작업 목표
@@ -99,13 +99,13 @@ export default function SettingsPage() {
 
 ## 검증 과정
 
-- [ ] `(main)/settings/index.tsx` 가 stub 에서 보강됨
-- [ ] 계정 이메일 표시 (`supabase.auth.getUser()`)
-- [ ] 분류 관리 / Epic 관리 두 메뉴 — push 동작
-- [ ] 로그아웃 버튼 → Alert confirm → `useLogout()` 호출
-- [ ] 로그아웃 후 `/(auth)/login` 으로 redirect (helper 책임)
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] 시뮬레이터에서 설정 탭 진입 + 로그아웃 → 로그인 화면 복귀
+- [x] `(main)/settings/index.tsx` 가 stub 에서 보강됨
+- [x] 계정 이메일 표시 (`supabase.auth.getUser()`)
+- [x] 분류 관리 / Epic 관리 두 메뉴 — push 동작
+- [x] 로그아웃 버튼 → Alert confirm → `useLogout()` 호출
+- [x] 로그아웃 후 `/(auth)/login` 으로 redirect (helper 책임)
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 본 task 신규 에러 0건
+- [ ] 시뮬레이터에서 설정 탭 진입 + 로그아웃 → 로그인 화면 복귀 — **수동 확인 필요**
 
 ## 주의사항
 

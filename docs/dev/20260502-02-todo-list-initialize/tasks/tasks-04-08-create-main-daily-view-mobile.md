@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 08
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 06 (DateHeaderMobile), 07 (TodoItem), Sub-01 task 10·12·13 (`useTodos`/`useToggleTodo`/`subscribeTodos`)
 
 ## 작업 목표
@@ -159,17 +159,17 @@ export function MainDailyViewMobile({ workspace }: Props) {
 
 ## 검증 과정
 
-- [ ] `MainDailyViewMobile.tsx` 파일 존재
-- [ ] `useTodos(workspace, date)` + `useToggleTodo()` 사용
-- [ ] `useEffect` 에서 `subscribeTodos` 구독 + cleanup 으로 unsubscribe
-- [ ] `Gesture.Pan` + `runOnJS` 로 좌우 스와이프 (translationX > 80 / < -80)
-- [ ] `activeOffsetX` 로 수평 의도 명확화
-- [ ] 두 섹션 (진행 중 / 완료) + 카운트 헤더
-- [ ] FAB 탭 → `router.push('/create-todo?workspace=...&date=...')`
-- [ ] TodoItem onPress → `/todo/{id}` navigate
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] 시뮬레이터에서 좌우 스와이프 → 일자 변경 동작
-- [ ] 화면 unmount 시 Realtime 채널 해제 (콘솔 누수 경고 없음)
+- [x] `MainDailyViewMobile.tsx` 파일 존재
+- [x] `useTodos({client, workspace, date})` + `useToggleTodo(client)` 사용 — 실제 hook 시그니처 정합
+- [x] `useEffect` 에서 `subscribeTodos(supabase, qc)` 구독 + cleanup 으로 unsubscribe
+- [x] `Gesture.Pan` + `runOnJS` 로 좌우 스와이프 (translationX > 80 / < -80)
+- [x] `activeOffsetX([-20, 20])` 로 수평 의도 명확화
+- [x] 두 섹션 (진행 중 / 완료) + 카운트 헤더 — TodoDailyView 의 `data.todo` / `data.done` 그대로 활용
+- [x] FAB 탭 → `router.push('/create-todo?workspace=...&date=...')`
+- [x] TodoItem onPress → `/todo/{id}` navigate
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 본 task 신규 에러 0건
+- [ ] 시뮬레이터에서 좌우 스와이프 → 일자 변경 동작 — **수동 확인 필요**
+- [ ] 화면 unmount 시 Realtime 채널 해제 (콘솔 누수 경고 없음) — **수동 확인 필요**
 
 ## 주의사항
 

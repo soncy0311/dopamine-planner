@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 12
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 10 (TodoForm), Sub-01 task 11 (`useCreateTodo`/`useUpdateTodo`/`useDeleteTodo`)
 
 ## 작업 목표
@@ -173,16 +173,16 @@ export default function TodoDetailModal() {
 
 ## 검증 과정
 
-- [ ] `_layout.tsx` 가 Stack 으로 변경 + 4 개 Stack.Screen 등록 (`create-todo`, `todo/[id]`, `categories`, `epics`)
-- [ ] `app/create-todo.tsx` 파일 존재 — TodoForm + `useCreateTodo`
-- [ ] query param `workspace`, `date` 로 defaultValues 정합
-- [ ] `app/todo/[id].tsx` 파일 존재 — TodoForm + `useTodo` + `useUpdateTodo` + `useDeleteTodo`
-- [ ] 삭제 버튼 → Alert confirm → 실행
-- [ ] 성공 시 `router.back()` (모달 닫힘)
-- [ ] 실패 시 Alert
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] 시뮬레이터에서 FAB → create modal → 입력 → 저장 → 목록 갱신
-- [ ] 목록 항목 탭 → detail modal → 수정/삭제 동작
+- [x] `_layout.tsx` 가 Stack 으로 변경 + Stack.Screen 등록 (`(auth)`, `(main)`, `create-todo`, `todo/[id]`, `categories`, `epics`, `index`)
+- [x] `app/create-todo.tsx` 파일 존재 — TodoForm + `useCreateTodo({client})`
+- [x] query param `workspace`, `date` 로 defaultValues 정합
+- [x] `app/todo/[id].tsx` 파일 존재 — TodoForm + `useQuery(fetchTodoDetail)` (단건 hook 부재로 web 패턴 정합) + `useUpdateTodo` + `useDeleteTodo`
+- [x] 삭제 버튼 → Alert confirm → 실행
+- [x] 성공 시 `router.back()` (모달 닫힘)
+- [x] 실패 시 Alert
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 본 task 신규 에러 0건
+- [ ] 시뮬레이터에서 FAB → create modal → 입력 → 저장 → 목록 갱신 — **수동 확인 필요**
+- [ ] 목록 항목 탭 → detail modal → 수정/삭제 동작 — **수동 확인 필요**
 
 ## 주의사항
 

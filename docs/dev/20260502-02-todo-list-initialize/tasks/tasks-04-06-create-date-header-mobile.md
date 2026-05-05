@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 06
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (deps), 사실상 sub-prd-01 의 date util 의존 (Sub-01 task 12·13 권장 선행)
 
 ## 작업 목표
@@ -116,14 +116,14 @@ export function DateHeaderMobile({ date, onDateChange }: Props) {
 
 ## 검증 과정
 
-- [ ] `apps/mobile/src/components/DateHeaderMobile.tsx` 파일 존재
-- [ ] Props (`date`, `onDateChange`) 정합
-- [ ] 일요일 시작 7 셀 렌더
-- [ ] 선택 셀 시각 강조 (primary bg)
-- [ ] 탭 시 `onDateChange(iso)` 호출
-- [ ] `accessibilityRole`/`accessibilityLabel` 속성
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] 시뮬레이터에서 7개 날짜 셀 + 월 라벨 시각 확인
+- [x] `apps/mobile/src/components/DateHeaderMobile.tsx` 파일 존재
+- [x] Props (`date`, `onDateChange`) 정합
+- [x] 일요일 시작 7 셀 렌더
+- [x] 선택 셀 시각 강조 (primary bg)
+- [x] 탭 시 `onDateChange(iso)` 호출
+- [x] `accessibilityRole`/`accessibilityLabel` 속성
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 본 task 신규 에러 0건
+- [ ] 시뮬레이터에서 7개 날짜 셀 + 월 라벨 시각 확인 — **수동 확인 필요**
 
 ## 주의사항
 

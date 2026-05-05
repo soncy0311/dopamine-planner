@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 09
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 08 (MainDailyViewMobile)
 
 ## 작업 목표
@@ -42,12 +42,12 @@ export default function WorkPage() {
 
 ## 검증 과정
 
-- [ ] `(main)/life/index.tsx` 가 `<MainDailyViewMobile workspace="life" />` 만 렌더
-- [ ] `(main)/work/index.tsx` 가 `<MainDailyViewMobile workspace="work" />` 만 렌더
-- [ ] 두 파일 모두 default export
-- [ ] 두 페이지 외 추가 로직 없음 (얇은 wrapper)
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] iOS 시뮬레이터에서 Tab Life ↔ Tab Work 전환 시 데이터 분리
+- [x] `(main)/life/index.tsx` 가 `<MainDailyViewMobile workspace="life" />` 만 렌더
+- [x] `(main)/work/index.tsx` 가 `<MainDailyViewMobile workspace="work" />` 만 렌더
+- [x] 두 파일 모두 default export
+- [x] 두 페이지 외 추가 로직 없음 (얇은 wrapper)
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 전체 0 에러
+- [ ] iOS 시뮬레이터에서 Tab Life ↔ Tab Work 전환 시 데이터 분리 — **수동 확인 필요**
 
 ## 주의사항
 

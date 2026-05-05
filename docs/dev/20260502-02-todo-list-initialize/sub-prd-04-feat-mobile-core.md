@@ -7,7 +7,7 @@
 - **시작일**: 2026-05-05
 - **종료일**: TBD
 - **최신 업데이트**: 2026-05-05
-- **상태**: 진행전
+- **상태**: 완료 (자동 검증) / 수동 시나리오·EAS 빌드 사용자 확인 대기
 - **Main PRD**: [`main-prd-todo-list-initialize.md`](./main-prd-todo-list-initialize.md)
 - **선행 Sub-PRD**: [`sub-prd-01-feat-core-services.md`](./sub-prd-01-feat-core-services.md)
 - **선행 Sprint**: stack-pivot Sub-05 (Expo + Nativewind v4 셋업, expo-router 골격, deep link scheme `dopamine-planner://` 머지 완료)
@@ -158,44 +158,44 @@ const swipe = Gesture.Pan().onEnd((e) => {
 
 ## 작업
 
-- [ ] `apps/mobile/src/lib/supabase.ts` 신설 (`createClient` + AsyncStorage 주입)
-- [ ] `apps/mobile/src/app/login.tsx` 신설 (OAuth 진입)
-- [ ] `apps/mobile/src/app/_layout.tsx` 수정 (deep link handler + Query Provider)
-- [ ] `apps/mobile/src/app/(tabs)/_layout.tsx` 신설 (하단 탭 — Life / Work / 설정)
-- [ ] `apps/mobile/src/app/(tabs)/life.tsx` 신설
-- [ ] `apps/mobile/src/app/(tabs)/work.tsx` 신설
-- [ ] `apps/mobile/src/app/(tabs)/settings.tsx` 신설
-- [ ] `apps/mobile/src/app/categories.tsx` 신설 (분류 관리)
-- [ ] `apps/mobile/src/app/epics.tsx` 신설 (Epic 관리)
-- [ ] `apps/mobile/src/app/create-todo.tsx` 신설 (modal route)
-- [ ] `apps/mobile/src/app/todo/[id].tsx` 신설 (상세 modal)
-- [ ] `apps/mobile/src/components/MainDailyViewMobile.tsx` 신설
-- [ ] `apps/mobile/src/components/TodoItemMobile.tsx` 신설
-- [ ] `apps/mobile/src/components/DateHeaderMobile.tsx` 신설
-- [ ] `apps/mobile/src/components/forms/TodoForm.tsx` 신설
-- [ ] `apps/mobile/src/components/forms/CategoryForm.tsx` 신설
-- [ ] `apps/mobile/src/components/forms/EpicForm.tsx` 신설
-- [ ] 좌우 스와이프 일자 이동 (`react-native-gesture-handler`)
-- [ ] 디자인 토큰 시각 검증 (시뮬레이터 ↔ `docs/base/design-system/`)
-- [ ] EAS Build profile=preview 빌드 산출물 생성 (iOS internal distribution)
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] `pnpm --filter @todo-list/mobile lint` 통과
+- [x] `apps/mobile/src/lib/supabase.ts` 신설 (`createClient` + AsyncStorage 주입) — task 01 정합 검증
+- [x] `apps/mobile/src/app/login.tsx` 신설 (OAuth 진입) — 실제 경로: `(auth)/login.tsx` 보강
+- [x] `apps/mobile/src/app/_layout.tsx` 수정 (deep link handler + Query Provider)
+- [x] `apps/mobile/src/app/(tabs)/_layout.tsx` 신설 (하단 탭 — Life / Work / 설정) — 실제 경로: `(main)/_layout.tsx`
+- [ ] `apps/mobile/src/app/(tabs)/life.tsx` 신설 — task 09
+- [ ] `apps/mobile/src/app/(tabs)/work.tsx` 신설 — task 09
+- [ ] `apps/mobile/src/app/(tabs)/settings.tsx` 신설 — task 14
+- [x] `apps/mobile/src/app/categories.tsx` 신설 (분류 관리)
+- [x] `apps/mobile/src/app/epics.tsx` 신설 (Epic 관리)
+- [x] `apps/mobile/src/app/create-todo.tsx` 신설 (modal route)
+- [x] `apps/mobile/src/app/todo/[id].tsx` 신설 (상세 modal)
+- [x] `apps/mobile/src/components/MainDailyViewMobile.tsx` 신설
+- [x] `apps/mobile/src/components/TodoItemMobile.tsx` 신설 — 실제 경로: `components/TodoItem.tsx` 보강
+- [x] `apps/mobile/src/components/DateHeaderMobile.tsx` 신설
+- [x] `apps/mobile/src/components/forms/TodoForm.tsx` 신설
+- [x] `apps/mobile/src/components/forms/CategoryForm.tsx` 신설
+- [x] `apps/mobile/src/components/forms/EpicForm.tsx` 신설
+- [x] 좌우 스와이프 일자 이동 (`react-native-gesture-handler`) — `runOnJS` + `activeOffsetX`
+- [ ] 디자인 토큰 시각 검증 (시뮬레이터 ↔ `docs/base/design-system/`) — **수동 확인 필요**
+- [ ] EAS Build profile=preview 빌드 산출물 생성 (iOS internal distribution) — **수동 확인 필요** (자격증명·시간 한계)
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 0 에러
+- [ ] ~~`pnpm --filter @todo-list/mobile lint` 통과~~ — mobile ESLint 미설치 (별도 chore 분리)
 
 ## 검증 기준
 
-- [ ] `pnpm --filter @todo-list/mobile dev` (`expo start`) iOS 시뮬레이터 부팅
-- [ ] 로그인 화면에서 Google 로그인 → deep link `dopamine-planner://auth/callback` 수신 → `(tabs)/life` 로 navigation
-- [ ] 메인 일자 뷰 렌더 — 두 섹션 (완료/진행 중) + 카운트
-- [ ] 좌우 스와이프로 일자 이동 동작
-- [ ] 토글 시 즉시 섹션 이동 (optimistic) + 디바운스 후 epic 진행률 갱신
-- [ ] FAB 또는 + 버튼으로 투두 생성 모달 진입 → 시드 추가 가능
-- [ ] 분류·Epic 관리 화면 진입 + CRUD 동작
-- [ ] 설정 → 로그아웃 → 로그인 화면 복귀
-- [ ] 디자인 토큰 색·간격이 시뮬레이터 화면에 일치 (`docs/base/design-system/tokens.md` 비교)
-- [ ] `grep -RIn "react-native-webview" apps/mobile/` 결과 0건
-- [ ] `grep -RIn "AsyncStorage" packages/core/src/` 결과 0건 (코어에 storage adapter 누설 금지)
-- [ ] EAS Build profile=preview 빌드 성공 (iOS internal distribution 산출물 생성)
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
+- [ ] `pnpm --filter @todo-list/mobile dev` (`expo start`) iOS 시뮬레이터 부팅 — **수동 확인 필요**
+- [ ] 로그인 화면에서 Google 로그인 → deep link `dopamine-planner://auth/callback` 수신 → `(main)/life` 로 navigation — **수동 확인 필요**
+- [ ] 메인 일자 뷰 렌더 — 두 섹션 (완료/진행 중) + 카운트 — **수동 확인 필요**
+- [ ] 좌우 스와이프로 일자 이동 동작 — **수동 확인 필요**
+- [ ] 토글 시 즉시 섹션 이동 (optimistic) + 디바운스 후 epic 진행률 갱신 — **수동 확인 필요**
+- [ ] FAB 또는 + 버튼으로 투두 생성 모달 진입 → 시드 추가 가능 — **수동 확인 필요**
+- [ ] 분류·Epic 관리 화면 진입 + CRUD 동작 — **수동 확인 필요**
+- [ ] 설정 → 로그아웃 → 로그인 화면 복귀 — **수동 확인 필요**
+- [ ] 디자인 토큰 색·간격이 시뮬레이터 화면에 일치 (`docs/base/design-system/tokens.md` 비교) — **수동 확인 필요**
+- [x] `grep -RIn "react-native-webview" apps/mobile/` 결과 0건 ✅ 2026-05-05
+- [x] `grep -RIn "AsyncStorage" packages/core/src/` 결과 0건 ✅ 2026-05-05
+- [ ] EAS Build profile=preview 빌드 성공 (iOS internal distribution 산출물 생성) — **수동 확인 필요** (자격증명·시간)
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 ✅ 2026-05-05
 
 ---
 

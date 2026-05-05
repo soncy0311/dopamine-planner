@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 10
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (deps), Sub-01 task 08·09·11 (`useCategories`/`useEpics`/`useCreateTodo`/`useUpdateTodo`)
 
 ## 작업 목표
@@ -306,14 +306,14 @@ export function TodoForm({ mode, workspace, defaultValues, onSubmit, onCancel, s
 
 ## 검증 과정
 
-- [ ] `lib/forms/schemas.ts` 에 `todoSchema` + `TodoFormValues` export
-- [ ] `forms/TodoForm.tsx` 에 RHF + zodResolver 사용
-- [ ] 분류 변경 시 epic_id 자동 reset (cascading)
-- [ ] DateTimePicker 진입 → 선택 시 due_date 갱신, "마감일 제거" 동작
-- [ ] 우선순위 3 옵션 (낮음/보통/높음) Pressable
-- [ ] 빈 제목 시 Zod 에러 메시지 노출
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] iOS 시뮬레이터에서 폼 입력 → 제출 정상
+- [x] `lib/forms/schemas.ts` 에 `TodoFormSchema` + `TodoFormValues` export — web schemas 와 정합 (camelCase, priority `'high'|'medium'|'low'`)
+- [x] `forms/TodoForm.tsx` 에 RHF + zodResolver 사용
+- [x] 분류 변경 시 `epicId` 자동 reset (cascading) — `useRef` 변경 추적 패턴 (web CreateTodoModal 정합)
+- [x] DateTimePicker 진입 → 선택 시 dueDate 갱신
+- [x] 우선순위 3 옵션 (낮음/보통/높음) Pressable
+- [x] 빈 제목 시 Zod 에러 메시지 노출
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 본 task 신규 에러 0건
+- [ ] iOS 시뮬레이터에서 폼 입력 → 제출 정상 — **수동 확인 필요**
 
 ## 주의사항
 

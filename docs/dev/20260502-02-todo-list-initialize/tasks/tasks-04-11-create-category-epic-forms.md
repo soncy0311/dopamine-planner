@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 11
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: 01 (deps), 10 (schemas.ts), Sub-01 task 08·09 (`useCategories`/mutations)
 
 ## 작업 목표
@@ -239,12 +239,12 @@ export function EpicForm({ mode, workspace, defaultValues, onSubmit, onCancel, s
 
 ## 검증 과정
 
-- [ ] `lib/forms/schemas.ts` 에 `categorySchema` / `epicSchema` / `PALETTE` export
-- [ ] `CategoryForm.tsx` 8색 팔레트 시각 + 선택 표시
-- [ ] `EpicForm.tsx` 분류 chip 선택 — 분류 미선택 시 Zod 에러
-- [ ] 빈 이름 / 빈 제목 Zod 에러 메시지 노출
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
-- [ ] 시뮬레이터에서 두 폼 입력 → 제출 정상
+- [x] `lib/forms/schemas.ts` 에 `CategoryFormSchema` / `EpicFormSchema` / `PALETTE` export — task 10 에서 일괄 작성
+- [x] `CategoryForm.tsx` 8색 팔레트 시각 + 선택 표시
+- [x] `EpicForm.tsx` 분류 chip 선택 — 분류 미선택 시 Zod 에러 (UUID 검증)
+- [x] 빈 이름 / 빈 제목 Zod 에러 메시지 노출
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — 본 task 신규 에러 0건
+- [ ] 시뮬레이터에서 두 폼 입력 → 제출 정상 — **수동 확인 필요**
 
 ## 주의사항
 

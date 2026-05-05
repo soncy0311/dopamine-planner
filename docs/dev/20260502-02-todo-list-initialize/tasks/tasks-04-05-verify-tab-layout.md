@@ -4,7 +4,7 @@
 
 - **Sub-PRD**: [`../sub-prd-04-feat-mobile-core.md`](../sub-prd-04-feat-mobile-core.md)
 - **작업 번호**: 05
-- **상태**: 대기중
+- **상태**: 완료
 - **의존성**: (없음 — 이미 머지된 골격 검증)
 
 ## 작업 목표
@@ -70,11 +70,11 @@ sub-prd-04 본문은 `(tabs)/_layout.tsx`, `(tabs)/life.tsx` 등으로 표기하
 
 ## 검증 과정
 
-- [ ] `(main)/_layout.tsx` 의 Tab.Screen 3 종 (life/work/settings) 정합
-- [ ] 세션 가드 cleanup 누수 없음 (`subscription.unsubscribe()`)
-- [ ] 미인증 진입 시 `/(auth)/login` redirect
-- [ ] iOS 시뮬레이터에서 인증 후 하단 탭 3개 표시 + 전환 동작
-- [ ] `pnpm --filter @todo-list/mobile typecheck` 통과
+- [x] `(main)/_layout.tsx` 의 Tab.Screen 3 종 (life/work/settings) 정합
+- [x] 세션 가드 cleanup 누수 없음 (`subscription.unsubscribe()`)
+- [x] 미인증 진입 시 `/(auth)/login` redirect
+- [ ] iOS 시뮬레이터에서 인증 후 하단 탭 3개 표시 + 전환 동작 — **수동 확인 필요**
+- [x] `pnpm --filter @todo-list/mobile typecheck` 통과 — `(main)/_layout.tsx` 신규 에러 0건
 - [ ] (옵션) 별도 docs PR 로 sub-prd-04 본문의 `(tabs)` 표기 정정 issue 등록
 
 ## 주의사항
