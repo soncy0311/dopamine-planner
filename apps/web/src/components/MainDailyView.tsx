@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   subscribeTodos,
@@ -13,6 +13,8 @@ import { DateNavigator, FAB } from '@todo-list/ui';
 import { supabase } from '@/lib/supabase/client';
 import { useDateQuery } from '@/hooks/useDateQuery';
 import { TodoSection } from './TodoSection';
+import { CreateTodoModal } from './modals/CreateTodoModal';
+import { TodoDetailModal } from './modals/TodoDetailModal';
 
 export type MainDailyViewProps = {
   workspace: Workspace;
@@ -27,6 +29,9 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   const { data, isLoading } = useTodos({ client: supabase, workspace, date });
   const toggle = useToggleTodo(supabase);
 
+  const [createOpen, setCreateOpen] = useState(false);
+  const [detailTodoId, setDetailTodoId] = useState<string | null>(null);
+
   const handleToggle = (item: SubIssueWithJoins) => {
     toggle.mutate({
       id: item.id,
@@ -35,12 +40,12 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
     });
   };
 
-  const handlePress = (_item: SubIssueWithJoins) => {
-    // Sub-03 가 상세 모달 open 핸들러로 대체
+  const handlePress = (item: SubIssueWithJoins) => {
+    setDetailTodoId(item.id);
   };
 
   const handleCreate = () => {
-    // Sub-03 가 생성 모달 open 핸들러로 대체
+    setCreateOpen(true);
   };
 
   return (
@@ -71,6 +76,22 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         ariaLabel="새 일 추가"
         className="md:hidden !bottom-24"
       />
+      <CreateTodoModal
+        open={createOpen}
+        onOpenChange={setCreateOpen}
+        workspace={workspace}
+        defaultDate={date}
+      />
+      {detailTodoId && (
+        <TodoDetailModal
+          open
+          onOpenChange={(o) => {
+            if (!o) setDetailTodoId(null);
+          }}
+          workspace={workspace}
+          todoId={detailTodoId}
+        />
+      )}
     </div>
   );
 }
