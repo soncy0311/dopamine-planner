@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "dotenv -e ../../env/.env.web.local -- next dev",
-    "build": "dotenv -e ../../env/.env.web.local -- next build",
+    "dev": "dotenv -e ../../env/.env.local -- next dev",
+    "build": "dotenv -e ../../env/.env.local -- next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit"
