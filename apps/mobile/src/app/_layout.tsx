@@ -37,15 +37,21 @@ export default function RootLayout() {
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen name="(main)" options={{ headerShown: false }} />
           <Stack.Screen
-            name="create-todo"
-            options={{ presentation: 'modal', title: '새 투두' }}
+            name="epic-form"
+            options={{ presentation: 'modal', title: 'Epic 추가' }}
+          />
+          <Stack.Screen
+            name="sub-issue-form"
+            options={{ presentation: 'modal', title: '서브 이슈 추가' }}
           />
           <Stack.Screen
             name="todo/[id]"
             options={{ presentation: 'modal', title: '투두 수정' }}
           />
-          <Stack.Screen name="categories" options={{ title: '분류 관리' }} />
-          <Stack.Screen name="epics" options={{ title: 'Epic 관리' }} />
+          <Stack.Screen
+            name="create-todo"
+            options={{ presentation: 'modal', headerShown: false }}
+          />
         </Stack>
       </QueryClientProvider>
     </GestureHandlerRootView>

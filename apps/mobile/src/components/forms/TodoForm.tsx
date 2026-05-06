@@ -42,13 +42,13 @@ export function TodoForm({
       priority: 'medium',
       categoryId: EMPTY_UUID,
       epicId: EMPTY_UUID,
-      dueDate: defaultValues?.dueDate ?? '',
+      registeredDate: defaultValues?.registeredDate ?? '',
       ...defaultValues,
     },
   });
 
   const categoryId = watch('categoryId');
-  const dueDate = watch('dueDate');
+  const registeredDate = watch('registeredDate');
 
   const { data: categories = [] } = useCategories({ client: supabase, workspace });
   const { data: epics = [] } = useEpics(
@@ -194,11 +194,11 @@ export function TodoForm({
         accessibilityRole="button"
         accessibilityLabel="마감일 선택"
       >
-        <Text className="text-foreground">{dueDate || '(선택)'}</Text>
+        <Text className="text-foreground">{registeredDate || '(선택)'}</Text>
       </Pressable>
       {showDate && (
         <DateTimePicker
-          value={dueDate ? new Date(dueDate + 'T00:00:00') : new Date()}
+          value={registeredDate ? new Date(registeredDate + 'T00:00:00') : new Date()}
           mode="date"
           display={Platform.OS === 'ios' ? 'inline' : 'default'}
           onChange={(_e, picked) => {
@@ -207,13 +207,13 @@ export function TodoForm({
               const y = picked.getFullYear();
               const m = String(picked.getMonth() + 1).padStart(2, '0');
               const d = String(picked.getDate()).padStart(2, '0');
-              setValue('dueDate', `${y}-${m}-${d}`);
+              setValue('registeredDate', `${y}-${m}-${d}`);
             }
           }}
         />
       )}
-      {errors.dueDate && (
-        <Text className="mt-1 text-xs text-red-600">{errors.dueDate.message}</Text>
+      {errors.registeredDate && (
+        <Text className="mt-1 text-xs text-red-600">{errors.registeredDate.message}</Text>
       )}
 
       <View className="mt-6 flex-row gap-2">

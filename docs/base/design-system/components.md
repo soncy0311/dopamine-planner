@@ -184,6 +184,15 @@ Atoms를 조합하여 하나의 기능 단위를 구성한다.
 | **위치 / 시간 / 개수** | top-right / 4초 / 3개 (sonner 기본값 채택) |
 | **접근성** | sonner 의 `aria-live` 자동 관리, `closeButton` 활성 |
 
+### CategoryComboboxCreate
+
+| 구성 | Input + Listbox + "+ 분류 만들기" 옵션 |
+|------|------|
+| **설명** | 분류 자유 입력 + 검색 + 즉시 생성 진입점 — 잠정안 (디자인 결정자 합류 전) |
+| **상세 명세** | [`./components/category-combobox-create.md`](./components/category-combobox-create.md) |
+| **사용** | `EpicFormModal` 의 분류 입력 필드 (분류 생성의 유일 경로) |
+| **접근성** | `role="combobox"`, `aria-expanded`, 옵션 `role="option"`, `↑/↓/Enter/Escape` 키보드 |
+
 ---
 
 ## 3. Organisms (유기체)
@@ -278,3 +287,13 @@ Molecules를 조합하여 독립적인 섹션을 구성한다.
 |------|------------------------------|
 | **설명** | 분류/Epic 관리 화면 |
 | **레이아웃** | 상단 헤더 고정, 중앙 리스트 스크롤, 하단 탭 바 고정 |
+
+### SettingsPage
+
+| 구성 | 프로필 카드 + 계정 / 앱 / 정보 섹션 |
+|------|------|
+| **설명** | 설정 페이지 page-level 레이아웃 — 잠정안 (디자인 결정자 합류 전) |
+| **상세 명세** | [`./components/settings-page.md`](./components/settings-page.md) |
+| **사용** | `apps/web/src/app/(main)/settings/page.tsx`, `apps/mobile/src/app/(main)/settings/` |
+| **레이아웃** | 단일 컬럼, 카드형 4블록. 분류·Epic 직접 관리 UI 부재 (의도적) |
+| **접근성** | 섹션 제목 `<h2>`, 로그아웃 destructive variant |

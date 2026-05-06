@@ -29,7 +29,7 @@ function makeClient(): { client: AppSupabaseClient; calls: FromCall[]; rpc: Retu
                   description: null,
                   priority: 'normal',
                   status: payload.status,
-                  due_date: '2026-05-06',
+                  registered_date: '2026-05-06',
                   completed_date: payload.completed_date,
                   carry_over_count: 0,
                   created_at: '2026-05-06T00:00:00Z',

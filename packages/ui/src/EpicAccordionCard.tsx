@@ -26,6 +26,7 @@ export type EpicAccordionCardProps = {
   onMainToggle: () => void;
   mainStatus: 'todo' | 'done';
   subIssues: EpicAccordionSubIssue[];
+  onAddSubIssue?: () => void;
 };
 
 export function EpicAccordionCard({
@@ -39,6 +40,7 @@ export function EpicAccordionCard({
   onMainToggle,
   mainStatus,
   subIssues,
+  onAddSubIssue,
 }: EpicAccordionCardProps) {
   const done = mainStatus === 'done';
   const total = segments.length;
@@ -144,6 +146,17 @@ export function EpicAccordionCard({
               />
             </li>
           ))}
+          {onAddSubIssue ? (
+            <li>
+              <button
+                type="button"
+                onClick={onAddSubIssue}
+                className="flex h-9 w-full items-center justify-start rounded-md px-2 text-xs font-medium text-purple-500 hover:bg-periwinkle-100"
+              >
+                + 서브 이슈 추가
+              </button>
+            </li>
+          ) : null}
         </ul>
       ) : null}
     </article>

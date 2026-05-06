@@ -33,7 +33,7 @@ function makeTodo(
     description: null,
     priority: 'normal',
     status: 'todo',
-    dueDate: '2026-05-06',
+    registeredDate: '2026-05-06',
     completedDate: null,
     carryOverCount: 0,
     createdAt: '2026-05-06T00:00:00Z',

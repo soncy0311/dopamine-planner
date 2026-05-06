@@ -25,7 +25,7 @@ export async function listByDate(
          category:category!inner ( id, name, color, workspace )
        )`,
     )
-    .eq('due_date', date)
+    .eq('registered_date', date)
     .eq('epic.category.workspace', workspace);
   if (error) throw error;
   return mapTodoDailyView((data ?? []) as Parameters<typeof mapTodoDailyView>[0], date);

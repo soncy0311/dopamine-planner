@@ -181,7 +181,11 @@ export function MainDailyViewMobile({ workspace }: Props) {
     const todoSec: { epic: EpicIssue; subs: SubIssueWithJoins[] }[] = [];
     const doneSec: { epic: EpicIssue; subs: SubIssueWithJoins[] }[] = [];
     for (const entry of grouped.epics) {
-      if (entry.epic.progress >= 1) doneSec.push(entry);
+      // sub 상태 기반 즉시 판정 (서버 progress 갱신 RPC 대기 회피).
+      const total = entry.subs.length;
+      const doneCount = entry.subs.filter((s) => s.status === 'done').length;
+      const isAllDone = total > 0 && doneCount === total;
+      if (isAllDone) doneSec.push(entry);
       else todoSec.push(entry);
     }
     return { todo: todoSec, done: doneSec };
@@ -212,8 +216,17 @@ export function MainDailyViewMobile({ workspace }: Props) {
   const isEmpty = !isLoading && todoCount === 0 && doneCount === 0;
 
   const handleCreate = useCallback(() => {
-    router.push(`/create-todo?workspace=${workspace}&date=${date}`);
+    router.push(`/epic-form?workspace=${workspace}&registeredDate=${date}`);
   }, [router, workspace, date]);
+
+  const handleAddSubIssue = useCallback(
+    (epic: EpicIssue) => {
+      router.push(
+        `/sub-issue-form?epicId=${epic.id}&epicTitle=${encodeURIComponent(epic.title)}&registeredDate=${date}`,
+      );
+    },
+    [router, date],
+  );
 
   const rows: Row[] = [
     { type: 'header', key: 'h-todo', label: `진행 중 (${todoCount})` },
@@ -261,8 +274,9 @@ export function MainDailyViewMobile({ workspace }: Props) {
                     : Math.round(
                         Math.max(0, Math.min(1, item.epic.progress)) * 100,
                       );
+                // mainStatus 도 sub 상태 기반 (optimistic update 즉시 반영).
                 const mainStatus: 'todo' | 'done' =
-                  item.epic.progress >= 1 ? 'done' : 'todo';
+                  total > 0 && done === total ? 'done' : 'todo';
                 return (
                   <EpicAccordionCard
                     epicId={item.epic.id}
@@ -277,6 +291,7 @@ export function MainDailyViewMobile({ workspace }: Props) {
                     subIssues={item.subs}
                     onSubToggle={handleToggle}
                     onSubPress={handlePress}
+                    onAddSubIssue={() => handleAddSubIssue(item.epic)}
                   />
                 );
               }

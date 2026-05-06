@@ -17,7 +17,7 @@ export interface SubIssue {
   description: string | null;
   priority: Priority;
   status: TodoStatus;
-  dueDate: string | null;
+  registeredDate: string | null;
   completedDate: string | null;
   carryOverCount: number;
   createdAt: string;
@@ -64,7 +64,7 @@ export function mapSubIssueRow(row: TodoRow): SubIssue {
     description: row.description,
     priority: row.priority,
     status: row.status,
-    dueDate: row.due_date,
+    registeredDate: row.registered_date,
     completedDate: row.completed_date,
     carryOverCount: row.carry_over_count,
     createdAt: row.created_at,

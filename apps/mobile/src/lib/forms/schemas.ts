@@ -17,7 +17,7 @@ export const TodoFormSchema = z.object({
   priority: z.enum(['high', 'medium', 'low']),
   categoryId: z.string().uuid('분류를 선택해주세요'),
   epicId: z.string().uuid('Epic 을 선택해주세요'),
-  dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
+  registeredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
 });
 export type TodoFormValues = z.infer<typeof TodoFormSchema>;
 

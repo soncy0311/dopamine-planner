@@ -1,7 +1,7 @@
 # API Contract
 
 > 작성일: 2026-05-01
-> 최종 수정일: 2026-05-05 — v2 (stack-pivot) 머지 후 SoT 정합 (OAuth 콜백·RPC 반환·Realtime publication 4건 갱신)
+> 최종 수정일: 2026-05-06 — Sub-09 정합 (sub_issue.registered_date / carry_over 의미 변경 / category_create RPC)
 > 기반 문서: detail-todo-service-initialize.md
 > 상태: Draft
 
@@ -325,7 +325,7 @@ const { data, error } = await supabase
       )
     )
   `)
-  .eq('due_date', '2026-05-01')
+  .eq('registered_date', '2026-05-01')
   .eq('epic.category.workspace', 'life');
 ```
 
@@ -341,7 +341,7 @@ const { data, error } = await supabase
     title: '장보기',
     description: '우유, 계란, 빵',
     priority: 'low',
-    due_date: '2026-05-01',
+    registered_date: '2026-05-01',
   })
   .select()
   .single();
@@ -406,7 +406,7 @@ const { error } = await supabase
 ### 4.1 carry_over_todos(target_date date) → table(moved_count integer)
 
 - **입력**: `target_date date` (오늘 날짜 등 일괄 이월할 기준일)
-- **처리**: 미완료 sub_issue (`status <> 'done'` — 즉 `todo`) 의 `due_date` 를 `target_date` 로 일괄 갱신, `carry_over_count` +1. 단일 트랜잭션 내에서 처리
+- **처리**: `registered_date < target_date AND status <> 'done'` 조건의 sub_issue 의 `registered_date = target_date` 로 일괄 갱신 + `carry_over_count` +1. 단일 트랜잭션 내에서 처리. 인덱스 `idx_sub_issue_user_registered_status` 사용 (Sub-09 마이그레이션 006 의 컬럼·인덱스 rename 결과)
 - **반환**: `table(moved_count integer)` — supabase-js 에서는 단일 row 배열로 도착 (`{ moved_count: number }[]`)
 - **권한**: `authenticated` 만 실행 가능 (`SECURITY DEFINER` + `auth.uid()` null 체크)
 
@@ -434,6 +434,25 @@ const progress = data?.[0]?.progress ?? 0;
 ```
 
 > 정확한 컬럼/타입은 Sub-03 의 SQL 정의 시 본 섹션과 1:1 정합되도록 갱신한다. 함수명·인자명·반환 타입은 `main-prd-stack-pivot.md` §데이터베이스 스키마 마이그레이션 4·5 와 동일하게 유지한다.
+
+### 4.3 category_create(workspace workspace, name text, color text default null) → table(id uuid, workspace workspace, name text, color text)
+
+- **입력**: `workspace workspace`, `name text`, `color text default null`
+- **처리**: 본인(`auth.uid()`) 분류를 신규 생성. unique constraint `(workspace, name)` 로 중복 방지 (위반 시 SQLSTATE `23505`). `SECURITY DEFINER` + `auth.uid()` null 체크
+- **반환**: `table(id uuid, workspace workspace, name text, color text)` — supabase-js 에서는 단일 row 배열로 도착 (신규 생성된 분류 row)
+- **권한**: `authenticated` 만 실행 가능 (`grant execute … to authenticated`, `revoke … from anon, public`)
+
+```typescript
+const { data, error } = await supabase.rpc('category_create', {
+  workspace: 'life',
+  name: '건강',
+  color: '#4CAF50',
+});
+// data: [{ id: '...', workspace: 'life', name: '건강', color: '#4CAF50' }]
+const created = data?.[0];
+```
+
+> Sub-09 의 `CategoryComboboxCreate` 가 신규 분류 즉시 생성 진입점에서 호출. 분류 직접 관리 UI 가 폐기되므로 본 RPC + DB trigger (마이그레이션 008 — orphan 자동 삭제) 가 분류 생애주기를 대체한다.
 
 ---
 
@@ -592,7 +611,7 @@ interface SubIssue {
   description: string | null;
   priority: Priority;
   status: TodoStatus;
-  dueDate: string | null;
+  registeredDate: string | null;
   completedDate: string | null;
   carryOverCount: number;
   createdAt: string;

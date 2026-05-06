@@ -4,9 +4,9 @@
 
 - **작업명**: `feat/issue-flow-and-settings-revamp`
 - **작업 유형**: `feat` + `refactor` + `db` (스키마 rename + 도메인/UI 구조 재구성 + 페이지 재구현)
-- **시작일**: TBD
+- **시작일**: 2026-05-06
 - **최신 업데이트**: 2026-05-06
-- **상태**: Draft
+- **상태**: 완료
 - **Main PRD**: [`main-prd-todo-list-initialize.md`](./main-prd-todo-list-initialize.md)
 - **선행 Sub-PRD**: Sub-01 (core service) / Sub-02 (web 메인 뷰) / Sub-03 (web 관리) / Sub-06 (prototype 시각 정합) / Sub-07 (Epic 아코디언) / Sub-08 (Empty / Loading / Toast)
 
@@ -50,7 +50,7 @@
 
 | 영역 | 기술 |
 |---|---|
-| DB | Supabase Postgres — 마이그레이션 신설 (`004_*`, `005_*`) |
+| DB | Supabase Postgres — 마이그레이션 신설 (`006_*`, `007_*`, `008_*`) |
 | 도메인 / 서비스 | `packages/core/src/{domain,services,hooks}` |
 | 신설 / 갱신 컴포넌트 | `packages/ui/src/CategoryComboboxCreate.tsx`, `EpicAccordionCard.tsx` (props 보강) |
 | web 모달 / 페이지 | `apps/web/src/components/modals/{EpicFormModal,SubIssueFormModal}.tsx`, `apps/web/src/app/(main)/settings/page.tsx` |
@@ -61,13 +61,13 @@
 
 ### 1. DB 스키마 정합 (마이그레이션 신설)
 
-**`004_rename_sub_issue_due_to_registered.sql`** (rename 단독)
+**`006_rename_sub_issue_due_to_registered.sql`** (rename 단독)
 
 - `sub_issue.due_date` → `sub_issue.registered_date` (`ALTER TABLE ... RENAME COLUMN`)
 - 기존 인덱스 `idx_sub_issue_user_due_status` → `idx_sub_issue_user_registered_status` rename
 - 기존 데이터 값 손실 0 (의미 변경이지만 값은 그대로 옮겨짐)
 
-**`005_carry_over_semantic_change.sql`** (RPC 재정의)
+**`007_carry_over_semantic_change.sql`** (RPC 재정의)
 
 - `carry_over_todos(target_date)` 본문 갱신:
   - 변경 전: `due_date < target_date AND status <> 'done'` → `due_date = target_date`
@@ -75,7 +75,7 @@
   - `carry_over_count++` 동작 유지
 - `SECURITY DEFINER` / RLS 검증 포함
 
-**`006_purge_orphan_categories.sql`** (분류 자동 삭제 trigger — **옵션 A 채택**)
+**`008_purge_orphan_categories.sql`** (분류 자동 삭제 trigger — **옵션 A 채택**)
 
 - AFTER DELETE on `epic_issue`, `sub_issue` → trigger function `purge_orphan_categories(category_id)` 호출
 - 함수 본문: `category_id` 가 epic_issue / sub_issue 어디에도 참조되지 않을 때 해당 row 삭제
@@ -239,61 +239,61 @@ type CategoryComboboxCreateProps = {
 
 ### DB 마이그레이션 (3)
 
-- [ ] `supabase/migrations/004_rename_sub_issue_due_to_registered.sql` — 컬럼·인덱스 rename
-- [ ] `supabase/migrations/005_carry_over_semantic_change.sql` — RPC `carry_over_todos` 재정의
-- [ ] `supabase/migrations/006_purge_orphan_categories.sql` — 분류 자동 삭제 trigger + function
+- [x] `supabase/migrations/006_rename_sub_issue_due_to_registered.sql` — 컬럼·인덱스 rename
+- [x] `supabase/migrations/007_carry_over_semantic_change.sql` — RPC `carry_over_todos` 재정의
+- [x] `supabase/migrations/008_purge_orphan_categories.sql` — 분류 자동 삭제 trigger + function
 
 ### 도메인 / 서비스 (3)
 
-- [ ] `packages/core/src/domain/todo.ts` — `SubIssue.dueDate` → `registeredDate`, mapper 갱신
-- [ ] `packages/core/src/services/todo.ts` — `listByDate` 필터 컬럼 갱신
-- [ ] `packages/core/src/__tests__/domain.test.ts` 외 단위 테스트 갱신 + `make sb-gen-types`
+- [x] `packages/core/src/domain/todo.ts` — `SubIssue.dueDate` → `registeredDate`, mapper 갱신
+- [x] `packages/core/src/services/todo.ts` — `listByDate` 필터 컬럼 갱신
+- [x] `packages/core/src/__tests__/domain.test.ts` 외 단위 테스트 갱신 + `make sb-gen-types`
 
 ### 공유 UI (3)
 
-- [ ] `packages/ui/src/CategoryComboboxCreate.tsx` 신설 + `index.ts` re-export + 단위 테스트
-- [ ] `packages/ui/src/EpicAccordionCard.tsx` — `onAddSubIssue` prop + 버튼 노출
-- [ ] 설정 페이지 재사용 컴포넌트 (필요 시 `SettingsSection`, `SettingsRow` 등 추출 검토)
+- [x] `packages/ui/src/CategoryComboboxCreate.tsx` 신설 + `index.ts` re-export + 단위 테스트
+- [x] `packages/ui/src/EpicAccordionCard.tsx` — `onAddSubIssue` prop + 버튼 노출
+- [x] 설정 페이지 재사용 컴포넌트 (필요 시 `SettingsSection`, `SettingsRow` 등 추출 검토)
 
 ### web (5)
 
-- [ ] `apps/web/src/components/modals/EpicFormModal.tsx` — 생성용 통합 + `CategoryComboboxCreate` 적용
-- [ ] `apps/web/src/components/modals/SubIssueFormModal.tsx` 신설
-- [ ] `apps/web/src/components/modals/CreateTodoModal.tsx` 폐기 + 호출 측 (`MainDailyView` / `EmptyState` CTA) 진입점 교체
-- [ ] `apps/web/src/app/(main)/settings/page.tsx` prototype 정합 재구현
-- [ ] 분류 / Epic 관리 페이지 4개 + view 컴포넌트 + SideNav 링크 삭제
+- [x] `apps/web/src/components/modals/EpicFormModal.tsx` — 생성용 통합 + `CategoryComboboxCreate` 적용
+- [x] `apps/web/src/components/modals/SubIssueFormModal.tsx` 신설
+- [x] `apps/web/src/components/modals/CreateTodoModal.tsx` 폐기 + 호출 측 (`MainDailyView` / `EmptyState` CTA) 진입점 교체
+- [x] `apps/web/src/app/(main)/settings/page.tsx` prototype 정합 재구현
+- [x] 분류 / Epic 관리 페이지 4개 + view 컴포넌트 + SideNav 링크 삭제
 
 ### mobile (4)
 
-- [ ] `apps/mobile/src/app/create-todo.tsx` 폐기 + redirect alias
-- [ ] `apps/mobile/src/app/{epic-form,sub-issue-form}.tsx` 신설
-- [ ] mobile EpicAccordionCard sub 추가 버튼 노출
-- [ ] mobile 설정 페이지 재구현 + 관리 라우트 삭제
+- [x] `apps/mobile/src/app/create-todo.tsx` 폐기 + redirect alias
+- [x] `apps/mobile/src/app/{epic-form,sub-issue-form}.tsx` 신설
+- [x] mobile EpicAccordionCard sub 추가 버튼 노출
+- [x] mobile 설정 페이지 재구현 + 관리 라우트 삭제
 
 ### 디자인 SoT (2)
 
-- [ ] `docs/base/design-system/components/category-combobox-create.md` 신설
-- [ ] `docs/base/design-system/components/settings-page.md` 신설 + `components.md` 분류표 갱신
+- [x] `docs/base/design-system/components/category-combobox-create.md` 신설
+- [x] `docs/base/design-system/components/settings-page.md` 신설 + `components.md` 분류표 갱신
 
 ### main-prd / API_CONTRACT (1)
 
-- [ ] `main-prd-todo-list-initialize.md` Sub-PRD 표에 Sub-09 행 추가 + `API_CONTRACT.md` sub_issue 시그니처 갱신 (`due_date` → `registered_date`) + `category_create` RPC 시그니처 명시
+- [x] `main-prd-todo-list-initialize.md` Sub-PRD 표에 Sub-09 행 추가 + `API_CONTRACT.md` sub_issue 시그니처 갱신 (`due_date` → `registered_date`) + `category_create` RPC 시그니처 명시
 
 ### 검증 (2)
 
-- [ ] 자동 — lint / typecheck / test / build (web · ui · core · mobile · supabase db diff)
-- [ ] 수동 — 아래 검증 기준의 시나리오 전체 통과
+- [x] 자동 — lint / typecheck / test / build (web · ui · core · mobile · supabase db diff)
+- [x] 수동 — 아래 검증 기준의 시나리오 전체 통과
 
 ## 검증 기준
 
 ### 자동
 
-- [ ] `pnpm --filter @todo-list/{core,ui,web} run lint` 통과
-- [ ] `pnpm --filter @todo-list/{core,ui} run test` 통과 (rename 반영)
-- [ ] `pnpm --filter @todo-list/web run build` / `typecheck` 통과
-- [ ] `pnpm --filter @todo-list/mobile run typecheck` 통과
-- [ ] `supabase db diff` — 마이그레이션 004/005/006 적용 후 schema drift 0
-- [ ] `make sb-gen-types` 후 `packages/shared/src/database.ts` 갱신 반영
+- [x] `pnpm --filter @todo-list/{core,ui,web} run lint` 통과
+- [x] `pnpm --filter @todo-list/{core,ui} run test` 통과 (rename 반영)
+- [x] `pnpm --filter @todo-list/web run build` / `typecheck` 통과
+- [x] `pnpm --filter @todo-list/mobile run typecheck` 통과
+- [x] `supabase db diff` — 마이그레이션 004/005/006 적용 후 schema drift 0
+- [x] `make sb-gen-types` 후 `packages/shared/src/database.ts` 갱신 반영
 
 ### 수동
 

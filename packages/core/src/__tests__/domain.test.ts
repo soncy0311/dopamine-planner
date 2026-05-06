@@ -37,7 +37,7 @@ function todoRow(overrides: Partial<TodoRow> = {}): TodoRow {
     description: null,
     priority: 'medium',
     status: 'todo',
-    due_date: '2026-05-05',
+    registered_date: '2026-05-05',
     completed_date: null,
     carry_over_count: 0,
     created_at: '2026-05-05T00:00:00Z',
@@ -87,7 +87,7 @@ describe('mapSubIssueRow', () => {
   it('snake_case row 를 camelCase SubIssue 로 변환한다', () => {
     const result = mapSubIssueRow(todoRow());
     expect(result.epicId).toBe('ep-1');
-    expect(result.dueDate).toBe('2026-05-05');
+    expect(result.registeredDate).toBe('2026-05-05');
     expect(result.carryOverCount).toBe(0);
   });
 });

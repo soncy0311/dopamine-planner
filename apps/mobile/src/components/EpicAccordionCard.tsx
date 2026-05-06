@@ -15,6 +15,7 @@ export type EpicAccordionCardProps = {
   subIssues: SubIssueWithJoins[];
   onSubToggle: (todo: SubIssueWithJoins) => void;
   onSubPress: (todo: SubIssueWithJoins) => void;
+  onAddSubIssue?: () => void;
 };
 
 export function EpicAccordionCard({
@@ -29,6 +30,7 @@ export function EpicAccordionCard({
   subIssues,
   onSubToggle,
   onSubPress,
+  onAddSubIssue,
 }: EpicAccordionCardProps) {
   const done = mainStatus === 'done';
 
@@ -110,6 +112,16 @@ export function EpicAccordionCard({
               onPress={onSubPress}
             />
           ))}
+          {onAddSubIssue ? (
+            <Pressable
+              onPress={onAddSubIssue}
+              accessibilityRole="button"
+              accessibilityLabel="서브 이슈 추가"
+              className="mt-1 h-9 items-start justify-center px-2"
+            >
+              <Text className="text-xs font-medium text-primary">+ 서브 이슈 추가</Text>
+            </Pressable>
+          ) : null}
         </View>
       ) : null}
     </View>

@@ -26,7 +26,8 @@ import {
 import { supabase } from '@/lib/supabase/client';
 import { useDateQuery } from '@/hooks/useDateQuery';
 import { CategoryFilterChips } from './CategoryFilterChips';
-import { CreateTodoModal } from './modals/CreateTodoModal';
+import { EpicFormModal } from './modals/EpicFormModal';
+import { SubIssueFormModal } from './modals/SubIssueFormModal';
 import { TodoDetailModal } from './modals/TodoDetailModal';
 
 export type MainDailyViewProps = {
@@ -72,7 +73,8 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   const { data: epics = [] } = useEpics({ client: supabase, workspace });
   const toggle = useToggleTodo(supabase);
 
-  const [createOpen, setCreateOpen] = useState(false);
+  const [epicFormOpen, setEpicFormOpen] = useState(false);
+  const [subFormEpic, setSubFormEpic] = useState<{ id: string; title: string } | null>(null);
   const [detailTodoId, setDetailTodoId] = useState<string | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [expand, setExpand] = useState<Record<string, boolean>>({});
@@ -109,7 +111,11 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
     const todoSection: typeof grouped.epics = [];
     const doneSection: typeof grouped.epics = [];
     for (const entry of grouped.epics) {
-      if (entry.epic.progress >= 1) doneSection.push(entry);
+      // sub 상태 기반 즉시 판정 (서버 progress 갱신 RPC 대기 회피).
+      const total = entry.subs.length;
+      const doneCount = entry.subs.filter((s) => s.status === 'done').length;
+      const isAllDone = total > 0 && doneCount === total;
+      if (isAllDone) doneSection.push(entry);
       else todoSection.push(entry);
     }
     return { todo: todoSection, done: doneSection };
@@ -143,7 +149,11 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   };
 
   const handleCreate = () => {
-    setCreateOpen(true);
+    setEpicFormOpen(true);
+  };
+
+  const handleAddSubIssue = (epic: EpicIssue) => {
+    setSubFormEpic({ id: epic.id, title: epic.title });
   };
 
   const handleToggleExpand = (epicId: string) => {
@@ -179,7 +189,9 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
       total > 0
         ? Math.round((doneCount / total) * 100)
         : Math.round(Math.max(0, Math.min(1, epic.progress)) * 100);
-    const mainStatus: 'todo' | 'done' = epic.progress >= 1 ? 'done' : 'todo';
+    // mainStatus 도 sub 상태 기반 (optimistic update 즉시 반영).
+    const mainStatus: 'todo' | 'done' =
+      total > 0 && doneCount === total ? 'done' : 'todo';
 
     return (
       <EpicAccordionCard
@@ -193,6 +205,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         onToggleExpand={() => handleToggleExpand(epic.id)}
         onMainToggle={() => void handleCascadeToggle(epic, subs)}
         mainStatus={mainStatus}
+        onAddSubIssue={() => handleAddSubIssue(epic)}
         subIssues={subs.map((s) => ({
           id: s.id,
           title: s.title,
@@ -217,11 +230,30 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   return (
     <div className="flex h-full flex-col gap-4 px-4 py-4">
       <DateNavigator date={date} onChange={setDate} />
-      <CategoryFilterChips
-        categories={categories.map((c) => ({ id: c.id, name: c.name, color: c.color }))}
-        selectedId={selectedCategoryId}
-        onSelect={setSelectedCategoryId}
-      />
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex-1 min-w-0">
+          <CategoryFilterChips
+            categories={categories.map((c) => ({ id: c.id, name: c.name, color: c.color }))}
+            selectedId={selectedCategoryId}
+            onSelect={setSelectedCategoryId}
+          />
+        </div>
+        <button
+          type="button"
+          onClick={handleCreate}
+          className="hidden h-9 shrink-0 items-center gap-1 rounded-md bg-purple-500 px-4 text-sm font-medium text-white transition-colors hover:bg-purple-600 md:inline-flex"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M12 5V19M5 12H19"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+          </svg>
+          새 투두
+        </button>
+      </div>
       {isLoading ? (
         <div className="flex items-center justify-center py-12">
           <Spinner variant="inline" size="md" />
@@ -309,13 +341,27 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
           </section>
         </div>
       )}
-      <FAB onClick={handleCreate} ariaLabel="새 일 추가" className="!bottom-24 md:!bottom-6" />
-      <CreateTodoModal
-        open={createOpen}
-        onOpenChange={setCreateOpen}
-        workspace={workspace}
-        defaultDate={date}
+      <FAB
+        onClick={handleCreate}
+        ariaLabel="새 일 추가"
+        className="!bottom-24 md:!hidden"
       />
+      <EpicFormModal
+        open={epicFormOpen}
+        onOpenChange={setEpicFormOpen}
+        workspace={workspace}
+      />
+      {subFormEpic && (
+        <SubIssueFormModal
+          open
+          onOpenChange={(o) => {
+            if (!o) setSubFormEpic(null);
+          }}
+          epicId={subFormEpic.id}
+          epicTitle={subFormEpic.title}
+          defaultRegisteredDate={date}
+        />
+      )}
       {detailTodoId && (
         <TodoDetailModal
           open

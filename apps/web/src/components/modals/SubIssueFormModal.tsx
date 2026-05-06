@@ -1,55 +1,61 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Dialog from '@radix-ui/react-dialog';
 import { toast } from 'sonner';
-import { useCreateEpic, type Workspace } from '@todo-list/core';
-import { EpicFormSchema, type EpicFormValues } from '@/lib/forms/schemas';
+import { z } from 'zod';
+import { useCreateTodo } from '@todo-list/core';
 import { showFkOrDefaultError } from '@/lib/errors/fkErrorToast';
 import { supabase } from '@/lib/supabase/client';
-import {
-  CategoryComboboxCreate,
-  type CategoryComboboxValue,
-} from '@/components/ui/CategoryComboboxCreate';
 import { PriorityRadioGroup } from '@/components/ui/PriorityRadioGroup';
 
-type EpicFormModalProps = {
+const SubIssueFormSchema = z.object({
+  title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이내'),
+  priority: z.enum(['high', 'medium', 'low']),
+  registeredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
+});
+type SubIssueFormValues = z.infer<typeof SubIssueFormSchema>;
+
+type SubIssueFormModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  workspace: Workspace;
+  epicId: string;
+  epicTitle?: string;
+  defaultRegisteredDate: string;
 };
 
-export function EpicFormModal({ open, onOpenChange, workspace }: EpicFormModalProps) {
-  const [category, setCategory] = useState<CategoryComboboxValue | null>(null);
-  const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');
-
-  const form = useForm<EpicFormValues>({
-    resolver: zodResolver(EpicFormSchema),
+export function SubIssueFormModal({
+  open,
+  onOpenChange,
+  epicId,
+  epicTitle,
+  defaultRegisteredDate,
+}: SubIssueFormModalProps) {
+  const form = useForm<SubIssueFormValues>({
+    resolver: zodResolver(SubIssueFormSchema),
     defaultValues: {
       title: '',
-      description: '',
-      categoryId: '',
+      priority: 'medium',
+      registeredDate: defaultRegisteredDate,
     },
   });
 
   useEffect(() => {
     if (open) {
-      form.reset({ title: '', description: '', categoryId: '' });
-      setCategory(null);
-      setPriority('medium');
+      form.reset({
+        title: '',
+        priority: 'medium',
+        registeredDate: defaultRegisteredDate,
+      });
     }
-  }, [open, form]);
+  }, [open, defaultRegisteredDate, form]);
 
-  useEffect(() => {
-    form.setValue('categoryId', category?.id ?? '', { shouldDirty: true, shouldValidate: true });
-  }, [category, form]);
-
-  const create = useCreateEpic({ client: supabase });
+  const create = useCreateTodo({ client: supabase });
   const submitting = form.formState.isSubmitting || create.isPending;
 
-  const onSubmit = async (values: EpicFormValues) => {
+  const onSubmit = async (values: SubIssueFormValues) => {
     try {
       const { data: userRes, error: userErr } = await supabase.auth.getUser();
       if (userErr || !userRes.user) {
@@ -58,14 +64,15 @@ export function EpicFormModal({ open, onOpenChange, workspace }: EpicFormModalPr
       }
       await create.mutateAsync({
         user_id: userRes.user.id,
-        category_id: values.categoryId,
+        epic_id: epicId,
         title: values.title,
-        description: values.description ?? null,
+        priority: values.priority,
+        registered_date: values.registeredDate,
       });
-      toast.success('Epic 이 생성되었어요');
+      toast.success('서브 이슈가 생성되었어요');
       onOpenChange(false);
     } catch (err) {
-      showFkOrDefaultError(err, 'Epic 저장에 실패했어요.');
+      showFkOrDefaultError(err, '서브 이슈 저장에 실패했어요.');
     }
   };
 
@@ -75,9 +82,16 @@ export function EpicFormModal({ open, onOpenChange, workspace }: EpicFormModalPr
         <Dialog.Overlay className="fixed inset-0 bg-black-900/40" />
         <Dialog.Content className="fixed inset-0 flex flex-col gap-4 bg-white p-6 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:w-[480px] sm:max-w-[calc(100vw-2rem)] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-lg sm:shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
           <header className="flex items-center justify-between">
-            <Dialog.Title className="text-lg font-semibold text-black-900">
-              Epic 추가
-            </Dialog.Title>
+            <div className="flex flex-col">
+              <Dialog.Title className="text-lg font-semibold text-black-900">
+                서브 이슈 추가
+              </Dialog.Title>
+              {epicTitle ? (
+                <Dialog.Description className="text-xs text-periwinkle-400">
+                  Epic: {epicTitle}
+                </Dialog.Description>
+              ) : null}
+            </div>
             <Dialog.Close
               type="button"
               aria-label="닫기"
@@ -88,15 +102,15 @@ export function EpicFormModal({ open, onOpenChange, workspace }: EpicFormModalPr
           </header>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
-              <label htmlFor="epic-title" className="text-sm font-medium text-black-900">
+              <label htmlFor="sub-title" className="text-sm font-medium text-black-900">
                 제목 *
               </label>
               <input
-                id="epic-title"
+                id="sub-title"
                 type="text"
                 {...form.register('title')}
                 className="rounded-md border border-periwinkle-200 bg-white px-3 py-3 text-sm text-black-900 outline-none focus:border-purple-500 focus:border-2"
-                placeholder="Epic 제목을 입력하세요"
+                placeholder="서브 이슈 제목을 입력하세요"
                 autoFocus
               />
               {form.formState.errors.title && (
@@ -104,32 +118,25 @@ export function EpicFormModal({ open, onOpenChange, workspace }: EpicFormModalPr
               )}
             </div>
             <div className="flex flex-col gap-1">
-              <label htmlFor="epic-desc" className="text-sm font-medium text-black-900">
-                설명
-              </label>
-              <textarea
-                id="epic-desc"
-                {...form.register('description')}
-                rows={3}
-                className="rounded-md border border-periwinkle-200 bg-white px-3 py-3 text-sm text-black-900 outline-none focus:border-purple-500 focus:border-2"
-                placeholder="설명을 입력하세요 (선택)"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
               <span className="text-sm font-medium text-black-900">우선순위</span>
-              <PriorityRadioGroup value={priority} onChange={setPriority} />
+              <PriorityRadioGroup
+                value={form.watch('priority')}
+                onChange={(p) => form.setValue('priority', p, { shouldDirty: true })}
+              />
             </div>
             <div className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-black-900">분류</span>
-              <CategoryComboboxCreate
-                workspace={workspace}
-                value={category}
-                onChange={setCategory}
-                placeholder="분류를 검색하세요"
+              <label htmlFor="sub-date" className="text-sm font-medium text-black-900">
+                등록일
+              </label>
+              <input
+                id="sub-date"
+                type="date"
+                {...form.register('registeredDate')}
+                className="rounded-md border border-periwinkle-200 bg-white px-3 py-3 text-sm text-black-900 outline-none focus:border-purple-500 focus:border-2"
               />
-              {form.formState.errors.categoryId && (
+              {form.formState.errors.registeredDate && (
                 <span className="text-xs text-red-500">
-                  {form.formState.errors.categoryId.message}
+                  {form.formState.errors.registeredDate.message}
                 </span>
               )}
             </div>

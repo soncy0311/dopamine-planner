@@ -32,7 +32,7 @@ type TodoDetailFetch = {
   title: string;
   description: string | null;
   priority: 'high' | 'medium' | 'low';
-  due_date: string | null;
+  registered_date: string | null;
   epic_id: string;
   epic: { id: string; category_id: string } | null;
 };
@@ -40,7 +40,7 @@ type TodoDetailFetch = {
 async function fetchTodoDetail(todoId: string): Promise<TodoDetailFetch> {
   const { data, error } = await supabase
     .from('sub_issue')
-    .select('id, title, description, priority, due_date, epic_id, epic:epic_issue(id, category_id)')
+    .select('id, title, description, priority, registered_date, epic_id, epic:epic_issue(id, category_id)')
     .eq('id', todoId)
     .single();
   if (error) throw error;
@@ -69,7 +69,7 @@ export function TodoDetailModal({
       priority: detail.priority,
       categoryId: detail.epic?.category_id ?? EMPTY_UUID,
       epicId: detail.epic_id,
-      dueDate: detail.due_date ?? new Date().toISOString().slice(0, 10),
+      registeredDate: detail.registered_date ?? new Date().toISOString().slice(0, 10),
     };
   }, [detail]);
 
@@ -81,7 +81,7 @@ export function TodoDetailModal({
       priority: 'medium',
       categoryId: EMPTY_UUID,
       epicId: EMPTY_UUID,
-      dueDate: new Date().toISOString().slice(0, 10),
+      registeredDate: new Date().toISOString().slice(0, 10),
     },
     values: detailValues,
   });
@@ -124,7 +124,7 @@ export function TodoDetailModal({
           title: values.title,
           description: values.description ?? null,
           priority: values.priority,
-          due_date: values.dueDate,
+          registered_date: values.registeredDate,
           epic_id: values.epicId,
         },
       });
@@ -235,7 +235,7 @@ export function TodoDetailModal({
                   <span className="text-sm text-black-900">등록일</span>
                   <input
                     type="date"
-                    {...form.register('dueDate')}
+                    {...form.register('registeredDate')}
                     className="rounded-md border border-lavender-gray-300 bg-white px-3 py-2 text-sm text-black-900 outline-none focus:border-purple-500"
                   />
                 </label>
