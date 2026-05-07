@@ -118,6 +118,18 @@
 | **색상** | `--color-border-subtle` |
 | **접근성** | `role="separator"` |
 
+### ProgressBar
+
+| 속성 | 설명 |
+|------|------|
+| **설명** | 단일 fill 형태의 선형 진행률 막대. Epic 진행률 표시의 atomic primitive. Sub 개수가 많거나(>10) 컨테이너가 좁을 때 fallback variant |
+| **변형** | `linear` (단일 fill). 분절 형태는 `SegmentedProgressBar` (Molecule) 참조 |
+| **상세 명세** | [`./components/progress-bar.md`](./components/progress-bar.md) |
+| **사이즈** | `sm` 4 / `md` 8 / `lg` 12 px. 반경 `--radius-full` 고정 |
+| **토큰** | `--progress-bar-track-bg`, `--progress-bar-fill`, `--progress-bar-text` |
+| **모션** | `width` transition `--duration-normal` + `--easing-default`. `prefers-reduced-motion` 시 즉시 변경 |
+| **접근성** | `role="progressbar"`, `aria-valuemin/max/now/valuetext`, `aria-label="<Epic 제목> 진행률"` |
+
 ### Avatar
 
 | 속성 | 설명 |
@@ -257,6 +269,24 @@ Atoms를 조합하여 하나의 기능 단위를 구성한다.
 | **위치 / 시간 / 개수** | top-right / 4초 / 3개 (sonner 기본값 채택) |
 | **접근성** | sonner 의 `aria-live` 자동 관리, `closeButton` 활성 |
 
+### SegmentedProgressBar
+
+| 구성 | Segment[] + ProgressPercent |
+|------|------|
+| **설명** | Epic 의 **하위 Sub 이슈 완료율** 을 분절된 segment 로 표현. 각 segment = Sub 1개 와 1:1 대응 (1개 완료 = 1칸 채워짐). EpicCard 헤더의 기본 진행률 표시 |
+| **상세 명세** | [`./components/progress-bar.md`](./components/progress-bar.md) |
+| **사용 기준** | `totalSubCount` ≤ 10 또는 컨테이너 폭 ≥ 120px. 그 외에는 `ProgressBar` (`linear`) 로 fallback |
+| **레이아웃** | `display: flex`, segment 간 gap 2px, 각 segment `flex: 1` + 높이 `md` 8px + `--radius-full` |
+| **토큰** | `--progress-bar-segment-bg`, `--progress-bar-segment-filled`, `--progress-bar-text` |
+| **모션** | segment `background` transition `--duration-fast` + `--easing-default`. `prefers-reduced-motion` 폴백 |
+| **접근성** | 컨테이너 `role="progressbar"` + `aria-valuemin/max/now/valuetext`. 개별 segment 는 `aria-hidden="true"` (장식). ProgressPercent 텍스트도 `aria-hidden="true"` — `aria-valuetext` 가 단일 SoT |
+
+```
+┌──┐ ┌──┐ ┌──┐ ┌──┐
+│■■│ │■■│ │  │ │  │  50%
+└──┘ └──┘ └──┘ └──┘
+```
+
 ### CategoryComboboxCreate
 
 | 구성 | Input + Listbox + "+ 분류 만들기" 옵션 |
@@ -351,16 +381,17 @@ Molecules를 조합하여 독립적인 섹션을 구성한다.
 
 ### EpicCard
 
-| 구성 | Header (Checkbox + CategoryBadge + PriorityBadge + Title + ProgressPercent) + SegmentedProgressBar + ExpandedBody (SubIssueRow[] + "서브 이슈 추가") |
+| 구성 | Header (Checkbox + CategoryBadge + PriorityBadge + Title + ProgressPercent) + SegmentedProgressBar / ProgressBar + ExpandedBody (SubIssueRow[] + "서브 이슈 추가") |
 |------|---|
 | **설명** | Epic 의 진행률 + 하위 Sub 들을 아코디언 형태로 표현. 메인 화면의 기본 단위 카드 |
 | **변형** | 펼침 (`data-expanded="true"`) / 접힘 (`data-expanded="false"`) |
 | **헤더 표시 정책** | CategoryBadge 와 PriorityBadge 는 Epic 헤더에만 노출. SubIssueRow 에는 priority/category 배지 미노출 (분류·우선순위는 Epic 단위 정책 — [`./components/issue-creation.md`](./components/issue-creation.md)) |
 | **상호작용** | Header Checkbox 클릭 → cascade 토글 (Sub 0개일 때도 Epic 자체를 manual 토글). Title 클릭 → Epic 편집 진입. "서브 이슈 추가" 버튼 → `SubCreateSheet` |
 | **가시성** | Sub 가 0개여도 카드는 노출 (`groupByEpic` 정책). 신규 생성 Epic 즉시 가시 + 일자 필터로 Epic 자체가 사라지지 않게 함 |
-| **토큰** | 프로그레스 바 활성 `--color-interactive-primary`, 비활성 `--color-border-subtle` |
+| **진행률** | 기본 `SegmentedProgressBar` (Sub 개수 ≤ 10 또는 폭 ≥ 120px), 그 외 `ProgressBar` (`linear`) 로 fallback. 산출식 `completedSubCount / totalSubCount`. Sub 0개 시 표시 정책은 [`./components/progress-bar.md`](./components/progress-bar.md) §1 참조 |
+| **토큰** | 프로그레스 바 토큰은 [`./components/progress-bar.md`](./components/progress-bar.md) 의 `--progress-bar-*` 사용 |
 | **레이아웃** | `--radius-md`, 내부 패딩 `--spacing-4` |
-| **접근성** | 카드 wrapper `role="region"`, 헤더 `aria-expanded`, Title 버튼 `aria-label="<title> 수정"` |
+| **접근성** | 카드 wrapper `role="region"`, 헤더 `aria-expanded`, Title 버튼 `aria-label="<title> 수정"`, 진행률은 `progressbar` role 로 별도 노출 |
 
 ---
 

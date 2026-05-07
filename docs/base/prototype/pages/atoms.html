@@ -139,6 +139,38 @@
         </div>
       </div>
 
+      <!-- ProgressBar (linear) -->
+      <div class="proto-component-card">
+        <h4>ProgressBar</h4>
+        <p>단일 fill 형태의 선형 진행률 막대 (atomic primitive). Sub 개수가 많거나(>10) 컨테이너가 좁을 때 fallback. 분절 형태는 Molecules 의 SegmentedProgressBar 참조.</p>
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-4); max-width: 360px;">
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext="전체 0% 완료" style="flex: 1;">
+              <div class="proto-epic-progress-fill" style="width: 0%;"></div>
+            </div>
+            <span class="proto-epic-progress-text">0%</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="33" aria-valuetext="전체 33% 완료" style="flex: 1;">
+              <div class="proto-epic-progress-fill" style="width: 33%;"></div>
+            </div>
+            <span class="proto-epic-progress-text">33%</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="66" aria-valuetext="전체 66% 완료" style="flex: 1;">
+              <div class="proto-epic-progress-fill" style="width: 66%;"></div>
+            </div>
+            <span class="proto-epic-progress-text">66%</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" aria-valuetext="전체 100% 완료" style="flex: 1;">
+              <div class="proto-epic-progress-fill" style="width: 100%;"></div>
+            </div>
+            <span class="proto-epic-progress-text">100%</span>
+          </div>
+        </div>
+      </div>
+
       <!-- AddButton -->
       <div class="proto-component-card">
         <h4>AddButton</h4>

@@ -264,6 +264,64 @@
           </div>
         </div>
       </div>
+
+      <!-- SegmentedProgressBar -->
+      <div class="proto-component-card">
+        <h4>SegmentedProgressBar</h4>
+        <p>Epic 의 하위 Sub 이슈 완료율을 분절된 segment 로 표현 — 각 segment 는 Sub 1개와 1:1 대응 (1개 완료 = 1칸 채워짐). EpicCard 헤더의 기본 진행률 표시. Sub 개수 ≤ 10 일 때 사용.</p>
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-4); max-width: 360px;">
+          <!-- 4개 Sub: 0/4 -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" aria-valuetext="전체 4개 중 0개 완료 (0%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">0%</span>
+          </div>
+          <!-- 4개 Sub: 1/4 -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="1" aria-valuetext="전체 4개 중 1개 완료 (25%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">25%</span>
+          </div>
+          <!-- 4개 Sub: 2/4 -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="2" aria-valuetext="전체 4개 중 2개 완료 (50%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">50%</span>
+          </div>
+          <!-- 4개 Sub: 3/4 -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="3" aria-valuetext="전체 4개 중 3개 완료 (75%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">75%</span>
+          </div>
+          <!-- 4개 Sub: 4/4 (100%) -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="4" aria-valuetext="전체 4개 중 4개 완료 (100%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">100%</span>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
   <script src="../js/icons.js"></script>
