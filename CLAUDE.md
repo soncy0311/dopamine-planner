@@ -93,33 +93,31 @@ todo-list/                  (Monorepo — pnpm + Turborepo)
 - TypeScript strict 모드 사용
 - Prettier 적용: semi, singleQuote, trailingComma: all, printWidth: 100, tabWidth: 2
 - 패키지 간 의존: `workspace:*` 프로토콜 사용
-- 실행 / 빌드 / 린트 등 모든 커맨드는 루트 `Makefile` 을 단일 진입점으로 사용한다 (`pnpm`/`turbo`/`supabase`/`docker compose` 를 wrap)
+- 실행 / 빌드 / 린트 등 모든 커맨드는 루트 `Makefile` 을 단일 진입점으로 사용한다 (`pnpm`/`turbo`/`supabase` 를 wrap)
 - 카탈로그 확인: `make help` / 환경 검증: `make doctor`
 - 자주 쓰는 명령:
-  - `make up` / `make down` — 전체 dev 환경 (supabase + web container) 기동/중지
-  - `make dev` — 호스트에서 turbo dev (컨테이너 미사용 시)
-  - `make web-up` / `make web-down` / `make web-logs` / `make web-shell` — web 컨테이너 개별 제어
+  - `make dev` — 호스트에서 turbo dev (web/packages 동시 watch)
+  - `make sb-start` / `make sb-stop` — Supabase 로컬 스택 기동/중지
   - `make mobile-dev` / `make mobile-ios` / `make mobile-android` — Expo 시뮬레이터 (호스트)
   - `make sb-reset` / `make sb-gen-types` — Supabase DB 재적용 / 타입 생성
   - `make build` / `make lint` / `make test` — turbo 빌드/린트/테스트
 
 ## 환경 변수 관리
 
-- 환경 변수 파일은 루트 `env/` 폴더에서 중앙 관리한다
-- `env/*.example`만 원격에 커밋하고, `env/*.local`은 `.gitignore` 처리
-- 새 환경 변수를 추가할 때는 반드시 `env/*.example`도 함께 갱신한다
-- 각 앱의 `dev` 스크립트는 `dotenv-cli`로 `env/` 폴더의 `.local` 파일을 로드한다
+- 환경 변수 파일은 루트 `env/` 폴더에서 **단일 통합 파일** 로 중앙 관리한다
+- `env/.env.example` 만 원격에 커밋하고, `env/.env.local` 은 `.gitignore` 처리
+- 새 환경 변수를 추가할 때는 반드시 `env/.env.example` 도 함께 갱신한다
+- web/mobile 의 `dev`/`build` 스크립트는 `dotenv-cli` 로 `env/.env.local` 을 로드한다
+- Makefile 의 `sb-*` / `up` / `down` 명령은 `env/.env.local` 을 자동 export 한 뒤 supabase CLI 호출 (config.toml 의 `env()` 보간이 참조)
 - 프로덕션(Vercel)은 대시보드에서 환경 변수를 주입한다
-- 모바일 앱: `EXPO_PUBLIC_` 접두사 사용
+- 변수명 중복 사유: Next.js (`NEXT_PUBLIC_`) 와 Expo (`EXPO_PUBLIC_`) 가 각자 자기 접두사만 클라이언트 번들에 포함하므로 같은 값(예: Supabase URL/KEY) 도 두 변수명으로 작성한다
 
 ### 환경 변수 파일 구조
 
 ```
 env/
-├── .env.web.example       # 웹 앱 템플릿 (커밋)
-├── .env.web.local         # 웹 앱 실제 값 (gitignore)
-├── .env.mobile.example    # 모바일 앱 템플릿 (커밋)
-└── .env.mobile.local      # 모바일 앱 실제 값 (gitignore)
+├── .env.example           # 통합 템플릿 (커밋)
+└── .env.local             # 실제 값 (gitignore) — web · mobile · supabase CLI 모두 본 파일 참조
 ```
 
 ## GitHub Projects 설정

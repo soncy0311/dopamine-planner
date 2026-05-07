@@ -174,6 +174,18 @@
 | `section-done-text` | `color-text-secondary` |
 | `section-progress-text` | `color-text-primary` |
 
+### Progress Bar
+
+> Epic 의 하위 Sub 이슈 완료율 표시 컴포넌트. 상세 명세는 [`./components/progress-bar.md`](./components/progress-bar.md) 참조.
+
+| 토큰 이름 | 참조 Semantic | 용도 |
+|---|---|---|
+| `progress-bar-track-bg` | `color-bg-surface` | `linear` 의 track 배경 |
+| `progress-bar-fill` | `color-interactive-primary` | `linear` 의 fill |
+| `progress-bar-segment-bg` | `color-bg-surface` | `segmented` 의 빈 segment 배경 |
+| `progress-bar-segment-filled` | `color-interactive-primary` | `segmented` 의 채워진 segment |
+| `progress-bar-text` | `color-text-secondary` | ProgressPercent 텍스트 |
+
 ---
 
 ## 6. Typography 토큰 (요약)

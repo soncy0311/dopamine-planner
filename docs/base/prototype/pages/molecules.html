@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/atoms.css">
   <link rel="stylesheet" href="../css/molecules.css">
   <link rel="stylesheet" href="../css/organisms.css">
+  <link rel="stylesheet" href="../css/pages.css">
 </head>
 <body>
   <script src="../js/sidebar.js"></script>
@@ -179,6 +180,68 @@
         </div>
       </div>
 
+      <!-- FilterChips -->
+      <div class="proto-component-card">
+        <h4>FilterChips</h4>
+        <p>분류 필터 칩 그룹 — "전체" + 사용자 분류, 가로 스크롤</p>
+        <div class="proto-filter-chips">
+          <button class="proto-filter-chip proto-filter-chip-active" data-filter="all">전체</button>
+          <button class="proto-filter-chip" data-filter="건강">건강</button>
+          <button class="proto-filter-chip" data-filter="자기개발">자기개발</button>
+          <button class="proto-filter-chip" data-filter="생활">생활</button>
+        </div>
+      </div>
+
+      <!-- ManageHeader -->
+      <div class="proto-component-card">
+        <h4>ManageHeader</h4>
+        <p>관리 페이지 상단 헤더 — 뒤로가기 + 제목 + 액션 버튼 (선택). 설정 페이지처럼 액션이 없는 변형도 지원.</p>
+        <div class="page-manage-header">
+          <button class="page-manage-header-back" aria-label="뒤로 가기">
+            <svg width="24" height="24" aria-hidden="true"><use href="#icon-chevron-left"></use></svg>
+          </button>
+          <h3 class="page-manage-header-title">분류 관리</h3>
+          <button class="page-manage-header-action" aria-label="분류 추가">
+            <svg width="24" height="24" aria-hidden="true"><use href="#icon-plus"></use></svg>
+          </button>
+        </div>
+        <div class="page-manage-header page-settings-header" style="margin-top: var(--spacing-3);">
+          <h3 class="page-manage-header-title page-settings-title">설정</h3>
+        </div>
+      </div>
+
+      <!-- ProfileCard -->
+      <div class="proto-component-card">
+        <h4>ProfileCard</h4>
+        <p>설정 화면 상단 프로필 카드 — 아바타 + 이름/이메일/공급자</p>
+        <div class="page-profile-card">
+          <div class="page-profile-avatar">홍</div>
+          <div class="page-profile-info">
+            <span class="page-profile-name">홍길동</span>
+            <span class="page-profile-email">hong@email.com</span>
+            <span class="page-profile-provider">Google 계정 연동</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SettingsMenuItem -->
+      <div class="proto-component-card">
+        <h4>SettingsMenuItem</h4>
+        <p>설정 섹션 안의 메뉴 항목 — 라벨만 / 보조 값(예: 테마) 포함의 두 변형</p>
+        <div style="display: flex; flex-direction: column;">
+          <div class="page-settings-menu-item">
+            <span>버전 정보</span>
+            <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg>
+          </div>
+          <hr class="proto-divider" role="separator">
+          <div class="page-settings-menu-item">
+            <span>화면 모드</span>
+            <span class="page-settings-menu-value">시스템</span>
+            <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg>
+          </div>
+        </div>
+      </div>
+
       <!-- FormField -->
       <div class="proto-component-card">
         <h4>FormField</h4>
@@ -198,6 +261,64 @@
             <label class="proto-form-label" for="field-disabled">제목</label>
             <input class="proto-form-input" id="field-disabled" type="text" placeholder="입력할 수 없습니다" disabled>
             <span class="proto-form-helper">비활성 상태입니다</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SegmentedProgressBar -->
+      <div class="proto-component-card">
+        <h4>SegmentedProgressBar</h4>
+        <p>Epic 의 하위 Sub 이슈 완료율을 분절된 segment 로 표현 — 각 segment 는 Sub 1개와 1:1 대응 (1개 완료 = 1칸 채워짐). EpicCard 헤더의 기본 진행률 표시. Sub 개수 ≤ 10 일 때 사용.</p>
+        <div style="display: flex; flex-direction: column; gap: var(--spacing-4); max-width: 360px;">
+          <!-- 4개 Sub: 0/4 -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" aria-valuetext="전체 4개 중 0개 완료 (0%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">0%</span>
+          </div>
+          <!-- 4개 Sub: 1/4 -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="1" aria-valuetext="전체 4개 중 1개 완료 (25%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">25%</span>
+          </div>
+          <!-- 4개 Sub: 2/4 -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="2" aria-valuetext="전체 4개 중 2개 완료 (50%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-progress-segment"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">50%</span>
+          </div>
+          <!-- 4개 Sub: 3/4 -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="3" aria-valuetext="전체 4개 중 3개 완료 (75%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">75%</span>
+          </div>
+          <!-- 4개 Sub: 4/4 (100%) -->
+          <div style="display: flex; align-items: center; gap: var(--spacing-2);">
+            <div class="proto-epic-progress-bar proto-epic-progress-segmented" role="progressbar" aria-valuemin="0" aria-valuemax="4" aria-valuenow="4" aria-valuetext="전체 4개 중 4개 완료 (100%)" style="flex: 1;">
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+              <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+            </div>
+            <span class="proto-epic-progress-text" aria-hidden="true">100%</span>
           </div>
         </div>
       </div>

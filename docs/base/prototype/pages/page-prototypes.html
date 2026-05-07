@@ -471,9 +471,9 @@
         </div>
       </div>
 
-      <!-- 4.4 투두 생성 -->
-      <div class="proto-page-frame" id="page-todo-create">
-        <div class="proto-page-label">4.4 투두 생성</div>
+      <!-- 4.4 Epic 추가 -->
+      <div class="proto-page-frame" id="page-epic-create">
+        <div class="proto-page-label">4.4 Epic 추가</div>
 
         <!-- 배경: Life 메인 콘텐츠 (정적 복제) -->
         <div class="page-content page-todo-create-bg">
@@ -553,7 +553,7 @@
         <div class="page-todo-create-sheet" role="dialog" aria-modal="true" aria-labelledby="page-sheet-title">
           <div class="proto-sheet-handle"></div>
           <div class="proto-sheet-header">
-            <h5 id="page-sheet-title" class="proto-sheet-title">새 투두</h5>
+            <h5 id="page-sheet-title" class="proto-sheet-title">Epic 추가</h5>
             <button class="proto-sheet-close" aria-label="닫기">✕</button>
           </div>
           <!-- 제목 -->
@@ -566,7 +566,7 @@
             <label class="proto-form-label" for="page-desc-input">설명</label>
             <textarea class="proto-form-input proto-form-textarea" id="page-desc-input" placeholder="설명을 입력하세요 (선택)" rows="3"></textarea>
           </div>
-          <!-- 우선순위 -->
+          <!-- 우선순위 — Epic 단위로 부여, Sub 는 상속 -->
           <div class="proto-sheet-priority">
             <span class="proto-form-label">우선순위</span>
             <div class="proto-sheet-priority-options">
@@ -575,7 +575,7 @@
               <span class="proto-badge proto-badge-priority-low">Low</span>
             </div>
           </div>
-          <!-- 분류 (Combobox) -->
+          <!-- 분류 (Combobox) — Epic 단위로 부여 -->
           <div class="proto-form-field">
             <label class="proto-form-label">분류</label>
             <div class="proto-combobox" data-open="false">
@@ -616,191 +616,89 @@
         </div>
       </div>
 
-      <!-- 4.5 Epic 관리 -->
-      <div class="proto-page-frame" id="page-epic">
-        <div class="proto-page-label">4.5 Epic 관리</div>
-        <div class="page-content">
-          <!-- ManageLayout 헤더 -->
-          <div class="page-manage-header">
-            <button class="page-manage-header-back" aria-label="뒤로 가기">
-              <svg width="24" height="24" aria-hidden="true"><use href="#icon-chevron-left"></use></svg>
-            </button>
-            <h3 class="page-manage-header-title">Epic 관리 — 건강</h3>
-            <button class="page-manage-header-action" aria-label="Epic 추가">
-              <svg width="24" height="24" aria-hidden="true"><use href="#icon-plus"></use></svg>
-            </button>
-          </div>
+      <!-- 4.5 Sub 추가 -->
+      <div class="proto-page-frame" id="page-sub-create">
+        <div class="proto-page-label">4.5 Sub 추가</div>
 
-          <!-- Epic 리스트 (IssueCard-accordion) -->
-          <div class="page-epic-list">
-            <!-- Epic 1: 3월 운동 루틴 80% (펼침) -->
-            <div class="proto-issue-card-accordion" data-expanded="true">
-              <div class="proto-todo-item" role="listitem">
-                <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
-                  <span class="proto-checkbox-box"></span>
-                </div>
-                <div class="proto-todo-item-content">
-                  <div class="proto-todo-item-tags">
-                    <span class="proto-badge proto-badge-category">건강</span>
-                  </div>
-                  <span class="proto-todo-item-title">3월 운동 루틴</span>
-                </div>
-                <svg class="proto-issue-card-accordion-chevron" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
+        <!-- 배경: Epic 펼침 카드 (서브 이슈 추가 진입 동선 표현) -->
+        <div class="page-content page-todo-create-bg">
+          <div class="proto-issue-card-accordion" data-expanded="true">
+            <div class="proto-todo-item" role="listitem">
+              <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
+                <span class="proto-checkbox-box"></span>
               </div>
-              <div class="proto-issue-card-accordion-progress">
-                <div class="proto-epic-progress-bar proto-epic-progress-segmented">
-                  <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
-                  <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
-                  <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
-                  <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
-                  <div class="proto-epic-progress-segment"></div>
+              <div class="proto-todo-item-content">
+                <div class="proto-todo-item-tags">
+                  <span class="proto-badge proto-badge-category">건강</span>
                 </div>
-                <span class="proto-epic-progress-text">80%</span>
+                <span class="proto-todo-item-title">3월 운동 루틴</span>
               </div>
-              <div class="proto-issue-card-accordion-body">
-                <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
-                  <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
-                    <span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">월요일 러닝 30분</span>
-                </div>
-                <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
-                  <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
-                    <span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">수요일 웨이트 트레이닝</span>
-                </div>
-                <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
-                  <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
-                    <span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">금요일 수영</span>
-                </div>
-                <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
-                  <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
-                    <span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">주말 등산</span>
-                </div>
-                <div class="proto-epic-sub-issue">
-                  <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
-                    <span class="proto-checkbox-box"></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">스트레칭 루틴 정리</span>
-                </div>
-                <button class="proto-epic-add-issue" aria-label="서브 이슈 추가">
-                  <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
-                  서브 이슈 추가
-                </button>
-              </div>
+              <svg class="proto-issue-card-accordion-chevron" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
             </div>
-
-            <!-- Epic 2: 식단 관리 50% (접힘) -->
-            <div class="proto-issue-card-accordion" data-expanded="false">
-              <div class="proto-todo-item" role="listitem">
-                <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
-                  <span class="proto-checkbox-box"></span>
-                </div>
-                <div class="proto-todo-item-content">
-                  <div class="proto-todo-item-tags">
-                    <span class="proto-badge proto-badge-category">건강</span>
-                  </div>
-                  <span class="proto-todo-item-title">식단 관리</span>
-                </div>
-                <svg class="proto-issue-card-accordion-chevron" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
+            <div class="proto-issue-card-accordion-progress">
+              <div class="proto-epic-progress-bar proto-epic-progress-segmented">
+                <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+                <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
+                <div class="proto-epic-progress-segment"></div>
               </div>
-              <div class="proto-issue-card-accordion-progress">
-                <div class="proto-epic-progress-bar proto-epic-progress-segmented">
-                  <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
-                  <div class="proto-epic-progress-segment proto-epic-progress-segment-filled"></div>
-                  <div class="proto-epic-progress-segment"></div>
-                  <div class="proto-epic-progress-segment"></div>
-                </div>
-                <span class="proto-epic-progress-text">50%</span>
-              </div>
-              <div class="proto-issue-card-accordion-body">
-                <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
-                  <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
-                    <span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">주간 식단표 작성</span>
-                </div>
-                <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
-                  <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
-                    <span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">건강 레시피 수집</span>
-                </div>
-                <div class="proto-epic-sub-issue">
-                  <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
-                    <span class="proto-checkbox-box"></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">아침 식사 습관 만들기</span>
-                </div>
-                <div class="proto-epic-sub-issue">
-                  <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
-                    <span class="proto-checkbox-box"></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">간식 줄이기</span>
-                </div>
-                <button class="proto-epic-add-issue" aria-label="서브 이슈 추가">
-                  <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
-                  서브 이슈 추가
-                </button>
-              </div>
+              <span class="proto-epic-progress-text">66%</span>
             </div>
-
-            <!-- Epic 3: 수면 개선 0% (접힘) -->
-            <div class="proto-issue-card-accordion" data-expanded="false">
-              <div class="proto-todo-item" role="listitem">
-                <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
-                  <span class="proto-checkbox-box"></span>
+            <div class="proto-issue-card-accordion-body">
+              <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
+                <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
+                  <span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span>
                 </div>
-                <div class="proto-todo-item-content">
-                  <div class="proto-todo-item-tags">
-                    <span class="proto-badge proto-badge-category">건강</span>
-                  </div>
-                  <span class="proto-todo-item-title">수면 개선</span>
-                </div>
-                <svg class="proto-issue-card-accordion-chevron" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-right"></use></svg>
+                <span class="proto-epic-sub-issue-title">월요일 러닝 30분</span>
               </div>
-              <div class="proto-issue-card-accordion-progress">
-                <div class="proto-epic-progress-bar proto-epic-progress-segmented">
-                  <div class="proto-epic-progress-segment"></div>
-                  <div class="proto-epic-progress-segment"></div>
-                  <div class="proto-epic-progress-segment"></div>
+              <div class="proto-epic-sub-issue proto-epic-sub-issue-completed">
+                <div class="proto-checkbox proto-checkbox-checked" role="checkbox" aria-checked="true" tabindex="0">
+                  <span class="proto-checkbox-box"><svg width="14" height="14"><use href="#icon-check"></use></svg></span>
                 </div>
-                <span class="proto-epic-progress-text">0%</span>
+                <span class="proto-epic-sub-issue-title">수요일 웨이트 트레이닝</span>
               </div>
-              <div class="proto-issue-card-accordion-body">
-                <div class="proto-epic-sub-issue">
-                  <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
-                    <span class="proto-checkbox-box"></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">수면 패턴 기록</span>
-                </div>
-                <div class="proto-epic-sub-issue">
-                  <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
-                    <span class="proto-checkbox-box"></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">취침 전 루틴 정하기</span>
-                </div>
-                <div class="proto-epic-sub-issue">
-                  <div class="proto-checkbox" role="checkbox" aria-checked="false" tabindex="0">
-                    <span class="proto-checkbox-box"></span>
-                  </div>
-                  <span class="proto-epic-sub-issue-title">카페인 섭취 줄이기</span>
-                </div>
-                <button class="proto-epic-add-issue" aria-label="서브 이슈 추가">
-                  <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
-                  서브 이슈 추가
-                </button>
-              </div>
+              <button class="proto-epic-add-issue" aria-label="서브 이슈 추가">
+                <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
+                서브 이슈 추가
+              </button>
             </div>
           </div>
         </div>
 
-        <!-- BottomTabBar (Life 활성) -->
+        <!-- 오버레이 -->
+        <div class="page-todo-create-overlay"></div>
+
+        <!-- 바텀 시트 -->
+        <div class="page-todo-create-sheet" role="dialog" aria-modal="true" aria-labelledby="page-sub-sheet-title">
+          <div class="proto-sheet-handle"></div>
+          <div class="proto-sheet-header">
+            <h5 id="page-sub-sheet-title" class="proto-sheet-title">Sub 추가</h5>
+            <button class="proto-sheet-close" aria-label="닫기">✕</button>
+          </div>
+          <!-- 상위 Epic (readonly — 진입 시점에 결정) -->
+          <div class="proto-form-field">
+            <label class="proto-form-label">상위 Epic</label>
+            <input class="proto-form-input" type="text" value="3월 운동 루틴" readonly>
+          </div>
+          <!-- 제목 -->
+          <div class="proto-form-field">
+            <label class="proto-form-label" for="page-sub-title-input">제목 *</label>
+            <input class="proto-form-input" id="page-sub-title-input" type="text" placeholder="할 일을 입력하세요">
+          </div>
+          <!-- 설명 -->
+          <div class="proto-form-field">
+            <label class="proto-form-label" for="page-sub-desc-input">설명</label>
+            <textarea class="proto-form-input proto-form-textarea" id="page-sub-desc-input" placeholder="설명을 입력하세요 (선택)" rows="3"></textarea>
+          </div>
+          <!-- 등록일 -->
+          <div class="proto-form-field">
+            <label class="proto-form-label" for="page-sub-date-input">등록일</label>
+            <input class="proto-form-input" id="page-sub-date-input" type="date" value="2026-05-01">
+          </div>
+          <!-- 저장 버튼 -->
+          <button class="proto-button proto-button-primary proto-sheet-save">저장하기</button>
+        </div>
+
+        <!-- BottomTabBar (Life 활성 — 배경 상태) -->
         <div class="page-tab-bar">
           <div class="proto-bottom-tab-bar" role="tablist">
             <div class="proto-tab-bar-item proto-tab-bar-item-active" role="tab" aria-selected="true">
@@ -839,24 +737,13 @@
               </div>
             </div>
 
-            <!-- 계정 섹션 -->
+            <!-- 테마 섹션 -->
             <div class="page-settings-section">
-              <h4 class="page-settings-section-title">계정</h4>
+              <h4 class="page-settings-section-title">테마</h4>
               <hr class="proto-divider" role="separator">
               <div class="page-settings-menu-item">
-                <span>소셜 계정 연동</span>
-                <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron">
-                  <use href="#icon-chevron-right"></use>
-                </svg>
-              </div>
-            </div>
-
-            <!-- 앱 섹션 -->
-            <div class="page-settings-section">
-              <h4 class="page-settings-section-title">앱</h4>
-              <hr class="proto-divider" role="separator">
-              <div class="page-settings-menu-item">
-                <span>알림 설정</span>
+                <span>화면 모드</span>
+                <span class="page-settings-menu-value">시스템</span>
                 <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron">
                   <use href="#icon-chevron-right"></use>
                 </svg>
@@ -1194,20 +1081,11 @@
                 </div>
               </div>
               <div class="page-settings-section">
-                <h4 class="page-settings-section-title">계정</h4>
+                <h4 class="page-settings-section-title">테마</h4>
                 <hr class="proto-divider" role="separator">
                 <div class="page-settings-menu-item">
-                  <span>소셜 계정 연동</span>
-                  <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron">
-                    <use href="#icon-chevron-right"></use>
-                  </svg>
-                </div>
-              </div>
-              <div class="page-settings-section">
-                <h4 class="page-settings-section-title">앱</h4>
-                <hr class="proto-divider" role="separator">
-                <div class="page-settings-menu-item">
-                  <span>알림 설정</span>
+                  <span>화면 모드</span>
+                  <span class="page-settings-menu-value">시스템</span>
                   <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron">
                     <use href="#icon-chevron-right"></use>
                   </svg>

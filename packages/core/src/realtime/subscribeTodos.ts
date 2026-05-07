@@ -1,21 +1,36 @@
+import type { QueryClient } from '@tanstack/react-query';
 import type { AppSupabaseClient } from '../supabase/types';
-
-type Workspace = 'life' | 'work';
+import { invalidateByTable } from '../queryKeys';
 
 export function subscribeTodos(
   client: AppSupabaseClient,
-  workspace: Workspace,
-  onChange: () => void,
+  qc: QueryClient,
 ): () => void {
   const channel = client
-    .channel(`todos:${workspace}`)
+    .channel('todos:all')
     .on(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       'postgres_changes' as any,
       { event: '*', schema: 'public', table: 'sub_issue' },
-      () => {
-        onChange();
-      },
+      () => invalidateByTable(qc, 'sub_issue'),
+    )
+    .on(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      'postgres_changes' as any,
+      { event: '*', schema: 'public', table: 'epic_issue' },
+      () => invalidateByTable(qc, 'epic_issue'),
+    )
+    .on(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      'postgres_changes' as any,
+      { event: '*', schema: 'public', table: 'category' },
+      () => invalidateByTable(qc, 'category'),
+    )
+    .on(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      'postgres_changes' as any,
+      { event: '*', schema: 'public', table: 'profile' },
+      () => invalidateByTable(qc, 'profile'),
     )
     .subscribe();
 

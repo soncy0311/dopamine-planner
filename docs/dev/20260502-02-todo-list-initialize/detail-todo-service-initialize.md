@@ -1,7 +1,7 @@
 # Dopamine Planner 서비스 기획서
 
 > 작성일: 2026-05-01
-> 최종 수정일: 2026-05-03 (MVP 결정 7개 확정 반영 — Realtime MVP 포함, Nativewind 자동 토큰 매핑, Google OAuth 만)
+> 최종 수정일: 2026-05-05 (v2 stack-pivot 머지 후 SoT 정합 — RPC 반환 타입을 003 마이그레이션 본문과 일치하도록 갱신)
 > 상태: Draft
 > 마이그레이션 계획: [`../20260502-01-stack-pivot/detail-stack-pivot.md`](../20260502-01-stack-pivot/detail-stack-pivot.md)
 
@@ -267,19 +267,35 @@ const { data, error } = await supabase.rpc('carry_over_todos', {
 ```
 
 ```sql
--- 예시: 함수 정의 (supabase/migrations/003_carry_over_todos.sql)
+-- 발췌: supabase/migrations/003_carry_over_todos.sql
 create or replace function public.carry_over_todos(target_date date)
-returns setof public.sub_issue
+returns table(moved_count integer)
 language plpgsql security definer set search_path = public
 as $$
+declare
+  cnt integer;
 begin
-  if auth.uid() is null then raise exception 'unauthorized'; end if;
-  -- 본문에서 auth.uid() 로 본인 데이터만 조작
-  ...
+  if auth.uid() is null then
+    raise exception 'unauthorized';
+  end if;
+
+  with moved as (
+    update sub_issue
+       set due_date = target_date,
+           carry_over_count = carry_over_count + 1
+     where user_id = auth.uid()
+       and status <> 'done'
+       and due_date < target_date
+    returning id
+  )
+  select count(*) into cnt from moved;
+
+  return query select cnt;
 end;
 $$;
+
+revoke all on function public.carry_over_todos(date) from public, anon;
 grant execute on function public.carry_over_todos(date) to authenticated;
-revoke execute on function public.carry_over_todos(date) from anon, public;
 ```
 
 > 📌 **Vercel API Routes 미사용**: 자체 서버 코드 0. 비즈니스 로직 = 클라이언트 + Postgres RPC.

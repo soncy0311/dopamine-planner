@@ -74,6 +74,7 @@ export type Database = {
           created_at: string
           description: string | null
           id: string
+          priority: Database["public"]["Enums"]["priority"]
           progress: number
           registered_date: string | null
           status: Database["public"]["Enums"]["epic_status"]
@@ -87,6 +88,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          priority?: Database["public"]["Enums"]["priority"]
           progress?: number
           registered_date?: string | null
           status?: Database["public"]["Enums"]["epic_status"]
@@ -100,6 +102,7 @@ export type Database = {
           created_at?: string
           description?: string | null
           id?: string
+          priority?: Database["public"]["Enums"]["priority"]
           progress?: number
           registered_date?: string | null
           status?: Database["public"]["Enums"]["epic_status"]
@@ -144,10 +147,9 @@ export type Database = {
           completed_date: string | null
           created_at: string
           description: string | null
-          due_date: string | null
           epic_id: string
           id: string
-          priority: Database["public"]["Enums"]["priority"]
+          registered_date: string | null
           status: Database["public"]["Enums"]["todo_status"]
           title: string
           updated_at: string
@@ -158,10 +160,9 @@ export type Database = {
           completed_date?: string | null
           created_at?: string
           description?: string | null
-          due_date?: string | null
           epic_id: string
           id?: string
-          priority?: Database["public"]["Enums"]["priority"]
+          registered_date?: string | null
           status?: Database["public"]["Enums"]["todo_status"]
           title: string
           updated_at?: string
@@ -172,10 +173,9 @@ export type Database = {
           completed_date?: string | null
           created_at?: string
           description?: string | null
-          due_date?: string | null
           epic_id?: string
           id?: string
-          priority?: Database["public"]["Enums"]["priority"]
+          registered_date?: string | null
           status?: Database["public"]["Enums"]["todo_status"]
           title?: string
           updated_at?: string

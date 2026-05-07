@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="../css/atoms.css">
   <link rel="stylesheet" href="../css/molecules.css">
   <link rel="stylesheet" href="../css/organisms.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/pages-desktop.css">
 </head>
 <body>
   <script src="../js/sidebar.js"></script>
@@ -126,30 +128,30 @@
         </div>
       </div>
 
-      <!-- TodoCreateSheet -->
+      <!-- EpicCreateSheet -->
       <div class="proto-component-card">
-        <h4>TodoCreateSheet</h4>
-        <p>바텀 시트 폼: 핸들 + 폼 필드 + 우선순위 + 저장 버튼</p>
+        <h4>EpicCreateSheet</h4>
+        <p>Epic 추가 바텀 시트 — 제목 / 설명 / 우선순위 / 분류(Combobox) / 등록일. 우선순위는 Epic 단위로만 부여하며 Sub 는 상속.</p>
         <div class="proto-create-sheet-demo">
-          <div class="proto-create-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+          <div class="proto-create-sheet" role="dialog" aria-modal="true" aria-labelledby="epic-sheet-title">
             <div class="proto-sheet-handle"></div>
             <div class="proto-sheet-header">
-              <h5 id="sheet-title" class="proto-sheet-title">새 투두</h5>
+              <h5 id="epic-sheet-title" class="proto-sheet-title">Epic 추가</h5>
               <button class="proto-sheet-close" aria-label="닫기">✕</button>
             </div>
             <div class="proto-form-field">
-              <label class="proto-form-label" for="sheet-title-input">제목 *</label>
-              <input class="proto-form-input" id="sheet-title-input" type="text" placeholder="할 일을 입력하세요">
+              <label class="proto-form-label" for="epic-sheet-title-input">제목 *</label>
+              <input class="proto-form-input" id="epic-sheet-title-input" type="text" placeholder="할 일을 입력하세요">
             </div>
             <div class="proto-form-field">
-              <label class="proto-form-label" for="sheet-desc-input">설명</label>
-              <textarea class="proto-form-input proto-form-textarea" id="sheet-desc-input" placeholder="설명을 입력하세요 (선택)" rows="3"></textarea>
+              <label class="proto-form-label" for="epic-sheet-desc-input">설명</label>
+              <textarea class="proto-form-input proto-form-textarea" id="epic-sheet-desc-input" placeholder="설명을 입력하세요 (선택)" rows="3"></textarea>
             </div>
             <div class="proto-sheet-priority">
               <span class="proto-form-label">우선순위</span>
               <div class="proto-sheet-priority-options">
                 <span class="proto-badge proto-badge-priority-high">High</span>
-                <span class="proto-badge proto-badge-priority-medium">Medium</span>
+                <span class="proto-badge proto-badge-priority-medium proto-badge-selected">Medium</span>
                 <span class="proto-badge proto-badge-priority-low">Low</span>
               </div>
             </div>
@@ -166,10 +168,135 @@
               </div>
             </div>
             <div class="proto-form-field">
-              <label class="proto-form-label" for="sheet-date">등록일</label>
-              <input class="proto-form-input" id="sheet-date" type="date" value="2026-05-01">
+              <label class="proto-form-label" for="epic-sheet-date">등록일</label>
+              <input class="proto-form-input" id="epic-sheet-date" type="date" value="2026-05-01">
             </div>
-            <button class="proto-button proto-button-primary proto-sheet-save">저장</button>
+            <button class="proto-button proto-button-primary proto-sheet-save">저장하기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SubCreateSheet -->
+      <div class="proto-component-card">
+        <h4>SubCreateSheet</h4>
+        <p>Sub 추가 바텀 시트 — 상위 Epic(readonly) / 제목 / 설명 / 등록일. 분류·우선순위는 상위 Epic 에서 상속하므로 Sub 단위에서는 입력하지 않는다.</p>
+        <div class="proto-create-sheet-demo">
+          <div class="proto-create-sheet" role="dialog" aria-modal="true" aria-labelledby="sub-sheet-title">
+            <div class="proto-sheet-handle"></div>
+            <div class="proto-sheet-header">
+              <h5 id="sub-sheet-title" class="proto-sheet-title">Sub 추가</h5>
+              <button class="proto-sheet-close" aria-label="닫기">✕</button>
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label">상위 Epic</label>
+              <input class="proto-form-input" type="text" value="3월 운동 루틴" readonly>
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label" for="sub-sheet-title-input">제목 *</label>
+              <input class="proto-form-input" id="sub-sheet-title-input" type="text" placeholder="할 일을 입력하세요">
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label" for="sub-sheet-desc-input">설명</label>
+              <textarea class="proto-form-input proto-form-textarea" id="sub-sheet-desc-input" placeholder="설명을 입력하세요 (선택)" rows="3"></textarea>
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label" for="sub-sheet-date">등록일</label>
+              <input class="proto-form-input" id="sub-sheet-date" type="date" value="2026-05-01">
+            </div>
+            <button class="proto-button proto-button-primary proto-sheet-save">저장하기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DesktopSideNav -->
+      <div class="proto-component-card">
+        <h4>DesktopSideNav</h4>
+        <p>데스크톱 사이드 네비게이션 — 로고 + 워크스페이스(Life/Work) + 설정. 활성 항목 강조.</p>
+        <div style="height: 480px; display: flex; border: 1px solid var(--color-periwinkle-200); border-radius: var(--radius-md); overflow: hidden;">
+          <nav class="desktop-side-nav">
+            <div class="desktop-nav-logo">
+              <svg width="28" height="28" class="desktop-nav-logo-icon" aria-hidden="true"><use href="#icon-circle-check"></use></svg>
+              <span class="desktop-nav-logo-text">Dopamine Planner</span>
+            </div>
+            <div class="desktop-nav-section">
+              <span class="desktop-nav-label">워크스페이스</span>
+              <button class="desktop-nav-item desktop-nav-item-active">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-home"></use></svg>
+                Life
+              </button>
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-briefcase"></use></svg>
+                Work
+              </button>
+            </div>
+            <div class="desktop-nav-spacer"></div>
+            <div class="desktop-nav-divider"></div>
+            <div class="desktop-nav-section">
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-settings"></use></svg>
+                설정
+              </button>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <!-- DesktopModal -->
+      <div class="proto-component-card">
+        <h4>DesktopModal</h4>
+        <p>데스크톱 모달 — Epic / Sub 추가용 두 변형. 백드롭 + 중앙 정렬 카드.</p>
+        <div style="position: relative; height: 560px; background: var(--color-periwinkle-50); border-radius: var(--radius-md); overflow: hidden;">
+          <div class="desktop-modal-overlay" style="position: absolute; inset: 0;">
+            <div class="desktop-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-epic">
+              <div class="desktop-modal-header">
+                <h5 id="demo-modal-epic" class="desktop-modal-title">Epic 추가</h5>
+                <button class="desktop-modal-close" aria-label="닫기">✕</button>
+              </div>
+              <div class="proto-form-field">
+                <label class="proto-form-label" for="demo-modal-epic-title">제목 *</label>
+                <input class="proto-form-input" id="demo-modal-epic-title" type="text" placeholder="할 일을 입력하세요">
+              </div>
+              <div class="proto-form-field">
+                <label class="proto-form-label">분류</label>
+                <div class="proto-combobox" data-open="false">
+                  <input class="proto-combobox-input" type="text" placeholder="분류를 검색하세요">
+                  <svg class="proto-combobox-icon" width="16" height="16" aria-hidden="true"><use href="#icon-chevron-down"></use></svg>
+                  <div class="proto-combobox-dropdown">
+                    <div class="proto-combobox-option" data-value="건강">건강</div>
+                  </div>
+                </div>
+              </div>
+              <div class="proto-form-field">
+                <label class="proto-form-label" for="demo-modal-epic-date">등록일</label>
+                <input class="proto-form-input" id="demo-modal-epic-date" type="date" value="2026-05-01">
+              </div>
+              <button class="proto-button proto-button-primary proto-sheet-save">저장하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SettingsSection -->
+      <div class="proto-component-card">
+        <h4>SettingsSection</h4>
+        <p>설정 화면의 그룹 — 섹션 타이틀 + Divider + 메뉴 아이템들. 테마 / 정보 등에 재사용.</p>
+        <div style="max-width: 430px;">
+          <div class="page-settings-section">
+            <h4 class="page-settings-section-title">테마</h4>
+            <hr class="proto-divider" role="separator">
+            <div class="page-settings-menu-item">
+              <span>화면 모드</span>
+              <span class="page-settings-menu-value">시스템</span>
+              <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg>
+            </div>
+          </div>
+          <div class="page-settings-section">
+            <h4 class="page-settings-section-title">정보</h4>
+            <hr class="proto-divider" role="separator">
+            <div class="page-settings-menu-item">
+              <span>버전 정보</span>
+              <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg>
+            </div>
           </div>
         </div>
       </div>

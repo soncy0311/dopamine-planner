@@ -1,31 +1,25 @@
-import { useMutation, useQueryClient, type UseMutationResult } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  type UseMutationResult,
+} from '@tanstack/react-query';
 import type { AppSupabaseClient } from '../supabase/types';
-import type { TodoUpdate, TodoView } from '../domain/todo';
+import { todoService } from '../services/todo';
+import type { SubIssue, TodoUpdate } from '../domain/todo';
 
-export type UseUpdateTodoArgs = {
-  client: AppSupabaseClient;
-};
-
+export type UseUpdateTodoArgs = { client: AppSupabaseClient };
 export type UpdateTodoInput = { id: string; patch: TodoUpdate };
 
 export function useUpdateTodo(
   args: UseUpdateTodoArgs,
-): UseMutationResult<TodoView, Error, UpdateTodoInput> {
+): UseMutationResult<SubIssue, Error, UpdateTodoInput> {
   const { client } = args;
   const qc = useQueryClient();
-  return useMutation<TodoView, Error, UpdateTodoInput>({
-    mutationFn: async ({ id, patch }) => {
-      const { data, error } = await client
-        .from('sub_issue')
-        .update(patch)
-        .eq('id', id)
-        .select()
-        .single();
-      if (error) throw error;
-      return data as TodoView;
-    },
+  return useMutation<SubIssue, Error, UpdateTodoInput>({
+    mutationFn: ({ id, patch }) => todoService.update(client, id, patch),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['todos'] });
+      qc.invalidateQueries({ queryKey: ['epics'] });
     },
   });
 }
