@@ -122,6 +122,18 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
       if (isAllDone) doneSection.push(entry);
       else todoSection.push(entry);
     }
+    // 우선순위 정렬 (high → medium → low). 동일 priority 내 입력 순서 유지 (stable sort).
+    const PRIORITY_ORDER: Record<'high' | 'medium' | 'low', number> = {
+      high: 0,
+      medium: 1,
+      low: 2,
+    };
+    const byPriority = (
+      a: { epic: EpicIssue },
+      b: { epic: EpicIssue },
+    ): number => PRIORITY_ORDER[a.epic.priority] - PRIORITY_ORDER[b.epic.priority];
+    todoSection.sort(byPriority);
+    doneSection.sort(byPriority);
     return { todo: todoSection, done: doneSection };
   }, [grouped.epics]);
 
@@ -139,6 +151,12 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
     for (const c of categories) m.set(c.id, { id: c.id, name: c.name, color: c.color });
     return m;
   }, [categories]);
+
+  // 필터 칩에는 현재 워크스페이스의 Epic 이 실제로 참조하는 분류만 노출 (빈 분류 숨김).
+  const visibleCategories = useMemo(() => {
+    const used = new Set(epics.map((e) => e.categoryId));
+    return categories.filter((c) => used.has(c.id));
+  }, [categories, epics]);
 
   const handleToggle = (item: SubIssueWithJoins) => {
     toggle.mutate({
@@ -252,7 +270,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
       <div className="flex items-center justify-between gap-3">
         <div className="flex-1 min-w-0">
           <CategoryFilterChips
-            categories={categories.map((c) => ({ id: c.id, name: c.name }))}
+            categories={visibleCategories.map((c) => ({ id: c.id, name: c.name }))}
             selectedId={selectedCategoryId}
             onSelect={setSelectedCategoryId}
           />

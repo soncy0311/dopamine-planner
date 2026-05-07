@@ -204,6 +204,18 @@ export function MainDailyViewMobile({ workspace }: Props) {
       if (isAllDone) doneSec.push(entry);
       else todoSec.push(entry);
     }
+    // 우선순위 정렬 (high → medium → low). 동일 priority 내 입력 순서 유지 (stable sort).
+    const PRIORITY_ORDER: Record<'high' | 'medium' | 'low', number> = {
+      high: 0,
+      medium: 1,
+      low: 2,
+    };
+    const byPriority = (
+      a: { epic: EpicIssue },
+      b: { epic: EpicIssue },
+    ): number => PRIORITY_ORDER[a.epic.priority] - PRIORITY_ORDER[b.epic.priority];
+    todoSec.sort(byPriority);
+    doneSec.sort(byPriority);
     return { todo: todoSec, done: doneSec };
   }, [grouped.epics]);
 
