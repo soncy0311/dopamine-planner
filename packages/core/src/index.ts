@@ -9,11 +9,13 @@ export * from './queryKeys';
 export * from './domain/category';
 export * from './domain/epic';
 export * from './domain/todo';
+export * from './domain/profile';
 
 // Services (Supabase access layer + RPC wrappers)
 export * as categoryService from './services/category';
 export * as epicService from './services/epic';
 export * as todoService from './services/todo';
+export * as profileService from './services/profile';
 export { cascadeToggleEpic } from './services/todo';
 export { carryOverTodos } from './services/carryOver';
 export { recalcEpicProgress } from './services/epicProgress';
