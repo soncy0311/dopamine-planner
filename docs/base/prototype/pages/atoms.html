@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="../css/atoms.css">
   <link rel="stylesheet" href="../css/molecules.css">
   <link rel="stylesheet" href="../css/organisms.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/pages-desktop.css">
 </head>
 <body>
   <script src="../js/sidebar.js"></script>
@@ -120,8 +122,8 @@
           </div>
           <div class="proto-badge-group">
             <span class="proto-badge-group-label">Carry-over</span>
-            <span class="proto-badge proto-badge-carry-over">🔄 2</span>
-            <span class="proto-badge proto-badge-carry-over">🔄 5</span>
+            <span class="proto-badge proto-badge-carry-over">+2</span>
+            <span class="proto-badge proto-badge-carry-over">+5</span>
           </div>
         </div>
       </div>
@@ -134,6 +136,26 @@
           <p>위쪽 콘텐츠</p>
           <hr class="proto-divider" role="separator">
           <p>아래쪽 콘텐츠</p>
+        </div>
+      </div>
+
+      <!-- AddButton -->
+      <div class="proto-component-card">
+        <h4>AddButton</h4>
+        <p>"+ 추가" 버튼 — 데스크톱 메인 필터 행 우측의 Epic / Sub 추가 진입점. 텍스트의 prefix `+` 와 중복되지 않도록 별도 SVG 아이콘은 두지 않는다.</p>
+        <div style="max-width: 360px;">
+          <button class="desktop-add-btn">+ 추가</button>
+        </div>
+      </div>
+
+      <!-- FAB (Floating Action Button) -->
+      <div class="proto-component-card">
+        <h4>FAB</h4>
+        <p>모바일 메인 화면 우측 하단의 추가 버튼 (할 일 추가 진입점). 페이지 컨텍스트에서는 TabBar 위에 absolute 로 고정.</p>
+        <div style="position: relative; height: 160px; max-width: 360px; border: 1px dashed var(--color-periwinkle-200); border-radius: var(--radius-md);">
+          <button class="page-fab" aria-label="할 일 추가">
+            <svg width="24" height="24" aria-hidden="true"><use href="#icon-plus"></use></svg>
+          </button>
         </div>
       </div>
 

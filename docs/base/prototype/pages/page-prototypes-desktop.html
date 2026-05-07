@@ -89,10 +89,7 @@
                 <button class="proto-filter-chip" data-filter="자기개발">자기개발</button>
                 <button class="proto-filter-chip" data-filter="생활">생활</button>
               </div>
-              <button class="desktop-add-btn">
-                <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
-                새 투두
-              </button>
+              <button class="desktop-add-btn">+ 추가</button>
             </div>
             <div class="desktop-content-body">
               <div class="page-todo-sections" style="padding: 0;">
@@ -272,10 +269,7 @@
                 <button class="proto-filter-chip" data-filter="미팅">미팅</button>
                 <button class="proto-filter-chip" data-filter="운영">운영</button>
               </div>
-              <button class="desktop-add-btn">
-                <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
-                새 투두
-              </button>
+              <button class="desktop-add-btn">+ 추가</button>
             </div>
             <div class="desktop-content-body">
               <div class="page-todo-sections" style="padding: 0;">
@@ -373,9 +367,9 @@
         </div>
       </div>
 
-      <!-- 5.3 투두 생성 (모달) -->
-      <div class="proto-desktop-frame" id="desktop-todo-create">
-        <div class="proto-page-label">5.3 투두 생성 (모달)</div>
+      <!-- 5.3 Epic 추가 (모달) -->
+      <div class="proto-desktop-frame" id="desktop-epic-create">
+        <div class="proto-page-label">5.3 Epic 추가 (모달)</div>
         <div class="desktop-app" style="filter: brightness(0.6);">
           <nav class="desktop-side-nav">
             <div class="desktop-nav-logo">
@@ -418,7 +412,7 @@
         <div class="desktop-modal-overlay">
           <div class="desktop-modal" role="dialog" aria-modal="true" aria-labelledby="desktop-modal-title">
             <div class="desktop-modal-header">
-              <h5 id="desktop-modal-title" class="desktop-modal-title">새 투두</h5>
+              <h5 id="desktop-modal-title" class="desktop-modal-title">Epic 추가</h5>
               <button class="desktop-modal-close" aria-label="닫기">✕</button>
             </div>
             <div class="proto-form-field">
@@ -458,9 +452,79 @@
         </div>
       </div>
 
-      <!-- 5.4 설정 -->
+      <!-- 5.4 Sub 추가 (모달) -->
+      <div class="proto-desktop-frame" id="desktop-sub-create">
+        <div class="proto-page-label">5.4 Sub 추가 (모달)</div>
+        <div class="desktop-app" style="filter: brightness(0.6);">
+          <nav class="desktop-side-nav">
+            <div class="desktop-nav-logo">
+              <svg width="28" height="28" class="desktop-nav-logo-icon" aria-hidden="true"><use href="#icon-circle-check"></use></svg>
+              <span class="desktop-nav-logo-text">Dopamine Planner</span>
+            </div>
+            <div class="desktop-nav-section">
+              <span class="desktop-nav-label">워크스페이스</span>
+              <button class="desktop-nav-item desktop-nav-item-active">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-home"></use></svg>
+                Life
+              </button>
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-briefcase"></use></svg>
+                Work
+              </button>
+            </div>
+            <div class="desktop-nav-spacer"></div>
+            <div class="desktop-nav-divider"></div>
+            <div class="desktop-nav-section">
+              <button class="desktop-nav-item">
+                <svg width="20" height="20" aria-hidden="true"><use href="#icon-settings"></use></svg>
+                설정
+              </button>
+            </div>
+          </nav>
+          <div class="desktop-content">
+            <div class="desktop-content-body">
+              <div class="page-todo-sections" style="padding: 0; padding-top: var(--spacing-6);">
+                <div class="proto-section-header proto-section-header-progress">
+                  <span class="proto-section-header-title">진행 중</span>
+                  <span class="proto-section-header-count">3</span>
+                </div>
+                <hr class="proto-divider" role="separator">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 모달 오버레이 -->
+        <div class="desktop-modal-overlay">
+          <div class="desktop-modal" role="dialog" aria-modal="true" aria-labelledby="desktop-sub-modal-title">
+            <div class="desktop-modal-header">
+              <h5 id="desktop-sub-modal-title" class="desktop-modal-title">Sub 추가</h5>
+              <button class="desktop-modal-close" aria-label="닫기">✕</button>
+            </div>
+            <!-- 상위 Epic (readonly — 진입 시점에 결정) -->
+            <div class="proto-form-field">
+              <label class="proto-form-label">상위 Epic</label>
+              <input class="proto-form-input" type="text" value="3월 운동 루틴" readonly>
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label" for="desktop-sub-title-input">제목 *</label>
+              <input class="proto-form-input" id="desktop-sub-title-input" type="text" placeholder="할 일을 입력하세요">
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label" for="desktop-sub-desc-input">설명</label>
+              <textarea class="proto-form-input proto-form-textarea" id="desktop-sub-desc-input" placeholder="설명을 입력하세요 (선택)" rows="3"></textarea>
+            </div>
+            <div class="proto-form-field">
+              <label class="proto-form-label" for="desktop-sub-date-input">등록일</label>
+              <input class="proto-form-input" id="desktop-sub-date-input" type="date" value="2026-05-01">
+            </div>
+            <button class="proto-button proto-button-primary proto-sheet-save">저장하기</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5.5 설정 -->
       <div class="proto-desktop-frame" id="desktop-settings">
-        <div class="proto-page-label">5.4 설정</div>
+        <div class="proto-page-label">5.5 설정</div>
         <div class="desktop-app">
           <nav class="desktop-side-nav">
             <div class="desktop-nav-logo">
@@ -500,18 +564,11 @@
                   </div>
                 </div>
                 <div class="page-settings-section">
-                  <h4 class="page-settings-section-title">계정</h4>
+                  <h4 class="page-settings-section-title">테마</h4>
                   <hr class="proto-divider" role="separator">
                   <div class="page-settings-menu-item">
-                    <span>소셜 계정 연동</span>
-                    <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg>
-                  </div>
-                </div>
-                <div class="page-settings-section">
-                  <h4 class="page-settings-section-title">앱</h4>
-                  <hr class="proto-divider" role="separator">
-                  <div class="page-settings-menu-item">
-                    <span>알림 설정</span>
+                    <span>화면 모드</span>
+                    <span class="page-settings-menu-value">시스템</span>
                     <svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg>
                   </div>
                 </div>
@@ -530,9 +587,9 @@
         </div>
       </div>
 
-      <!-- 5.5 인터랙티브 데모 -->
+      <!-- 5.6 인터랙티브 데모 -->
       <div class="proto-desktop-frame" id="desktop-interactive">
-        <div class="proto-page-label">5.5 인터랙티브 데모 (탭 전환 + 체크박스)</div>
+        <div class="proto-page-label">5.6 인터랙티브 데모 (탭 전환 + 체크박스)</div>
         <div class="desktop-app">
           <nav class="desktop-side-nav" id="desktop-interactive-nav">
             <div class="desktop-nav-logo">
@@ -598,10 +655,7 @@
                 <button class="proto-filter-chip" data-filter="자기개발">자기개발</button>
                 <button class="proto-filter-chip" data-filter="생활">생활</button>
               </div>
-              <button class="desktop-add-btn">
-                <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
-                새 투두
-              </button>
+              <button class="desktop-add-btn">+ 추가</button>
             </div>
             <div class="desktop-content-body">
               <div class="page-todo-sections" style="padding: 0;">
@@ -711,10 +765,7 @@
                 <button class="proto-filter-chip" data-filter="미팅">미팅</button>
                 <button class="proto-filter-chip" data-filter="운영">운영</button>
               </div>
-              <button class="desktop-add-btn">
-                <svg width="16" height="16" aria-hidden="true"><use href="#icon-plus"></use></svg>
-                새 투두
-              </button>
+              <button class="desktop-add-btn">+ 추가</button>
             </div>
             <div class="desktop-content-body">
               <div class="page-todo-sections" style="padding: 0;">
@@ -800,14 +851,9 @@
                   </div>
                 </div>
                 <div class="page-settings-section">
-                  <h4 class="page-settings-section-title">계정</h4>
+                  <h4 class="page-settings-section-title">테마</h4>
                   <hr class="proto-divider" role="separator">
-                  <div class="page-settings-menu-item"><span>소셜 계정 연동</span><svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg></div>
-                </div>
-                <div class="page-settings-section">
-                  <h4 class="page-settings-section-title">앱</h4>
-                  <hr class="proto-divider" role="separator">
-                  <div class="page-settings-menu-item"><span>알림 설정</span><svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg></div>
+                  <div class="page-settings-menu-item"><span>화면 모드</span><span class="page-settings-menu-value">시스템</span><svg width="20" height="20" aria-hidden="true" class="page-settings-chevron"><use href="#icon-chevron-right"></use></svg></div>
                 </div>
                 <div class="page-settings-section">
                   <h4 class="page-settings-section-title">정보</h4>

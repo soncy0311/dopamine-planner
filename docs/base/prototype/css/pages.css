@@ -325,6 +325,14 @@
   color: var(--color-text-tertiary);
 }
 
+/* 메뉴 항목의 보조 값 (예: 테마 — "시스템") */
+.page-settings-menu-value {
+  margin-left: auto;
+  margin-right: var(--spacing-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
+
 /* 로그아웃 버튼 (destructive) */
 .page-settings-logout {
   width: 100%;

@@ -113,9 +113,9 @@ Primitive  →  Semantic  →  Component
 |------|------|--------|
 | **P0** | 토큰을 `packages/config/tailwind.config.js` 로 매핑 | Sub-02 (`stack-pivot`) |
 | **P0** | 타이포그래피 + Pretendard CDN 로딩 | `apps/web/src/app/layout.tsx` 폰트 셋업 |
-| **P1** | Atoms 컴포넌트 (Button, Checkbox, Badge, Icon, Divider) | `packages/ui/src/components/` |
-| **P1** | Molecules 컴포넌트 (TodoItem, SectionHeader, DateNavigator, TabBarItem) | `packages/ui/src/components/` |
-| **P2** | Organisms 컴포넌트 (TodoSection, BottomTabBar, TodoCreateSheet) | `packages/ui/src/components/` |
+| **P1** | Atoms 컴포넌트 (Button, Checkbox, Badge, Icon, Divider, AddButton, FAB) | `packages/ui/src/components/` |
+| **P1** | Molecules 컴포넌트 (TodoItem, SectionHeader, DateNavigator, TabBarItem, FilterChips, ManageHeader, ProfileCard, SettingsMenuItem, FormField) | `packages/ui/src/components/` |
+| **P2** | Organisms 컴포넌트 (TodoSection, BottomTabBar, EpicCreateSheet, SubCreateSheet, DesktopSideNav, DesktopModal, SettingsSection) | `packages/ui/src/components/` |
 | **P2** | Storybook 카탈로그 | (후속) |
 | **P3** | 다크 모드 (Semantic 재매핑) | `tokens.md` Semantic 표에 Dark 컬럼 추가 후 코드 반영 |
 | **P3** | 모션/스와이프 인터랙션 | RN: `react-native-reanimated`, web: `framer-motion` 검토 |
