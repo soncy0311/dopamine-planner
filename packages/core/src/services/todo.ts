@@ -16,6 +16,11 @@ export async function listByDate(
   workspace: Workspace,
   date: string,
 ): Promise<TodoDailyView> {
+  // 일자 뷰 정책 (sub-prd-10 §일자 뷰 정합):
+  //  - 진행 중 섹션: status='todo' AND registered_date = date
+  //  - 완료    섹션: status='done' AND completed_date = date  (그 날 완료된 것만)
+  // sub-issue 의 registered_date 가 다른 날로 이동하더라도, 완료된 일자에 한해 그 날
+  // 의 완료 섹션에 계속 노출된다 — 이력 단절 방지.
   const { data, error } = await client
     .from('sub_issue')
     .select(
@@ -25,7 +30,9 @@ export async function listByDate(
          category:category!inner ( id, name, color, workspace )
        )`,
     )
-    .eq('registered_date', date)
+    .or(
+      `and(status.eq.todo,registered_date.eq.${date}),and(status.eq.done,completed_date.eq.${date})`,
+    )
     .eq('epic.category.workspace', workspace);
   if (error) throw error;
   return mapTodoDailyView((data ?? []) as Parameters<typeof mapTodoDailyView>[0], date);
