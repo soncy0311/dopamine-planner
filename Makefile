@@ -1,6 +1,6 @@
 ## Todo List — 단일 entry point
 ##
-## `make help` 로 카탈로그를 본다. 모든 dev/build/lint/test/supabase/docker 명령은
+## `make help` 로 카탈로그를 본다. 모든 dev/build/lint/test/supabase 명령은
 ## 본 Makefile 을 거친다. 호스트에 도구가 부재하면 `make doctor` 가 안내한다.
 
 SHELL := /usr/bin/env bash
@@ -26,7 +26,6 @@ endif
 
 WEB_FILTER    := --filter @todo-list/web
 MOBILE_FILTER := --filter @todo-list/mobile
-COMPOSE       := docker compose -f scripts/docker-compose.yml --project-directory .
 
 # Supabase CLI 가 config.toml 의 env() 보간을 해석하도록
 # env/.env.local 을 자동 export 한 뒤 supabase 호출.
@@ -35,8 +34,6 @@ SB_LOAD_ENV   := set -a; [ -f $(SB_ENV_FILE) ] && . $(SB_ENV_FILE) || true; set 
 
 .PHONY: help doctor install clean \
 	dev build lint test typecheck format \
-	up down restart ps logs \
-	web-up web-down web-logs web-shell web-build web-restart \
 	mobile-dev mobile-ios mobile-android mobile-build \
 	sb-start sb-stop sb-reset sb-status sb-gen-types sb-link sb-push \
 	migrate
@@ -55,7 +52,7 @@ help: ## 본 카탈로그 출력
 doctor: ## docker / pnpm / supabase / node 4 종 PATH 검증
 	@printf "$(C_BOLD)환경 검증$(C_END)\n"
 	@command -v docker  >/dev/null 2>&1 && printf "  $(C_OK)✓$(C_END) docker $$(docker --version)\n" \
-		|| printf "  $(C_ERR)✗$(C_END) docker — Docker Desktop 설치: https://www.docker.com/products/docker-desktop\n"
+		|| printf "  $(C_ERR)✗$(C_END) docker — Supabase CLI 가 docker 스택을 사용하므로 필요. Docker Desktop 설치: https://www.docker.com/products/docker-desktop\n"
 	@command -v pnpm    >/dev/null 2>&1 && printf "  $(C_OK)✓$(C_END) pnpm $$(pnpm --version)\n" \
 		|| printf "  $(C_ERR)✗$(C_END) pnpm — corepack enable && corepack prepare pnpm@9.15.0 --activate\n"
 	@command -v supabase >/dev/null 2>&1 && printf "  $(C_OK)✓$(C_END) supabase $$(supabase --version)\n" \
@@ -75,7 +72,7 @@ clean: ## turbo clean + node_modules 정리
 	@find . -type d -name .next -prune -exec rm -rf {} + 2>/dev/null || true
 	@find . -type d -name dist -not -path '*/node_modules/*' -prune -exec rm -rf {} + 2>/dev/null || true
 
-dev: ## turbo dev (호스트, 컨테이너 미사용)
+dev: ## turbo dev (호스트, web/packages 동시 watch)
 	@pnpm turbo run dev
 
 build: ## turbo build (web 정적 export 등)
@@ -93,51 +90,7 @@ typecheck: ## turbo typecheck (있는 경우만)
 format: ## prettier --write
 	@pnpm format
 
-## ── 통합 (supabase + web container) ───────────────────────────────────────
-
-up: ## supabase start + docker compose up -d web (전체 dev 환경 기동)
-	@printf "$(C_BOLD)→ Supabase 기동$(C_END)\n"
-	@$(SB_LOAD_ENV) supabase start
-	@printf "$(C_BOLD)→ Web 컨테이너 기동$(C_END)\n"
-	@$(COMPOSE) up -d web
-	@printf "\n$(C_OK)✓ 완료$(C_END) — Web: http://localhost:3000  Supabase Studio: http://localhost:54323\n"
-
-down: ## docker compose down + supabase stop
-	@$(COMPOSE) down
-	@$(SB_LOAD_ENV) supabase stop || true
-
-restart: down up ## up 재실행
-
-ps: ## 컨테이너 상태
-	@$(COMPOSE) ps
-	@supabase status || true
-
-logs: ## web container log tail (Ctrl-C 로 종료)
-	@$(COMPOSE) logs -f web
-
-## ── Web 컨테이너 개별 제어 ────────────────────────────────────────────────
-
-web-up: ## web 컨테이너만 기동
-	@$(COMPOSE) up -d web
-	@printf "$(C_OK)✓$(C_END) http://localhost:3000\n"
-
-web-down: ## web 컨테이너만 중지
-	@$(COMPOSE) stop web
-	@$(COMPOSE) rm -f web
-
-web-logs: ## web 컨테이너 log tail
-	@$(COMPOSE) logs -f web
-
-web-shell: ## web 컨테이너 안 sh 진입
-	@$(COMPOSE) exec web sh
-
-web-build: ## web 이미지 강제 rebuild (lockfile 변경 후 등)
-	@$(COMPOSE) build --no-cache web
-
-web-restart: ## web 컨테이너 재기동
-	@$(COMPOSE) restart web
-
-## ── Mobile (호스트, 컨테이너 미사용) ──────────────────────────────────────
+## ── Mobile (호스트) ───────────────────────────────────────────────────────
 
 mobile-dev: ## Expo dev server (호스트)
 	@pnpm $(MOBILE_FILTER) dev

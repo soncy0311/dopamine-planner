@@ -93,12 +93,11 @@ todo-list/                  (Monorepo — pnpm + Turborepo)
 - TypeScript strict 모드 사용
 - Prettier 적용: semi, singleQuote, trailingComma: all, printWidth: 100, tabWidth: 2
 - 패키지 간 의존: `workspace:*` 프로토콜 사용
-- 실행 / 빌드 / 린트 등 모든 커맨드는 루트 `Makefile` 을 단일 진입점으로 사용한다 (`pnpm`/`turbo`/`supabase`/`docker compose` 를 wrap)
+- 실행 / 빌드 / 린트 등 모든 커맨드는 루트 `Makefile` 을 단일 진입점으로 사용한다 (`pnpm`/`turbo`/`supabase` 를 wrap)
 - 카탈로그 확인: `make help` / 환경 검증: `make doctor`
 - 자주 쓰는 명령:
-  - `make up` / `make down` — 전체 dev 환경 (supabase + web container) 기동/중지
-  - `make dev` — 호스트에서 turbo dev (컨테이너 미사용 시)
-  - `make web-up` / `make web-down` / `make web-logs` / `make web-shell` — web 컨테이너 개별 제어
+  - `make dev` — 호스트에서 turbo dev (web/packages 동시 watch)
+  - `make sb-start` / `make sb-stop` — Supabase 로컬 스택 기동/중지
   - `make mobile-dev` / `make mobile-ios` / `make mobile-android` — Expo 시뮬레이터 (호스트)
   - `make sb-reset` / `make sb-gen-types` — Supabase DB 재적용 / 타입 생성
   - `make build` / `make lint` / `make test` — turbo 빌드/린트/테스트
