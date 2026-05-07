@@ -16,6 +16,7 @@ export type EpicAccordionCardProps = {
   onSubToggle: (todo: SubIssueWithJoins) => void;
   onSubPress: (todo: SubIssueWithJoins) => void;
   onAddSubIssue?: () => void;
+  onTitlePress?: () => void;
 };
 
 export function EpicAccordionCard({
@@ -31,6 +32,7 @@ export function EpicAccordionCard({
   onSubToggle,
   onSubPress,
   onAddSubIssue,
+  onTitlePress,
 }: EpicAccordionCardProps) {
   const done = mainStatus === 'done';
 
@@ -64,12 +66,25 @@ export function EpicAccordionCard({
           </View>
         ) : null}
 
-        <Text
-          className="flex-1 text-sm font-medium text-foreground"
-          numberOfLines={1}
-        >
-          {title}
-        </Text>
+        {onTitlePress ? (
+          <Pressable
+            onPress={onTitlePress}
+            accessibilityRole="button"
+            accessibilityLabel={`${title} 수정`}
+            className="flex-1"
+          >
+            <Text className="text-sm font-medium text-foreground" numberOfLines={1}>
+              {title}
+            </Text>
+          </Pressable>
+        ) : (
+          <Text
+            className="flex-1 text-sm font-medium text-foreground"
+            numberOfLines={1}
+          >
+            {title}
+          </Text>
+        )}
 
         <Text className="ml-2 text-xs text-muted-foreground">{progressPercent}%</Text>
 

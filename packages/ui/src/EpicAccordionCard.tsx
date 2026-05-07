@@ -27,6 +27,7 @@ export type EpicAccordionCardProps = {
   mainStatus: 'todo' | 'done';
   subIssues: EpicAccordionSubIssue[];
   onAddSubIssue?: () => void;
+  onTitlePress?: () => void;
 };
 
 export function EpicAccordionCard({
@@ -41,6 +42,7 @@ export function EpicAccordionCard({
   mainStatus,
   subIssues,
   onAddSubIssue,
+  onTitlePress,
 }: EpicAccordionCardProps) {
   const done = mainStatus === 'done';
   const total = segments.length;
@@ -87,7 +89,7 @@ export function EpicAccordionCard({
         </button>
 
         {category ? (
-          <span className="flex items-center gap-1 text-xs text-periwinkle-400">
+          <span className="-ml-2 flex items-center gap-1 text-xs text-periwinkle-400">
             <span
               aria-hidden="true"
               className="h-2 w-2 rounded-full"
@@ -97,7 +99,17 @@ export function EpicAccordionCard({
           </span>
         ) : null}
 
-        <span className="flex-1 truncate text-sm font-medium text-periwinkle-500">{title}</span>
+        {onTitlePress ? (
+          <button
+            type="button"
+            onClick={onTitlePress}
+            className="flex-1 truncate rounded-md px-1 py-0.5 text-left text-sm font-medium text-periwinkle-500 hover:bg-periwinkle-100"
+          >
+            {title}
+          </button>
+        ) : (
+          <span className="flex-1 truncate text-sm font-medium text-periwinkle-500">{title}</span>
+        )}
 
         <span className="text-xs text-periwinkle-400">{progressPercent}%</span>
 

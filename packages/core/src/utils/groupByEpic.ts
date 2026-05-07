@@ -29,9 +29,9 @@ export function groupByEpic<T extends SubIssue = SubIssueWithJoins>(
   }
 
   return {
-    epics: epics
-      .filter((e) => byEpic.has(e.id))
-      .map((e) => ({ epic: e, subs: byEpic.get(e.id) ?? [] })),
+    // 워크스페이스의 모든 epic 을 항상 노출 (sub 0개여도 카드 자체는 보임).
+    // 신규 생성한 epic 즉시 가시성 확보 + 일자 필터에 의해 epic 자체가 사라지는 UX 회피.
+    epics: epics.map((e) => ({ epic: e, subs: byEpic.get(e.id) ?? [] })),
     standalone,
   };
 }

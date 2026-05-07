@@ -11,8 +11,8 @@ describe('EmptyState', () => {
   });
 
   it('description 추가 시 보조 텍스트 노출', () => {
-    render(<EmptyState title="t" description="새 투두를 만들어 시작해보세요" />);
-    expect(screen.getByText('새 투두를 만들어 시작해보세요')).toBeInTheDocument();
+    render(<EmptyState title="t" description="할 일을 등록해보세요" />);
+    expect(screen.getByText('할 일을 등록해보세요')).toBeInTheDocument();
   });
 
   it('action 주입 시 버튼 노출 + 클릭 시 onClick 호출', () => {

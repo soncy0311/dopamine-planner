@@ -3,7 +3,6 @@
 export type CategoryFilterChipsCategory = {
   id: string;
   name: string;
-  color: string;
 };
 
 export type CategoryFilterChipsProps = {
@@ -46,15 +45,10 @@ export function CategoryFilterChips({
             onClick={() => onSelect(cat.id)}
             className={
               active
-                ? 'flex h-8 shrink-0 items-center gap-1 rounded-full bg-purple-500 px-3 text-xs font-semibold text-white'
-                : 'flex h-8 shrink-0 items-center gap-1 rounded-full bg-periwinkle-100 px-3 text-xs font-medium text-periwinkle-500 hover:bg-periwinkle-200'
+                ? 'flex h-8 shrink-0 items-center rounded-full bg-purple-500 px-3 text-xs font-semibold text-white'
+                : 'flex h-8 shrink-0 items-center rounded-full bg-periwinkle-100 px-3 text-xs font-medium text-periwinkle-500 hover:bg-periwinkle-200'
             }
           >
-            <span
-              aria-hidden="true"
-              className="h-2 w-2 rounded-full"
-              style={{ backgroundColor: cat.color }}
-            />
             <span className="truncate max-w-[8rem]">{cat.name}</span>
           </button>
         );

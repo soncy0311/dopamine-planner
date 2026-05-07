@@ -101,4 +101,13 @@ describe('groupByEpic', () => {
     const result = groupByEpic(todos, epics);
     expect(result.epics[0].subs.map((s) => s.id)).toEqual(['t3', 't1', 't2']);
   });
+
+  it('sub 가 0개인 epic 도 결과에 포함된다 (신규 생성 epic 즉시 노출)', () => {
+    const epics = [makeEpic('e1'), makeEpic('e2')];
+    const todos = [makeTodo('t1', 'e1')];
+    const result = groupByEpic(todos, epics);
+    expect(result.epics).toHaveLength(2);
+    const e2 = result.epics.find((g) => g.epic.id === 'e2');
+    expect(e2?.subs).toEqual([]);
+  });
 });

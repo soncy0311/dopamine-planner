@@ -38,6 +38,10 @@ export function CategoryComboboxCreate({
   const [activeIndex, setActiveIndex] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  // 동기 가드: create.isPending 은 mutateAsync 호출 시점에야 true 가 되는데
+  // selectCreate 는 그 전에 supabase.auth.getUser() 를 await 하므로 그 사이에
+  // Enter 더블 입력 시 두 번 다 통과해 중복 생성될 수 있음. ref 로 sync 차단.
+  const submittingRef = useRef(false);
   const listboxId = useId();
   const optionIdPrefix = useId();
 
@@ -83,6 +87,8 @@ export function CategoryComboboxCreate({
 
   const selectCreate = async () => {
     if (!trimmed) return;
+    if (submittingRef.current) return;
+    submittingRef.current = true;
     try {
       const { data: userRes, error: userErr } = await supabase.auth.getUser();
       if (userErr || !userRes.user) {
@@ -101,6 +107,8 @@ export function CategoryComboboxCreate({
     } catch (err) {
       const msg = err instanceof Error ? err.message : '분류 생성에 실패했어요.';
       toast.error(msg.includes('duplicate') ? '같은 이름의 분류가 이미 있어요.' : msg);
+    } finally {
+      submittingRef.current = false;
     }
   };
 

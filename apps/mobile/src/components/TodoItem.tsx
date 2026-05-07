@@ -34,20 +34,11 @@ export function TodoItem({ todo, onToggle, onPress }: Props) {
         accessibilityRole="button"
         accessibilityLabel={`${todo.title} 상세 보기`}
       >
-        <View className="flex-row items-center">
-          {todo.category?.name ? (
-            <View className="mr-2 flex-row items-center">
-              <View
-                className="mr-1 h-2 w-2 rounded-full"
-                style={{ backgroundColor: todo.category.color || '#9ca3af' }}
-              />
-              <Text className="text-xs text-muted-foreground">{todo.category.name}</Text>
-            </View>
-          ) : null}
-          {todo.priority === 'high' && (
+        {todo.priority === 'high' ? (
+          <View className="flex-row items-center">
             <Text className="mr-2 text-xs font-semibold text-red-600">높음</Text>
-          )}
-        </View>
+          </View>
+        ) : null}
         <Text
           className={`text-base ${
             done ? 'text-muted-foreground line-through' : 'text-foreground'

@@ -27,6 +27,7 @@ import { supabase } from '@/lib/supabase/client';
 import { useDateQuery } from '@/hooks/useDateQuery';
 import { CategoryFilterChips } from './CategoryFilterChips';
 import { EpicFormModal } from './modals/EpicFormModal';
+import { EpicDetailModal } from './modals/EpicDetailModal';
 import { SubIssueFormModal } from './modals/SubIssueFormModal';
 import { TodoDetailModal } from './modals/TodoDetailModal';
 
@@ -76,6 +77,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   const [epicFormOpen, setEpicFormOpen] = useState(false);
   const [subFormEpic, setSubFormEpic] = useState<{ id: string; title: string } | null>(null);
   const [detailTodoId, setDetailTodoId] = useState<string | null>(null);
+  const [detailEpicId, setDetailEpicId] = useState<string | null>(null);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
   const [expand, setExpand] = useState<Record<string, boolean>>({});
 
@@ -112,9 +114,11 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
     const doneSection: typeof grouped.epics = [];
     for (const entry of grouped.epics) {
       // sub 상태 기반 즉시 판정 (서버 progress 갱신 RPC 대기 회피).
+      // sub 가 0개인 경우 epic.status 자체를 기준으로 분류 (수동 완료 지원).
       const total = entry.subs.length;
       const doneCount = entry.subs.filter((s) => s.status === 'done').length;
-      const isAllDone = total > 0 && doneCount === total;
+      const isAllDone =
+        total > 0 ? doneCount === total : entry.epic.status === 'completed';
       if (isAllDone) doneSection.push(entry);
       else todoSection.push(entry);
     }
@@ -165,8 +169,15 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   };
 
   const handleCascadeToggle = async (epic: EpicIssue, subs: SubIssueWithJoins[]) => {
-    const allDone = subs.length > 0 && subs.every((s) => s.status === 'done');
-    const target: 'todo' | 'done' = allDone ? 'todo' : 'done';
+    // sub 가 0개일 땐 epic.status 자체로 토글 방향 결정.
+    const target: 'todo' | 'done' =
+      subs.length === 0
+        ? epic.status === 'completed'
+          ? 'todo'
+          : 'done'
+        : subs.every((s) => s.status === 'done')
+          ? 'todo'
+          : 'done';
     try {
       await cascadeToggleEpic(
         supabase,
@@ -190,8 +201,15 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         ? Math.round((doneCount / total) * 100)
         : Math.round(Math.max(0, Math.min(1, epic.progress)) * 100);
     // mainStatus 도 sub 상태 기반 (optimistic update 즉시 반영).
+    // sub 0개일 땐 epic.status 자체를 기준으로 ('completed' → 'done').
     const mainStatus: 'todo' | 'done' =
-      total > 0 && doneCount === total ? 'done' : 'todo';
+      total > 0
+        ? doneCount === total
+          ? 'done'
+          : 'todo'
+        : epic.status === 'completed'
+          ? 'done'
+          : 'todo';
 
     return (
       <EpicAccordionCard
@@ -206,6 +224,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         onMainToggle={() => void handleCascadeToggle(epic, subs)}
         mainStatus={mainStatus}
         onAddSubIssue={() => handleAddSubIssue(epic)}
+        onTitlePress={() => setDetailEpicId(epic.id)}
         subIssues={subs.map((s) => ({
           id: s.id,
           title: s.title,
@@ -233,7 +252,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
       <div className="flex items-center justify-between gap-3">
         <div className="flex-1 min-w-0">
           <CategoryFilterChips
-            categories={categories.map((c) => ({ id: c.id, name: c.name, color: c.color }))}
+            categories={categories.map((c) => ({ id: c.id, name: c.name }))}
             selectedId={selectedCategoryId}
             onSelect={setSelectedCategoryId}
           />
@@ -251,7 +270,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
               strokeLinecap="round"
             />
           </svg>
-          새 투두
+          추가
         </button>
       </div>
       {isLoading ? (
@@ -270,8 +289,8 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
             {todoSectionEmpty ? (
               <EmptyState
                 title="아직 할 일이 없어요"
-                description="새 투두를 만들어 시작해보세요"
-                action={{ label: '새 투두 만들기', onClick: handleCreate }}
+                description="할 일을 등록해보세요"
+                action={{ label: '+ 추가', onClick: handleCreate }}
               />
             ) : (
               <div className="flex flex-col gap-2">
@@ -350,6 +369,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         open={epicFormOpen}
         onOpenChange={setEpicFormOpen}
         workspace={workspace}
+        defaultRegisteredDate={date}
       />
       {subFormEpic && (
         <SubIssueFormModal
@@ -370,6 +390,16 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
           }}
           workspace={workspace}
           todoId={detailTodoId}
+        />
+      )}
+      {detailEpicId && (
+        <EpicDetailModal
+          open
+          onOpenChange={(o) => {
+            if (!o) setDetailEpicId(null);
+          }}
+          workspace={workspace}
+          epicId={detailEpicId}
         />
       )}
     </div>

@@ -90,6 +90,22 @@ export async function cascadeToggleEpic(
   subs: ReadonlyArray<{ id: string; status: TodoStatus }>,
   target: TodoStatus,
 ): Promise<void> {
+  // sub 가 0개인 epic 도 사용자가 직접 완료/해제 토글할 수 있도록 epic 자체를 갱신.
+  // recalc RPC 는 total=0 이면 'completed' 로 만들지 않으므로, 여기서 직접 패치.
+  if (subs.length === 0) {
+    const completed_date =
+      target === 'done' ? new Date().toISOString().slice(0, 10) : null;
+    const { error } = await client
+      .from('epic_issue')
+      .update({
+        status: target === 'done' ? 'completed' : 'active',
+        completed_date,
+        progress: target === 'done' ? 1 : 0,
+      })
+      .eq('id', epic.id);
+    if (error) throw error;
+    return;
+  }
   const targets = subs.filter((s) => s.status !== target);
   await Promise.all(targets.map((s) => toggle(client, s.id, target)));
   await recalcEpicProgress(client, epic.id);

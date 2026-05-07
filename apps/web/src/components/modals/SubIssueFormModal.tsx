@@ -13,6 +13,7 @@ import { PriorityRadioGroup } from '@/components/ui/PriorityRadioGroup';
 
 const SubIssueFormSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이내'),
+  description: z.string().max(2000, '설명은 2000자 이내').optional(),
   priority: z.enum(['high', 'medium', 'low']),
   registeredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
 });
@@ -37,6 +38,7 @@ export function SubIssueFormModal({
     resolver: zodResolver(SubIssueFormSchema),
     defaultValues: {
       title: '',
+      description: '',
       priority: 'medium',
       registeredDate: defaultRegisteredDate,
     },
@@ -46,6 +48,7 @@ export function SubIssueFormModal({
     if (open) {
       form.reset({
         title: '',
+        description: '',
         priority: 'medium',
         registeredDate: defaultRegisteredDate,
       });
@@ -66,6 +69,7 @@ export function SubIssueFormModal({
         user_id: userRes.user.id,
         epic_id: epicId,
         title: values.title,
+        description: values.description?.trim() ? values.description.trim() : null,
         priority: values.priority,
         registered_date: values.registeredDate,
       });
@@ -115,6 +119,23 @@ export function SubIssueFormModal({
               />
               {form.formState.errors.title && (
                 <span className="text-xs text-red-500">{form.formState.errors.title.message}</span>
+              )}
+            </div>
+            <div className="flex flex-col gap-1">
+              <label htmlFor="sub-desc" className="text-sm font-medium text-black-900">
+                설명
+              </label>
+              <textarea
+                id="sub-desc"
+                {...form.register('description')}
+                rows={3}
+                className="rounded-md border border-periwinkle-200 bg-white px-3 py-3 text-sm text-black-900 outline-none focus:border-purple-500 focus:border-2"
+                placeholder="설명을 입력하세요 (선택)"
+              />
+              {form.formState.errors.description && (
+                <span className="text-xs text-red-500">
+                  {form.formState.errors.description.message}
+                </span>
               )}
             </div>
             <div className="flex flex-col gap-1">

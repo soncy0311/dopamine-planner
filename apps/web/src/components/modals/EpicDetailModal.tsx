@@ -7,62 +7,64 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import { useDeleteTodo, useUpdateTodo, type Workspace } from '@todo-list/core';
+import { useDeleteEpic, useUpdateEpic, type Workspace } from '@todo-list/core';
 import { showFkOrDefaultError } from '@/lib/errors/fkErrorToast';
 import { supabase } from '@/lib/supabase/client';
-import { PriorityRadioGroup } from '@/components/ui/PriorityRadioGroup';
+import {
+  CategoryComboboxCreate,
+  type CategoryComboboxValue,
+} from '@/components/ui/CategoryComboboxCreate';
 import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
 
-const SubIssueEditSchema = z.object({
+const EpicEditSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이내'),
   description: z.string().max(2000, '설명은 2000자 이내').optional(),
-  priority: z.enum(['high', 'medium', 'low']),
+  categoryId: z.string().min(1, '분류를 선택해주세요'),
   registeredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
 });
-type SubIssueEditValues = z.infer<typeof SubIssueEditSchema>;
+type EpicEditValues = z.infer<typeof EpicEditSchema>;
 
-type TodoDetailFetch = {
+type EpicDetailFetch = {
   id: string;
   title: string;
   description: string | null;
-  priority: 'high' | 'medium' | 'low';
+  category_id: string;
   registered_date: string | null;
-  epic_id: string;
-  epic: { id: string; title: string } | null;
+  category: { id: string; name: string; color: string | null } | null;
 };
 
-async function fetchTodoDetail(todoId: string): Promise<TodoDetailFetch> {
+async function fetchEpicDetail(epicId: string): Promise<EpicDetailFetch> {
   const { data, error } = await supabase
-    .from('sub_issue')
-    .select('id, title, description, priority, registered_date, epic_id, epic:epic_issue(id, title)')
-    .eq('id', todoId)
+    .from('epic_issue')
+    .select('id, title, description, category_id, registered_date, category:category(id, name, color)')
+    .eq('id', epicId)
     .single();
   if (error) throw error;
-  return data as unknown as TodoDetailFetch;
+  return data as unknown as EpicDetailFetch;
 }
 
-type TodoDetailModalProps = {
+type EpicDetailModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   workspace: Workspace;
-  todoId: string;
+  epicId: string;
 };
 
-// workspace 는 현재 본 모달 흐름에선 직접 사용하지 않지만, 향후 epic 이동 등을
-// 추가할 여지를 두고 prop 시그니처를 유지한다 (호출 측 연쇄 변경 회피).
-export function TodoDetailModal({ open, onOpenChange, todoId }: TodoDetailModalProps) {
+export function EpicDetailModal({ open, onOpenChange, workspace, epicId }: EpicDetailModalProps) {
   const { data: detail } = useQuery({
-    queryKey: ['todoDetail', todoId],
-    queryFn: () => fetchTodoDetail(todoId),
-    enabled: open && !!todoId,
+    queryKey: ['epicDetail', epicId],
+    queryFn: () => fetchEpicDetail(epicId),
+    enabled: open && !!epicId,
   });
 
-  const form = useForm<SubIssueEditValues>({
-    resolver: zodResolver(SubIssueEditSchema),
+  const [category, setCategory] = useState<CategoryComboboxValue | null>(null);
+
+  const form = useForm<EpicEditValues>({
+    resolver: zodResolver(EpicEditSchema),
     defaultValues: {
       title: '',
       description: '',
-      priority: 'medium',
+      categoryId: '',
       registeredDate: new Date().toISOString().slice(0, 10),
     },
   });
@@ -72,43 +74,59 @@ export function TodoDetailModal({ open, onOpenChange, todoId }: TodoDetailModalP
     form.reset({
       title: detail.title,
       description: detail.description ?? '',
-      priority: detail.priority,
+      categoryId: detail.category_id,
       registeredDate:
         detail.registered_date ?? new Date().toISOString().slice(0, 10),
     });
+    setCategory(
+      detail.category
+        ? {
+            id: detail.category.id,
+            name: detail.category.name,
+            color: detail.category.color ?? undefined,
+          }
+        : null,
+    );
   }, [detail, form]);
 
-  const update = useUpdateTodo({ client: supabase });
-  const remove = useDeleteTodo({ client: supabase });
+  useEffect(() => {
+    form.setValue('categoryId', category?.id ?? '', {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  }, [category, form]);
+
+  const update = useUpdateEpic({ client: supabase });
+  const remove = useDeleteEpic({ client: supabase });
   const [confirmOpen, setConfirmOpen] = useState(false);
   const submitting = form.formState.isSubmitting || update.isPending;
 
-  const onSubmit = async (values: SubIssueEditValues) => {
+  const onSubmit = async (values: EpicEditValues) => {
     try {
       await update.mutateAsync({
-        id: todoId,
+        id: epicId,
         patch: {
           title: values.title,
           description: values.description?.trim() ? values.description.trim() : null,
-          priority: values.priority,
+          category_id: values.categoryId,
           registered_date: values.registeredDate,
         },
       });
-      toast.success('수정되었어요');
+      toast.success('Epic 이 수정되었어요');
       onOpenChange(false);
     } catch (err) {
-      showFkOrDefaultError(err, '저장에 실패했어요.');
+      showFkOrDefaultError(err, 'Epic 저장에 실패했어요.');
     }
   };
 
   const onConfirmDelete = async () => {
     try {
-      await remove.mutateAsync({ id: todoId });
+      await remove.mutateAsync({ id: epicId });
       toast.success('삭제되었어요');
       setConfirmOpen(false);
       onOpenChange(false);
     } catch (err) {
-      showFkOrDefaultError(err, '연결된 자료가 있어 삭제할 수 없어요.');
+      showFkOrDefaultError(err, '삭제에 실패했어요.');
     }
   };
 
@@ -119,16 +137,9 @@ export function TodoDetailModal({ open, onOpenChange, todoId }: TodoDetailModalP
           <Dialog.Overlay className="fixed inset-0 bg-black-900/40" />
           <Dialog.Content className="fixed inset-0 flex flex-col gap-4 bg-white p-6 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:w-[480px] sm:max-w-[calc(100vw-2rem)] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-lg sm:shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
             <header className="flex items-center justify-between">
-              <div className="flex flex-col">
-                <Dialog.Title className="text-lg font-semibold text-black-900">
-                  서브 이슈 수정
-                </Dialog.Title>
-                {detail?.epic ? (
-                  <Dialog.Description className="text-xs text-periwinkle-400">
-                    Epic: {detail.epic.title}
-                  </Dialog.Description>
-                ) : null}
-              </div>
+              <Dialog.Title className="text-lg font-semibold text-black-900">
+                Epic 수정
+              </Dialog.Title>
               <Dialog.Close
                 type="button"
                 aria-label="닫기"
@@ -140,52 +151,59 @@ export function TodoDetailModal({ open, onOpenChange, todoId }: TodoDetailModalP
             {!detail ? (
               <p className="text-sm text-periwinkle-300">불러오는 중…</p>
             ) : (
-              <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="flex flex-col gap-4"
+              >
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="sub-edit-title" className="text-sm font-medium text-black-900">
+                  <label htmlFor="epic-edit-title" className="text-sm font-medium text-black-900">
                     제목 *
                   </label>
                   <input
-                    id="sub-edit-title"
+                    id="epic-edit-title"
                     type="text"
                     {...form.register('title')}
                     className="rounded-md border border-periwinkle-200 bg-white px-3 py-3 text-sm text-black-900 outline-none focus:border-2 focus:border-purple-500"
-                    placeholder="서브 이슈 제목을 입력하세요"
+                    placeholder="Epic 제목을 입력하세요"
                   />
                   {form.formState.errors.title && (
-                    <span className="text-xs text-red-500">{form.formState.errors.title.message}</span>
+                    <span className="text-xs text-red-500">
+                      {form.formState.errors.title.message}
+                    </span>
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="sub-edit-desc" className="text-sm font-medium text-black-900">
+                  <label htmlFor="epic-edit-desc" className="text-sm font-medium text-black-900">
                     설명
                   </label>
                   <textarea
-                    id="sub-edit-desc"
+                    id="epic-edit-desc"
                     {...form.register('description')}
                     rows={3}
                     className="rounded-md border border-periwinkle-200 bg-white px-3 py-3 text-sm text-black-900 outline-none focus:border-2 focus:border-purple-500"
                     placeholder="설명을 입력하세요 (선택)"
                   />
-                  {form.formState.errors.description && (
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm font-medium text-black-900">분류</span>
+                  <CategoryComboboxCreate
+                    workspace={workspace}
+                    value={category}
+                    onChange={setCategory}
+                    placeholder="분류를 검색하세요"
+                  />
+                  {form.formState.errors.categoryId && (
                     <span className="text-xs text-red-500">
-                      {form.formState.errors.description.message}
+                      {form.formState.errors.categoryId.message}
                     </span>
                   )}
                 </div>
                 <div className="flex flex-col gap-1">
-                  <span className="text-sm font-medium text-black-900">우선순위</span>
-                  <PriorityRadioGroup
-                    value={form.watch('priority')}
-                    onChange={(p) => form.setValue('priority', p, { shouldDirty: true })}
-                  />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label htmlFor="sub-edit-date" className="text-sm font-medium text-black-900">
+                  <label htmlFor="epic-edit-date" className="text-sm font-medium text-black-900">
                     등록일
                   </label>
                   <input
-                    id="sub-edit-date"
+                    id="epic-edit-date"
                     type="date"
                     {...form.register('registeredDate')}
                     className="rounded-md border border-periwinkle-200 bg-white px-3 py-3 text-sm text-black-900 outline-none focus:border-2 focus:border-purple-500"
@@ -228,8 +246,8 @@ export function TodoDetailModal({ open, onOpenChange, todoId }: TodoDetailModalP
       <ConfirmDeleteDialog
         open={confirmOpen}
         onOpenChange={setConfirmOpen}
-        title="이 서브 이슈를 삭제할까요?"
-        description="이 작업은 되돌릴 수 없어요."
+        title="이 Epic 을 삭제할까요?"
+        description="Epic 의 모든 서브 이슈도 함께 삭제돼요."
         onConfirm={onConfirmDelete}
         loading={remove.isPending}
       />

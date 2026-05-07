@@ -3,8 +3,8 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { CategoryFilterChips } from '@/components/CategoryFilterChips';
 
 const CATS = [
-  { id: 'a', name: 'Work', color: '#FF0000' },
-  { id: 'b', name: 'Life', color: '#00FF00' },
+  { id: 'a', name: 'Work' },
+  { id: 'b', name: 'Life' },
 ];
 
 describe('CategoryFilterChips', () => {

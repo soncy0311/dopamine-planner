@@ -127,16 +127,6 @@ export function TodoItem({
         ) : null}
       </div>
 
-      {category ? (
-        <span className="flex items-center gap-1 text-xs text-periwinkle-400">
-          <span
-            aria-hidden="true"
-            className="h-2 w-2 rounded-full"
-            style={{ backgroundColor: category.color }}
-          />
-          <span className="truncate max-w-[7rem]">{category.name}</span>
-        </span>
-      ) : null}
     </div>
   );
 }

@@ -11,6 +11,7 @@ type Props = {
   defaultValues?: Partial<EpicFormValues>;
   onSubmit: (v: EpicFormValues) => Promise<void> | void;
   onCancel: () => void;
+  onDelete?: () => void;
   submitting?: boolean;
 };
 
@@ -22,6 +23,7 @@ export function EpicForm({
   defaultValues,
   onSubmit,
   onCancel,
+  onDelete,
   submitting,
 }: Props) {
   const { data: categories = [] } = useCategories({ client: supabase, workspace });
@@ -105,6 +107,16 @@ export function EpicForm({
       )}
 
       <View className="mt-6 flex-row gap-2">
+        {onDelete ? (
+          <Pressable
+            onPress={onDelete}
+            className="items-center justify-center rounded-md bg-red-500 px-4 py-3"
+            accessibilityRole="button"
+            accessibilityLabel="삭제"
+          >
+            <Text className="text-white">삭제</Text>
+          </Pressable>
+        ) : null}
         <Pressable
           onPress={onCancel}
           className="flex-1 items-center rounded-md border border-border py-3"

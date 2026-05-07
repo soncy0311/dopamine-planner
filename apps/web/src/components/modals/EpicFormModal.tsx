@@ -19,9 +19,15 @@ type EpicFormModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   workspace: Workspace;
+  defaultRegisteredDate: string;
 };
 
-export function EpicFormModal({ open, onOpenChange, workspace }: EpicFormModalProps) {
+export function EpicFormModal({
+  open,
+  onOpenChange,
+  workspace,
+  defaultRegisteredDate,
+}: EpicFormModalProps) {
   const [category, setCategory] = useState<CategoryComboboxValue | null>(null);
   const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');
 
@@ -61,6 +67,7 @@ export function EpicFormModal({ open, onOpenChange, workspace }: EpicFormModalPr
         category_id: values.categoryId,
         title: values.title,
         description: values.description ?? null,
+        registered_date: defaultRegisteredDate,
       });
       toast.success('Epic 이 생성되었어요');
       onOpenChange(false);

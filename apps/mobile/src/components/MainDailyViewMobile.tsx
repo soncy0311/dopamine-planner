@@ -129,10 +129,24 @@ export function MainDailyViewMobile({ workspace }: Props) {
     [workspace],
   );
 
+  const handleEditEpic = useCallback(
+    (epic: EpicIssue) => {
+      router.push(`/epic-form?id=${epic.id}&workspace=${workspace}`);
+    },
+    [router, workspace],
+  );
+
   const handleCascadeToggle = useCallback(
     async (epic: EpicIssue, subs: SubIssueWithJoins[]) => {
-      const allDone = subs.length > 0 && subs.every((s) => s.status === 'done');
-      const target: 'todo' | 'done' = allDone ? 'todo' : 'done';
+      // sub 0개일 땐 epic.status 자체로 토글 방향 결정 (web 과 동일).
+      const target: 'todo' | 'done' =
+        subs.length === 0
+          ? epic.status === 'completed'
+            ? 'todo'
+            : 'done'
+          : subs.every((s) => s.status === 'done')
+            ? 'todo'
+            : 'done';
       try {
         await cascadeToggleEpic(
           supabase,
@@ -182,9 +196,11 @@ export function MainDailyViewMobile({ workspace }: Props) {
     const doneSec: { epic: EpicIssue; subs: SubIssueWithJoins[] }[] = [];
     for (const entry of grouped.epics) {
       // sub 상태 기반 즉시 판정 (서버 progress 갱신 RPC 대기 회피).
+      // sub 0개일 땐 epic.status 자체로 분류 (수동 완료 지원, web 과 동일).
       const total = entry.subs.length;
       const doneCount = entry.subs.filter((s) => s.status === 'done').length;
-      const isAllDone = total > 0 && doneCount === total;
+      const isAllDone =
+        total > 0 ? doneCount === total : entry.epic.status === 'completed';
       if (isAllDone) doneSec.push(entry);
       else todoSec.push(entry);
     }
@@ -249,8 +265,8 @@ export function MainDailyViewMobile({ workspace }: Props) {
           <View className="flex-1 items-center justify-center">
             <EmptyState
               title="아직 할 일이 없어요"
-              description="새 투두를 만들어 시작해보세요"
-              action={{ label: '새 투두 만들기', onClick: handleCreate }}
+              description="할 일을 등록해보세요"
+              action={{ label: '+ 추가', onClick: handleCreate }}
             />
           </View>
         ) : (
@@ -275,8 +291,15 @@ export function MainDailyViewMobile({ workspace }: Props) {
                         Math.max(0, Math.min(1, item.epic.progress)) * 100,
                       );
                 // mainStatus 도 sub 상태 기반 (optimistic update 즉시 반영).
+                // sub 0개일 땐 epic.status 자체를 기준 ('completed' → 'done').
                 const mainStatus: 'todo' | 'done' =
-                  total > 0 && done === total ? 'done' : 'todo';
+                  total > 0
+                    ? done === total
+                      ? 'done'
+                      : 'todo'
+                    : item.epic.status === 'completed'
+                      ? 'done'
+                      : 'todo';
                 return (
                   <EpicAccordionCard
                     epicId={item.epic.id}
@@ -292,6 +315,7 @@ export function MainDailyViewMobile({ workspace }: Props) {
                     onSubToggle={handleToggle}
                     onSubPress={handlePress}
                     onAddSubIssue={() => handleAddSubIssue(item.epic)}
+                    onTitlePress={() => handleEditEpic(item.epic)}
                   />
                 );
               }
