@@ -16,13 +16,14 @@ type EpicEditFetch = {
   id: string;
   title: string;
   description: string | null;
+  priority: 'high' | 'medium' | 'low';
   category_id: string;
 };
 
 async function fetchEpicForEdit(id: string): Promise<EpicEditFetch> {
   const { data, error } = await supabase
     .from('epic_issue')
-    .select('id, title, description, category_id')
+    .select('id, title, description, priority, category_id')
     .eq('id', id)
     .single();
   if (error) throw error;
@@ -57,6 +58,7 @@ export default function EpicFormScreen() {
       setDefaults({
         title: existing.title,
         description: existing.description ?? '',
+        priority: existing.priority,
         categoryId: existing.category_id,
       });
     }
@@ -75,6 +77,7 @@ export default function EpicFormScreen() {
           patch: {
             title: values.title,
             description: values.description?.trim() ? values.description.trim() : null,
+            priority: values.priority,
             category_id: values.categoryId,
           },
         });
@@ -84,6 +87,7 @@ export default function EpicFormScreen() {
           category_id: values.categoryId,
           title: values.title,
           description: values.description ?? null,
+          priority: values.priority,
           registered_date: params.registeredDate ?? new Date().toISOString().slice(0, 10),
         });
       }

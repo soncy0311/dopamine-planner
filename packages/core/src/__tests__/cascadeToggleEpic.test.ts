@@ -47,7 +47,6 @@ function makeClient(): { client: AppSupabaseClient; calls: FromCall[]; rpc: Retu
                     epic_id: 'ep-1',
                     title: `t-${id}`,
                     description: null,
-                    priority: 'normal',
                     status: payload.status,
                     registered_date: '2026-05-06',
                     completed_date: payload.completed_date,

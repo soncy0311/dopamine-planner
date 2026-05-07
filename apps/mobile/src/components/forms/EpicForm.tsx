@@ -33,7 +33,13 @@ export function EpicForm({
     formState: { errors },
   } = useForm<EpicFormValues>({
     resolver: zodResolver(EpicFormSchema),
-    defaultValues: { title: '', description: '', categoryId: EMPTY_UUID, ...defaultValues },
+    defaultValues: {
+      title: '',
+      description: '',
+      priority: 'medium',
+      categoryId: EMPTY_UUID,
+      ...defaultValues,
+    },
   });
 
   return (
@@ -69,6 +75,31 @@ export function EpicForm({
             className="mb-1 min-h-20 rounded-md border border-border px-3 py-3 text-foreground"
             accessibilityLabel="Epic 설명"
           />
+        )}
+      />
+
+      <Text className="mb-1 mt-3 text-sm text-muted-foreground">우선순위</Text>
+      <Controller
+        control={control}
+        name="priority"
+        render={({ field: { value, onChange } }) => (
+          <View className="flex-row gap-2">
+            {(['high', 'medium', 'low'] as const).map((p) => (
+              <Pressable
+                key={p}
+                onPress={() => onChange(p)}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: value === p }}
+                className={`flex-1 items-center rounded-md border px-3 py-2 ${
+                  value === p ? 'border-primary bg-primary' : 'border-border'
+                }`}
+              >
+                <Text className={value === p ? 'text-primary-foreground' : 'text-foreground'}>
+                  {p}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
         )}
       />
 

@@ -197,8 +197,8 @@ export default function SettingsPage() {
         </div>
       </section>
 
-      <SettingsSection title="앱">
-        <SettingsRow label="테마" value="곧 제공 예정" disabled />
+      <SettingsSection title="테마">
+        <SettingsRow label="화면 모드" value="시스템" disabled />
       </SettingsSection>
 
       <SettingsSection title="정보">

@@ -269,7 +269,7 @@ ERD 상세는 [`detail-todo-service-initialize.md`](./detail-todo-service-initia
 - 모바일 화면 작성 시 Tailwind className 그대로 사용 (`<View className="bg-purple-500 p-4">`)
 - Sub-04 검증 시 디자인 시스템 토큰(`docs/base/design-system/`) 의 색·간격이 시뮬레이터 화면에 일치하는지 시각 비교
 
-## Sub-PRD 구조 (9개 — Sub-01~05 = 1차 / Sub-06~08 = prototype 정합 후속 / Sub-09 = 모달·DB·설정 정합)
+## Sub-PRD 구조 (10개 — Sub-01~05 = 1차 / Sub-06~08 = prototype 정합 후속 / Sub-09 = 모달·DB·설정 정합 / Sub-10 = priority Epic 이전 + 잔존 정책 정합)
 
 본 PRD 승인 후 `/generate-sub-prd` 로 Sub-01 부터 순차 생성한다. 분할은 1차 제안이며, 후속 시점에 작업 흐름 보면서 재분할 가능하다.
 
@@ -286,6 +286,7 @@ Sub-06~08 은 Sub-02·03 머지 후 `docs/base/prototype/` 와의 시각·UX 격
 | [**Sub-07: `feat/epic-accordion-card`**](./sub-prd-07-feat-epic-accordion-card.md) ✅ **Done (2026-05-06)** | Epic 아코디언 카드 신설 (`EpicAccordionCard` web/mobile) + MainDailyView 일반·Epic 혼재 렌더 + cascade 메인 토글 + Realtime 진행률 갱신 + expand state 영속화 (localStorage / AsyncStorage) | `packages/ui/src/EpicAccordionCard.tsx`, `apps/web/src/components/MainDailyView.tsx`, `apps/mobile/src/components/{EpicAccordionCard,MainDailyViewMobile}.tsx`, `packages/core/src/services/todo.ts` (`cascadeToggleEpic`), `packages/core/src/utils/groupByEpic.ts` | Sub-01, Sub-06 |
 | [**Sub-08: `feat/auth-and-empty-state`**](./sub-prd-08-feat-auth-and-empty-state.md) ✅ **Done (2026-05-06)** | Empty state·Spinner·Toast 디자인 SoT 등재 + 공유 컴포넌트 신설 (web + mobile) + 호출 측 리팩터 (MainDailyView / MainDailyViewMobile) + Toaster props 정합 | `packages/ui/src/{EmptyState,Spinner}.tsx`, `apps/mobile/src/components/{EmptyState,Spinner}.tsx`, `docs/base/design-system/components/*.md`, `apps/web/src/components/MainDailyView.tsx`, `apps/web/src/app/layout.tsx`, `apps/mobile/src/components/MainDailyViewMobile.tsx` | (디자인 결정 의존) |
 | [**Sub-09: `feat/issue-flow-and-settings-revamp`**](./sub-prd-09-feat-issue-flow-and-settings-revamp.md) | sub_issue/Epic 모달 분리 + 분류 자유입력 Combobox + 설정·관리 페이지 정합 + DB rename/trigger | 마이그레이션 006/007/008, `CategoryComboboxCreate`, `EpicFormModal`/`SubIssueFormModal`, settings 재구현 | Sub-01, Sub-02, Sub-03, Sub-06, Sub-07, Sub-08 |
+| [**Sub-10: `refactor/priority-on-epic-and-design-system-alignment`**](./sub-prd-10-refactor-priority-on-epic-and-design-system-alignment.md) | `priority` 를 sub_issue → epic_issue 로 이전 + AddButton SVG 제거 + Sub 폼 readonly Epic input + Epic 폼 priority DB 연동 + EpicCard priority badge + Settings "앱" → "테마" + mobile 정합 | 마이그레이션 013, `domain/{todo,epic}.ts`, `EpicAccordionCard.priority`, `TodoItem` priority 제거, web/mobile 모달·Settings 갱신 | Sub-01, Sub-02, Sub-03, Sub-06, Sub-07, Sub-08, Sub-09 |
 
 > **분할 원칙**: stack-pivot 의 Phase 4·5 (웹 SPA 골격 / 모바일 골격) 가 끝난 시점부터 시작한다고 가정. 본 PRD 의 sub 들은 골격을 늘여 실 화면들로 확장한다.
 > **Sub-06~08 추가 사유**: Sub-02·03 머지 후 prototype 의도와 시각·UX 격차 9건이 누적. Sub-06 (시각·UX 일괄) / Sub-07 (Epic 카드 단일 큰 작업) / Sub-08 (디자인 결정 의존 — Empty/Loading/Toast SoT) 로 책임 분리.

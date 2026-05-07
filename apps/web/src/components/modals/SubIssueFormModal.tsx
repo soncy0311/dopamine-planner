@@ -9,12 +9,10 @@ import { z } from 'zod';
 import { useCreateTodo } from '@todo-list/core';
 import { showFkOrDefaultError } from '@/lib/errors/fkErrorToast';
 import { supabase } from '@/lib/supabase/client';
-import { PriorityRadioGroup } from '@/components/ui/PriorityRadioGroup';
 
 const SubIssueFormSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이내'),
   description: z.string().max(2000, '설명은 2000자 이내').optional(),
-  priority: z.enum(['high', 'medium', 'low']),
   registeredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
 });
 type SubIssueFormValues = z.infer<typeof SubIssueFormSchema>;
@@ -39,7 +37,6 @@ export function SubIssueFormModal({
     defaultValues: {
       title: '',
       description: '',
-      priority: 'medium',
       registeredDate: defaultRegisteredDate,
     },
   });
@@ -49,7 +46,6 @@ export function SubIssueFormModal({
       form.reset({
         title: '',
         description: '',
-        priority: 'medium',
         registeredDate: defaultRegisteredDate,
       });
     }
@@ -70,7 +66,6 @@ export function SubIssueFormModal({
         epic_id: epicId,
         title: values.title,
         description: values.description?.trim() ? values.description.trim() : null,
-        priority: values.priority,
         registered_date: values.registeredDate,
       });
       toast.success('서브 이슈가 생성되었어요');
@@ -86,16 +81,9 @@ export function SubIssueFormModal({
         <Dialog.Overlay className="fixed inset-0 bg-black-900/40" />
         <Dialog.Content className="fixed inset-0 flex flex-col gap-4 bg-white p-6 sm:inset-auto sm:left-1/2 sm:top-1/2 sm:w-[480px] sm:max-w-[calc(100vw-2rem)] sm:-translate-x-1/2 sm:-translate-y-1/2 sm:rounded-lg sm:shadow-[0_20px_60px_rgba(0,0,0,0.15)]">
           <header className="flex items-center justify-between">
-            <div className="flex flex-col">
-              <Dialog.Title className="text-lg font-semibold text-black-900">
-                서브 이슈 추가
-              </Dialog.Title>
-              {epicTitle ? (
-                <Dialog.Description className="text-xs text-periwinkle-400">
-                  Epic: {epicTitle}
-                </Dialog.Description>
-              ) : null}
-            </div>
+            <Dialog.Title className="text-lg font-semibold text-black-900">
+              서브 이슈 추가
+            </Dialog.Title>
             <Dialog.Close
               type="button"
               aria-label="닫기"
@@ -105,6 +93,19 @@ export function SubIssueFormModal({
             </Dialog.Close>
           </header>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <label htmlFor="sub-epic" className="text-sm font-medium text-black-900">
+                상위 Epic
+              </label>
+              <input
+                id="sub-epic"
+                type="text"
+                value={epicTitle ?? ''}
+                readOnly
+                aria-readonly="true"
+                className="rounded-md border border-periwinkle-200 bg-periwinkle-100 px-3 py-3 text-sm text-periwinkle-500 outline-none"
+              />
+            </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="sub-title" className="text-sm font-medium text-black-900">
                 제목 *
@@ -137,13 +138,6 @@ export function SubIssueFormModal({
                   {form.formState.errors.description.message}
                 </span>
               )}
-            </div>
-            <div className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-black-900">우선순위</span>
-              <PriorityRadioGroup
-                value={form.watch('priority')}
-                onChange={(p) => form.setValue('priority', p, { shouldDirty: true })}
-              />
             </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="sub-date" className="text-sm font-medium text-black-900">

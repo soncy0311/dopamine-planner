@@ -200,7 +200,7 @@ Atoms를 조합하여 하나의 기능 단위를 구성한다.
 | 구성 | Chip[] (`전체` + 사용자 분류명) |
 |------|---|
 | **설명** | 메인 화면에서 분류별로 Epic 카드를 필터링하는 칩 그룹 |
-| **상태** | 활성 (`--color-interactive-primary` 배경 + `--color-text-inverse`), 비활성 (`--color-bg-subtle` + `--color-text-secondary`) |
+| **상태** | 활성 (`--badge-bg` 배경 + `--badge-text` + 동일 색 border), 비활성 (`border 1px --color-border-default` + `--color-bg-elevated` + `--color-text-secondary`) — prototype `proto-filter-chip` 정합 |
 | **레이아웃** | 가로 스크롤 (`overflow-x: auto`), 칩 간격 `--spacing-2`, 칩 높이 32px, `--radius-full` |
 | **분류 표기** | 칩 라벨은 분류명 텍스트만. **컬러 dot 동반 금지** (`TodoItem` 과 동일 정책) |
 | **접근성** | 각 칩은 `<button>`, 활성 칩에 `aria-pressed="true"` |
@@ -379,11 +379,11 @@ Molecules를 조합하여 독립적인 섹션을 구성한다.
 | **설명** | 분류(카테고리) 관리 목록 |
 | **레이아웃** | 리스트 아이템 간격 `--spacing-3` |
 
-### EpicCard
+### IssueCardAccordion
 
 | 구성 | Header (Checkbox + CategoryBadge + PriorityBadge + Title + ProgressPercent) + SegmentedProgressBar / ProgressBar + ExpandedBody (SubIssueRow[] + "서브 이슈 추가") |
 |------|---|
-| **설명** | Epic 의 진행률 + 하위 Sub 들을 아코디언 형태로 표현. 메인 화면의 기본 단위 카드 |
+| **설명** | Epic 의 진행률 + 하위 Sub 들을 아코디언 형태로 표현. 메인 화면의 기본 단위 카드. 코드: `packages/ui/src/IssueCardAccordion.tsx` (web), `apps/mobile/src/components/IssueCardAccordion.tsx` (mobile) |
 | **변형** | 펼침 (`data-expanded="true"`) / 접힘 (`data-expanded="false"`) |
 | **헤더 표시 정책** | CategoryBadge 와 PriorityBadge 는 Epic 헤더에만 노출. SubIssueRow 에는 priority/category 배지 미노출 (분류·우선순위는 Epic 단위 정책 — [`./components/issue-creation.md`](./components/issue-creation.md)) |
 | **상호작용** | Header Checkbox 클릭 → cascade 토글 (Sub 0개일 때도 Epic 자체를 manual 토글). Title 클릭 → Epic 편집 진입. "서브 이슈 추가" 버튼 → `SubCreateSheet` |

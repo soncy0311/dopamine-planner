@@ -10,7 +10,6 @@ type TodoDetailFetch = {
   id: string;
   title: string;
   description: string | null;
-  priority: 'high' | 'medium' | 'low';
   registered_date: string | null;
   epic_id: string;
   epic: { id: string; category_id: string } | null;
@@ -20,7 +19,7 @@ async function fetchTodoDetail(id: string): Promise<TodoDetailFetch> {
   const { data, error } = await supabase
     .from('sub_issue')
     .select(
-      'id, title, description, priority, registered_date, epic_id, epic:epic_issue(id, category_id)',
+      'id, title, description, registered_date, epic_id, epic:epic_issue(id, category_id)',
     )
     .eq('id', id)
     .single();
@@ -82,7 +81,6 @@ export default function TodoDetailModal() {
         defaultValues={{
           title: detail.title,
           description: detail.description ?? '',
-          priority: detail.priority,
           categoryId: detail.epic?.category_id ?? ('' as unknown as string),
           epicId: detail.epic_id,
           registeredDate: detail.registered_date ?? new Date().toISOString().slice(0, 10),
@@ -96,7 +94,6 @@ export default function TodoDetailModal() {
               patch: {
                 title: values.title,
                 description: values.description ?? null,
-                priority: values.priority,
                 registered_date: values.registeredDate,
                 epic_id: values.epicId,
               },

@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export type DateNavigatorProps = {
   date: string;
@@ -53,10 +53,15 @@ export function buildMonthGrid(anchor: Date): Date[] {
   });
 }
 
+function todayISO(): string {
+  return toISO(new Date());
+}
+
 export function DateNavigator({ date, onChange }: DateNavigatorProps) {
   const current = parseISO(date);
   const year = current.getFullYear();
   const month = current.getMonth() + 1;
+  const today = todayISO();
 
   const [expanded, setExpanded] = useState(false);
   const calId = useId();
@@ -108,7 +113,7 @@ export function DateNavigator({ date, onChange }: DateNavigatorProps) {
           onClick={onPrev}
           className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-periwinkle-100"
         >
-          <span aria-hidden="true">←</span>
+          <ChevronLeft aria-hidden className="h-5 w-5 text-periwinkle-500" />
         </button>
         <button
           type="button"
@@ -136,7 +141,7 @@ export function DateNavigator({ date, onChange }: DateNavigatorProps) {
           onClick={onNext}
           className="flex h-11 w-11 items-center justify-center rounded-full hover:bg-periwinkle-100"
         >
-          <span aria-hidden="true">→</span>
+          <ChevronRight aria-hidden className="h-5 w-5 text-periwinkle-500" />
         </button>
       </div>
 
@@ -160,13 +165,16 @@ export function DateNavigator({ date, onChange }: DateNavigatorProps) {
             const iso = toISO(d);
             const inMonth = d.getMonth() + 1 === month;
             const active = iso === date;
+            const isToday = iso === today;
             const base =
-              'flex h-9 items-center justify-center rounded-md text-sm hover:bg-periwinkle-100';
+              'flex h-9 items-center justify-center rounded-full text-sm hover:bg-periwinkle-100';
             const cls = active
               ? `${base} bg-purple-500 text-white hover:bg-purple-500`
-              : inMonth
-                ? `${base} text-periwinkle-500`
-                : `${base} text-lavender-gray-300 opacity-40`;
+              : isToday
+                ? `${base} text-purple-500 font-semibold ring-1 ring-purple-500 ring-inset`
+                : inMonth
+                  ? `${base} text-periwinkle-500`
+                  : `${base} text-lavender-gray-300 opacity-40`;
             return (
               <button
                 key={iso}
@@ -187,6 +195,12 @@ export function DateNavigator({ date, onChange }: DateNavigatorProps) {
           {week.map((d, i) => {
             const iso = toISO(d);
             const active = iso === date;
+            const isToday = iso === today;
+            const numCls = active
+              ? 'flex h-8 w-8 items-center justify-center rounded-full bg-purple-500 text-sm font-medium text-white'
+              : isToday
+                ? 'flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold text-purple-500 ring-1 ring-purple-500 ring-inset'
+                : 'flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium text-periwinkle-500';
             return (
               <button
                 key={iso}
@@ -194,14 +208,10 @@ export function DateNavigator({ date, onChange }: DateNavigatorProps) {
                 aria-label={`${d.getMonth() + 1}월 ${d.getDate()}일`}
                 aria-pressed={active}
                 onClick={() => onChange(iso)}
-                className={
-                  active
-                    ? 'flex h-11 flex-col items-center justify-center rounded-md bg-purple-500 text-white'
-                    : 'flex h-11 flex-col items-center justify-center rounded-md text-periwinkle-500 hover:bg-periwinkle-100'
-                }
+                className="flex flex-col items-center justify-center gap-0.5 py-1 rounded-md hover:bg-periwinkle-100"
               >
-                <span className="text-[10px]">{DAY_LABELS[i]}</span>
-                <span className="text-sm font-medium">{d.getDate()}</span>
+                <span className="text-[10px] font-medium text-periwinkle-400">{DAY_LABELS[i]}</span>
+                <span className={numCls}>{d.getDate()}</span>
               </button>
             );
           })}

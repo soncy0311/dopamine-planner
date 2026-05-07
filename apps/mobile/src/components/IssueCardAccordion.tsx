@@ -2,12 +2,13 @@ import { Pressable, Text, View } from 'react-native';
 import type { SubIssueWithJoins } from '@todo-list/core';
 import { TodoItem } from './TodoItem';
 
-export type EpicAccordionCardProps = {
+export type IssueCardAccordionProps = {
   epicId: string;
   title: string;
   progressPercent: number;
   segments: { filled: boolean }[];
   category?: { name: string; color: string };
+  priority?: 'high' | 'medium' | 'low' | null;
   expanded: boolean;
   onToggleExpand: () => void;
   onMainToggle: () => void;
@@ -19,11 +20,30 @@ export type EpicAccordionCardProps = {
   onTitlePress?: () => void;
 };
 
-export function EpicAccordionCard({
+const PRIORITY_LABEL: Record<'high' | 'medium' | 'low', string> = {
+  high: 'High',
+  medium: 'Medium',
+  low: 'Low',
+};
+
+function priorityClasses(p: 'high' | 'medium' | 'low'): string {
+  if (p === 'high') return 'bg-priority-high-bg';
+  if (p === 'medium') return 'bg-priority-medium-bg';
+  return 'bg-priority-low-bg';
+}
+
+function priorityTextClasses(p: 'high' | 'medium' | 'low'): string {
+  if (p === 'high') return 'text-priority-high';
+  if (p === 'medium') return 'text-priority-medium';
+  return 'text-priority-low';
+}
+
+export function IssueCardAccordion({
   title,
   progressPercent,
   segments,
   category,
+  priority,
   expanded,
   onToggleExpand,
   onMainToggle,
@@ -33,7 +53,7 @@ export function EpicAccordionCard({
   onSubPress,
   onAddSubIssue,
   onTitlePress,
-}: EpicAccordionCardProps) {
+}: IssueCardAccordionProps) {
   const done = mainStatus === 'done';
 
   return (
@@ -63,6 +83,17 @@ export function EpicAccordionCard({
               style={{ backgroundColor: category.color || '#9ca3af' }}
             />
             <Text className="text-xs text-muted-foreground">{category.name}</Text>
+          </View>
+        ) : null}
+
+        {priority ? (
+          <View
+            accessibilityLabel={`Epic 우선순위 ${PRIORITY_LABEL[priority]}`}
+            className={`mr-2 rounded-md px-2 py-0.5 ${priorityClasses(priority)}`}
+          >
+            <Text className={`text-[10px] font-medium uppercase ${priorityTextClasses(priority)}`}>
+              {PRIORITY_LABEL[priority]}
+            </Text>
           </View>
         ) : null}
 

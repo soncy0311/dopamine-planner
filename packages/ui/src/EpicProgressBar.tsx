@@ -15,15 +15,16 @@ export function EpicProgressBar({ total, done, segments = true }: EpicProgressBa
         aria-valuenow={safeDone}
         aria-valuemin={0}
         aria-valuemax={safeTotal}
-        className="flex h-2 w-full gap-1"
+        className="flex h-2 w-full"
+        style={{ gap: '2px' }}
       >
         {Array.from({ length: safeTotal }).map((_, i) => (
           <span
             key={i}
             className={
               i < safeDone
-                ? 'h-full flex-1 rounded-sm bg-purple-500'
-                : 'h-full flex-1 rounded-sm bg-periwinkle-200'
+                ? 'h-full flex-1 rounded-full bg-purple-500'
+                : 'h-full flex-1 rounded-full bg-periwinkle-100'
             }
           />
         ))}
@@ -39,10 +40,10 @@ export function EpicProgressBar({ total, done, segments = true }: EpicProgressBa
       aria-valuenow={safeDone}
       aria-valuemin={0}
       aria-valuemax={safeTotal}
-      className="h-2 w-full overflow-hidden rounded-sm bg-periwinkle-200"
+      className="h-2 w-full overflow-hidden rounded-full bg-periwinkle-100"
     >
       <span
-        className="block h-full bg-purple-500 transition-all"
+        className="block h-full rounded-full bg-purple-500 transition-all"
         style={{ width: `${ratio * 100}%` }}
       />
     </div>

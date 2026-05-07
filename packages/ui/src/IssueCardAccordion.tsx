@@ -1,41 +1,48 @@
 import type { MouseEvent } from 'react';
 import { EpicProgressBar } from './EpicProgressBar';
-import { TodoItem, type TodoItemPriority } from './TodoItem';
+import { TodoItem, priorityBadgeClass, type TodoItemPriority } from './TodoItem';
 
-export type EpicAccordionSegment = { filled: boolean };
+export type IssueCardAccordionSegment = { filled: boolean };
 
-export type EpicAccordionSubIssue = {
+export type IssueCardAccordionSubIssue = {
   id: string;
   title: string;
   status: 'todo' | 'done';
-  priority?: TodoItemPriority | null;
   carryOverCount?: number;
   category?: { name: string; color: string };
   onToggle: () => void;
   onPress?: () => void;
 };
 
-export type EpicAccordionCardProps = {
+const PRIORITY_LABEL: Record<TodoItemPriority, string> = {
+  high: 'High',
+  medium: 'Medium',
+  low: 'Low',
+};
+
+export type IssueCardAccordionProps = {
   epicId: string;
   title: string;
   progressPercent: number;
-  segments: EpicAccordionSegment[];
+  segments: IssueCardAccordionSegment[];
   category?: { name: string; color: string };
+  priority?: TodoItemPriority | null;
   expanded: boolean;
   onToggleExpand: () => void;
   onMainToggle: () => void;
   mainStatus: 'todo' | 'done';
-  subIssues: EpicAccordionSubIssue[];
+  subIssues: IssueCardAccordionSubIssue[];
   onAddSubIssue?: () => void;
   onTitlePress?: () => void;
 };
 
-export function EpicAccordionCard({
+export function IssueCardAccordion({
   epicId,
   title,
   progressPercent,
   segments,
   category,
+  priority,
   expanded,
   onToggleExpand,
   onMainToggle,
@@ -43,7 +50,7 @@ export function EpicAccordionCard({
   subIssues,
   onAddSubIssue,
   onTitlePress,
-}: EpicAccordionCardProps) {
+}: IssueCardAccordionProps) {
   const done = mainStatus === 'done';
   const total = segments.length;
   const doneCount = segments.filter((s) => s.filled).length;
@@ -99,6 +106,15 @@ export function EpicAccordionCard({
           </span>
         ) : null}
 
+        {priority ? (
+          <span
+            className={priorityBadgeClass(priority)}
+            aria-label={`Epic 우선순위 ${PRIORITY_LABEL[priority]}`}
+          >
+            {PRIORITY_LABEL[priority]}
+          </span>
+        ) : null}
+
         {onTitlePress ? (
           <button
             type="button"
@@ -150,7 +166,6 @@ export function EpicAccordionCard({
                 id={s.id}
                 title={s.title}
                 status={s.status}
-                priority={s.priority}
                 carryOverCount={s.carryOverCount}
                 category={s.category}
                 onToggle={s.onToggle}

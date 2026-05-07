@@ -29,22 +29,22 @@ export function EpicFormModal({
   defaultRegisteredDate,
 }: EpicFormModalProps) {
   const [category, setCategory] = useState<CategoryComboboxValue | null>(null);
-  const [priority, setPriority] = useState<'high' | 'medium' | 'low'>('medium');
 
   const form = useForm<EpicFormValues>({
     resolver: zodResolver(EpicFormSchema),
     defaultValues: {
       title: '',
       description: '',
+      priority: 'medium',
       categoryId: '',
     },
   });
+  const priority = form.watch('priority');
 
   useEffect(() => {
     if (open) {
-      form.reset({ title: '', description: '', categoryId: '' });
+      form.reset({ title: '', description: '', priority: 'medium', categoryId: '' });
       setCategory(null);
-      setPriority('medium');
     }
   }, [open, form]);
 
@@ -67,6 +67,7 @@ export function EpicFormModal({
         category_id: values.categoryId,
         title: values.title,
         description: values.description ?? null,
+        priority: values.priority,
         registered_date: defaultRegisteredDate,
       });
       toast.success('Epic 이 생성되었어요');
@@ -124,7 +125,10 @@ export function EpicFormModal({
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-sm font-medium text-black-900">우선순위</span>
-              <PriorityRadioGroup value={priority} onChange={setPriority} />
+              <PriorityRadioGroup
+                value={priority}
+                onChange={(p) => form.setValue('priority', p, { shouldDirty: true })}
+              />
             </div>
             <div className="flex flex-col gap-1">
               <span className="text-sm font-medium text-black-900">분류</span>

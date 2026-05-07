@@ -10,13 +10,11 @@ import { z } from 'zod';
 import { useDeleteTodo, useUpdateTodo, type Workspace } from '@todo-list/core';
 import { showFkOrDefaultError } from '@/lib/errors/fkErrorToast';
 import { supabase } from '@/lib/supabase/client';
-import { PriorityRadioGroup } from '@/components/ui/PriorityRadioGroup';
 import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
 
 const SubIssueEditSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이내'),
   description: z.string().max(2000, '설명은 2000자 이내').optional(),
-  priority: z.enum(['high', 'medium', 'low']),
   registeredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
 });
 type SubIssueEditValues = z.infer<typeof SubIssueEditSchema>;
@@ -25,7 +23,6 @@ type TodoDetailFetch = {
   id: string;
   title: string;
   description: string | null;
-  priority: 'high' | 'medium' | 'low';
   registered_date: string | null;
   epic_id: string;
   epic: { id: string; title: string } | null;
@@ -34,7 +31,7 @@ type TodoDetailFetch = {
 async function fetchTodoDetail(todoId: string): Promise<TodoDetailFetch> {
   const { data, error } = await supabase
     .from('sub_issue')
-    .select('id, title, description, priority, registered_date, epic_id, epic:epic_issue(id, title)')
+    .select('id, title, description, registered_date, epic_id, epic:epic_issue(id, title)')
     .eq('id', todoId)
     .single();
   if (error) throw error;
@@ -62,7 +59,6 @@ export function TodoDetailModal({ open, onOpenChange, todoId }: TodoDetailModalP
     defaultValues: {
       title: '',
       description: '',
-      priority: 'medium',
       registeredDate: new Date().toISOString().slice(0, 10),
     },
   });
@@ -72,7 +68,6 @@ export function TodoDetailModal({ open, onOpenChange, todoId }: TodoDetailModalP
     form.reset({
       title: detail.title,
       description: detail.description ?? '',
-      priority: detail.priority,
       registeredDate:
         detail.registered_date ?? new Date().toISOString().slice(0, 10),
     });
@@ -90,7 +85,6 @@ export function TodoDetailModal({ open, onOpenChange, todoId }: TodoDetailModalP
         patch: {
           title: values.title,
           description: values.description?.trim() ? values.description.trim() : null,
-          priority: values.priority,
           registered_date: values.registeredDate,
         },
       });
@@ -172,13 +166,6 @@ export function TodoDetailModal({ open, onOpenChange, todoId }: TodoDetailModalP
                       {form.formState.errors.description.message}
                     </span>
                   )}
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm font-medium text-black-900">우선순위</span>
-                  <PriorityRadioGroup
-                    value={form.watch('priority')}
-                    onChange={(p) => form.setValue('priority', p, { shouldDirty: true })}
-                  />
                 </div>
                 <div className="flex flex-col gap-1">
                   <label htmlFor="sub-edit-date" className="text-sm font-medium text-black-900">

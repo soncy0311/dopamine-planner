@@ -10,7 +10,7 @@ import { supabase } from '@/lib/supabase';
 
 const SubIssueFormSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이내'),
-  priority: z.enum(['high', 'medium', 'low']),
+  description: z.string().max(2000, '설명은 2000자 이내').optional(),
   registeredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
 });
 type SubIssueFormValues = z.infer<typeof SubIssueFormSchema>;
@@ -37,7 +37,7 @@ export default function SubIssueFormScreen() {
     watch,
   } = useForm<SubIssueFormValues>({
     resolver: zodResolver(SubIssueFormSchema),
-    defaultValues: { title: '', priority: 'medium', registeredDate: defaultRegistered },
+    defaultValues: { title: '', description: '', registeredDate: defaultRegistered },
   });
 
   const registeredDate = watch('registeredDate');
@@ -61,7 +61,7 @@ export default function SubIssueFormScreen() {
         user_id: userRes.user.id,
         epic_id: epicId,
         title: values.title,
-        priority: values.priority,
+        description: values.description?.trim() ? values.description.trim() : null,
         registered_date: values.registeredDate,
       });
       router.back();
@@ -74,11 +74,17 @@ export default function SubIssueFormScreen() {
   return (
     <View className="flex-1 bg-background p-4">
       <Text className="text-base font-semibold text-foreground">서브 이슈 추가</Text>
-      {epicTitle ? (
-        <Text className="mt-1 text-xs text-muted-foreground">Epic: {epicTitle}</Text>
-      ) : null}
 
-      <Text className="mb-1 mt-4 text-sm text-muted-foreground">제목 *</Text>
+      <Text className="mb-1 mt-4 text-sm text-muted-foreground">상위 Epic</Text>
+      <TextInput
+        value={epicTitle}
+        editable={false}
+        accessibilityLabel="상위 Epic"
+        accessibilityState={{ disabled: true }}
+        className="mb-1 rounded-md border border-border bg-muted px-3 py-3 text-muted-foreground"
+      />
+
+      <Text className="mb-1 mt-3 text-sm text-muted-foreground">제목 *</Text>
       <Controller
         control={control}
         name="title"
@@ -95,30 +101,27 @@ export default function SubIssueFormScreen() {
       />
       {errors.title && <Text className="mb-2 text-xs text-red-600">{errors.title.message}</Text>}
 
-      <Text className="mb-1 mt-3 text-sm text-muted-foreground">우선순위</Text>
+      <Text className="mb-1 mt-3 text-sm text-muted-foreground">설명</Text>
       <Controller
         control={control}
-        name="priority"
-        render={({ field: { value, onChange } }) => (
-          <View className="flex-row gap-2">
-            {(['high', 'medium', 'low'] as const).map((p) => (
-              <Pressable
-                key={p}
-                onPress={() => onChange(p)}
-                className={`flex-1 items-center rounded-md border px-3 py-2 ${
-                  value === p ? 'border-primary bg-primary' : 'border-border'
-                }`}
-              >
-                <Text
-                  className={value === p ? 'text-primary-foreground' : 'text-foreground'}
-                >
-                  {p}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
+        name="description"
+        render={({ field: { value, onChange, onBlur } }) => (
+          <TextInput
+            value={value ?? ''}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder="설명을 입력하세요 (선택)"
+            multiline
+            numberOfLines={3}
+            textAlignVertical="top"
+            className="mb-1 min-h-[80px] rounded-md border border-border px-3 py-3 text-foreground"
+            accessibilityLabel="서브 이슈 설명"
+          />
         )}
       />
+      {errors.description && (
+        <Text className="mb-2 text-xs text-red-600">{errors.description.message}</Text>
+      )}
 
       <Text className="mb-1 mt-3 text-sm text-muted-foreground">등록일</Text>
       <Pressable

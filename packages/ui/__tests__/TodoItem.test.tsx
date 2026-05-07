@@ -10,13 +10,8 @@ describe('TodoItem', () => {
     onToggle: vi.fn(),
   };
 
-  it('priority="high" 일 때 High badge 를 노출한다', () => {
-    render(<TodoItem {...baseProps} priority="high" />);
-    expect(screen.getByText('High')).toBeInTheDocument();
-  });
-
-  it('priority 가 null/undefined 면 badge 를 노출하지 않는다', () => {
-    render(<TodoItem {...baseProps} priority={null} />);
+  it('priority prop 부재 — priority badge 미노출 (sub-prd-10 §3.1: priority 는 Epic 단위)', () => {
+    render(<TodoItem {...baseProps} />);
     expect(screen.queryByText('High')).toBeNull();
     expect(screen.queryByText('Medium')).toBeNull();
     expect(screen.queryByText('Low')).toBeNull();

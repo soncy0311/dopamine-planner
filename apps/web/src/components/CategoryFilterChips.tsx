@@ -29,8 +29,8 @@ export function CategoryFilterChips({
         onClick={() => onSelect(null)}
         className={
           selectedId === null
-            ? 'flex h-8 shrink-0 items-center rounded-full bg-purple-500 px-3 text-xs font-semibold text-white'
-            : 'flex h-8 shrink-0 items-center rounded-full bg-periwinkle-100 px-3 text-xs font-medium text-periwinkle-500 hover:bg-periwinkle-200'
+            ? 'flex h-8 shrink-0 items-center rounded-full border border-purple-100 bg-purple-100 px-3 text-xs font-semibold text-purple-700'
+            : 'flex h-8 shrink-0 items-center rounded-full border border-periwinkle-200 bg-white px-3 text-xs font-medium text-periwinkle-500 hover:bg-periwinkle-100'
         }
       >
         전체
@@ -45,8 +45,8 @@ export function CategoryFilterChips({
             onClick={() => onSelect(cat.id)}
             className={
               active
-                ? 'flex h-8 shrink-0 items-center rounded-full bg-purple-500 px-3 text-xs font-semibold text-white'
-                : 'flex h-8 shrink-0 items-center rounded-full bg-periwinkle-100 px-3 text-xs font-medium text-periwinkle-500 hover:bg-periwinkle-200'
+                ? 'flex h-8 shrink-0 items-center rounded-full border border-purple-100 bg-purple-100 px-3 text-xs font-semibold text-purple-700'
+                : 'flex h-8 shrink-0 items-center rounded-full border border-periwinkle-200 bg-white px-3 text-xs font-medium text-periwinkle-500 hover:bg-periwinkle-100'
             }
           >
             <span className="truncate max-w-[8rem]">{cat.name}</span>

@@ -21,7 +21,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { DateHeaderMobile } from './DateHeaderMobile';
 import { TodoItem } from './TodoItem';
-import { EpicAccordionCard } from './EpicAccordionCard';
+import { IssueCardAccordion } from './IssueCardAccordion';
 import { EmptyState } from './EmptyState';
 import { Spinner } from './Spinner';
 
@@ -301,12 +301,13 @@ export function MainDailyViewMobile({ workspace }: Props) {
                       ? 'done'
                       : 'todo';
                 return (
-                  <EpicAccordionCard
+                  <IssueCardAccordion
                     epicId={item.epic.id}
                     title={item.epic.title}
                     progressPercent={progressPercent}
                     segments={item.subs.map((s) => ({ filled: s.status === 'done' }))}
                     category={item.category}
+                    priority={item.epic.priority}
                     expanded={!!expand[item.epic.id]}
                     onToggleExpand={() => handleToggleExpand(item.epic.id)}
                     onMainToggle={() => void handleCascadeToggle(item.epic, item.subs)}

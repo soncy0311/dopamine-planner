@@ -12,16 +12,9 @@ export type TodoItemProps = {
   title: string;
   status: 'todo' | 'done';
   category?: TodoItemCategory;
-  priority?: TodoItemPriority | null;
   carryOverCount?: number;
   onToggle: () => void;
   onPress?: () => void;
-};
-
-const PRIORITY_LABEL: Record<TodoItemPriority, string> = {
-  high: 'High',
-  medium: 'Medium',
-  low: 'Low',
 };
 
 export function priorityBadgeClass(p: TodoItemPriority): string {
@@ -36,7 +29,6 @@ export function TodoItem({
   title,
   status,
   category,
-  priority,
   carryOverCount,
   onToggle,
   onPress,
@@ -52,6 +44,40 @@ export function TodoItem({
     onPress?.();
   };
 
+  const checkbox = (
+    <button
+      type="button"
+      aria-pressed={done}
+      aria-label={done ? '완료 해제' : '완료'}
+      onClick={handleCheckboxClick}
+      className="flex h-11 w-11 items-center justify-center rounded-full"
+      style={{ gridRow: 2, gridColumn: 1 }}
+    >
+      <span
+        className={
+          done
+            ? 'flex h-5 w-5 items-center justify-center rounded-full border-2 border-purple-500 bg-purple-500 text-white'
+            : 'flex h-5 w-5 items-center justify-center rounded-full border-2 border-periwinkle-400'
+        }
+      >
+        {done ? (
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path
+              d="M2 6.5L4.5 9L10 3"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        ) : null}
+      </span>
+    </button>
+  );
+
+  const showTags = !!category;
+  const showTrailing = !!(carryOverCount && carryOverCount > 0);
+
   return (
     <div
       role={onPress ? 'button' : undefined}
@@ -63,70 +89,51 @@ export function TodoItem({
           onPress();
         }
       }}
-      className="flex items-center gap-3 rounded-md px-2 py-1 hover:bg-periwinkle-100 transition-colors"
+      className="grid min-h-12 items-center rounded-md px-2 py-1 hover:bg-periwinkle-100 transition-colors"
+      style={{
+        gridTemplateColumns: 'auto 1fr auto',
+        rowGap: '2px',
+        columnGap: '0.75rem',
+      }}
     >
-      <button
-        type="button"
-        aria-pressed={done}
-        aria-label={done ? '완료 해제' : '완료'}
-        onClick={handleCheckboxClick}
-        className="flex h-11 w-11 items-center justify-center rounded-full"
-      >
-        <span
-          className={
-            done
-              ? 'flex h-5 w-5 items-center justify-center rounded-full border-2 border-purple-500 bg-purple-500 text-white'
-              : 'flex h-5 w-5 items-center justify-center rounded-full border-2 border-periwinkle-400'
-          }
+      {checkbox}
+
+      {showTags ? (
+        <div
+          className="flex min-w-0 items-center gap-1"
+          style={{ gridRow: 1, gridColumn: 2 }}
         >
-          {done ? (
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
+          <span className="inline-flex items-center gap-1 text-[10px] font-medium text-periwinkle-400">
+            <span
               aria-hidden="true"
-            >
-              <path
-                d="M2 6.5L4.5 9L10 3"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          ) : null}
-        </span>
-      </button>
+              className="h-2 w-2 rounded-full"
+              style={{ backgroundColor: category!.color }}
+            />
+            <span className="truncate max-w-[8rem]">{category!.name}</span>
+          </span>
+        </div>
+      ) : null}
 
-      <div className="flex flex-1 items-center gap-2 min-w-0">
+      <span
+        className={
+          done
+            ? 'truncate text-sm text-periwinkle-400 line-through min-w-0'
+            : 'truncate text-sm text-periwinkle-500 min-w-0'
+        }
+        style={{ gridRow: 2, gridColumn: 2 }}
+      >
+        {title}
+      </span>
+
+      {showTrailing ? (
         <span
-          className={
-            done
-              ? 'truncate text-sm text-periwinkle-400 line-through'
-              : 'truncate text-sm text-periwinkle-500'
-          }
+          className="inline-flex h-5 items-center rounded-full bg-periwinkle-100 px-2 text-[10px] font-medium text-periwinkle-500"
+          aria-label={`이월 ${carryOverCount}회`}
+          style={{ gridRow: 2, gridColumn: 3 }}
         >
-          {title}
+          +{carryOverCount}
         </span>
-        {priority ? (
-          <span
-            className={priorityBadgeClass(priority)}
-            aria-label={`우선순위 ${PRIORITY_LABEL[priority]}`}
-          >
-            {PRIORITY_LABEL[priority]}
-          </span>
-        ) : null}
-        {carryOverCount && carryOverCount > 0 ? (
-          <span
-            className="inline-flex h-5 items-center rounded-full bg-periwinkle-100 px-2 text-[10px] font-medium text-periwinkle-500"
-            aria-label={`이월 ${carryOverCount}회`}
-          >
-            +{carryOverCount}
-          </span>
-        ) : null}
-      </div>
-
+      ) : null}
     </div>
   );
 }

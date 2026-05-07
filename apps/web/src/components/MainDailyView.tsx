@@ -18,7 +18,7 @@ import {
 import {
   DateNavigator,
   EmptyState,
-  EpicAccordionCard,
+  IssueCardAccordion,
   FAB,
   Spinner,
   TodoItem,
@@ -212,13 +212,14 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
           : 'todo';
 
     return (
-      <EpicAccordionCard
+      <IssueCardAccordion
         key={epic.id}
         epicId={epic.id}
         title={epic.title}
         progressPercent={progressPercent}
         segments={subs.map((s) => ({ filled: s.status === 'done' }))}
         category={cat ? { name: cat.name, color: cat.color } : undefined}
+        priority={epic.priority}
         expanded={!!expand[epic.id]}
         onToggleExpand={() => handleToggleExpand(epic.id)}
         onMainToggle={() => void handleCascadeToggle(epic, subs)}
@@ -229,7 +230,6 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
           id: s.id,
           title: s.title,
           status: s.status,
-          priority: s.priority,
           carryOverCount: s.carryOverCount,
           category: s.category
             ? { name: s.category.name, color: s.category.color }
@@ -260,17 +260,9 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         <button
           type="button"
           onClick={handleCreate}
-          className="hidden h-9 shrink-0 items-center gap-1 rounded-md bg-purple-500 px-4 text-sm font-medium text-white transition-colors hover:bg-purple-600 md:inline-flex"
+          className="hidden h-9 shrink-0 items-center rounded-md bg-purple-500 px-4 text-sm font-medium text-white transition-colors hover:bg-purple-600 md:inline-flex"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M12 5V19M5 12H19"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-          추가
+          + 추가
         </button>
       </div>
       {isLoading ? (
@@ -303,7 +295,6 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
                           id={item.id}
                           title={item.title}
                           status="todo"
-                          priority={item.priority}
                           carryOverCount={item.carryOverCount}
                           category={
                             item.category
@@ -341,7 +332,6 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
                           id={item.id}
                           title={item.title}
                           status="done"
-                          priority={item.priority}
                           carryOverCount={item.carryOverCount}
                           category={
                             item.category

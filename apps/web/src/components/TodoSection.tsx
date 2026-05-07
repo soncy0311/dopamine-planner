@@ -38,7 +38,6 @@ export function TodoSection({ title, status, items, onToggle, onPress }: TodoSec
                 id={item.id}
                 title={item.title}
                 status={status}
-                priority={item.priority}
                 carryOverCount={item.carryOverCount}
                 category={
                   item.category

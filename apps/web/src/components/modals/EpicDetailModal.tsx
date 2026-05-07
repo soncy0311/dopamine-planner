@@ -14,11 +14,13 @@ import {
   CategoryComboboxCreate,
   type CategoryComboboxValue,
 } from '@/components/ui/CategoryComboboxCreate';
+import { PriorityRadioGroup } from '@/components/ui/PriorityRadioGroup';
 import { ConfirmDeleteDialog } from './ConfirmDeleteDialog';
 
 const EpicEditSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이내'),
   description: z.string().max(2000, '설명은 2000자 이내').optional(),
+  priority: z.enum(['high', 'medium', 'low']),
   categoryId: z.string().min(1, '분류를 선택해주세요'),
   registeredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
 });
@@ -28,6 +30,7 @@ type EpicDetailFetch = {
   id: string;
   title: string;
   description: string | null;
+  priority: 'high' | 'medium' | 'low';
   category_id: string;
   registered_date: string | null;
   category: { id: string; name: string; color: string | null } | null;
@@ -36,7 +39,9 @@ type EpicDetailFetch = {
 async function fetchEpicDetail(epicId: string): Promise<EpicDetailFetch> {
   const { data, error } = await supabase
     .from('epic_issue')
-    .select('id, title, description, category_id, registered_date, category:category(id, name, color)')
+    .select(
+      'id, title, description, priority, category_id, registered_date, category:category(id, name, color)',
+    )
     .eq('id', epicId)
     .single();
   if (error) throw error;
@@ -64,6 +69,7 @@ export function EpicDetailModal({ open, onOpenChange, workspace, epicId }: EpicD
     defaultValues: {
       title: '',
       description: '',
+      priority: 'medium',
       categoryId: '',
       registeredDate: new Date().toISOString().slice(0, 10),
     },
@@ -74,6 +80,7 @@ export function EpicDetailModal({ open, onOpenChange, workspace, epicId }: EpicD
     form.reset({
       title: detail.title,
       description: detail.description ?? '',
+      priority: detail.priority,
       categoryId: detail.category_id,
       registeredDate:
         detail.registered_date ?? new Date().toISOString().slice(0, 10),
@@ -108,6 +115,7 @@ export function EpicDetailModal({ open, onOpenChange, workspace, epicId }: EpicD
         patch: {
           title: values.title,
           description: values.description?.trim() ? values.description.trim() : null,
+          priority: values.priority,
           category_id: values.categoryId,
           registered_date: values.registeredDate,
         },
@@ -182,6 +190,13 @@ export function EpicDetailModal({ open, onOpenChange, workspace, epicId }: EpicD
                     rows={3}
                     className="rounded-md border border-periwinkle-200 bg-white px-3 py-3 text-sm text-black-900 outline-none focus:border-2 focus:border-purple-500"
                     placeholder="설명을 입력하세요 (선택)"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-sm font-medium text-black-900">우선순위</span>
+                  <PriorityRadioGroup
+                    value={form.watch('priority')}
+                    onChange={(p) => form.setValue('priority', p, { shouldDirty: true })}
                   />
                 </div>
                 <div className="flex flex-col gap-1">

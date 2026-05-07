@@ -7,7 +7,6 @@ export type TodoInsert = Database['public']['Tables']['sub_issue']['Insert'];
 export type TodoUpdate = Database['public']['Tables']['sub_issue']['Update'];
 
 export type TodoStatus = Database['public']['Enums']['todo_status'];
-export type Priority = Database['public']['Enums']['priority'];
 
 export interface SubIssue {
   id: string;
@@ -15,7 +14,6 @@ export interface SubIssue {
   epicId: string;
   title: string;
   description: string | null;
-  priority: Priority;
   status: TodoStatus;
   registeredDate: string | null;
   completedDate: string | null;
@@ -62,7 +60,6 @@ export function mapSubIssueRow(row: TodoRow): SubIssue {
     epicId: row.epic_id,
     title: row.title,
     description: row.description,
-    priority: row.priority,
     status: row.status,
     registeredDate: row.registered_date,
     completedDate: row.completed_date,
