@@ -69,13 +69,14 @@ describe('IssueCardAccordion', () => {
   it('메인 체크 클릭 시 onMainToggle 이 호출된다', () => {
     const onMainToggle = vi.fn();
     render(<IssueCardAccordion {...makeProps({ onMainToggle })} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Epic 완료' }));
+    // 헤더는 TodoItem 마크업 — checkbox aria-label = "완료" / "완료 해제"
+    fireEvent.click(screen.getAllByRole('button', { name: '완료' })[0]);
     expect(onMainToggle).toHaveBeenCalledTimes(1);
   });
 
   it('mainStatus="done" 일 때 메인 체크 button 의 aria-pressed=true', () => {
     render(<IssueCardAccordion {...makeProps({ mainStatus: 'done' })} />);
-    expect(screen.getByRole('button', { name: 'Epic 완료 해제' })).toHaveAttribute(
+    expect(screen.getAllByRole('button', { name: '완료 해제' })[0]).toHaveAttribute(
       'aria-pressed',
       'true',
     );

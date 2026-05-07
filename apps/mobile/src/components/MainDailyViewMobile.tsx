@@ -321,7 +321,17 @@ export function MainDailyViewMobile({ workspace }: Props) {
                 );
               }
               return (
-                <TodoItem todo={item.todo} onToggle={handleToggle} onPress={handlePress} />
+                <TodoItem
+                  todo={item.todo}
+                  category={
+                    item.todo.category
+                      ? { name: item.todo.category.name, color: item.todo.category.color }
+                      : undefined
+                  }
+                  carryOverCount={item.todo.carryOverCount}
+                  onToggle={handleToggle}
+                  onPress={handlePress}
+                />
               );
             }}
           />

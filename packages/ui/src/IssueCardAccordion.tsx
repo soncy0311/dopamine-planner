@@ -1,6 +1,6 @@
 import type { MouseEvent } from 'react';
 import { EpicProgressBar } from './EpicProgressBar';
-import { TodoItem, priorityBadgeClass, type TodoItemPriority } from './TodoItem';
+import { TodoItem, type TodoItemPriority } from './TodoItem';
 
 export type IssueCardAccordionSegment = { filled: boolean };
 
@@ -8,16 +8,8 @@ export type IssueCardAccordionSubIssue = {
   id: string;
   title: string;
   status: 'todo' | 'done';
-  carryOverCount?: number;
-  category?: { name: string; color: string };
   onToggle: () => void;
   onPress?: () => void;
-};
-
-const PRIORITY_LABEL: Record<TodoItemPriority, string> = {
-  high: 'High',
-  medium: 'Medium',
-  low: 'Low',
 };
 
 export type IssueCardAccordionProps = {
@@ -25,7 +17,7 @@ export type IssueCardAccordionProps = {
   title: string;
   progressPercent: number;
   segments: IssueCardAccordionSegment[];
-  category?: { name: string; color: string };
+  category?: { name: string; color?: string };
   priority?: TodoItemPriority | null;
   expanded: boolean;
   onToggleExpand: () => void;
@@ -35,6 +27,31 @@ export type IssueCardAccordionProps = {
   onAddSubIssue?: () => void;
   onTitlePress?: () => void;
 };
+
+function ChevronRight({ expanded }: { expanded: boolean }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden="true"
+      className={
+        expanded
+          ? 'rotate-90 text-periwinkle-400 transition-transform'
+          : 'text-periwinkle-400 transition-transform'
+      }
+    >
+      <path
+        d="M6 4L10 8L6 12"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
 
 export function IssueCardAccordion({
   epicId,
@@ -51,140 +68,133 @@ export function IssueCardAccordion({
   onAddSubIssue,
   onTitlePress,
 }: IssueCardAccordionProps) {
-  const done = mainStatus === 'done';
   const total = segments.length;
   const doneCount = segments.filter((s) => s.filled).length;
   const bodyId = `epic-${epicId}-body`;
 
-  const handleMainToggle = (e: MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    onMainToggle();
+  const handleHeaderClick = (e: MouseEvent<HTMLDivElement>) => {
+    // 체크박스/타이틀/체브론 버튼 자체 클릭은 stopPropagation 으로 분리
+    if (e.target !== e.currentTarget) return;
+    onToggleExpand();
   };
 
   return (
     <article
       data-expanded={expanded}
-      className="flex flex-col gap-2 rounded-lg border border-periwinkle-200 bg-white p-3"
+      className="overflow-hidden rounded-lg border border-periwinkle-200 bg-white"
     >
-      <header className="flex items-center gap-3">
-        <button
-          type="button"
-          aria-pressed={done}
-          aria-label={done ? 'Epic 완료 해제' : 'Epic 완료'}
-          onClick={handleMainToggle}
-          className="flex h-11 w-11 items-center justify-center rounded-full"
-        >
-          <span
-            className={
-              done
-                ? 'flex h-5 w-5 items-center justify-center rounded-full border-2 border-purple-500 bg-purple-500 text-white'
-                : 'flex h-5 w-5 items-center justify-center rounded-full border-2 border-periwinkle-400'
-            }
-          >
-            {done ? (
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path
-                  d="M2 6.5L4.5 9L10 3"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            ) : null}
-          </span>
-        </button>
+      {/* 헤더: TodoItem 마크업 (체크박스 + tags + title + chevron) */}
+      <div className="cursor-pointer" onClick={handleHeaderClick}>
+        <TodoItem
+          id={epicId}
+          title={title}
+          status={mainStatus}
+          category={category}
+          priority={priority}
+          onToggle={onMainToggle}
+          onPress={onTitlePress}
+          trailing={
+            <button
+              type="button"
+              aria-expanded={expanded}
+              aria-controls={bodyId}
+              aria-label={expanded ? '접기' : '펼치기'}
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleExpand();
+              }}
+              className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-periwinkle-100"
+            >
+              <ChevronRight expanded={expanded} />
+            </button>
+          }
+        />
+      </div>
 
-        {category ? (
-          <span className="-ml-2 flex items-center gap-1 text-xs text-periwinkle-400">
-            <span
-              aria-hidden="true"
-              className="h-2 w-2 rounded-full"
-              style={{ backgroundColor: category.color }}
-            />
-            <span className="truncate max-w-[7rem]">{category.name}</span>
-          </span>
-        ) : null}
+      {/* 진행률 바 + percent */}
+      <div className="flex items-center gap-2 px-4 pb-3">
+        <div className="flex-1">
+          <EpicProgressBar total={total} done={doneCount} segments />
+        </div>
+        <span className="text-xs font-medium text-periwinkle-500">{progressPercent}%</span>
+      </div>
 
-        {priority ? (
-          <span
-            className={priorityBadgeClass(priority)}
-            aria-label={`Epic 우선순위 ${PRIORITY_LABEL[priority]}`}
-          >
-            {PRIORITY_LABEL[priority]}
-          </span>
-        ) : null}
-
-        {onTitlePress ? (
-          <button
-            type="button"
-            onClick={onTitlePress}
-            className="flex-1 truncate rounded-md px-1 py-0.5 text-left text-sm font-medium text-periwinkle-500 hover:bg-periwinkle-100"
-          >
-            {title}
-          </button>
-        ) : (
-          <span className="flex-1 truncate text-sm font-medium text-periwinkle-500">{title}</span>
-        )}
-
-        <span className="text-xs text-periwinkle-400">{progressPercent}%</span>
-
-        <button
-          type="button"
-          aria-expanded={expanded}
-          aria-controls={bodyId}
-          aria-label={expanded ? '접기' : '펼치기'}
-          onClick={onToggleExpand}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-periwinkle-400 hover:bg-periwinkle-100"
-        >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            aria-hidden="true"
-            className={expanded ? 'rotate-90 transition-transform' : 'transition-transform'}
-          >
-            <path
-              d="M6 4L10 8L6 12"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      </header>
-
-      <EpicProgressBar total={total} done={doneCount} segments />
-
+      {/* 펼침 body — sub-issues (태그 없이 체크박스 + 제목만) */}
       {expanded ? (
-        <ul id={bodyId} role="list" className="flex flex-col gap-1 pl-6">
-          {subIssues.map((s) => (
-            <li key={s.id}>
-              <TodoItem
-                id={s.id}
-                title={s.title}
-                status={s.status}
-                carryOverCount={s.carryOverCount}
-                category={s.category}
-                onToggle={s.onToggle}
-                onPress={s.onPress}
-              />
-            </li>
-          ))}
-          {onAddSubIssue ? (
-            <li>
-              <button
-                type="button"
-                onClick={onAddSubIssue}
-                className="flex h-9 w-full items-center justify-start rounded-md px-2 text-xs font-medium text-purple-500 hover:bg-periwinkle-100"
-              >
-                + 서브 이슈 추가
-              </button>
-            </li>
-          ) : null}
-        </ul>
+        <div id={bodyId} className="border-t border-periwinkle-100">
+          <ul role="list" className="flex flex-col">
+            {subIssues.map((s) => {
+              const subDone = s.status === 'done';
+              return (
+                <li key={s.id}>
+                  <div
+                    role={s.onPress ? 'button' : undefined}
+                    tabIndex={s.onPress ? 0 : -1}
+                    onClick={() => s.onPress?.()}
+                    onKeyDown={(e) => {
+                      if (s.onPress && (e.key === 'Enter' || e.key === ' ')) {
+                        e.preventDefault();
+                        s.onPress();
+                      }
+                    }}
+                    className="flex min-h-8 items-center gap-2 border-b border-periwinkle-100 py-1 pl-8 pr-4 last:border-b-0 hover:bg-periwinkle-100/50"
+                  >
+                    <button
+                      type="button"
+                      aria-pressed={subDone}
+                      aria-label={subDone ? '완료 해제' : '완료'}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        s.onToggle();
+                      }}
+                      className="flex items-center justify-center"
+                    >
+                      <span
+                        className={
+                          subDone
+                            ? 'flex h-[14px] w-[14px] items-center justify-center rounded-sm border-2 border-purple-500 bg-purple-500 text-white'
+                            : 'flex h-[14px] w-[14px] items-center justify-center rounded-sm border-2 border-periwinkle-300'
+                        }
+                      >
+                        {subDone ? (
+                          <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                            <path
+                              d="M2 6.5L4.5 9L10 3"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        ) : null}
+                      </span>
+                    </button>
+                    <span
+                      className={
+                        subDone
+                          ? 'flex-1 truncate text-xs text-periwinkle-400 line-through'
+                          : 'flex-1 truncate text-xs text-periwinkle-500'
+                      }
+                    >
+                      {s.title}
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+            {onAddSubIssue ? (
+              <li>
+                <button
+                  type="button"
+                  onClick={onAddSubIssue}
+                  className="flex h-9 w-full items-center justify-start border-t border-periwinkle-100 px-4 pl-8 text-xs font-medium text-purple-500 hover:bg-periwinkle-100/50"
+                >
+                  + 서브 이슈 추가
+                </button>
+              </li>
+            ) : null}
+          </ul>
+        </div>
       ) : null}
     </article>
   );
