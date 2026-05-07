@@ -28,6 +28,11 @@ WEB_FILTER    := --filter @todo-list/web
 MOBILE_FILTER := --filter @todo-list/mobile
 COMPOSE       := docker compose -f scripts/docker-compose.yml --project-directory .
 
+# Supabase CLI 가 config.toml 의 env() 보간을 해석하도록
+# env/.env.local 을 자동 export 한 뒤 supabase 호출.
+SB_ENV_FILE   := env/.env.local
+SB_LOAD_ENV   := set -a; [ -f $(SB_ENV_FILE) ] && . $(SB_ENV_FILE) || true; set +a;
+
 .PHONY: help doctor install clean \
 	dev build lint test typecheck format \
 	up down restart ps logs \
@@ -92,14 +97,14 @@ format: ## prettier --write
 
 up: ## supabase start + docker compose up -d web (전체 dev 환경 기동)
 	@printf "$(C_BOLD)→ Supabase 기동$(C_END)\n"
-	@supabase start
+	@$(SB_LOAD_ENV) supabase start
 	@printf "$(C_BOLD)→ Web 컨테이너 기동$(C_END)\n"
 	@$(COMPOSE) up -d web
 	@printf "\n$(C_OK)✓ 완료$(C_END) — Web: http://localhost:3000  Supabase Studio: http://localhost:54323\n"
 
 down: ## docker compose down + supabase stop
 	@$(COMPOSE) down
-	@supabase stop || true
+	@$(SB_LOAD_ENV) supabase stop || true
 
 restart: down up ## up 재실행
 
@@ -148,20 +153,20 @@ mobile-build: ## EAS Build 안내
 
 ## ── Supabase CLI wrap ─────────────────────────────────────────────────────
 
-sb-start: ## supabase start
-	@supabase start
+sb-start: ## supabase start (env/.env.local 자동 로드)
+	@$(SB_LOAD_ENV) supabase start
 
 sb-stop: ## supabase stop
-	@supabase stop
+	@$(SB_LOAD_ENV) supabase stop
 
 sb-reset: ## supabase db reset (마이그레이션 재적용)
-	@supabase db reset
+	@$(SB_LOAD_ENV) supabase db reset
 
 sb-status: ## supabase status (URL/key 등)
-	@supabase status
+	@$(SB_LOAD_ENV) supabase status
 
 sb-gen-types: ## supabase gen types → packages/shared/src/database.ts
-	@supabase gen types typescript --local > packages/shared/src/database.ts
+	@$(SB_LOAD_ENV) supabase gen types typescript --local > packages/shared/src/database.ts
 	@printf "$(C_OK)✓$(C_END) packages/shared/src/database.ts 갱신\n"
 
 sb-link: ## supabase link --project-ref REF=<your-ref>

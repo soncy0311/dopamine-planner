@@ -1,24 +1,20 @@
+'use client';
+
 import { createClient } from '@todo-list/core';
 
-type SupabaseInstance = ReturnType<typeof createClient>;
+// SSG prerender 단계에서 env 미주입 시 빌드 실패 방지용 fallback.
+// 실제 배포(Vercel)·dev 환경에서는 env 주입으로 placeholder 가 치환된다.
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'http://localhost:54321';
+const publishableKey =
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+  'build-placeholder-publishable-key';
 
-let _instance: SupabaseInstance | null = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const browserStorage: any =
+  typeof window !== 'undefined' ? window.localStorage : undefined;
 
-const getInstance = (): SupabaseInstance => {
-  if (_instance) return _instance;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const browserStorage: any = typeof window !== 'undefined' ? window.localStorage : undefined;
-  _instance = createClient({
-    url: process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    anonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    storage: browserStorage,
-  });
-  return _instance;
-};
-
-export const supabase = new Proxy({} as SupabaseInstance, {
-  get: (_target, prop) => {
-    const value = getInstance()[prop as keyof SupabaseInstance];
-    return typeof value === 'function' ? value.bind(getInstance()) : value;
-  },
+export const supabase = createClient({
+  url,
+  publishableKey,
+  storage: browserStorage,
 });

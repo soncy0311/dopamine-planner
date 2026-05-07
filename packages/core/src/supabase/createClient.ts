@@ -9,12 +9,12 @@ export type StorageAdapter = {
 
 export type CreateClientOptions = {
   url: string;
-  anonKey: string;
+  publishableKey: string;
   storage: StorageAdapter;
 };
 
 export function createClient(opts: CreateClientOptions): SupabaseClient<Database> {
-  return createSupabaseClient<Database>(opts.url, opts.anonKey, {
+  return createSupabaseClient<Database>(opts.url, opts.publishableKey, {
     auth: { storage: opts.storage as any, persistSession: true, autoRefreshToken: true },
   });
 }

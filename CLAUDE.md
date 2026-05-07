@@ -105,21 +105,20 @@ todo-list/                  (Monorepo — pnpm + Turborepo)
 
 ## 환경 변수 관리
 
-- 환경 변수 파일은 루트 `env/` 폴더에서 중앙 관리한다
-- `env/*.example`만 원격에 커밋하고, `env/*.local`은 `.gitignore` 처리
-- 새 환경 변수를 추가할 때는 반드시 `env/*.example`도 함께 갱신한다
-- 각 앱의 `dev` 스크립트는 `dotenv-cli`로 `env/` 폴더의 `.local` 파일을 로드한다
+- 환경 변수 파일은 루트 `env/` 폴더에서 **단일 통합 파일** 로 중앙 관리한다
+- `env/.env.example` 만 원격에 커밋하고, `env/.env.local` 은 `.gitignore` 처리
+- 새 환경 변수를 추가할 때는 반드시 `env/.env.example` 도 함께 갱신한다
+- web/mobile 의 `dev`/`build` 스크립트는 `dotenv-cli` 로 `env/.env.local` 을 로드한다
+- Makefile 의 `sb-*` / `up` / `down` 명령은 `env/.env.local` 을 자동 export 한 뒤 supabase CLI 호출 (config.toml 의 `env()` 보간이 참조)
 - 프로덕션(Vercel)은 대시보드에서 환경 변수를 주입한다
-- 모바일 앱: `EXPO_PUBLIC_` 접두사 사용
+- 변수명 중복 사유: Next.js (`NEXT_PUBLIC_`) 와 Expo (`EXPO_PUBLIC_`) 가 각자 자기 접두사만 클라이언트 번들에 포함하므로 같은 값(예: Supabase URL/KEY) 도 두 변수명으로 작성한다
 
 ### 환경 변수 파일 구조
 
 ```
 env/
-├── .env.web.example       # 웹 앱 템플릿 (커밋)
-├── .env.web.local         # 웹 앱 실제 값 (gitignore)
-├── .env.mobile.example    # 모바일 앱 템플릿 (커밋)
-└── .env.mobile.local      # 모바일 앱 실제 값 (gitignore)
+├── .env.example           # 통합 템플릿 (커밋)
+└── .env.local             # 실제 값 (gitignore) — web · mobile · supabase CLI 모두 본 파일 참조
 ```
 
 ## GitHub Projects 설정

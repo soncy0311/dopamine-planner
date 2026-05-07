@@ -13,7 +13,8 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - path: env/.env.web.local
+      # CLAUDE.md §환경 변수 관리 — 통합 env 파일 단일 SoT
+      - path: env/.env.local
         required: false
     extra_hosts:
       # 컨테이너 안에서 호스트의 supabase docker stack (54321) 으로 접근

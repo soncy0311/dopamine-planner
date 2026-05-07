@@ -144,7 +144,7 @@ export type Database = {
           completed_date: string | null
           created_at: string
           description: string | null
-          due_date: string | null
+          registered_date: string | null
           epic_id: string
           id: string
           priority: Database["public"]["Enums"]["priority"]
@@ -158,7 +158,7 @@ export type Database = {
           completed_date?: string | null
           created_at?: string
           description?: string | null
-          due_date?: string | null
+          registered_date?: string | null
           epic_id: string
           id?: string
           priority?: Database["public"]["Enums"]["priority"]
@@ -172,7 +172,7 @@ export type Database = {
           completed_date?: string | null
           created_at?: string
           description?: string | null
-          due_date?: string | null
+          registered_date?: string | null
           epic_id?: string
           id?: string
           priority?: Database["public"]["Enums"]["priority"]

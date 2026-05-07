@@ -4,14 +4,17 @@
   "private": true,
   "main": "expo-router/entry",
   "scripts": {
-    "dev": "dotenv -e ../../env/.env.mobile.local -- expo start",
+    "dev": "dotenv -e ../../env/.env.local -- expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
     "build": "echo 'Use EAS Build for production builds'",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@react-native-async-storage/async-storage": "1.23.1",
+    "@react-native-community/datetimepicker": "8.2.0",
     "@supabase/supabase-js": "^2.0.0",
     "@tanstack/react-query": "^5.0.0",
     "@todo-list/config": "workspace:*",
@@ -19,15 +22,20 @@
     "@todo-list/shared": "workspace:*",
     "expo": "~52.0.0",
     "expo-auth-session": "~6.0.0",
+    "expo-linking": "~7.0.0",
     "expo-router": "~4.0.0",
     "expo-status-bar": "~2.0.0",
     "expo-web-browser": "~14.0.0",
     "nativewind": "^4.0.0",
     "react": "^19.0.0",
+    "react-hook-form": "^7.54.0",
     "react-native": "~0.76.0",
+    "react-native-gesture-handler": "~2.20.0",
+    "react-native-reanimated": "~3.16.0",
     "react-native-safe-area-context": "~5.0.0",
     "react-native-screens": "~4.4.0",
-    "tailwindcss": "^3.4.0"
+    "tailwindcss": "^3.4.0",
+    "zod": "^3.23.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

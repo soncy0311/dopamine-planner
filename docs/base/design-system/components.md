@@ -157,6 +157,42 @@ Atoms를 조합하여 하나의 기능 단위를 구성한다.
 | **레이아웃** | 라벨-입력 간격 `--spacing-2`, 입력 필드 `--radius-md` |
 | **접근성** | `<label>` 연결, 에러 시 `aria-invalid`, `aria-describedby` |
 
+### EmptyState
+
+| 구성 | (Icon) + Title + (Description) + (Action Button) |
+|------|------|
+| **설명** | 데이터 0건 화면의 표준 빈 상태 표현 — 잠정안 (디자인 결정자 합류 전) |
+| **상세 명세** | [`./components/empty-state.md`](./components/empty-state.md) |
+| **사용** | 빈 워크스페이스 / 빈 일자 / 검색 결과 0건 |
+| **접근성** | `role="status"`, 아이콘 `aria-hidden`, CTA 버튼 단수 |
+
+### Spinner
+
+| 구성 | (Wrapper) + 회전 SVG / ActivityIndicator |
+|------|------|
+| **변형** | `inline` (섹션·리스트), `fullscreen` (라우트 전환·부트스트랩) |
+| **사이즈** | `sm` 16 / `md` 24 / `lg` 40 |
+| **상세 명세** | [`./components/spinner.md`](./components/spinner.md) |
+| **접근성** | `role="status"`, `aria-label` 기본 "로딩 중", `prefers-reduced-motion` 폴백 |
+
+### Toast
+
+| 구성 | sonner `<Toaster />` 등록 + `toast.{success,error,info,warning}(msg)` 호출 |
+|------|------|
+| **설명** | 비동기 결과 알림. sonner 라이브러리 wrapping |
+| **상세 명세** | [`./components/toast.md`](./components/toast.md) |
+| **위치 / 시간 / 개수** | top-right / 4초 / 3개 (sonner 기본값 채택) |
+| **접근성** | sonner 의 `aria-live` 자동 관리, `closeButton` 활성 |
+
+### CategoryComboboxCreate
+
+| 구성 | Input + Listbox + "+ 분류 만들기" 옵션 |
+|------|------|
+| **설명** | 분류 자유 입력 + 검색 + 즉시 생성 진입점 — 잠정안 (디자인 결정자 합류 전) |
+| **상세 명세** | [`./components/category-combobox-create.md`](./components/category-combobox-create.md) |
+| **사용** | `EpicFormModal` 의 분류 입력 필드 (분류 생성의 유일 경로) |
+| **접근성** | `role="combobox"`, `aria-expanded`, 옵션 `role="option"`, `↑/↓/Enter/Escape` 키보드 |
+
 ---
 
 ## 3. Organisms (유기체)
@@ -251,3 +287,13 @@ Molecules를 조합하여 독립적인 섹션을 구성한다.
 |------|------------------------------|
 | **설명** | 분류/Epic 관리 화면 |
 | **레이아웃** | 상단 헤더 고정, 중앙 리스트 스크롤, 하단 탭 바 고정 |
+
+### SettingsPage
+
+| 구성 | 프로필 카드 + 계정 / 앱 / 정보 섹션 |
+|------|------|
+| **설명** | 설정 페이지 page-level 레이아웃 — 잠정안 (디자인 결정자 합류 전) |
+| **상세 명세** | [`./components/settings-page.md`](./components/settings-page.md) |
+| **사용** | `apps/web/src/app/(main)/settings/page.tsx`, `apps/mobile/src/app/(main)/settings/` |
+| **레이아웃** | 단일 컬럼, 카드형 4블록. 분류·Epic 직접 관리 UI 부재 (의도적) |
+| **접근성** | 섹션 제목 `<h2>`, 로그아웃 destructive variant |
