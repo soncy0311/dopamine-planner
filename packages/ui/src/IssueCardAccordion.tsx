@@ -116,7 +116,7 @@ export function IssueCardAccordion({
         <div className="flex-1">
           <EpicProgressBar total={total} done={doneCount} segments />
         </div>
-        <span className="text-xs font-medium text-periwinkle-500">{progressPercent}%</span>
+        <span className="text-xs md:text-sm font-medium text-periwinkle-500">{progressPercent}%</span>
       </div>
 
       {/* 펼침 body — sub-issues (태그 없이 체크박스 + 제목만) */}
@@ -137,7 +137,7 @@ export function IssueCardAccordion({
                         s.onPress();
                       }
                     }}
-                    className="flex min-h-8 items-center gap-2 border-b border-periwinkle-100 py-1 pl-8 pr-4 last:border-b-0 hover:bg-periwinkle-100/50"
+                    className="flex min-h-8 items-center gap-2 border-b border-periwinkle-100 py-2.5 pl-16 pr-4 last:border-b-0 hover:bg-periwinkle-100/50"
                   >
                     <button
                       type="button"
@@ -172,8 +172,8 @@ export function IssueCardAccordion({
                     <span
                       className={
                         subDone
-                          ? 'flex-1 truncate text-xs text-periwinkle-400 line-through'
-                          : 'flex-1 truncate text-xs text-periwinkle-500'
+                          ? 'flex-1 truncate text-sm md:text-base text-periwinkle-400 line-through'
+                          : 'flex-1 truncate text-sm md:text-base text-periwinkle-500'
                       }
                     >
                       {s.title}
@@ -187,7 +187,7 @@ export function IssueCardAccordion({
                 <button
                   type="button"
                   onClick={onAddSubIssue}
-                  className="flex h-9 w-full items-center justify-start border-t border-periwinkle-100 px-4 pl-8 text-xs font-medium text-purple-500 hover:bg-periwinkle-100/50"
+                  className="flex h-9 w-full items-center justify-start border-t border-periwinkle-100 pl-16 pr-4 text-[11px] md:text-xs font-medium text-purple-500 hover:bg-periwinkle-100/50"
                 >
                   + 서브 이슈 추가
                 </button>

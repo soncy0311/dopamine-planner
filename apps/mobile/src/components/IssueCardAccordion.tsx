@@ -178,7 +178,7 @@ export function IssueCardAccordion({
                 onPress={() => onSubPress(s)}
                 accessibilityRole="button"
                 accessibilityLabel={`${s.title} 상세`}
-                className="flex-row items-center gap-2 border-b border-periwinkle-100 py-1.5 pl-8 pr-4"
+                className="flex-row items-center gap-2 border-b border-periwinkle-100 py-1.5 pl-16 pr-4"
               >
                 <Pressable
                   onPress={(e) => {
@@ -219,7 +219,7 @@ export function IssueCardAccordion({
               onPress={onAddSubIssue}
               accessibilityRole="button"
               accessibilityLabel="서브 이슈 추가"
-              className="border-t border-periwinkle-100 py-2 pl-8 pr-4"
+              className="border-t border-periwinkle-100 py-2 pl-16 pr-4"
             >
               <Text className="text-xs font-medium text-purple-500">+ 서브 이슈 추가</Text>
             </Pressable>

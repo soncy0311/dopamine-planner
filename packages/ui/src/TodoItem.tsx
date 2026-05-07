@@ -90,7 +90,7 @@ export function TodoItem({
       style={{
         gridTemplateColumns: 'auto 1fr auto',
         rowGap: '2px',
-        columnGap: '12px',
+        columnGap: '16px',
         alignItems: 'center',
       }}
     >
@@ -149,8 +149,8 @@ export function TodoItem({
       <span
         className={
           done
-            ? 'truncate text-sm text-periwinkle-400 line-through min-w-0'
-            : 'truncate text-sm text-black-900 min-w-0'
+            ? 'truncate text-base md:text-lg text-periwinkle-400 line-through min-w-0'
+            : 'truncate text-base md:text-lg text-black-900 min-w-0'
         }
         style={{ gridRow: 2, gridColumn: 2 }}
       >
