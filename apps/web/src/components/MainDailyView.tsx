@@ -85,41 +85,37 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
     setExpand(readExpandState(workspace));
   }, [workspace]);
 
-  const filterByCategory = useCallback(
-    (items: SubIssueWithJoins[]) =>
-      selectedCategoryId === null
-        ? items
-        : items.filter((t) => t.category?.id === selectedCategoryId),
-    [selectedCategoryId],
-  );
-
-  const todoItems = useMemo(
-    () => filterByCategory(data?.todo ?? []),
-    [data?.todo, filterByCategory],
-  );
-  const doneItems = useMemo(
-    () => filterByCategory(data?.done ?? []),
-    [data?.done, filterByCategory],
-  );
-
+  // 분류 필터는 visibleEpics 단계에서 처리 — items 단계 추가 필터 불요.
   const allItems = useMemo(
-    () => [...todoItems, ...doneItems],
-    [todoItems, doneItems],
+    () => [...(data?.todo ?? []), ...(data?.done ?? [])],
+    [data?.todo, data?.done],
   );
 
-  const grouped = useMemo(() => groupByEpic(allItems, epics), [allItems, epics]);
+  // 노출 정책 (sub-prd-10 §일자 뷰 정합):
+  //  - 진행 중 섹션: 활성 Epic + (선택 분류와 일치)
+  //  - 완료 섹션: 본 일자 완료 Epic + (선택 분류와 일치)
+  // sub 의 status / registered_date / completed_date 는 섹션 분기에 영향 X.
+  const visibleEpics = useMemo(() => {
+    return epics.filter((e) => {
+      if (selectedCategoryId !== null && e.categoryId !== selectedCategoryId) {
+        return false;
+      }
+      if (e.status === 'active') return true;
+      if (e.status === 'completed' && e.completedDate === date) return true;
+      return false;
+    });
+  }, [epics, date, selectedCategoryId]);
+
+  const grouped = useMemo(
+    () => groupByEpic(allItems, visibleEpics),
+    [allItems, visibleEpics],
+  );
 
   const epicsByDoneSection = useMemo(() => {
     const todoSection: typeof grouped.epics = [];
     const doneSection: typeof grouped.epics = [];
     for (const entry of grouped.epics) {
-      // sub 상태 기반 즉시 판정 (서버 progress 갱신 RPC 대기 회피).
-      // sub 가 0개인 경우 epic.status 자체를 기준으로 분류 (수동 완료 지원).
-      const total = entry.subs.length;
-      const doneCount = entry.subs.filter((s) => s.status === 'done').length;
-      const isAllDone =
-        total > 0 ? doneCount === total : entry.epic.status === 'completed';
-      if (isAllDone) doneSection.push(entry);
+      if (entry.epic.status === 'completed') doneSection.push(entry);
       else todoSection.push(entry);
     }
     // 우선순위 정렬 (high → medium → low). 동일 priority 내 입력 순서 유지 (stable sort).

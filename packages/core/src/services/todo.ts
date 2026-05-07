@@ -1,8 +1,9 @@
 import type { AppSupabaseClient } from '../supabase/types';
 import {
+  flattenJoined,
   mapSubIssueRow,
-  mapTodoDailyView,
   type SubIssue,
+  type SubIssueRowWithJoins,
   type TodoDailyView,
   type TodoInsert,
   type TodoStatus,
@@ -16,26 +17,43 @@ export async function listByDate(
   workspace: Workspace,
   date: string,
 ): Promise<TodoDailyView> {
-  // 일자 뷰 정책 (sub-prd-10 §일자 뷰 정합):
-  //  - 진행 중 섹션: status='todo' AND registered_date = date
-  //  - 완료    섹션: status='done' AND completed_date = date  (그 날 완료된 것만)
-  // sub-issue 의 registered_date 가 다른 날로 이동하더라도, 완료된 일자에 한해 그 날
-  // 의 완료 섹션에 계속 노출된다 — 이력 단절 방지.
-  const { data, error } = await client
-    .from('sub_issue')
-    .select(
-      `*,
-       epic:epic_issue!inner (
-         id, title, progress,
-         category:category!inner ( id, name, color, workspace )
-       )`,
-    )
-    .or(
-      `and(status.eq.todo,registered_date.eq.${date}),and(status.eq.done,completed_date.eq.${date})`,
-    )
-    .eq('epic.category.workspace', workspace);
-  if (error) throw error;
-  return mapTodoDailyView((data ?? []) as Parameters<typeof mapTodoDailyView>[0], date);
+  // 일자 뷰 노출 정책 (sub-prd-10 §일자 뷰 정합):
+  //  - 진행 중 섹션: 완료되지 않은 (active) Epic + 그 Epic 의 모든 sub (status·날짜 무관)
+  //  - 완료    섹션: 본 일자에 완료된 Epic (completed_date = date) + 그 Epic 의 모든 sub
+  //
+  // 즉 sub 의 registered_date / completed_date 는 노출 정책에 영향 없음. Epic 의
+  // status 와 completed_date 가 SoT.
+  const baseSelect = `*,
+     epic:epic_issue!inner (
+       id, title, progress, status, completed_date,
+       category:category!inner ( id, name, color, workspace )
+     )`;
+
+  const [activeRes, doneRes] = await Promise.all([
+    // 진행 중 섹션 sub: Epic.status = 'active'
+    client
+      .from('sub_issue')
+      .select(baseSelect)
+      .eq('epic.status', 'active')
+      .eq('epic.category.workspace', workspace),
+    // 완료 섹션 sub: Epic.status = 'completed' AND Epic.completed_date = date
+    client
+      .from('sub_issue')
+      .select(baseSelect)
+      .eq('epic.status', 'completed')
+      .eq('epic.completed_date', date)
+      .eq('epic.category.workspace', workspace),
+  ]);
+  if (activeRes.error) throw activeRes.error;
+  if (doneRes.error) throw doneRes.error;
+
+  const todoRows = (activeRes.data ?? []) as SubIssueRowWithJoins[];
+  const doneRows = (doneRes.data ?? []) as SubIssueRowWithJoins[];
+  return {
+    date,
+    todo: todoRows.map(flattenJoined),
+    done: doneRows.map(flattenJoined),
+  };
 }
 
 export async function create(

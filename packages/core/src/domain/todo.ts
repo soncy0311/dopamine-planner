@@ -48,7 +48,7 @@ type EpicJoinShape = {
     | null;
 };
 
-type SubIssueRowWithJoins = TodoRow & {
+export type SubIssueRowWithJoins = TodoRow & {
   epic?: EpicJoinShape | null;
   epic_issue?: EpicJoinShape | null;
 };
@@ -69,7 +69,7 @@ export function mapSubIssueRow(row: TodoRow): SubIssue {
   };
 }
 
-function flattenJoined(row: SubIssueRowWithJoins): SubIssueWithJoins {
+export function flattenJoined(row: SubIssueRowWithJoins): SubIssueWithJoins {
   const base = mapSubIssueRow(row);
   const epicJoin = row.epic ?? row.epic_issue ?? null;
   const cat = epicJoin?.category ?? null;

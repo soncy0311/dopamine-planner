@@ -1,11 +1,9 @@
-import { useEffect } from 'react';
-import { useQuery, useQueryClient, type UseQueryResult } from '@tanstack/react-query';
+import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { AppSupabaseClient } from '../supabase/types';
 import { todoService } from '../services/todo';
 import type { TodoDailyView } from '../domain/todo';
 import type { Workspace } from '../domain/category';
 import { queryKeys } from '../queryKeys';
-import { carryOverTodos } from '../services/carryOver';
 
 export type UseTodosArgs = {
   client: AppSupabaseClient;
@@ -13,40 +11,13 @@ export type UseTodosArgs = {
   date: string;
 };
 
-function todayLocal(): string {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
-}
-
 export function useTodos(args: UseTodosArgs): UseQueryResult<TodoDailyView> {
   const { client, workspace, date } = args;
-  const qc = useQueryClient();
-  const query = useQuery<TodoDailyView>({
+  // 자동 이월 (carryOverTodos) 은 사용자가 sub 의 등록일을 수동으로 과거 날짜로 옮긴
+  // 경우에도 그 sub 를 오늘로 다시 끌어오는 부작용이 있어 비활성화한다.
+  // 진행 중 sub 는 사용자가 지정한 등록일에 그대로 머물러야 한다 (sub-prd-10 §일자 뷰 정합).
+  return useQuery<TodoDailyView>({
     queryKey: queryKeys.todos(workspace, date),
     queryFn: () => todoService.listByDate(client, workspace, date),
   });
-
-  useEffect(() => {
-    const today = todayLocal();
-    if (date !== today) return;
-    let cancelled = false;
-    carryOverTodos(client, today)
-      .then((moved) => {
-        if (cancelled) return;
-        if (moved > 0) {
-          qc.invalidateQueries({ queryKey: queryKeys.todos(workspace, today) });
-        }
-      })
-      .catch((err) => {
-        console.warn('[useTodos] carryOverTodos failed:', err);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [client, workspace, date, qc]);
-
-  return query;
 }

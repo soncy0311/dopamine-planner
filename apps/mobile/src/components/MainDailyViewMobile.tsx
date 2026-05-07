@@ -186,22 +186,25 @@ export function MainDailyViewMobile({ workspace }: Props) {
     return m;
   }, [categories]);
 
+  // 노출 정책: 진행 중 = 활성 Epic / 완료 = 본 일자 완료 Epic. (sub-prd-10 §일자 뷰 정합)
+  const visibleEpics = useMemo(() => {
+    return epics.filter((e) => {
+      if (e.status === 'active') return true;
+      if (e.status === 'completed' && e.completedDate === date) return true;
+      return false;
+    });
+  }, [epics, date]);
+
   const grouped = useMemo(
-    () => groupByEpic([...todoList, ...doneList], epics),
-    [todoList, doneList, epics],
+    () => groupByEpic([...todoList, ...doneList], visibleEpics),
+    [todoList, doneList, visibleEpics],
   );
 
   const epicSections = useMemo(() => {
     const todoSec: { epic: EpicIssue; subs: SubIssueWithJoins[] }[] = [];
     const doneSec: { epic: EpicIssue; subs: SubIssueWithJoins[] }[] = [];
     for (const entry of grouped.epics) {
-      // sub 상태 기반 즉시 판정 (서버 progress 갱신 RPC 대기 회피).
-      // sub 0개일 땐 epic.status 자체로 분류 (수동 완료 지원, web 과 동일).
-      const total = entry.subs.length;
-      const doneCount = entry.subs.filter((s) => s.status === 'done').length;
-      const isAllDone =
-        total > 0 ? doneCount === total : entry.epic.status === 'completed';
-      if (isAllDone) doneSec.push(entry);
+      if (entry.epic.status === 'completed') doneSec.push(entry);
       else todoSec.push(entry);
     }
     // 우선순위 정렬 (high → medium → low). 동일 priority 내 입력 순서 유지 (stable sort).
