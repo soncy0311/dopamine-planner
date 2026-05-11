@@ -66,9 +66,9 @@ todo-list/                  (Monorepo — pnpm + Turborepo)
 1. 요구사항 문서(`docs/`) 확인 → 검증 항목 정리
 2. Sub-PRD 또는 Task 문서 작성
 3. `dev`에서 `{type}/{name}` 브랜치 생성 (예: `feat/todo-create`, `chore/tailwind-setup`)
-4. 구현 (Atomic 커밋, `/commit-message` 스킬 사용)
+4. 구현 (Atomic 커밋, `commit-message` 스킬 사용)
 5. 테스트 작성 및 실행 (Unit + E2E)
-6. `/create-pr` 스킬로 PR 생성 (base: `dev`)
+6. `create-pr` 스킬로 PR 생성 (base: `dev`)
 7. 리뷰 후 머지
 
 ### 2. 핫픽스
@@ -85,8 +85,8 @@ todo-list/                  (Monorepo — pnpm + Turborepo)
 
 ## 스킬 정보
 
-- 커밋 메시지 작성은 `/commit-message` 스킬을 사용한다
-- PR 생성은 `/create-pr` 스킬을 사용한다. base 브랜치는 작업 플로우에 정의된 값을 따른다
+- 커밋 메시지 작성은 `commit-message` 스킬을 사용한다
+- PR 생성은 `create-pr` 스킬을 사용한다. base 브랜치는 작업 플로우에 정의된 값을 따른다
 
 ## 코드 규칙
 

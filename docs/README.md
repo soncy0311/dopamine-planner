@@ -2,9 +2,9 @@
 
 ## 기본 원칙
 
-- 브랜치 정책, 커밋 컨벤션, GitHub Projects 설정은 루트 `CLAUDE.md`를 따른다
-- 커밋 메시지는 `/commit-message` 스킬을 사용하며, scope는 `docs`를 사용한다
-- PR 생성은 `/create-pr` 스킬을 사용한다
+- 브랜치 정책, 커밋 컨벤션, GitHub Projects 설정은 루트 운영 지침을 따른다
+- 커밋 메시지는 `commit-message` 스킬을 사용하며, scope는 `docs`를 사용한다
+- PR 생성은 `create-pr` 스킬을 사용한다
 
 ## 폴더 구조
 
