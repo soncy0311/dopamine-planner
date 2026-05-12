@@ -10,6 +10,7 @@ import {
   groupByEpic,
   queryKeys,
   subscribeTodos,
+  useCalendarCompletedCounts,
   useCategories,
   useEpics,
   useTodos,
@@ -101,6 +102,11 @@ export function MainDailyViewMobile({ workspace }: Props) {
   const { data, isLoading } = useTodos({ client: supabase, workspace, date });
   const { data: categories = [] } = useCategories({ client: supabase, workspace });
   const { data: epics = [] } = useEpics({ client: supabase, workspace });
+  const { data: completedCounts = {} } = useCalendarCompletedCounts({
+    client: supabase,
+    workspace,
+    month: date.slice(0, 7),
+  });
   const toggle = useToggleTodo(supabase);
 
   const handleToggle = useCallback(
@@ -297,7 +303,11 @@ export function MainDailyViewMobile({ workspace }: Props) {
   return (
     <GestureDetector gesture={swipe}>
       <View className="flex-1 bg-background">
-        <DateHeaderMobile date={date} onDateChange={setDate} />
+        <DateHeaderMobile
+          date={date}
+          onDateChange={setDate}
+          completedCounts={completedCounts}
+        />
         <View className="border-b border-border bg-background px-3 py-2">
           <FlatList
             horizontal

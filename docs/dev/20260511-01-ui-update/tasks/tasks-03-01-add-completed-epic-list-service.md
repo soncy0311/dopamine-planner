@@ -6,12 +6,12 @@
 |---|---|
 | Sub-PRD | [`sub-prd-03-feat-completed-epic-archive-calendar.md`](../sub-prd-03-feat-completed-epic-archive-calendar.md) |
 | 작업 번호 | 03-01 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | Sub-02 nullable category 정책 완료 필요 |
 
 ## 작업 목표
 
-`packages/core` 에 완료 Epic archive 목록을 조회하는 service 를 추가한다. 조회 기준은 `status = 'completed'` 이고 `completed_date` 가 존재하는 Epic 으로 고정하며, workspace, 월/날짜 범위, optional category filter 를 입력받아 web/mobile 이 같은 데이터 계약을 사용하도록 한다.
+`packages/core` 에 완료 Epic 목록을 조회하는 service 를 추가한다. 조회 기준은 `status = 'completed'` 이고 `completed_date` 가 존재하는 Epic 으로 고정하며, workspace 단위 전체 목록을 web/mobile 이 같은 데이터 계약으로 사용하도록 한다.
 
 ## 상세 구현 내용
 
@@ -47,10 +47,15 @@
 
 ## 검증 과정
 
-- [ ] `status = 'completed'` 이고 `completed_date` 가 있는 Epic 만 반환된다.
-- [ ] active 복귀로 `completed_date = null` 이 된 Epic 이 반환되지 않는다.
-- [ ] 특정 category 와 `category_id = null` 필터가 구분된다.
-- [ ] 날짜 범위 또는 월 범위 조건이 `completed_date` 기준으로 적용된다.
+- [x] `status = 'completed'` 이고 `completed_date` 가 있는 Epic 만 반환된다.
+- [x] active 복귀로 `completed_date = null` 이 된 Epic 이 반환되지 않는다.
+- [x] category별 구분은 조회 필터가 아니라 grouping helper 에서 처리된다.
+- [x] 월/날짜 범위 archive 조건은 범위 변경으로 제외되었다.
+
+## 실행 기록
+
+- **일시**: 2026-05-12 23:58 KST
+- **결과**: `listCompletedByWorkspace` 추가, `make typecheck` 및 `make test` 통과.
 
 ## 주의사항
 
@@ -58,7 +63,7 @@
 - active 복귀로 `completed_date = null` 이 되면 archive/count 에서 제외한다.
 - "분류 없음"은 `category_id = null` 그룹이며 실제 category row 를 생성하지 않는다.
 - 월 단위 calendar count 는 별도 batch 조회로 처리하고 날짜 셀별 Supabase 호출을 만들지 않는다.
-- indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- indicator 규칙은 0개 없음, 1~4개는 완료 Epic 1개당 점 1개, 5개 이상은 5개당 별 1개만 표시하며 점은 추가하지 않는다. 주간 UI에서는 선택된 날짜에서도 indicator 색상은 변하지 않고, 월간 UI에서는 선택된 날짜 indicator 색상을 흰색으로 바꾼다.
 - indicator 자체는 장식이며 접근성 문구는 날짜 버튼/accessibility label 에 병합한다.
 
 ## 관련 문서

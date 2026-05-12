@@ -7,6 +7,7 @@ import {
   groupByEpic,
   queryKeys,
   subscribeTodos,
+  useCalendarCompletedCounts,
   useCategories,
   useEpics,
   useTodos,
@@ -72,6 +73,11 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   const { data, isLoading } = useTodos({ client: supabase, workspace, date });
   const { data: categories = [] } = useCategories({ client: supabase, workspace });
   const { data: epics = [] } = useEpics({ client: supabase, workspace });
+  const { data: completedCounts = {} } = useCalendarCompletedCounts({
+    client: supabase,
+    workspace,
+    month: date.slice(0, 7),
+  });
   const toggle = useToggleTodo(supabase);
 
   const [epicFormOpen, setEpicFormOpen] = useState(false);
@@ -272,7 +278,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
 
   return (
     <div className="flex h-full flex-col gap-4 px-4 py-4">
-      <DateNavigator date={date} onChange={setDate} />
+      <DateNavigator date={date} onChange={setDate} completedCounts={completedCounts} />
       <div className="flex items-center justify-between gap-3">
         <div className="flex-1 min-w-0">
           <CategoryFilterChips

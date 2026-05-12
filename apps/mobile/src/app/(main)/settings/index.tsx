@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Alert, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import {
   useCategories,
+  useCompletedEpicsByCategoryPeriod,
   useDeleteCategory,
   useUpdateCategory,
   type Category,
+  type EpicIssue,
   type Workspace,
 } from '@todo-list/core';
 import { supabase } from '@/lib/supabase';
@@ -19,6 +21,26 @@ type AccountInfo = {
   provider?: string;
 };
 
+const PRIORITY_LABEL: Record<EpicIssue['priority'], string> = {
+  high: '높음',
+  medium: '보통',
+  low: '낮음',
+};
+
+function formatDate(value: string | null): string {
+  if (!value) return '-';
+  const [year, month, day] = value.split('-');
+  return year && month && day ? `${year}.${month}.${day}` : value;
+}
+
+function todayIso(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 function SettingsSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <View className="mt-4 px-4">
@@ -26,6 +48,145 @@ function SettingsSection({ title, children }: { title: string; children: React.R
       <View className="overflow-hidden rounded-lg border border-border bg-card">
         {children}
       </View>
+    </View>
+  );
+}
+
+function CompletedEpicList({ epics }: { epics: EpicIssue[] }) {
+  if (epics.length === 0) {
+    return (
+      <View className="rounded-md bg-muted px-3 py-2">
+        <Text className="text-xs text-muted-foreground">완료된 Epic 이 없습니다.</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View className="gap-1.5">
+      {epics.map((epic) => (
+        <View key={epic.id} className="rounded-md bg-muted px-3 py-2">
+          <View className="flex-row items-center justify-between gap-3">
+            <Text className="min-w-0 flex-1 text-sm font-medium text-foreground" numberOfLines={1}>
+              {epic.title}
+            </Text>
+            <Text className="rounded-full bg-primary px-2 py-0.5 text-[11px] text-primary-foreground">
+              100%
+            </Text>
+          </View>
+          <View className="mt-1 flex-row flex-wrap gap-x-3 gap-y-1">
+            <Text className="text-[11px] text-muted-foreground">
+              우선순위 {PRIORITY_LABEL[epic.priority]}
+            </Text>
+            <Text className="text-[11px] text-muted-foreground">
+              완료일 {formatDate(epic.completedDate)}
+            </Text>
+          </View>
+        </View>
+      ))}
+    </View>
+  );
+}
+
+type CompletedEpicPeriodMode = 'month' | 'day';
+
+function CompletedEpicArchivePanel({
+  category,
+  periodMode,
+  month,
+  day,
+  epics,
+  isLoading,
+  isError,
+  onPeriodModeChange,
+  onMonthChange,
+  onDayChange,
+  onClose,
+}: {
+  category: Category;
+  periodMode: CompletedEpicPeriodMode;
+  month: string;
+  day: string;
+  epics: EpicIssue[];
+  isLoading: boolean;
+  isError: boolean;
+  onPeriodModeChange: (mode: CompletedEpicPeriodMode) => void;
+  onMonthChange: (value: string) => void;
+  onDayChange: (value: string) => void;
+  onClose: () => void;
+}) {
+  return (
+    <View className="mt-2 gap-3 rounded-md border border-primary bg-muted p-3">
+      <View className="flex-row items-center justify-between gap-3">
+        <View className="min-w-0 flex-1 flex-row items-center gap-2">
+          <View
+            className="h-3 w-3 rounded-full"
+            style={{ backgroundColor: category.color || '#9CA3AF' }}
+          />
+          <Text className="text-sm font-semibold text-foreground" numberOfLines={1}>
+            {category.name} 완료 Epic
+          </Text>
+        </View>
+        <Pressable onPress={onClose} accessibilityRole="button" accessibilityLabel="완료 Epic 조회 닫기">
+          <Text className="text-xs text-muted-foreground">닫기</Text>
+        </Pressable>
+      </View>
+
+      <View className="flex-row flex-wrap items-center gap-2">
+        <View className="flex-row rounded-md border border-border bg-card p-0.5">
+          {(['month', 'day'] as const).map((mode) => (
+            <Pressable
+              key={mode}
+              onPress={() => onPeriodModeChange(mode)}
+              accessibilityRole="button"
+              accessibilityState={{ selected: periodMode === mode }}
+              className={`rounded px-3 py-2 ${
+                periodMode === mode ? 'bg-primary' : 'bg-card'
+              }`}
+            >
+              <Text
+                className={
+                  periodMode === mode
+                    ? 'text-xs text-primary-foreground'
+                    : 'text-xs text-muted-foreground'
+                }
+              >
+                {mode === 'month' ? '월별' : '일별'}
+              </Text>
+            </Pressable>
+          ))}
+        </View>
+        {periodMode === 'month' ? (
+          <TextInput
+            value={month}
+            onChangeText={onMonthChange}
+            placeholder="YYYY-MM"
+            maxLength={7}
+            className="min-w-28 rounded-md border border-border bg-card px-3 py-2 text-foreground"
+            accessibilityLabel="완료 Epic 조회 월"
+          />
+        ) : (
+          <TextInput
+            value={day}
+            onChangeText={onDayChange}
+            placeholder="YYYY-MM-DD"
+            maxLength={10}
+            className="min-w-36 rounded-md border border-border bg-card px-3 py-2 text-foreground"
+            accessibilityLabel="완료 Epic 조회 날짜"
+          />
+        )}
+      </View>
+
+      {isLoading ? (
+        <View className="rounded-md bg-card px-3 py-3">
+          <Text className="text-sm text-muted-foreground">완료 Epic 을 불러오는 중입니다.</Text>
+        </View>
+      ) : isError ? (
+        <View className="rounded-md bg-card px-3 py-3">
+          <Text className="text-sm text-red-600">완료 Epic 을 불러오지 못했습니다.</Text>
+        </View>
+      ) : (
+        <CompletedEpicList epics={epics} />
+      )}
     </View>
   );
 }
@@ -69,6 +230,35 @@ function CategoryManagementSection({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draftName, setDraftName] = useState('');
   const [draftColor, setDraftColor] = useState<string>(PALETTE[0]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [periodMode, setPeriodMode] = useState<CompletedEpicPeriodMode>('month');
+  const [month, setMonth] = useState(() => todayIso().slice(0, 7));
+  const [day, setDay] = useState(() => todayIso());
+  const selectedCategory = useMemo(
+    () => categories.find((category) => category.id === selectedCategoryId) ?? null,
+    [categories, selectedCategoryId],
+  );
+  const period = useMemo(
+    () =>
+      periodMode === 'month'
+        ? { mode: 'month' as const, value: month || todayIso().slice(0, 7) }
+        : { mode: 'day' as const, value: day || todayIso() },
+    [periodMode, month, day],
+  );
+  const {
+    data: selectedCompletedEpics = [],
+    isLoading: completedEpicsLoading,
+    isError: completedEpicsError,
+  } = useCompletedEpicsByCategoryPeriod({
+    client: supabase,
+    workspace,
+    categoryId: selectedCategoryId,
+    period,
+  });
+
+  useEffect(() => {
+    if (selectedCategoryId && !selectedCategory) setSelectedCategoryId(null);
+  }, [selectedCategoryId, selectedCategory]);
 
   const startEdit = (category: Category) => {
     setEditingId(category.id);
@@ -113,6 +303,7 @@ function CategoryManagementSection({
             try {
               await deleteCategory.mutateAsync({ id: category.id, workspace });
               if (editingId === category.id) cancelEdit();
+              if (selectedCategoryId === category.id) setSelectedCategoryId(null);
             } catch (e: unknown) {
               const msg = e instanceof Error ? e.message : '다시 시도해 주세요.';
               Alert.alert('분류 삭제 실패', msg);
@@ -130,10 +321,16 @@ function CategoryManagementSection({
           <Text className="text-sm text-muted-foreground">등록된 분류가 없습니다.</Text>
         </View>
       ) : (
-        categories.map((category) => {
+        <>
+          {categories.map((category) => {
           const editing = editingId === category.id;
           return (
-            <View key={category.id} className="border-b border-border px-4 py-3">
+            <View
+              key={category.id}
+              className={`gap-3 border-b border-border px-4 py-3 ${
+                selectedCategoryId === category.id ? 'bg-muted' : ''
+              }`}
+            >
               {editing ? (
                 <View className="gap-2">
                   <TextInput
@@ -180,7 +377,13 @@ function CategoryManagementSection({
                 </View>
               ) : (
                 <View className="flex-row items-center justify-between gap-3">
-                  <View className="min-w-0 flex-1 flex-row items-center gap-2">
+                  <Pressable
+                    onPress={() => setSelectedCategoryId(category.id)}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected: selectedCategoryId === category.id }}
+                    accessibilityLabel={`${category.name} 완료 Epic 조회`}
+                    className="min-w-0 flex-1 flex-row items-center gap-2"
+                  >
                     <View
                       className="h-3 w-3 rounded-full"
                       style={{ backgroundColor: category.color || '#9CA3AF' }}
@@ -188,7 +391,7 @@ function CategoryManagementSection({
                     <Text className="text-sm font-medium text-foreground" numberOfLines={1}>
                       {category.name}
                     </Text>
-                  </View>
+                  </Pressable>
                   <View className="flex-row gap-3">
                     <Pressable onPress={() => startEdit(category)} accessibilityRole="button">
                       <Text className="text-xs text-primary">수정</Text>
@@ -205,7 +408,25 @@ function CategoryManagementSection({
               )}
             </View>
           );
-        })
+          })}
+          {selectedCategory ? (
+            <View className="border-b border-border px-4 py-3">
+              <CompletedEpicArchivePanel
+                category={selectedCategory}
+                periodMode={periodMode}
+                month={month}
+                day={day}
+                epics={selectedCompletedEpics}
+                isLoading={completedEpicsLoading}
+                isError={completedEpicsError}
+                onPeriodModeChange={setPeriodMode}
+                onMonthChange={setMonth}
+                onDayChange={setDay}
+                onClose={() => setSelectedCategoryId(null)}
+              />
+            </View>
+          ) : null}
+        </>
       )}
     </SettingsSection>
   );

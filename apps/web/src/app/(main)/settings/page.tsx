@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   profileService,
   useCategories,
+  useCompletedEpicsByCategoryPeriod,
   useDeleteCategory,
   useUpdateCategory,
   type Category,
+  type EpicIssue,
   type Workspace,
 } from '@todo-list/core';
 import { toast } from 'sonner';
@@ -23,12 +25,167 @@ type AccountInfo = {
   provider?: string;
 };
 
+const PRIORITY_LABEL: Record<EpicIssue['priority'], string> = {
+  high: '높음',
+  medium: '보통',
+  low: '낮음',
+};
+
+function formatDate(value: string | null): string {
+  if (!value) return '-';
+  const [year, month, day] = value.split('-');
+  return year && month && day ? `${year}.${month}.${day}` : value;
+}
+
+function todayIso(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 function SettingsSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="flex flex-col gap-2 rounded-lg border border-periwinkle-200 bg-white p-4">
       <h2 className="text-sm font-semibold text-black-900">{title}</h2>
       <div className="flex flex-col gap-2">{children}</div>
     </section>
+  );
+}
+
+function CompletedEpicList({ epics }: { epics: EpicIssue[] }) {
+  if (epics.length === 0) {
+    return (
+      <p className="rounded-md bg-periwinkle-50 px-3 py-2 text-xs text-periwinkle-400">
+        완료된 Epic 이 없습니다.
+      </p>
+    );
+  }
+
+  return (
+    <ul className="flex flex-col gap-1.5">
+      {epics.map((epic) => (
+        <li
+          key={epic.id}
+          className="flex flex-col gap-1 rounded-md bg-periwinkle-50 px-3 py-2"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <span className="min-w-0 truncate text-sm font-medium text-black-900">
+              {epic.title}
+            </span>
+            <span className="shrink-0 rounded-full bg-purple-100 px-2 py-0.5 text-[11px] font-medium text-purple-700">
+              100%
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-periwinkle-500">
+            <span>우선순위 {PRIORITY_LABEL[epic.priority]}</span>
+            <span>완료일 {formatDate(epic.completedDate)}</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+type CompletedEpicPeriodMode = 'month' | 'day';
+
+function CompletedEpicArchivePanel({
+  category,
+  periodMode,
+  month,
+  day,
+  epics,
+  isLoading,
+  isError,
+  onPeriodModeChange,
+  onMonthChange,
+  onDayChange,
+  onClose,
+}: {
+  category: Category;
+  periodMode: CompletedEpicPeriodMode;
+  month: string;
+  day: string;
+  epics: EpicIssue[];
+  isLoading: boolean;
+  isError: boolean;
+  onPeriodModeChange: (mode: CompletedEpicPeriodMode) => void;
+  onMonthChange: (value: string) => void;
+  onDayChange: (value: string) => void;
+  onClose: () => void;
+}) {
+  return (
+    <div className="mt-2 flex flex-col gap-3 rounded-md border border-purple-200 bg-purple-50 p-3">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex min-w-0 items-center gap-2">
+          <span
+            aria-hidden="true"
+            className="h-3 w-3 shrink-0 rounded-full"
+            style={{ backgroundColor: category.color || '#9CA3AF' }}
+          />
+          <h3 className="truncate text-sm font-semibold text-black-900">
+            {category.name} 완료 Epic
+          </h3>
+        </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="shrink-0 text-xs font-medium text-periwinkle-500 hover:text-black-900"
+        >
+          닫기
+        </button>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="grid grid-cols-2 rounded-md border border-periwinkle-200 bg-white p-0.5">
+          {(['month', 'day'] as const).map((mode) => (
+            <button
+              key={mode}
+              type="button"
+              onClick={() => onPeriodModeChange(mode)}
+              aria-pressed={periodMode === mode}
+              className={
+                periodMode === mode
+                  ? 'rounded px-3 py-1.5 text-xs font-medium bg-purple-500 text-white'
+                  : 'rounded px-3 py-1.5 text-xs font-medium text-periwinkle-500 hover:bg-periwinkle-50'
+              }
+            >
+              {mode === 'month' ? '월별' : '일별'}
+            </button>
+          ))}
+        </div>
+        {periodMode === 'month' ? (
+          <input
+            type="month"
+            value={month}
+            onChange={(event) => onMonthChange(event.target.value)}
+            className="h-9 rounded-md border border-periwinkle-200 bg-white px-3 text-sm text-black-900 outline-none focus:border-purple-500"
+            aria-label="완료 Epic 조회 월"
+          />
+        ) : (
+          <input
+            type="date"
+            value={day}
+            onChange={(event) => onDayChange(event.target.value)}
+            className="h-9 rounded-md border border-periwinkle-200 bg-white px-3 text-sm text-black-900 outline-none focus:border-purple-500"
+            aria-label="완료 Epic 조회 날짜"
+          />
+        )}
+      </div>
+
+      {isLoading ? (
+        <p className="rounded-md bg-white px-3 py-3 text-sm text-periwinkle-500">
+          완료 Epic 을 불러오는 중입니다.
+        </p>
+      ) : isError ? (
+        <p className="rounded-md bg-white px-3 py-3 text-sm text-red-500">
+          완료 Epic 을 불러오지 못했습니다.
+        </p>
+      ) : (
+        <CompletedEpicList epics={epics} />
+      )}
+    </div>
   );
 }
 
@@ -73,6 +230,35 @@ function CategoryManagementSection({
   const [editingId, setEditingId] = useState<string | null>(null);
   const [draftName, setDraftName] = useState('');
   const [draftColor, setDraftColor] = useState<string>(PALETTE[0]);
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [periodMode, setPeriodMode] = useState<CompletedEpicPeriodMode>('month');
+  const [month, setMonth] = useState(() => todayIso().slice(0, 7));
+  const [day, setDay] = useState(() => todayIso());
+  const selectedCategory = useMemo(
+    () => categories.find((category) => category.id === selectedCategoryId) ?? null,
+    [categories, selectedCategoryId],
+  );
+  const period = useMemo(
+    () =>
+      periodMode === 'month'
+        ? { mode: 'month' as const, value: month || todayIso().slice(0, 7) }
+        : { mode: 'day' as const, value: day || todayIso() },
+    [periodMode, month, day],
+  );
+  const {
+    data: selectedCompletedEpics = [],
+    isLoading: completedEpicsLoading,
+    isError: completedEpicsError,
+  } = useCompletedEpicsByCategoryPeriod({
+    client: supabase,
+    workspace,
+    categoryId: selectedCategoryId,
+    period,
+  });
+
+  useEffect(() => {
+    if (selectedCategoryId && !selectedCategory) setSelectedCategoryId(null);
+  }, [selectedCategoryId, selectedCategory]);
 
   const startEdit = (category: Category) => {
     setEditingId(category.id);
@@ -117,6 +303,7 @@ function CategoryManagementSection({
       await deleteCategory.mutateAsync({ id: category.id, workspace });
       toast.success('분류가 삭제되었습니다. 연결된 Epic 은 분류 없음으로 전환됩니다.');
       if (editingId === category.id) cancelEdit();
+      if (selectedCategoryId === category.id) setSelectedCategoryId(null);
     } catch (err) {
       console.error('[settings] delete category failed:', err);
       toast.error('분류 삭제에 실패했습니다.');
@@ -128,12 +315,17 @@ function CategoryManagementSection({
       {categories.length === 0 ? (
         <p className="px-3 py-2 text-sm text-periwinkle-400">등록된 분류가 없습니다.</p>
       ) : (
-        categories.map((category) => {
+        <>
+          {categories.map((category) => {
           const editing = editingId === category.id;
           return (
             <div
               key={category.id}
-              className="flex flex-col gap-2 rounded-md border border-periwinkle-100 px-3 py-3"
+              className={
+                selectedCategoryId === category.id
+                  ? 'flex flex-col gap-3 rounded-md border border-purple-200 bg-purple-50/40 px-3 py-3'
+                  : 'flex flex-col gap-3 rounded-md border border-periwinkle-100 px-3 py-3'
+              }
             >
               {editing ? (
                 <>
@@ -182,7 +374,12 @@ function CategoryManagementSection({
                 </>
               ) : (
                 <div className="flex items-center justify-between gap-3">
-                  <span className="flex min-w-0 items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedCategoryId(category.id)}
+                    aria-pressed={selectedCategoryId === category.id}
+                    className="flex min-w-0 flex-1 items-center gap-2 text-left"
+                  >
                     <span
                       aria-hidden="true"
                       className="h-3 w-3 shrink-0 rounded-full"
@@ -191,7 +388,7 @@ function CategoryManagementSection({
                     <span className="truncate text-sm font-medium text-black-900">
                       {category.name}
                     </span>
-                  </span>
+                  </button>
                   <span className="flex shrink-0 items-center gap-2">
                     <button
                       type="button"
@@ -213,7 +410,23 @@ function CategoryManagementSection({
               )}
             </div>
           );
-        })
+          })}
+          {selectedCategory ? (
+            <CompletedEpicArchivePanel
+              category={selectedCategory}
+              periodMode={periodMode}
+              month={month}
+              day={day}
+              epics={selectedCompletedEpics}
+              isLoading={completedEpicsLoading}
+              isError={completedEpicsError}
+              onPeriodModeChange={setPeriodMode}
+              onMonthChange={setMonth}
+              onDayChange={setDay}
+              onClose={() => setSelectedCategoryId(null)}
+            />
+          ) : null}
+        </>
       )}
     </SettingsSection>
   );

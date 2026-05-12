@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-03-feat-completed-epic-archive-calendar.md`](../sub-prd-03-feat-completed-epic-archive-calendar.md) |
 | 작업 번호 | 03-03 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 03-01, 03-02 완료 필요 |
 
 ## 작업 목표
@@ -44,10 +44,15 @@
 
 ## 검증 과정
 
-- [ ] 완료 Epic 이 category 별 group 으로 묶인다.
-- [ ] group 모델이 web/mobile 에 필요한 category 이름, 색상, 완료 Epic 목록을 포함한다.
-- [ ] 일반 category group 정렬이 기존 category sort/order 정책을 따른다.
-- [ ] `category_id = null` row 가 helper 처리 과정에서 누락되지 않는다.
+- [x] 완료 Epic 이 category 별 group 으로 묶인다.
+- [x] group 모델이 web/mobile 에 필요한 category 이름, 색상, 완료 Epic 목록을 포함한다.
+- [x] 일반 category group 정렬이 기존 category sort/order 정책을 따른다.
+- [x] `category_id = null` row 가 helper 처리 과정에서 누락되지 않는다.
+
+## 실행 기록
+
+- **일시**: 2026-05-12 23:58 KST
+- **결과**: `groupCompletedEpicsByCategory` 추가 및 helper 테스트 통과.
 
 ## 주의사항
 
@@ -55,7 +60,7 @@
 - active 복귀로 `completed_date = null` 이 되면 archive/count 에서 제외한다.
 - "분류 없음"은 `category_id = null` 그룹이며 실제 category row 를 생성하지 않는다.
 - 월 단위 calendar count 는 batch 조회하며 날짜 셀별 Supabase 호출 금지다.
-- indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- indicator 규칙은 0개 없음, 1~4개는 완료 Epic 1개당 점 1개, 5개 이상은 5개당 별 1개만 표시하며 점은 추가하지 않는다. 주간 UI에서는 선택된 날짜에서도 indicator 색상은 변하지 않고, 월간 UI에서는 선택된 날짜 indicator 색상을 흰색으로 바꾼다.
 - indicator 자체는 장식이며 접근성 문구는 날짜 버튼/accessibility label 에 병합한다.
 
 ## 관련 문서
