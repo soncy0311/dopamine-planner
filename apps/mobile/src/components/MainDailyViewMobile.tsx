@@ -299,12 +299,6 @@ export function MainDailyViewMobile({ workspace }: Props) {
               if (item.type === 'epic') {
                 const total = item.subs.length;
                 const done = item.subs.filter((s) => s.status === 'done').length;
-                const progressPercent =
-                  total > 0
-                    ? Math.round((done / total) * 100)
-                    : Math.round(
-                        Math.max(0, Math.min(1, item.epic.progress)) * 100,
-                      );
                 // mainStatus 도 sub 상태 기반 (optimistic update 즉시 반영).
                 // sub 0개일 땐 epic.status 자체를 기준 ('completed' → 'done').
                 const mainStatus: 'todo' | 'done' =
@@ -319,8 +313,8 @@ export function MainDailyViewMobile({ workspace }: Props) {
                   <IssueCardAccordion
                     epicId={item.epic.id}
                     title={item.epic.title}
-                    progressPercent={progressPercent}
-                    segments={item.subs.map((s) => ({ filled: s.status === 'done' }))}
+                    totalSubCount={total}
+                    completedSubCount={done}
                     category={item.category}
                     priority={item.epic.priority}
                     expanded={!!expand[item.epic.id]}

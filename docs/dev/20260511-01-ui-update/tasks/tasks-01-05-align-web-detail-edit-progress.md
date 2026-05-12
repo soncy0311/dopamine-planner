@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-01-refactor-progress-ui-unification.md`](../sub-prd-01-refactor-progress-ui-unification.md) |
 | 작업 번호 | 01-05 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | tasks-01-04 완료 필요 |
 
 ## 작업 목표
@@ -47,10 +47,15 @@ web Epic 상세/편집 화면에 progress 표시가 있는지 확인하고, 표�
 
 ## 검증 과정
 
-- [ ] web 상세/편집 화면의 progress 관련 사용처 검색 결과를 확인했다.
-- [ ] progress 표시가 있는 경우 카드와 동일한 linear/Sub 0개 미표기 정책이 적용되어 있다.
-- [ ] progress 표시가 없는 경우 불필요한 UI 를 새로 추가하지 않았고, 확인 결과를 작업 기록에 남겼다.
-- [ ] 기존 Epic 생성/수정 폼 제출 흐름이 변경되지 않았다.
+- [x] web 상세/편집 화면의 progress 관련 사용처 검색 결과를 확인했다.
+- [x] progress 표시가 있는 경우 카드와 동일한 linear/Sub 0개 미표기 정책이 적용되어 있다.
+- [x] progress 표시가 없는 경우 불필요한 UI 를 새로 추가하지 않았고, 확인 결과를 작업 기록에 남겼다.
+- [x] 기존 Epic 생성/수정 폼 제출 흐름이 변경되지 않았다.
+
+## 완료 기록
+
+- **일시**: 2026-05-12 21:41
+- **확인 결과**: `EpicDetailModal`, `EpicFormModal` 에 Epic 진행률 UI 없음. 해당 없음, 카드 정책으로 충분.
 
 ## 주의사항
 

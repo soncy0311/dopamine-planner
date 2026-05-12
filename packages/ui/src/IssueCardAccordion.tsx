@@ -2,8 +2,6 @@ import type { MouseEvent } from 'react';
 import { EpicProgressBar } from './EpicProgressBar';
 import { TodoItem, type TodoItemPriority } from './TodoItem';
 
-export type IssueCardAccordionSegment = { filled: boolean };
-
 export type IssueCardAccordionSubIssue = {
   id: string;
   title: string;
@@ -15,8 +13,8 @@ export type IssueCardAccordionSubIssue = {
 export type IssueCardAccordionProps = {
   epicId: string;
   title: string;
-  progressPercent: number;
-  segments: IssueCardAccordionSegment[];
+  totalSubCount: number;
+  completedSubCount: number;
   category?: { name: string; color?: string };
   priority?: TodoItemPriority | null;
   expanded: boolean;
@@ -56,8 +54,8 @@ function ChevronRight({ expanded }: { expanded: boolean }) {
 export function IssueCardAccordion({
   epicId,
   title,
-  progressPercent,
-  segments,
+  totalSubCount,
+  completedSubCount,
   category,
   priority,
   expanded,
@@ -68,8 +66,9 @@ export function IssueCardAccordion({
   onAddSubIssue,
   onTitlePress,
 }: IssueCardAccordionProps) {
-  const total = segments.length;
-  const doneCount = segments.filter((s) => s.filled).length;
+  const total = Math.max(0, totalSubCount);
+  const doneCount = Math.min(Math.max(0, completedSubCount), total);
+  const progressPercent = total > 0 ? Math.round((doneCount / total) * 100) : 0;
   const bodyId = `epic-${epicId}-body`;
 
   const handleHeaderClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -111,13 +110,19 @@ export function IssueCardAccordion({
         />
       </div>
 
-      {/* 진행률 바 + percent */}
-      <div className="flex items-center gap-2 px-4 pb-3">
-        <div className="flex-1">
-          <EpicProgressBar total={total} done={doneCount} segments />
+      {total > 0 ? (
+        <div className="flex items-center gap-2 px-4 pb-3">
+          <div className="flex-1">
+            <EpicProgressBar total={total} done={doneCount} />
+          </div>
+          <span
+            aria-hidden="true"
+            className="text-xs md:text-sm font-medium text-periwinkle-500"
+          >
+            {progressPercent}%
+          </span>
         </div>
-        <span className="text-xs md:text-sm font-medium text-periwinkle-500">{progressPercent}%</span>
-      </div>
+      ) : null}
 
       {/* 펼침 body — sub-issues (태그 없이 체크박스 + 제목만) */}
       {expanded ? (

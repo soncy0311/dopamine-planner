@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-01-refactor-progress-ui-unification.md`](../sub-prd-01-refactor-progress-ui-unification.md) |
 | 작업 번호 | 01-03 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | tasks-01-01, tasks-01-02 완료 필요 |
 
 ## 작업 목표
@@ -46,10 +46,10 @@
 
 ## 검증 과정
 
-- [ ] `EpicProgressBar` 기본 렌더링이 segmented segment 배열을 만들지 않는다.
-- [ ] `safeTotal > 0` 케이스에서 fill width 가 `safeDone / safeTotal` 로 계산된다.
-- [ ] `safeTotal <= 0` 케이스가 Sub 0개 미표기 정책과 충돌하지 않는다.
-- [ ] progressbar role/value 속성이 유지되고 보조 텍스트 의미가 기존과 동일하다.
+- [x] `EpicProgressBar` 기본 렌더링이 segmented segment 배열을 만들지 않는다.
+- [x] `safeTotal > 0` 케이스에서 fill width 가 `safeDone / safeTotal` 로 계산된다.
+- [x] `safeTotal <= 0` 케이스가 Sub 0개 미표기 정책과 충돌하지 않는다.
+- [x] progressbar role/value 속성이 유지되고 보조 텍스트 의미가 기존과 동일하다.
 
 ## 주의사항
 

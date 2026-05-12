@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-01-refactor-progress-ui-unification.md`](../sub-prd-01-refactor-progress-ui-unification.md) |
 | 작업 번호 | 01-02 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | tasks-01-01 완료 필요 |
 
 ## 작업 목표
@@ -45,10 +45,10 @@ Sub 가 0개인 Epic 에서는 progress bar 를 렌더링하지 않는 정책을
 
 ## 검증 과정
 
-- [ ] progress 문서에 `totalSubCount = 0` 은 progress bar 미표기로 명시되어 있다.
-- [ ] `0% bar`, `숨김 vs 0%` 처럼 정책을 열어두는 표현이 남아 있지 않다.
-- [ ] web/mobile 모두 같은 정책을 적용해야 한다는 문장이 포함되어 있다.
-- [ ] Epic 자체 완료 상태와 Sub 기반 진행률이 별도 의미라는 설명이 포함되어 있다.
+- [x] progress 문서에 `totalSubCount = 0` 은 progress bar 미표기로 명시되어 있다.
+- [x] `0% bar`, `숨김 vs 0%` 처럼 정책을 열어두는 표현이 남아 있지 않다.
+- [x] web/mobile 모두 같은 정책을 적용해야 한다는 문장이 포함되어 있다.
+- [x] Epic 자체 완료 상태와 Sub 기반 진행률이 별도 의미라는 설명이 포함되어 있다.
 
 ## 주의사항
 

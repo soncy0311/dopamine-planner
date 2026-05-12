@@ -6,7 +6,6 @@ export type { EpicProgressBarProps } from './EpicProgressBar';
 export { IssueCardAccordion } from './IssueCardAccordion';
 export type {
   IssueCardAccordionProps,
-  IssueCardAccordionSegment,
   IssueCardAccordionSubIssue,
 } from './IssueCardAccordion';
 export { DateNavigator } from './DateNavigator';

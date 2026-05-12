@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-01-refactor-progress-ui-unification.md`](../sub-prd-01-refactor-progress-ui-unification.md) |
 | 작업 번호 | 01-01 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 없음 |
 
 ## 작업 목표
@@ -45,10 +45,10 @@
 
 ## 검증 과정
 
-- [ ] `docs/base/design-system/components/progress-bar.md` 에서 EpicCard 기본 variant 가 `linear` 로 설명된다.
-- [ ] Epic 기본 정책 설명에 `segmented (기본)` 또는 Sub 개수 기반 자동 전환 기준이 남아 있지 않다.
-- [ ] 진행률 산출식이 `completedSubCount / totalSubCount` 로 유지되어 있다.
-- [ ] `docs/base/design-system/components.md` 에 상충하는 Epic progress 기본 정책이 없는지 확인한다.
+- [x] `docs/base/design-system/components/progress-bar.md` 에서 EpicCard 기본 variant 가 `linear` 로 설명된다.
+- [x] Epic 기본 정책 설명에 `segmented (기본)` 또는 Sub 개수 기반 자동 전환 기준이 남아 있지 않다.
+- [x] 진행률 산출식이 `completedSubCount / totalSubCount` 로 유지되어 있다.
+- [x] `docs/base/design-system/components.md` 에 상충하는 Epic progress 기본 정책이 없는지 확인한다.
 
 ## 주의사항
 

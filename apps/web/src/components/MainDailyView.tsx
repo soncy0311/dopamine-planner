@@ -210,10 +210,6 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
     const cat = categoryById.get(epic.categoryId);
     const total = subs.length;
     const doneCount = subs.filter((s) => s.status === 'done').length;
-    const progressPercent =
-      total > 0
-        ? Math.round((doneCount / total) * 100)
-        : Math.round(Math.max(0, Math.min(1, epic.progress)) * 100);
     // mainStatus 도 sub 상태 기반 (optimistic update 즉시 반영).
     // sub 0개일 땐 epic.status 자체를 기준으로 ('completed' → 'done').
     const mainStatus: 'todo' | 'done' =
@@ -230,8 +226,8 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         key={epic.id}
         epicId={epic.id}
         title={epic.title}
-        progressPercent={progressPercent}
-        segments={subs.map((s) => ({ filled: s.status === 'done' }))}
+        totalSubCount={total}
+        completedSubCount={doneCount}
         category={cat ? { name: cat.name, color: cat.color } : undefined}
         priority={epic.priority}
         expanded={!!expand[epic.id]}

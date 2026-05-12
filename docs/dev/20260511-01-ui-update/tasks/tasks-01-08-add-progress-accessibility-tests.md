@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-01-refactor-progress-ui-unification.md`](../sub-prd-01-refactor-progress-ui-unification.md) |
 | 작업 번호 | 01-08 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | tasks-01-04, tasks-01-05, tasks-01-06, tasks-01-07 완료 필요 |
 
 ## 작업 목표
@@ -51,11 +51,11 @@ web progressbar 의 role/value/보조 텍스트 테스트를 추가하고, mobil
 
 ## 검증 과정
 
-- [ ] web 테스트에 progressbar role/value/valuetext 검증이 추가되어 있다.
-- [ ] Sub 0개 Epic 에서 progressbar 미표기 테스트가 추가되어 있다.
-- [ ] 일부 완료와 전체 완료 fixture 가 접근성 의미를 검증한다.
-- [ ] mobile 자동 테스트가 없으면 typecheck 및 수동 QA 검증 항목이 명시되어 있다.
-- [ ] `make test` 실행 시 추가된 web 테스트가 통과한다.
+- [x] web 테스트에 progressbar role/value/valuetext 검증이 추가되어 있다.
+- [x] Sub 0개 Epic 에서 progressbar 미표기 테스트가 추가되어 있다.
+- [x] 일부 완료와 전체 완료 fixture 가 접근성 의미를 검증한다.
+- [x] mobile 자동 테스트가 없으면 typecheck 및 수동 QA 검증 항목이 명시되어 있다.
+- [x] `make test` 실행 시 추가된 web 테스트가 통과한다.
 
 ## 주의사항
 

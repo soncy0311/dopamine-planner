@@ -4,8 +4,8 @@ import type { SubIssueWithJoins } from '@todo-list/core';
 export type IssueCardAccordionProps = {
   epicId: string;
   title: string;
-  progressPercent: number;
-  segments: { filled: boolean }[];
+  totalSubCount: number;
+  completedSubCount: number;
   category?: { name: string; color?: string };
   priority?: 'high' | 'medium' | 'low' | null;
   expanded: boolean;
@@ -36,8 +36,8 @@ function priorityBadgeColors(p: 'high' | 'medium' | 'low'): {
 
 export function IssueCardAccordion({
   title,
-  progressPercent,
-  segments,
+  totalSubCount,
+  completedSubCount,
   category,
   priority,
   expanded,
@@ -52,6 +52,10 @@ export function IssueCardAccordion({
 }: IssueCardAccordionProps) {
   const done = mainStatus === 'done';
   const showTags = !!priority || !!category;
+  const safeTotal = Math.max(0, totalSubCount);
+  const safeDone = Math.min(Math.max(0, completedSubCount), safeTotal);
+  const progressPercent =
+    safeTotal > 0 ? Math.round((safeDone / safeTotal) * 100) : 0;
 
   return (
     <View className="mx-3 my-1 overflow-hidden rounded-lg border border-periwinkle-200 bg-white">
@@ -148,24 +152,31 @@ export function IssueCardAccordion({
         </View>
       </Pressable>
 
-      {/* 진행률 바 + percent */}
-      <View className="flex-row items-center gap-2 px-4 pb-3">
-        <View className="flex-1 flex-row" style={{ gap: 2 }}>
-          {segments.length === 0 ? (
-            <View className="h-2 flex-1 rounded-full bg-periwinkle-100" />
-          ) : (
-            segments.map((seg, i) => (
-              <View
-                key={i}
-                className={`h-2 flex-1 rounded-full ${
-                  seg.filled ? 'bg-purple-500' : 'bg-periwinkle-100'
-                }`}
-              />
-            ))
-          )}
+      {safeTotal > 0 ? (
+        <View className="flex-row items-center gap-2 px-4 pb-3">
+          <View
+            accessibilityRole="progressbar"
+            accessibilityValue={{
+              min: 0,
+              max: safeTotal,
+              now: safeDone,
+              text: `전체 ${safeTotal}개 중 ${safeDone}개 완료 (${progressPercent}%)`,
+            }}
+            className="h-2 flex-1 overflow-hidden rounded-full bg-periwinkle-100"
+          >
+            <View
+              className="h-full rounded-full bg-purple-500"
+              style={{ width: `${progressPercent}%` }}
+            />
+          </View>
+          <Text
+            accessible={false}
+            className="text-xs font-medium text-periwinkle-500"
+          >
+            {progressPercent}%
+          </Text>
         </View>
-        <Text className="text-xs font-medium text-periwinkle-500">{progressPercent}%</Text>
-      </View>
+      ) : null}
 
       {/* 펼침 body — sub-issues (태그 없이 체크박스 + 제목만) */}
       {expanded ? (

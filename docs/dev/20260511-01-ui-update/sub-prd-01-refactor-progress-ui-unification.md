@@ -6,8 +6,8 @@
 - **작업 유형**: `refactor` (코드 구조 변경)
 - **시작일**: 2026-05-12
 - **종료일**: TBD
-- **최신 업데이트**: 2026-05-12
-- **상태**: 진행전
+- **최신 업데이트**: 2026-05-12 21:49
+- **상태**: 완료 (lint 환경 이슈)
 - **Main PRD**: [`main-prd-ui-update.md`](./main-prd-ui-update.md)
 - **선행 Sub-PRD**: 없음
 
@@ -84,29 +84,33 @@
 5. **레이아웃 흔들림 방지**: progress bar 높이와 percent 텍스트 영역은 고정 크기 또는 안정적인 flex 규칙을 사용한다.
 6. **색상 임의 추가 금지**: 기존 design-system 토큰을 사용하고 인라인 색상 또는 플랫폼별 임의 색상은 추가하지 않는다.
 
-## 작업
+## 완료된 작업
 
-- [ ] `docs/base/design-system/components/progress-bar.md` 의 Epic 기본 variant 를 `linear` 로 갱신한다.
-- [ ] Sub 0개 Epic 의 진행률 미표기 정책을 디자인 시스템 문서에 명시한다.
-- [ ] `packages/ui` 의 Epic 진행률 컴포넌트 기본 표시를 단일 linear bar 로 변경한다.
-- [ ] web Epic 카드에서 segmented progress 렌더링을 제거하고 linear progress 를 적용한다.
-- [ ] web Epic 상세/편집 화면의 progress 표시가 카드와 동일한 정책을 쓰는지 확인하고 보정한다.
-- [ ] mobile Epic 카드에서 linear progress 를 적용한다.
-- [ ] mobile Epic 상세/편집 화면의 progress 표시가 카드와 동일한 정책을 쓰는지 확인하고 보정한다.
-- [ ] progressbar 접근성 속성의 현재 값, 최대 값, 보조 텍스트가 기존 의미를 유지하는지 테스트를 추가 또는 갱신한다.
-- [ ] Sub 0개, 일부 완료, 전체 완료 케이스를 web/mobile fixture 로 검증한다.
+- [x] Sub 0개, 일부 완료, 전체 완료 케이스를 web/mobile fixture 로 검증한다. ✅ (2026-05-12 21:49)
+- [x] progressbar 접근성 속성의 현재 값, 최대 값, 보조 텍스트가 기존 의미를 유지하는지 테스트를 추가 또는 갱신한다. ✅ (2026-05-12 21:49)
+- [x] mobile Epic 상세/편집 화면의 progress 표시가 카드와 동일한 정책을 쓰는지 확인하고 보정한다. ✅ (2026-05-12 21:41)
+- [x] mobile Epic 카드에서 linear progress 를 적용한다. ✅ (2026-05-12 21:41)
+- [x] web Epic 상세/편집 화면의 progress 표시가 카드와 동일한 정책을 쓰는지 확인하고 보정한다. ✅ (2026-05-12 21:41)
+- [x] web Epic 카드에서 segmented progress 렌더링을 제거하고 linear progress 를 적용한다. ✅ (2026-05-12 21:41)
+- [x] `packages/ui` 의 Epic 진행률 컴포넌트 기본 표시를 단일 linear bar 로 변경한다. ✅ (2026-05-12 21:41)
+- [x] Sub 0개 Epic 의 진행률 미표기 정책을 디자인 시스템 문서에 명시한다. ✅ (2026-05-12 21:41)
+- [x] `docs/base/design-system/components/progress-bar.md` 의 Epic 기본 variant 를 `linear` 로 갱신한다. ✅ (2026-05-12 21:41)
+
+## 남은 작업
+
+- 없음.
 
 ## 검증 기준
 
-- [ ] Epic 카드의 진행률이 web/mobile 모두 단일 linear progress bar 로 표시된다.
-- [ ] Sub 개수가 1개, 3개, 10개 이상이어도 segmented UI 가 나타나지 않는다.
-- [ ] Sub 0개 Epic 에서는 progress bar 가 표시되지 않고 레이아웃이 깨지지 않는다.
-- [ ] `completedSubCount / totalSubCount` 기준의 % 표시가 기존과 동일하다.
-- [ ] web 의 progressbar ARIA 속성이 유지된다.
-- [ ] mobile 의 accessibilityRole/accessibilityValue 가 유지된다.
-- [ ] `docs/base/design-system/components/progress-bar.md` 와 구현 기본 정책이 서로 일치한다.
+- [x] Epic 카드의 진행률이 web/mobile 모두 단일 linear progress bar 로 표시된다.
+- [x] Sub 개수가 1개, 3개, 10개 이상이어도 segmented UI 가 나타나지 않는다.
+- [x] Sub 0개 Epic 에서는 progress bar 가 표시되지 않고 레이아웃이 깨지지 않는다.
+- [x] `completedSubCount / totalSubCount` 기준의 % 표시가 기존과 동일하다.
+- [x] web 의 progressbar ARIA 속성이 유지된다.
+- [x] mobile 의 accessibilityRole/accessibilityValue 가 유지된다.
+- [x] `docs/base/design-system/components/progress-bar.md` 와 구현 기본 정책이 서로 일치한다.
 - [ ] `make lint` 통과.
-- [ ] `make test` 통과.
+- [x] `make test` 통과.
 
 ---
 

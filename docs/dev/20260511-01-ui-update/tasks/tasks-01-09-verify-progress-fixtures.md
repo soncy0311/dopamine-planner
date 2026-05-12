@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-01-refactor-progress-ui-unification.md`](../sub-prd-01-refactor-progress-ui-unification.md) |
 | 작업 번호 | 01-09 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | tasks-01-08 완료 필요 |
 
 ## 작업 목표
@@ -58,12 +58,19 @@ Sub 0개, 일부 완료, 전체 완료 fixture 로 web/mobile progress 정책을
 
 ## 검증 과정
 
-- [ ] Sub 0개 fixture 에서 progress bar 미표기 정책이 web/mobile 모두 확인됐다.
-- [ ] 일부 완료 fixture 에서 percent 와 접근성 값이 `completedSubCount / totalSubCount` 와 일치한다.
-- [ ] 전체 완료 fixture 에서 100% linear bar 가 표시된다.
-- [ ] `rg -n "segments|segmented" packages/ui/src apps/web/src apps/mobile/src` 결과에 Epic 기본 segmented 강제 사용이 남아 있지 않다.
+- [x] Sub 0개 fixture 에서 progress bar 미표기 정책이 web/mobile 모두 확인됐다.
+- [x] 일부 완료 fixture 에서 percent 와 접근성 값이 `completedSubCount / totalSubCount` 와 일치한다.
+- [x] 전체 완료 fixture 에서 100% linear bar 가 표시된다.
+- [x] `rg -n "segments|segmented" packages/ui/src apps/web/src apps/mobile/src` 결과에 Epic 기본 segmented 강제 사용이 남아 있지 않다.
 - [ ] `make lint` 가 통과한다.
-- [ ] `make test` 가 통과한다.
+- [x] `make test` 가 통과한다.
+
+## 검증 기록
+
+- **일시**: 2026-05-12 21:49
+- **`make test`**: 통과.
+- **`make typecheck`**: 통과. mobile 자동 테스트 부재 보완 검증으로 실행.
+- **`make lint`**: 실패. `@todo-list/mobile` lint 단계에서 `eslint: command not found` 로 중단되어 체크하지 않음.
 
 ## 주의사항
 

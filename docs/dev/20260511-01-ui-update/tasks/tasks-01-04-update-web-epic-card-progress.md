@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-01-refactor-progress-ui-unification.md`](../sub-prd-01-refactor-progress-ui-unification.md) |
 | 작업 번호 | 01-04 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | tasks-01-03 완료 필요 |
 
 ## 작업 목표
@@ -48,11 +48,11 @@ web Epic 카드에서 segmented progress 렌더링을 제거하고, Sub 가 1개
 
 ## 검증 과정
 
-- [ ] web Epic 카드에서 segmented segment UI 가 렌더링되지 않는다.
-- [ ] Sub 0개 Epic 에서는 progress row 와 percent 텍스트가 렌더링되지 않는다.
-- [ ] Sub 일부 완료 케이스에서 percent 는 `Math.round(doneCount / total * 100)` 와 일치한다.
-- [ ] main checkbox 일괄 완료/해제 동작은 기존과 동일하다.
-- [ ] 관련 `packages/ui` 테스트 fixture 가 새 props 계약과 일치한다.
+- [x] web Epic 카드에서 segmented segment UI 가 렌더링되지 않는다.
+- [x] Sub 0개 Epic 에서는 progress row 와 percent 텍스트가 렌더링되지 않는다.
+- [x] Sub 일부 완료 케이스에서 percent 는 `Math.round(doneCount / total * 100)` 와 일치한다.
+- [x] main checkbox 일괄 완료/해제 동작은 기존과 동일하다.
+- [x] 관련 `packages/ui` 테스트 fixture 가 새 props 계약과 일치한다.
 
 ## 주의사항
 

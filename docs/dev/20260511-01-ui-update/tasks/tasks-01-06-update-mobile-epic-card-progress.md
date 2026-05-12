@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-01-refactor-progress-ui-unification.md`](../sub-prd-01-refactor-progress-ui-unification.md) |
 | 작업 번호 | 01-06 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | tasks-01-03 완료 필요 |
 
 ## 작업 목표
@@ -46,11 +46,11 @@ mobile Epic 카드에서 segment 배열 기반 progress 렌더링을 단일 line
 
 ## 검증 과정
 
-- [ ] mobile Epic 카드에서 segment 배열이 화면에 렌더링되지 않는다.
-- [ ] Sub 0개 Epic 에서는 progress row 와 percent 텍스트가 표시되지 않는다.
-- [ ] Sub 일부 완료/전체 완료 케이스의 percent 가 `completedSubCount / totalSubCount` 와 일치한다.
-- [ ] `accessibilityRole` 과 `accessibilityValue` 가 Sub 가 있는 progress 에 유지된다.
-- [ ] mobile package 에 별도 test script 가 없으면 `typecheck` 및 수동 QA 항목으로 검증 계획을 남긴다.
+- [x] mobile Epic 카드에서 segment 배열이 화면에 렌더링되지 않는다.
+- [x] Sub 0개 Epic 에서는 progress row 와 percent 텍스트가 표시되지 않는다.
+- [x] Sub 일부 완료/전체 완료 케이스의 percent 가 `completedSubCount / totalSubCount` 와 일치한다.
+- [x] `accessibilityRole` 과 `accessibilityValue` 가 Sub 가 있는 progress 에 유지된다.
+- [x] mobile package 에 별도 test script 가 없으면 `typecheck` 및 수동 QA 항목으로 검증 계획을 남긴다.
 
 ## 주의사항
 
