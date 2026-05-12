@@ -10,7 +10,8 @@ export type Priority = Database['public']['Enums']['priority'];
 export interface EpicIssue {
   id: string;
   userId: string;
-  categoryId: string;
+  categoryId: string | null;
+  workspace: Database['public']['Enums']['workspace'];
   title: string;
   description: string | null;
   priority: Priority;
@@ -29,6 +30,7 @@ export function mapEpicRow(row: EpicRow): EpicIssue {
     id: row.id,
     userId: row.user_id,
     categoryId: row.category_id,
+    workspace: row.workspace,
     title: row.title,
     description: row.description,
     priority: row.priority,

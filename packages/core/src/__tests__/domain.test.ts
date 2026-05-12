@@ -27,6 +27,7 @@ const epicRow: EpicRow = {
   progress: 0,
   created_at: '2026-05-05T00:00:00Z',
   updated_at: '2026-05-05T00:00:00Z',
+  workspace: 'life',
 };
 
 function todoRow(overrides: Partial<TodoRow> = {}): TodoRow {
@@ -71,6 +72,7 @@ describe('mapEpicRow', () => {
       id: 'ep-1',
       userId: 'u-1',
       categoryId: 'cat-1',
+      workspace: 'life',
       title: '5월 정리',
       description: null,
       priority: 'medium',
@@ -81,6 +83,10 @@ describe('mapEpicRow', () => {
       createdAt: '2026-05-05T00:00:00Z',
       updatedAt: '2026-05-05T00:00:00Z',
     });
+  });
+
+  it('category_id null row 를 분류 없음 Epic 으로 변환한다', () => {
+    expect(mapEpicRow({ ...epicRow, category_id: null }).categoryId).toBeNull();
   });
 });
 
@@ -129,5 +135,23 @@ describe('mapTodoDailyView', () => {
       name: '집안일',
       color: '#ff0000',
     });
+  });
+
+  it('category JOIN 이 null 이어도 예외 없이 null category 로 평탄화한다', () => {
+    const view = mapTodoDailyView(
+      [
+        {
+          ...todoRow({ id: 't-1' }),
+          epic: {
+            id: 'ep-1',
+            title: '5월 정리',
+            progress: 0.5,
+            category: null,
+          },
+        },
+      ],
+      '2026-05-05',
+    );
+    expect(view.todo[0]?.category).toBeNull();
   });
 });

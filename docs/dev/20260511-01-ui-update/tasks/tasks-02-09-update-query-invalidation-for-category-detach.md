@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-09 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-07, 02-08 완료 필요 |
 
 ## 작업 목표
@@ -49,10 +49,10 @@ category 수정/삭제 detach 후 category 목록뿐 아니라 Epic/Todo 표시�
 
 ## 검증 과정
 
-- [ ] category delete detach 후 Epic 목록이 재조회되어 "분류 없음"으로 표시될 수 있다.
-- [ ] category update 후 연결 Epic/Sub 표시 이름과 색상이 최신 값으로 갱신된다.
-- [ ] "전체" 필터와 "분류 없음" 필터를 구분할 수 있는 query key 확장성이 있다.
-- [ ] queryKeys 테스트가 새 key/invalidation 정책을 검증한다.
+- [x] category delete detach 후 Epic 목록이 재조회되어 "분류 없음"으로 표시될 수 있다.
+- [x] category update 후 연결 Epic/Sub 표시 이름과 색상이 최신 값으로 갱신된다.
+- [x] "전체" 필터와 "분류 없음" 필터를 구분할 수 있는 query key 확장성이 있다.
+- [x] queryKeys 테스트가 새 key/invalidation 정책을 검증한다.
 
 ## 주의사항
 

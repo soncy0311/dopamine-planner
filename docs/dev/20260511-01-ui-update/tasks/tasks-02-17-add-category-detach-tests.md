@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-17 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-02부터 02-16까지 완료 필요 |
 
 ## 작업 목표
@@ -52,13 +52,17 @@
 
 ## 검증 과정
 
-- [ ] category 삭제 후 연결 Epic row 가 삭제되지 않고 `category_id = null` 이 된다.
-- [ ] category 삭제 후 연결 Sub row 가 삭제되지 않는다.
-- [ ] 신규 Epic 을 분류 없이 생성하는 테스트가 통과한다.
-- [ ] "전체" 필터와 "분류 없음" 필터가 서로 다른 결과를 반환한다.
-- [ ] web/mobile 모두 null category Epic 렌더링 오류가 없다.
+- [x] category 삭제 후 연결 Epic row 가 삭제되지 않고 `category_id = null` 이 된다.
+- [x] category 삭제 후 연결 Sub row 가 삭제되지 않는다.
+- [x] 신규 Epic 을 분류 없이 생성하는 테스트가 통과한다.
+- [x] "전체" 필터와 "분류 없음" 필터가 서로 다른 결과를 반환한다.
+- [x] web/mobile 모두 null category Epic 렌더링 오류가 없다.
 - [ ] `make lint` 가 통과한다.
-- [ ] `make test` 가 통과한다.
+- [x] `make test` 가 통과한다.
+
+## 검증 기록
+- **일시**: 2026-05-12 23:02
+- **결과**: `make lint`는 mobile 패키지에서 `eslint: command not found`로 실패했다. 나머지 `make sb-reset`, `make sb-gen-types`, `make typecheck`, `make test`는 통과했다.
 
 ## 주의사항
 

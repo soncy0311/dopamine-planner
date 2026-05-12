@@ -21,6 +21,13 @@ describe('queryKeys', () => {
     ]);
   });
 
+  it('uncategorizedEpics 헬퍼는 workspace 와 null categoryId 키를 가진다', () => {
+    expect(queryKeys.uncategorizedEpics('life')).toEqual([
+      'epics',
+      { workspace: 'life', categoryId: null },
+    ]);
+  });
+
   it('categories 헬퍼는 워크스페이스 키를 가진다', () => {
     expect(queryKeys.categories('life')).toEqual([
       'categories',
@@ -52,12 +59,14 @@ describe('invalidateByTable', () => {
     expect(qc.invalidateQueries).toHaveBeenCalledWith({ queryKey: ['epics'] });
   });
 
-  it('category → categories prefix invalidate', () => {
+  it('category → categories, epics, todos prefix invalidate', () => {
     const qc = makeQc();
     invalidateByTable(qc, 'category');
     expect(qc.invalidateQueries).toHaveBeenCalledWith({
       queryKey: ['categories'],
     });
+    expect(qc.invalidateQueries).toHaveBeenCalledWith({ queryKey: ['epics'] });
+    expect(qc.invalidateQueries).toHaveBeenCalledWith({ queryKey: ['todos'] });
   });
 
   it('profile → profile prefix invalidate', () => {

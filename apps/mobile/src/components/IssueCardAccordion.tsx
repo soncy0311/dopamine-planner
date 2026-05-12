@@ -180,7 +180,7 @@ export function IssueCardAccordion({
 
       {/* 펼침 body — sub-issues (태그 없이 체크박스 + 제목만) */}
       {expanded ? (
-        <View className="border-t border-periwinkle-100">
+        <View>
           {subIssues.map((s) => {
             const subDone = s.status === 'done';
             return (
@@ -230,7 +230,7 @@ export function IssueCardAccordion({
               onPress={onAddSubIssue}
               accessibilityRole="button"
               accessibilityLabel="서브 이슈 추가"
-              className="border-t border-periwinkle-100 py-2 pl-16 pr-4"
+              className="py-2 pl-16 pr-4"
             >
               <Text className="text-xs font-medium text-purple-500">+ 서브 이슈 추가</Text>
             </Pressable>

@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-11 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-07, 02-09, 02-10 완료 필요 |
 
 ## 작업 목표
@@ -47,10 +47,10 @@ web 설정의 분류 관리 화면에서 category 삭제 전 confirmation 을 �
 
 ## 검증 과정
 
-- [ ] category 삭제 전 confirmation 이 표시된다.
-- [ ] confirmation 에 Epic/Sub 유지 및 "분류 없음" 전환 정책이 표시된다.
-- [ ] 삭제 성공 후 category row 는 목록에서 사라진다.
-- [ ] 연결 Epic/Sub 는 삭제되지 않고 "분류 없음"으로 표시될 수 있다.
+- [x] category 삭제 전 confirmation 이 표시된다.
+- [x] confirmation 에 Epic/Sub 유지 및 "분류 없음" 전환 정책이 표시된다.
+- [x] 삭제 성공 후 category row 는 목록에서 사라진다.
+- [x] 연결 Epic/Sub 는 삭제되지 않고 "분류 없음"으로 표시될 수 있다.
 
 ## 주의사항
 

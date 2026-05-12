@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-12 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-08, 02-10 완료 필요 |
 
 ## 작업 목표
@@ -50,10 +50,10 @@ web Epic 생성/편집 폼에서 category 선택을 optional 로 전환하고, �
 
 ## 검증 과정
 
-- [ ] web 에서 신규 Epic 을 category 없이 생성할 수 있다.
-- [ ] web Epic 편집에서 category 를 제거하고 저장할 수 있다.
-- [ ] 저장 후 해당 Epic 이 "분류 없음" 상태로 표시될 수 있다.
-- [ ] category 선택을 비워도 form validation 이 막지 않는다.
+- [x] web 에서 신규 Epic 을 category 없이 생성할 수 있다.
+- [x] web Epic 편집에서 category 를 제거하고 저장할 수 있다.
+- [x] 저장 후 해당 Epic 이 "분류 없음" 상태로 표시될 수 있다.
+- [x] category 선택을 비워도 form validation 이 막지 않는다.
 
 ## 주의사항
 

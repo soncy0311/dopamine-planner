@@ -27,13 +27,10 @@ export async function listByWorkspace(
 ): Promise<EpicIssue[]> {
   const { data, error } = await client
     .from('epic_issue')
-    .select('*, category!inner(workspace)')
-    .eq('category.workspace', workspace);
+    .select('*')
+    .eq('workspace', workspace);
   if (error) throw error;
-  const rows = (data ?? []) as Array<EpicRow & { category?: unknown }>;
-  return rows.map(({ category: _category, ...rest }) =>
-    mapEpicRow(rest as EpicRow),
-  );
+  return (data ?? []).map(mapEpicRow);
 }
 
 export async function create(

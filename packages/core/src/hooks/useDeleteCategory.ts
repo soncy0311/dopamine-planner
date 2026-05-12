@@ -20,6 +20,8 @@ export function useDeleteCategory(
     mutationFn: ({ id }) => categoryService.remove(client, id),
     onSuccess: (_data, { workspace }) => {
       qc.invalidateQueries({ queryKey: queryKeys.categories(workspace) });
+      qc.invalidateQueries({ queryKey: queryKeys.epics(workspace) });
+      qc.invalidateQueries({ queryKey: ['todos'] });
     },
   });
 }

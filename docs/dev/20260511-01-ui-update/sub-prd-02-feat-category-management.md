@@ -6,8 +6,8 @@
 - **작업 유형**: `feat` (새로운 기능 추가)
 - **시작일**: 2026-05-12
 - **종료일**: TBD
-- **최신 업데이트**: 2026-05-12
-- **상태**: 진행전
+- **최신 업데이트**: 2026-05-12 23:02
+- **상태**: 완료 (lint 환경 이슈 제외)
 - **Main PRD**: [`main-prd-ui-update.md`](./main-prd-ui-update.md)
 - **선행 Sub-PRD**: 없음 (Sub-01 과 독립)
 
@@ -113,37 +113,49 @@ alter table public.epic_issue
 6. **폼 기본값 주의**: 기존 Epic 편집 폼이 category 선택을 required 로 가정하면 null 저장이 막힌다.
 7. **필터 의미 분리**: "전체"와 "분류 없음"은 다른 필터 옵션이다.
 
-## 작업
+## 완료된 작업
 
-- [ ] 현재 `epic_issue.category_id` constraint, trigger, index, RLS 정책을 확인한다.
-- [ ] `category_id` nullable 및 `on delete set null` 전환 migration 을 작성한다.
-- [ ] 기존 orphan category trigger 가 새 정책과 충돌하는지 검토하고 수정한다.
-- [ ] 필요 시 `delete_category_detach_epics(category_id uuid)` RPC 를 작성한다.
-- [ ] Supabase generated type 및 `packages/shared` 타입을 갱신한다.
-- [ ] `packages/core` Epic 도메인 타입을 `categoryId: string | null` 로 갱신한다.
-- [ ] category service 에 update/delete detach 흐름을 구현한다.
-- [ ] epic service/update payload 가 `category_id = null` 을 허용하도록 보정한다.
-- [ ] queryKeys 및 invalidate 범위에 category 삭제 후 epic 목록 갱신을 반영한다.
-- [ ] web 분류 관리 화면에 분류명/색상 수정 기능을 추가한다.
-- [ ] web 분류 관리 화면에 삭제 confirmation 과 detach 정책 안내를 추가한다.
-- [ ] web Epic 생성/편집 폼에서 분류 선택을 선택 항목으로 전환하고 분류 제거 UI 를 추가한다.
-- [ ] mobile 분류 관리 화면에 분류명/색상 수정 기능을 추가한다.
-- [ ] mobile 분류 관리 화면에 삭제 confirmation 과 detach 정책 안내를 추가한다.
-- [ ] mobile Epic 생성/편집 폼에서 분류 선택을 선택 항목으로 전환하고 분류 제거 UI 를 추가한다.
-- [ ] 카드, 목록, 필터에서 "분류 없음" 표시를 추가한다.
-- [ ] 분류 삭제 후 Epic/Sub 유지 테스트를 추가한다.
+- [x] 분류 삭제 후 Epic/Sub 유지 테스트를 추가한다. ✅ (2026-05-12 23:02)
+- [x] 카드, 목록, 필터에서 "분류 없음" 표시를 추가한다. ✅ (2026-05-12 23:02)
+- [x] mobile Epic 생성/편집 폼에서 분류 선택을 선택 항목으로 전환하고 분류 제거 UI 를 추가한다. ✅ (2026-05-12 23:02)
+- [x] mobile 분류 관리 화면에 삭제 confirmation 과 detach 정책 안내를 추가한다. ✅ (2026-05-12 23:02)
+- [x] mobile 분류 관리 화면에 분류명/색상 수정 기능을 추가한다. ✅ (2026-05-12 23:02)
+- [x] web Epic 생성/편집 폼에서 분류 선택을 선택 항목으로 전환하고 분류 제거 UI 를 추가한다. ✅ (2026-05-12 23:02)
+- [x] web 분류 관리 화면에 삭제 confirmation 과 detach 정책 안내를 추가한다. ✅ (2026-05-12 23:02)
+- [x] web 분류 관리 화면에 분류명/색상 수정 기능을 추가한다. ✅ (2026-05-12 23:02)
+- [x] queryKeys 및 invalidate 범위에 category 삭제 후 epic 목록 갱신을 반영한다. ✅ (2026-05-12 23:02)
+- [x] epic service/update payload 가 `category_id = null` 을 허용하도록 보정한다. ✅ (2026-05-12 23:02)
+- [x] category service 에 update/delete detach 흐름을 구현한다. ✅ (2026-05-12 23:02)
+- [x] `packages/core` Epic 도메인 타입을 `categoryId: string | null` 로 갱신한다. ✅ (2026-05-12 23:02)
+- [x] Supabase generated type 및 `packages/shared` 타입을 갱신한다. ✅ (2026-05-12 23:02)
+- [x] 필요 시 `delete_category_detach_epics(category_id uuid)` RPC 를 작성한다. ✅ (2026-05-12 23:02)
+- [x] 기존 orphan category trigger 가 새 정책과 충돌하는지 검토하고 수정한다. ✅ (2026-05-12 23:02)
+- [x] `category_id` nullable 및 `on delete set null` 전환 migration 을 작성한다. ✅ (2026-05-12 23:02)
+- [x] 현재 `epic_issue.category_id` constraint, trigger, index, RLS 정책을 확인한다. ✅ (2026-05-12 23:02)
+
+## 남은 작업
+
+- [ ] mobile lint 환경에서 `eslint` 실행 파일을 사용할 수 있도록 의존성/스크립트 상태를 정리한다.
 
 ## 검증 기준
 
-- [ ] category 삭제 후 연결 Epic row 가 삭제되지 않고 `category_id = null` 이 된다.
-- [ ] category 삭제 후 연결 Sub row 가 삭제되지 않는다.
-- [ ] 분류 수정 후 연결 Epic/Sub 표시 이름과 색상이 최신 값으로 보인다.
-- [ ] Epic 편집에서 분류 제거 후 저장하면 해당 Epic 이 "분류 없음"으로 표시된다.
-- [ ] 신규 Epic 을 분류 없이 생성할 수 있다.
-- [ ] "전체" 필터와 "분류 없음" 필터가 서로 다른 결과를 반환한다.
-- [ ] web/mobile 모두 null category Epic 을 렌더링할 때 오류가 없다.
+- [x] category 삭제 후 연결 Epic row 가 삭제되지 않고 `category_id = null` 이 된다.
+- [x] category 삭제 후 연결 Sub row 가 삭제되지 않는다.
+- [x] 분류 수정 후 연결 Epic/Sub 표시 이름과 색상이 최신 값으로 보인다.
+- [x] Epic 편집에서 분류 제거 후 저장하면 해당 Epic 이 "분류 없음"으로 표시된다.
+- [x] 신규 Epic 을 분류 없이 생성할 수 있다.
+- [x] "전체" 필터와 "분류 없음" 필터가 서로 다른 결과를 반환한다.
+- [x] web/mobile 모두 null category Epic 을 렌더링할 때 오류가 없다.
 - [ ] `make lint` 통과.
-- [ ] `make test` 통과.
+- [x] `make test` 통과.
+
+## 검증 기록
+
+- `make sb-reset`: 통과
+- `make sb-gen-types`: 통과
+- `make typecheck`: 통과
+- `make test`: 통과
+- `make lint`: mobile 패키지에서 `eslint: command not found`로 실패
 
 ---
 

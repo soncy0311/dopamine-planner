@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-06 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-05 완료 필요 |
 
 ## 작업 목표
@@ -46,10 +46,10 @@
 
 ## 검증 과정
 
-- [ ] null category DB row 가 도메인 Epic 으로 정상 변환된다.
-- [ ] `categoryId: string` 만 가정하는 core domain 코드가 남아 있지 않다.
-- [ ] Sub/Todo 표시용 도메인 코드가 null category Epic 에서 예외를 던지지 않는다.
-- [ ] "분류 없음" row 생성 또는 sentinel id 추가 없이 null 로 표현한다.
+- [x] null category DB row 가 도메인 Epic 으로 정상 변환된다.
+- [x] `categoryId: string` 만 가정하는 core domain 코드가 남아 있지 않다.
+- [x] Sub/Todo 표시용 도메인 코드가 null category Epic 에서 예외를 던지지 않는다.
+- [x] "분류 없음" row 생성 또는 sentinel id 추가 없이 null 로 표현한다.
 
 ## 주의사항
 

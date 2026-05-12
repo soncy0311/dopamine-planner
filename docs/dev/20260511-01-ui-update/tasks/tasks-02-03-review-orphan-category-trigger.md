@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-03 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-01 완료 필요 |
 
 ## 작업 목표
@@ -45,10 +45,10 @@
 
 ## 검증 과정
 
-- [ ] orphan category trigger 의 유지/수정/폐기 결정이 명확하다.
-- [ ] Epic category detach 가 의도치 않은 Epic/Sub/category 삭제를 유발하지 않는다.
-- [ ] trigger/function 변경이 사용자 본인 row 범위를 벗어나지 않는다.
-- [ ] migration reset 시 trigger/function 생성 순서가 깨지지 않는다.
+- [x] orphan category trigger 의 유지/수정/폐기 결정이 명확하다.
+- [x] Epic category detach 가 의도치 않은 Epic/Sub/category 삭제를 유발하지 않는다.
+- [x] trigger/function 변경이 사용자 본인 row 범위를 벗어나지 않는다.
+- [x] migration reset 시 trigger/function 생성 순서가 깨지지 않는다.
 
 ## 주의사항
 

@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-07 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-04, 02-05 완료 필요 |
 
 ## 작업 목표
@@ -49,10 +49,10 @@
 
 ## 검증 과정
 
-- [ ] category name/color 를 수정하는 service/hook 이 제공된다.
-- [ ] category 삭제 service 가 Epic/Sub 를 삭제하지 않는다.
-- [ ] delete detach 가 RPC 또는 명확한 transaction 정책을 통해 호출된다.
-- [ ] 서비스 타입이 `packages/shared/src/database.ts` 의 nullable/RPC 타입과 일치한다.
+- [x] category name/color 를 수정하는 service/hook 이 제공된다.
+- [x] category 삭제 service 가 Epic/Sub 를 삭제하지 않는다.
+- [x] delete detach 가 RPC 또는 명확한 transaction 정책을 통해 호출된다.
+- [x] 서비스 타입이 `packages/shared/src/database.ts` 의 nullable/RPC 타입과 일치한다.
 
 ## 주의사항
 

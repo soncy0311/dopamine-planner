@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-01 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 없음 |
 
 ## 작업 목표
@@ -46,10 +46,10 @@
 
 ## 검증 과정
 
-- [ ] 실제 `epic_issue.category_id` constraint 명이 확인되어 후속 migration 에 사용할 수 있다.
-- [ ] `category_id` 의 현재 nullability 와 delete action 이 문서화되어 있다.
-- [ ] orphan category trigger/function 의 유지, 수정, 폐기 판단 근거가 정리되어 있다.
-- [ ] category/epic RLS 정책이 삭제 detach 흐름에서 필요한 권한 조건을 충족하는지 확인했다.
+- [x] 실제 `epic_issue.category_id` constraint 명이 확인되어 후속 migration 에 사용할 수 있다.
+- [x] `category_id` 의 현재 nullability 와 delete action 이 문서화되어 있다.
+- [x] orphan category trigger/function 의 유지, 수정, 폐기 판단 근거가 정리되어 있다.
+- [x] category/epic RLS 정책이 삭제 detach 흐름에서 필요한 권한 조건을 충족하는지 확인했다.
 
 ## 주의사항
 

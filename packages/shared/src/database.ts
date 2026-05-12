@@ -69,7 +69,7 @@ export type Database = {
       }
       epic_issue: {
         Row: {
-          category_id: string
+          category_id: string | null
           completed_date: string | null
           created_at: string
           description: string | null
@@ -81,9 +81,10 @@ export type Database = {
           title: string
           updated_at: string
           user_id: string
+          workspace: Database["public"]["Enums"]["workspace"]
         }
         Insert: {
-          category_id: string
+          category_id?: string | null
           completed_date?: string | null
           created_at?: string
           description?: string | null
@@ -95,9 +96,10 @@ export type Database = {
           title: string
           updated_at?: string
           user_id: string
+          workspace: Database["public"]["Enums"]["workspace"]
         }
         Update: {
-          category_id?: string
+          category_id?: string | null
           completed_date?: string | null
           created_at?: string
           description?: string | null
@@ -109,6 +111,7 @@ export type Database = {
           title?: string
           updated_at?: string
           user_id?: string
+          workspace?: Database["public"]["Enums"]["workspace"]
         }
         Relationships: [
           {
@@ -201,6 +204,10 @@ export type Database = {
         Returns: {
           moved_count: number
         }[]
+      }
+      delete_category_detach_epics: {
+        Args: { p_category_id: string }
+        Returns: undefined
       }
       recalc_epic_progress: {
         Args: { epic_id: string }

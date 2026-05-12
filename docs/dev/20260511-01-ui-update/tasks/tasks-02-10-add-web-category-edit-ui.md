@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-10 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-07 완료 필요 |
 
 ## 작업 목표
@@ -48,10 +48,10 @@ web 설정의 분류 관리 화면에서 분류명과 색상을 수정할 수 �
 
 ## 검증 과정
 
-- [ ] web 설정 화면에서 category name 을 수정할 수 있다.
-- [ ] web 설정 화면에서 category color 를 수정할 수 있다.
-- [ ] invalid 입력 시 저장되지 않고 사용자에게 오류가 표시된다.
-- [ ] 수정 후 연결 Epic/Sub 표시가 최신 category name/color 를 사용할 수 있도록 invalidate 된다.
+- [x] web 설정 화면에서 category name 을 수정할 수 있다.
+- [x] web 설정 화면에서 category color 를 수정할 수 있다.
+- [x] invalid 입력 시 저장되지 않고 사용자에게 오류가 표시된다.
+- [x] 수정 후 연결 Epic/Sub 표시가 최신 category name/color 를 사용할 수 있도록 invalidate 된다.
 
 ## 주의사항
 

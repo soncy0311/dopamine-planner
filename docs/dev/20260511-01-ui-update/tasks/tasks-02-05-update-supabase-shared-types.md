@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-05 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-02, 02-04 완료 필요 |
 
 ## 작업 목표
@@ -46,10 +46,10 @@ DB 변경 결과를 `packages/shared` 의 Supabase 타입에 반영한다. `epic
 
 ## 검증 과정
 
-- [ ] `packages/shared/src/database.ts` 에서 `epic_issue.category_id` Row 타입이 nullable 이다.
-- [ ] Insert/Update 타입에서 `category_id: null` 또는 생략이 허용된다.
-- [ ] RPC 를 추가했다면 generated function 타입이 반영되어 있다.
-- [ ] generated 타입 외 임의 수동 타입 덮어쓰기를 하지 않았다.
+- [x] `packages/shared/src/database.ts` 에서 `epic_issue.category_id` Row 타입이 nullable 이다.
+- [x] Insert/Update 타입에서 `category_id: null` 또는 생략이 허용된다.
+- [x] RPC 를 추가했다면 generated function 타입이 반영되어 있다.
+- [x] generated 타입 외 임의 수동 타입 덮어쓰기를 하지 않았다.
 
 ## 주의사항
 

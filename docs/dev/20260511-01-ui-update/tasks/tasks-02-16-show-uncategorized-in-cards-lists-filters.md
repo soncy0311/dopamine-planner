@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-16 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-06, 02-12, 02-15 완료 필요 |
 
 ## 작업 목표
@@ -53,10 +53,10 @@ web/mobile 카드, 목록, 필터에서 null category Epic 을 "분류 없음"�
 
 ## 검증 과정
 
-- [ ] web 카드/목록/detail 이 null category Epic 을 "분류 없음"으로 표시한다.
-- [ ] mobile 카드/목록이 null category Epic 을 오류 없이 표시한다.
-- [ ] "전체" 필터는 null category Epic 을 포함한다.
-- [ ] "분류 없음" 필터는 null category Epic 만 보여준다.
+- [x] web 카드/목록/detail 이 null category Epic 을 "분류 없음"으로 표시한다.
+- [x] mobile 카드/목록이 null category Epic 을 오류 없이 표시한다.
+- [x] "전체" 필터는 null category Epic 을 포함한다.
+- [x] "분류 없음" 필터는 null category Epic 만 보여준다.
 
 ## 주의사항
 

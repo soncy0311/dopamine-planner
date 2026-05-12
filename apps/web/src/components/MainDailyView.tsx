@@ -25,7 +25,7 @@ import {
 } from '@todo-list/ui';
 import { supabase } from '@/lib/supabase/client';
 import { useDateQuery } from '@/hooks/useDateQuery';
-import { CategoryFilterChips } from './CategoryFilterChips';
+import { CategoryFilterChips, type CategoryFilterValue } from './CategoryFilterChips';
 import { EpicFormModal } from './modals/EpicFormModal';
 import { EpicDetailModal } from './modals/EpicDetailModal';
 import { SubIssueFormModal } from './modals/SubIssueFormModal';
@@ -78,7 +78,9 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   const [subFormEpic, setSubFormEpic] = useState<{ id: string; title: string } | null>(null);
   const [detailTodoId, setDetailTodoId] = useState<string | null>(null);
   const [detailEpicId, setDetailEpicId] = useState<string | null>(null);
-  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilterValue>({
+    kind: 'all',
+  });
   const [expand, setExpand] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
@@ -97,14 +99,17 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
   // sub 의 status / registered_date / completed_date 는 섹션 분기에 영향 X.
   const visibleEpics = useMemo(() => {
     return epics.filter((e) => {
-      if (selectedCategoryId !== null && e.categoryId !== selectedCategoryId) {
+      if (categoryFilter.kind === 'category' && e.categoryId !== categoryFilter.id) {
+        return false;
+      }
+      if (categoryFilter.kind === 'uncategorized' && e.categoryId !== null) {
         return false;
       }
       if (e.status === 'active') return true;
       if (e.status === 'completed' && e.completedDate === date) return true;
       return false;
     });
-  }, [epics, date, selectedCategoryId]);
+  }, [epics, date, categoryFilter]);
 
   const grouped = useMemo(
     () => groupByEpic(allItems, visibleEpics),
@@ -154,6 +159,11 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
     return categories.filter((c) => used.has(c.id));
   }, [categories, epics]);
 
+  const hasUncategorizedEpics = useMemo(
+    () => epics.some((e) => e.categoryId === null),
+    [epics],
+  );
+
   const handleToggle = (item: SubIssueWithJoins) => {
     toggle.mutate({
       id: item.id,
@@ -174,9 +184,9 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
     setSubFormEpic({ id: epic.id, title: epic.title });
   };
 
-  const handleToggleExpand = (epicId: string) => {
+  const handleToggleExpand = (epicId: string, currentExpanded: boolean) => {
     setExpand((prev) => {
-      const next = { ...prev, [epicId]: !prev[epicId] };
+      const next = { ...prev, [epicId]: !currentExpanded };
       writeExpandState(workspace, next);
       return next;
     });
@@ -207,7 +217,10 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
 
   const renderEpicCard = (entry: { epic: EpicIssue; subs: SubIssueWithJoins[] }) => {
     const { epic, subs } = entry;
-    const cat = categoryById.get(epic.categoryId);
+    const cat = epic.categoryId ? categoryById.get(epic.categoryId) : null;
+    const category = cat
+      ? { name: cat.name, color: cat.color }
+      : { name: '분류 없음', color: '#9CA3AF' };
     const total = subs.length;
     const doneCount = subs.filter((s) => s.status === 'done').length;
     // mainStatus 도 sub 상태 기반 (optimistic update 즉시 반영).
@@ -220,6 +233,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         : epic.status === 'completed'
           ? 'done'
           : 'todo';
+    const expanded = expand[epic.id] ?? epic.status !== 'completed';
 
     return (
       <IssueCardAccordion
@@ -228,10 +242,10 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         title={epic.title}
         totalSubCount={total}
         completedSubCount={doneCount}
-        category={cat ? { name: cat.name, color: cat.color } : undefined}
+        category={category}
         priority={epic.priority}
-        expanded={!!expand[epic.id]}
-        onToggleExpand={() => handleToggleExpand(epic.id)}
+        expanded={expanded}
+        onToggleExpand={() => handleToggleExpand(epic.id, expanded)}
         onMainToggle={() => void handleCascadeToggle(epic, subs)}
         mainStatus={mainStatus}
         onAddSubIssue={() => handleAddSubIssue(epic)}
@@ -243,7 +257,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
           carryOverCount: s.carryOverCount,
           category: s.category
             ? { name: s.category.name, color: s.category.color }
-            : undefined,
+            : { name: '분류 없음', color: '#9CA3AF' },
           onToggle: () => handleToggle(s),
           onPress: () => handlePress(s),
         }))}
@@ -263,8 +277,9 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
         <div className="flex-1 min-w-0">
           <CategoryFilterChips
             categories={visibleCategories.map((c) => ({ id: c.id, name: c.name }))}
-            selectedId={selectedCategoryId}
-            onSelect={setSelectedCategoryId}
+            selected={categoryFilter}
+            showUncategorized={hasUncategorizedEpics}
+            onSelect={setCategoryFilter}
           />
         </div>
         <button
@@ -309,7 +324,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
                           category={
                             item.category
                               ? { name: item.category.name, color: item.category.color }
-                              : undefined
+                              : { name: '분류 없음', color: '#9CA3AF' }
                           }
                           onToggle={() => handleToggle(item)}
                           onPress={() => handlePress(item)}
@@ -346,7 +361,7 @@ export function MainDailyView({ workspace }: MainDailyViewProps) {
                           category={
                             item.category
                               ? { name: item.category.name, color: item.category.color }
-                              : undefined
+                              : { name: '분류 없음', color: '#9CA3AF' }
                           }
                           onToggle={() => handleToggle(item)}
                           onPress={() => handlePress(item)}

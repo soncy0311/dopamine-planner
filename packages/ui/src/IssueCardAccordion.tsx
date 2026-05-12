@@ -126,7 +126,7 @@ export function IssueCardAccordion({
 
       {/* 펼침 body — sub-issues (태그 없이 체크박스 + 제목만) */}
       {expanded ? (
-        <div id={bodyId} className="border-t border-periwinkle-100">
+        <div id={bodyId}>
           <ul role="list" className="flex flex-col">
             {subIssues.map((s) => {
               const subDone = s.status === 'done';
@@ -192,7 +192,7 @@ export function IssueCardAccordion({
                 <button
                   type="button"
                   onClick={onAddSubIssue}
-                  className="flex h-9 w-full items-center justify-start border-t border-periwinkle-100 pl-16 pr-4 text-[11px] md:text-xs font-medium text-purple-500 hover:bg-periwinkle-100/50"
+                  className="flex h-9 w-full items-center justify-start pl-16 pr-4 text-[11px] md:text-xs font-medium text-purple-500 hover:bg-periwinkle-100/50"
                 >
                   + 서브 이슈 추가
                 </button>

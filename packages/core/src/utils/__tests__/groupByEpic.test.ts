@@ -8,6 +8,7 @@ function makeEpic(id: string, overrides: Partial<EpicIssue> = {}): EpicIssue {
     id,
     userId: 'u-1',
     categoryId: 'cat-1',
+    workspace: 'life',
     title: `epic-${id}`,
     description: null,
     priority: 'medium',

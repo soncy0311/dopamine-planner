@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-08 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-06 완료 필요 |
 
 ## 작업 목표
@@ -47,10 +47,10 @@ Epic 생성/수정 service 와 hook 이 `category_id = null` 을 정상 저장�
 
 ## 검증 과정
 
-- [ ] 신규 Epic 을 category 없이 생성할 수 있다.
-- [ ] 기존 Epic update 에서 `category_id = null` 을 저장할 수 있다.
-- [ ] undefined 와 null 의 의미가 service payload 에서 구분된다.
-- [ ] null category Epic 조회가 누락되거나 mapper 오류를 내지 않는다.
+- [x] 신규 Epic 을 category 없이 생성할 수 있다.
+- [x] 기존 Epic update 에서 `category_id = null` 을 저장할 수 있다.
+- [x] undefined 와 null 의 의미가 service payload 에서 구분된다.
+- [x] null category Epic 조회가 누락되거나 mapper 오류를 내지 않는다.
 
 ## 주의사항
 

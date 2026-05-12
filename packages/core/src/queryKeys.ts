@@ -9,6 +9,8 @@ export const queryKeys = {
   epics: (workspace: Workspace) => ['epics', { workspace }] as const,
   epicsByCategory: (categoryId: string) =>
     ['epics', { categoryId }] as const,
+  uncategorizedEpics: (workspace: Workspace) =>
+    ['epics', { workspace, categoryId: null }] as const,
   categories: (workspace: Workspace) =>
     ['categories', { workspace }] as const,
   profile: () => ['profile'] as const,
@@ -24,6 +26,8 @@ export function invalidateByTable(qc: QueryClient, table: RealtimeTable): void {
       return;
     case 'category':
       qc.invalidateQueries({ queryKey: ['categories'] });
+      qc.invalidateQueries({ queryKey: ['epics'] });
+      qc.invalidateQueries({ queryKey: ['todos'] });
       return;
     case 'profile':
       qc.invalidateQueries({ queryKey: ['profile'] });

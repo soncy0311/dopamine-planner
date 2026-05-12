@@ -15,8 +15,6 @@ type Props = {
   submitting?: boolean;
 };
 
-const EMPTY_UUID = '' as unknown as string;
-
 export function EpicForm({
   mode,
   workspace,
@@ -37,7 +35,7 @@ export function EpicForm({
       title: '',
       description: '',
       priority: 'medium',
-      categoryId: EMPTY_UUID,
+      categoryId: null,
       ...defaultValues,
     },
   });
@@ -103,33 +101,39 @@ export function EpicForm({
         )}
       />
 
-      <Text className="mb-1 mt-3 text-sm text-muted-foreground">분류 *</Text>
+      <Text className="mb-1 mt-3 text-sm text-muted-foreground">분류</Text>
       <Controller
         control={control}
         name="categoryId"
         render={({ field: { value, onChange } }) => (
           <View className="flex-row flex-wrap gap-2">
-            {categories.length === 0 ? (
-              <Text className="text-xs text-muted-foreground">먼저 분류를 추가하세요</Text>
-            ) : (
-              categories.map((c) => (
-                <Pressable
-                  key={c.id}
-                  onPress={() => onChange(c.id)}
-                  className={`flex-row items-center rounded-full border px-3 py-1 ${
-                    value === c.id ? 'border-primary bg-primary' : 'border-border'
-                  }`}
-                >
-                  <View
-                    className="mr-1 h-2 w-2 rounded-full"
-                    style={{ backgroundColor: c.color || '#9ca3af' }}
-                  />
-                  <Text className={value === c.id ? 'text-primary-foreground' : 'text-foreground'}>
-                    {c.name}
-                  </Text>
-                </Pressable>
-              ))
-            )}
+            <Pressable
+              onPress={() => onChange(null)}
+              className={`rounded-full border px-3 py-1 ${
+                value === null ? 'border-primary bg-primary' : 'border-border'
+              }`}
+            >
+              <Text className={value === null ? 'text-primary-foreground' : 'text-foreground'}>
+                분류 없음
+              </Text>
+            </Pressable>
+            {categories.map((c) => (
+              <Pressable
+                key={c.id}
+                onPress={() => onChange(c.id)}
+                className={`flex-row items-center rounded-full border px-3 py-1 ${
+                  value === c.id ? 'border-primary bg-primary' : 'border-border'
+                }`}
+              >
+                <View
+                  className="mr-1 h-2 w-2 rounded-full"
+                  style={{ backgroundColor: c.color || '#9ca3af' }}
+                />
+                <Text className={value === c.id ? 'text-primary-foreground' : 'text-foreground'}>
+                  {c.name}
+                </Text>
+              </Pressable>
+            ))}
           </View>
         )}
       />

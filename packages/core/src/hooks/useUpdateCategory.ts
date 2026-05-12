@@ -22,6 +22,8 @@ export function useUpdateCategory(
       qc.invalidateQueries({
         queryKey: queryKeys.categories(updated.workspace),
       });
+      qc.invalidateQueries({ queryKey: queryKeys.epics(updated.workspace) });
+      qc.invalidateQueries({ queryKey: ['todos'] });
     },
   });
 }

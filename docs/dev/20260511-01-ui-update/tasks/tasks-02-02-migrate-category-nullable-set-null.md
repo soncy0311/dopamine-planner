@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-02 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-01 완료 필요 |
 
 ## 작업 목표
@@ -44,10 +44,10 @@
 
 ## 검증 과정
 
-- [ ] migration 적용 후 `epic_issue.category_id` 가 nullable 이다.
-- [ ] category FK delete action 이 `set null` 이다.
-- [ ] category 삭제가 연결 Epic/Sub 삭제로 이어지지 않는 schema 가 된다.
-- [ ] "분류 없음"은 `category_id = null` 로만 표현되고 별도 category row 를 만들지 않는다.
+- [x] migration 적용 후 `epic_issue.category_id` 가 nullable 이다.
+- [x] category FK delete action 이 `set null` 이다.
+- [x] category 삭제가 연결 Epic/Sub 삭제로 이어지지 않는 schema 가 된다.
+- [x] "분류 없음"은 `category_id = null` 로만 표현되고 별도 category row 를 만들지 않는다.
 
 ## 주의사항
 

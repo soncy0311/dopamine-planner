@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-02-feat-category-management.md`](../sub-prd-02-feat-category-management.md) |
 | 작업 번호 | 02-04 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 02-02, 02-03 완료 필요 |
 
 ## 작업 목표
@@ -46,10 +46,10 @@
 
 ## 검증 과정
 
-- [ ] RPC 가 연결 Epic 을 삭제하지 않고 `category_id = null` 로 변경한다.
-- [ ] RPC 실행 후 category row 만 삭제된다.
-- [ ] 타 사용자 category/epic row 에 영향을 주지 않는다.
-- [ ] "분류 없음" category row 를 생성하지 않는다.
+- [x] RPC 가 연결 Epic 을 삭제하지 않고 `category_id = null` 로 변경한다.
+- [x] RPC 실행 후 category row 만 삭제된다.
+- [x] 타 사용자 category/epic row 에 영향을 주지 않는다.
+- [x] "분류 없음" category row 를 생성하지 않는다.
 
 ## 주의사항
 

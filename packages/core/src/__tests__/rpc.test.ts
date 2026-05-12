@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import type { AppSupabaseClient } from '../supabase/types';
 import { carryOverTodos } from '../services/carryOver';
+import { categoryService } from '../services/category';
 import { recalcEpicProgress } from '../services/epicProgress';
 
 function clientWithRpc(result: { data: unknown; error: unknown }) {
@@ -40,5 +41,20 @@ describe('recalcEpicProgress', () => {
   it('빈 배열은 0 으로 fallback', async () => {
     const client = clientWithRpc({ data: [], error: null });
     await expect(recalcEpicProgress(client, 'ep-1')).resolves.toBe(0);
+  });
+});
+
+describe('categoryService.remove', () => {
+  it('delete_category_detach_epics RPC 로 category 삭제를 위임한다', async () => {
+    const client = clientWithRpc({ data: null, error: null });
+    await expect(categoryService.remove(client, 'cat-1')).resolves.toBeUndefined();
+    expect(client.rpc).toHaveBeenCalledWith('delete_category_detach_epics', {
+      p_category_id: 'cat-1',
+    });
+  });
+
+  it('RPC error 발생 시 throw', async () => {
+    const client = clientWithRpc({ data: null, error: new Error('forbidden') });
+    await expect(categoryService.remove(client, 'cat-1')).rejects.toThrow('forbidden');
   });
 });
