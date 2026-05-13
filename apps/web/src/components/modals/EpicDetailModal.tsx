@@ -21,7 +21,10 @@ const EpicEditSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요').max(200, '제목은 200자 이내'),
   description: z.string().max(2000, '설명은 2000자 이내').optional(),
   priority: z.enum(['high', 'medium', 'low']),
-  categoryId: z.string().min(1, '분류를 선택해주세요'),
+  categoryId: z.preprocess(
+    (value) => (value === '' ? null : value),
+    z.string().uuid('올바른 분류가 아닙니다').nullable(),
+  ),
   registeredDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, '유효한 날짜가 아닙니다'),
 });
 type EpicEditValues = z.infer<typeof EpicEditSchema>;
@@ -31,7 +34,7 @@ type EpicDetailFetch = {
   title: string;
   description: string | null;
   priority: 'high' | 'medium' | 'low';
-  category_id: string;
+  category_id: string | null;
   registered_date: string | null;
   category: { id: string; name: string; color: string | null } | null;
 };
@@ -70,7 +73,7 @@ export function EpicDetailModal({ open, onOpenChange, workspace, epicId }: EpicD
       title: '',
       description: '',
       priority: 'medium',
-      categoryId: '',
+      categoryId: null,
       registeredDate: new Date().toISOString().slice(0, 10),
     },
   });
@@ -97,7 +100,7 @@ export function EpicDetailModal({ open, onOpenChange, workspace, epicId }: EpicD
   }, [detail, form]);
 
   useEffect(() => {
-    form.setValue('categoryId', category?.id ?? '', {
+    form.setValue('categoryId', category?.id ?? null, {
       shouldDirty: true,
       shouldValidate: true,
     });
@@ -205,7 +208,7 @@ export function EpicDetailModal({ open, onOpenChange, workspace, epicId }: EpicD
                     workspace={workspace}
                     value={category}
                     onChange={setCategory}
-                    placeholder="분류를 검색하세요"
+                    placeholder="분류 없음"
                   />
                   {form.formState.errors.categoryId && (
                     <span className="text-xs text-red-500">

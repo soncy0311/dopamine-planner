@@ -6,8 +6,8 @@ function makeProps(overrides: Partial<IssueCardAccordionProps> = {}): IssueCardA
   return {
     epicId: 'ep-1',
     title: '5월 정리',
-    progressPercent: 50,
-    segments: [{ filled: true }, { filled: false }],
+    totalSubCount: 2,
+    completedSubCount: 1,
     category: { name: '집안일', color: '#ff0000' },
     expanded: false,
     onToggleExpand: vi.fn(),
@@ -44,9 +44,42 @@ describe('IssueCardAccordion', () => {
     expect(screen.getByText('sub 2')).toBeInTheDocument();
   });
 
-  it('progressPercent 가 헤더에 그대로 표시된다', () => {
-    render(<IssueCardAccordion {...makeProps({ progressPercent: 73 })} />);
+  it('완료/전체 개수 기준 percent 를 헤더에 표시한다', () => {
+    render(<IssueCardAccordion {...makeProps({ totalSubCount: 11, completedSubCount: 8 })} />);
     expect(screen.getByText('73%')).toBeInTheDocument();
+  });
+
+  it('progressbar 접근성 값과 보조 텍스트를 완료/전체 개수 기준으로 제공한다', () => {
+    render(<IssueCardAccordion {...makeProps({ totalSubCount: 2, completedSubCount: 1 })} />);
+    const progressbar = screen.getByRole('progressbar');
+    expect(progressbar).toHaveAttribute('aria-valuemin', '0');
+    expect(progressbar).toHaveAttribute('aria-valuemax', '2');
+    expect(progressbar).toHaveAttribute('aria-valuenow', '1');
+    expect(progressbar).toHaveAttribute('aria-valuetext', '전체 2개 중 1개 완료 (50%)');
+  });
+
+  it('Sub 0개 Epic 에서는 progressbar 와 percent 를 렌더하지 않는다', () => {
+    render(<IssueCardAccordion {...makeProps({ totalSubCount: 0, completedSubCount: 0 })} />);
+    expect(screen.queryByRole('progressbar')).toBeNull();
+    expect(screen.queryByText('0%')).toBeNull();
+  });
+
+  it('전체 완료 fixture 에서 100% progress 의미를 제공한다', () => {
+    render(<IssueCardAccordion {...makeProps({ totalSubCount: 3, completedSubCount: 3 })} />);
+    const progressbar = screen.getByRole('progressbar');
+    expect(screen.getByText('100%')).toBeInTheDocument();
+    expect(progressbar).toHaveAttribute('aria-valuemax', '3');
+    expect(progressbar).toHaveAttribute('aria-valuenow', '3');
+    expect(progressbar).toHaveAttribute('aria-valuetext', '전체 3개 중 3개 완료 (100%)');
+  });
+
+  it('Sub 개수만큼 segment element 를 렌더링하지 않는다', () => {
+    const { container } = render(
+      <IssueCardAccordion {...makeProps({ totalSubCount: 10, completedSubCount: 4 })} />,
+    );
+    const progressbar = screen.getByRole('progressbar');
+    expect(progressbar.children).toHaveLength(1);
+    expect(container.querySelectorAll('[role="progressbar"] > span')).toHaveLength(1);
   });
 
   it('chevron 클릭 시 onToggleExpand 가 호출된다', () => {

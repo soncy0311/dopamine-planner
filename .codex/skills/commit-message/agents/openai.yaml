@@ -1,0 +1,4 @@
+interface:
+  display_name: "commit-message"
+  short_description: "Analyze changes and create a conventional commit"
+  default_prompt: "Use $commit-message to analyze the current changes and create a conventional commit."

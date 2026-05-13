@@ -25,8 +25,8 @@ export async function listByDate(
   // status 와 completed_date 가 SoT.
   const baseSelect = `*,
      epic:epic_issue!inner (
-       id, title, progress, status, completed_date,
-       category:category!inner ( id, name, color, workspace )
+       id, title, progress, status, completed_date, workspace,
+       category:category ( id, name, color, workspace )
      )`;
 
   const [activeRes, doneRes] = await Promise.all([
@@ -35,14 +35,14 @@ export async function listByDate(
       .from('sub_issue')
       .select(baseSelect)
       .eq('epic.status', 'active')
-      .eq('epic.category.workspace', workspace),
+      .eq('epic.workspace', workspace),
     // 완료 섹션 sub: Epic.status = 'completed' AND Epic.completed_date = date
     client
       .from('sub_issue')
       .select(baseSelect)
       .eq('epic.status', 'completed')
       .eq('epic.completed_date', date)
-      .eq('epic.category.workspace', workspace),
+      .eq('epic.workspace', workspace),
   ]);
   if (activeRes.error) throw activeRes.error;
   if (doneRes.error) throw doneRes.error;

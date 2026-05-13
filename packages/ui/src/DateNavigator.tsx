@@ -4,6 +4,7 @@ import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 export type DateNavigatorProps = {
   date: string;
   onChange: (date: string) => void;
+  completedCounts?: Record<string, number>;
 };
 
 const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
@@ -57,7 +58,58 @@ function todayISO(): string {
   return toISO(new Date());
 }
 
-export function DateNavigator({ date, onChange }: DateNavigatorProps) {
+export function getCompletedEpicDotCount(count: number): number {
+  if (count <= 0) return 0;
+  return count < 5 ? count : 0;
+}
+
+export function getCompletedEpicStarCount(count: number): number {
+  return count >= 5 ? Math.floor(count / 5) : 0;
+}
+
+function completedLabel(base: string, count: number): string {
+  return count > 0 ? `${base}, 완료 Epic ${count}개` : base;
+}
+
+function CompletedIndicator({
+  count,
+  invert,
+}: {
+  count: number;
+  invert?: boolean;
+}) {
+  const dotCount = getCompletedEpicDotCount(count);
+  const starCount = getCompletedEpicStarCount(count);
+  if (dotCount === 0 && starCount === 0) return null;
+  const dotClass = invert
+    ? 'h-1 w-1 rounded-full bg-white'
+    : 'h-1 w-1 rounded-full bg-purple-500';
+  const starClass = invert
+    ? 'text-[9px] leading-none text-white'
+    : 'text-[9px] leading-none text-purple-500';
+  return (
+    <span
+      aria-hidden="true"
+      data-dot-count={dotCount}
+      data-star-count={starCount}
+      data-testid="completed-epic-indicator"
+      className="flex h-2 items-center justify-center gap-0.5"
+    >
+      {starCount > 0 ? (
+        <span className={starClass}>{'★'.repeat(starCount)}</span>
+      ) : null}
+      {Array.from({ length: dotCount }, (_, index) => (
+        <span key={index} className={dotClass} />
+      ))}
+    </span>
+  );
+}
+
+export function DateNavigator({
+  date,
+  onChange,
+  completedCounts = {},
+}: DateNavigatorProps) {
   const current = parseISO(date);
   const year = current.getFullYear();
   const month = current.getMonth() + 1;
@@ -166,8 +218,9 @@ export function DateNavigator({ date, onChange }: DateNavigatorProps) {
             const inMonth = d.getMonth() + 1 === month;
             const active = iso === date;
             const isToday = iso === today;
+            const completedCount = completedCounts[iso] ?? 0;
             const base =
-              'flex h-9 items-center justify-center rounded-full text-sm hover:bg-periwinkle-100';
+              'flex h-10 items-center justify-center rounded-full text-sm hover:bg-periwinkle-100';
             const cls = active
               ? `${base} bg-purple-500 text-white hover:bg-purple-500`
               : isToday
@@ -180,12 +233,16 @@ export function DateNavigator({ date, onChange }: DateNavigatorProps) {
                 key={iso}
                 type="button"
                 role="gridcell"
-                aria-label={`${d.getMonth() + 1}월 ${d.getDate()}일`}
+                aria-label={completedLabel(
+                  `${d.getMonth() + 1}월 ${d.getDate()}일`,
+                  completedCount,
+                )}
                 aria-selected={active}
                 onClick={() => onChange(iso)}
-                className={cls}
+                className={`${cls} flex-col gap-0.5`}
               >
-                {d.getDate()}
+                <span>{d.getDate()}</span>
+                <CompletedIndicator count={completedCount} invert={active} />
               </button>
             );
           })}
@@ -196,6 +253,7 @@ export function DateNavigator({ date, onChange }: DateNavigatorProps) {
             const iso = toISO(d);
             const active = iso === date;
             const isToday = iso === today;
+            const completedCount = completedCounts[iso] ?? 0;
             const numCls = active
               ? 'flex h-8 w-8 items-center justify-center rounded-full bg-purple-500 text-sm font-medium text-white'
               : isToday
@@ -205,13 +263,19 @@ export function DateNavigator({ date, onChange }: DateNavigatorProps) {
               <button
                 key={iso}
                 type="button"
-                aria-label={`${d.getMonth() + 1}월 ${d.getDate()}일`}
+                aria-label={completedLabel(
+                  `${d.getMonth() + 1}월 ${d.getDate()}일`,
+                  completedCount,
+                )}
                 aria-pressed={active}
                 onClick={() => onChange(iso)}
-                className="flex flex-col items-center justify-center gap-0.5 py-1 rounded-md hover:bg-periwinkle-100"
+                className="flex min-h-14 flex-col items-center justify-center gap-0.5 rounded-md py-1 hover:bg-periwinkle-100"
               >
                 <span className="text-[10px] font-medium text-periwinkle-400">{DAY_LABELS[i]}</span>
                 <span className={numCls}>{d.getDate()}</span>
+                <span className="flex h-2 items-center justify-center">
+                  <CompletedIndicator count={completedCount} />
+                </span>
               </button>
             );
           })}

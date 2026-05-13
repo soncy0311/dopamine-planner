@@ -28,6 +28,9 @@ export * from './hooks/useDeleteCategory';
 
 // Hooks — Epics
 export * from './hooks/useEpics';
+export * from './hooks/useCompletedEpics';
+export * from './hooks/useCompletedEpicsByCategoryPeriod';
+export * from './hooks/useCalendarCompletedCounts';
 export * from './hooks/useCreateEpic';
 export * from './hooks/useUpdateEpic';
 export * from './hooks/useDeleteEpic';

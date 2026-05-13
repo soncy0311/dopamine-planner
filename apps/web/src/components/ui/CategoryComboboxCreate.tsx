@@ -18,7 +18,7 @@ export type CategoryComboboxValue = {
 export type CategoryComboboxCreateProps = {
   workspace: Workspace;
   value: CategoryComboboxValue | null;
-  onChange: (category: CategoryComboboxValue) => void;
+  onChange: (category: CategoryComboboxValue | null) => void;
   placeholder?: string;
   ariaLabel?: string;
 };
@@ -172,6 +172,20 @@ export function CategoryComboboxCreate({
           onKeyDown={onKeyDown}
           className="flex h-10 w-full items-center rounded-md border border-periwinkle-200 bg-white px-3 text-sm text-periwinkle-500 outline-none focus:border-purple-500"
         />
+        {value ? (
+          <button
+            type="button"
+            onClick={() => {
+              onChange(null);
+              setFilter('');
+              setOpen(false);
+              inputRef.current?.focus();
+            }}
+            className="h-10 shrink-0 rounded-md border border-periwinkle-200 px-3 text-xs font-medium text-periwinkle-500 hover:bg-periwinkle-100"
+          >
+            제거
+          </button>
+        ) : null}
       </div>
       {open ? (
         <ul

@@ -3,8 +3,8 @@
 ## 기본 원칙
 
 - 모든 구현과 구조적 판단은 `docs/` 하위 요구사항·설계 문서를 기준으로 한다
-- 각 폴더별 추가 규칙은 해당 폴더의 CLAUDE.md를 참조한다
-- 클라이언트(web/mobile) 규칙 → `apps/web/CLAUDE.md`, `apps/mobile/CLAUDE.md`
+- 하위 폴더에서 작업할 때 해당 폴더에 `README.md`가 있으면 루트 규칙과 함께 해당 파일의 규칙을 따른다
+- 클라이언트(web/mobile) 규칙 → `apps/web/README.md`, `apps/mobile/README.md`
 
 ### 플랜 모드
 

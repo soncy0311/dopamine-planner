@@ -18,11 +18,12 @@ Epic 의 진행률은 **하위 Sub 이슈의 완료 개수 / 전체 개수** 로
 
 | 상태 | 산출식 | 비고 |
 |---|---|---|
-| Sub 0 개 (Epic 단독) | 진행률 미표기 (or 0%) | Epic 자체의 done 토글로 100% 처리 — 호스트 결정 |
+| Sub 0 개 (Epic 단독) | 진행률 미표기 | Epic 자체 완료 여부는 Checkbox/status 로 표현하며 Sub 기반 progress 와 혼합하지 않음 |
 | Sub N 개 | `completedSubCount / totalSubCount` | 0% ~ 100% |
 | 모든 Sub 완료 | 100% (자동 or cascade 후) | EpicCard 헤더 Checkbox 와 정합 |
 
 > 진행률 산출 책임은 호스트(EpicCard) 가 가진다. 본 컴포넌트는 **표시만** 담당한다 (`value`, `total` 또는 `percent` props 입력).
+> Epic host 는 web/mobile 모두 `totalSubCount === 0` 일 때 ProgressBar 와 ProgressPercent 를 함께 렌더링하지 않는다. 이 경우 `progressbar` role 도 노출하지 않으며, 별도 상태 안내가 필요하면 Epic 자체 상태 의미로 제공한다.
 
 ---
 
@@ -30,18 +31,17 @@ Epic 의 진행률은 **하위 Sub 이슈의 완료 개수 / 전체 개수** 로
 
 | variant | 분류 | 설명 |
 |---|---|---|
-| `linear` | Atom | 단일 fill 막대. Sub 개수 무관 / 산출된 % 만 시각화 |
-| `segmented` (기본) | Molecule | Sub 개수만큼 분절된 segment. **각 segment = Sub 1개** 의 완료 여부와 1:1 대응 |
+| `linear` (Epic 기본) | Atom | 단일 fill 막대. Sub 개수 무관 / 산출된 % 만 시각화 |
+| `segmented` | Molecule | 특수 실험/별도 컴포넌트에서만 사용하는 분절형 표시. **Epic 기본 progress 로 사용하지 않음** |
 
-> EpicCard 의 기본은 **`segmented`**. Sub 개수가 시각적으로 드러나 도파민 보상 신호가 강해진다 (1개 완료 = 1칸 채워짐 즉시 인지). `linear` 는 Sub 개수가 매우 많거나(>10) 폭이 좁은 영역에서 fallback.
+> EpicCard 의 기본은 **`linear`**. Sub 개수가 1개, 3개, 10개 이상이어도 Epic 기본 progress 는 동일한 단일 막대로 표시한다.
 
-### segmented ↔ linear 전환 기준
+### segmented 사용 기준
 
-| 조건 | variant |
+| 조건 | 정책 |
 |---|---|
-| `totalSubCount` ≤ 10 | `segmented` |
-| `totalSubCount` > 10 | `linear` (segment gap 이 시인성을 해침) |
-| 컨테이너 폭 < 120px | `linear` |
+| EpicCard 기본 progress | `linear` 고정 |
+| `segmented` 필요 | Epic 기본 정책이 아닌 별도 실험/특수 컴포넌트 정책으로 문서화 후 사용 |
 
 ---
 
@@ -165,22 +165,26 @@ WAI-ARIA `progressbar` role 표준을 따른다.
   <CategoryBadge />
   <PriorityBadge />
   <Title />
-  <ProgressPercent value={completedSubCount} total={totalSubCount} />
+  {totalSubCount > 0 ? (
+    <ProgressPercent value={completedSubCount} total={totalSubCount} />
+  ) : null}
 </EpicCard.Header>
 
-<ProgressBar
-  variant={totalSubCount > 10 ? 'linear' : 'segmented'}
-  value={completedSubCount}
-  total={totalSubCount}
-  size="md"
-  ariaLabel={`${epicTitle} 진행률`}
-/>
+{totalSubCount > 0 ? (
+  <ProgressBar
+    variant="linear"
+    value={completedSubCount}
+    total={totalSubCount}
+    size="md"
+    ariaLabel={`${epicTitle} 진행률`}
+  />
+) : null}
 ```
 
 호스트 책임:
 
 - `value` / `total` 산출 (Epic 의 sub 집계는 `packages/core` 도메인 로직)
-- Sub 가 0개일 때의 표시 정책 결정 (숨김 vs 0%) — EpicCard 명세에 따름
+- Sub 가 0개일 때 ProgressBar / ProgressPercent 미표기
 - `ariaLabel` 주입
 
 ProgressBar 책임:

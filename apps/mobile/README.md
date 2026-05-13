@@ -59,8 +59,8 @@ apps/mobile/src/app/         # expo-router (그룹 라우팅)
 
 | 항목 | 값 |
 |------|---|
-| Bundle ID (iOS) | `com.daon.todolist` |
-| Package (Android) | `com.daon.todolist` |
+| Bundle ID (iOS) | `com.soncy0311.dopamineplanner` |
+| Package (Android) | `com.soncy0311.dopamineplanner` |
 | Scheme | `dopamine-planner` |
 | Orientation | portrait |
 | UI Style | automatic (시스템 테마) |

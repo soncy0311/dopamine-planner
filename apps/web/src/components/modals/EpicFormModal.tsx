@@ -36,20 +36,20 @@ export function EpicFormModal({
       title: '',
       description: '',
       priority: 'medium',
-      categoryId: '',
+      categoryId: null,
     },
   });
   const priority = form.watch('priority');
 
   useEffect(() => {
     if (open) {
-      form.reset({ title: '', description: '', priority: 'medium', categoryId: '' });
+      form.reset({ title: '', description: '', priority: 'medium', categoryId: null });
       setCategory(null);
     }
   }, [open, form]);
 
   useEffect(() => {
-    form.setValue('categoryId', category?.id ?? '', { shouldDirty: true, shouldValidate: true });
+    form.setValue('categoryId', category?.id ?? null, { shouldDirty: true, shouldValidate: true });
   }, [category, form]);
 
   const create = useCreateEpic({ client: supabase });
@@ -65,6 +65,7 @@ export function EpicFormModal({
       await create.mutateAsync({
         user_id: userRes.user.id,
         category_id: values.categoryId,
+        workspace,
         title: values.title,
         description: values.description ?? null,
         priority: values.priority,
@@ -136,7 +137,7 @@ export function EpicFormModal({
                 workspace={workspace}
                 value={category}
                 onChange={setCategory}
-                placeholder="분류를 검색하세요"
+                placeholder="분류 없음"
               />
               {form.formState.errors.categoryId && (
                 <span className="text-xs text-red-500">

@@ -10,6 +10,7 @@ import {
   groupByEpic,
   queryKeys,
   subscribeTodos,
+  useCalendarCompletedCounts,
   useCategories,
   useEpics,
   useTodos,
@@ -26,6 +27,11 @@ import { EmptyState } from './EmptyState';
 import { Spinner } from './Spinner';
 
 type Props = { workspace: Workspace };
+
+type CategoryFilterValue =
+  | { kind: 'all' }
+  | { kind: 'uncategorized' }
+  | { kind: 'category'; id: string };
 
 type Row =
   | { type: 'header'; key: string; label: string }
@@ -62,6 +68,9 @@ export function MainDailyViewMobile({ workspace }: Props) {
   const qc = useQueryClient();
   const [date, setDate] = useState<string>(() => todayIso());
   const [expand, setExpand] = useState<Record<string, boolean>>({});
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilterValue>({
+    kind: 'all',
+  });
 
   useEffect(() => {
     const unsub = subscribeTodos(supabase, qc);
@@ -93,6 +102,11 @@ export function MainDailyViewMobile({ workspace }: Props) {
   const { data, isLoading } = useTodos({ client: supabase, workspace, date });
   const { data: categories = [] } = useCategories({ client: supabase, workspace });
   const { data: epics = [] } = useEpics({ client: supabase, workspace });
+  const { data: completedCounts = {} } = useCalendarCompletedCounts({
+    client: supabase,
+    workspace,
+    month: date.slice(0, 7),
+  });
   const toggle = useToggleTodo(supabase);
 
   const handleToggle = useCallback(
@@ -114,9 +128,9 @@ export function MainDailyViewMobile({ workspace }: Props) {
   );
 
   const handleToggleExpand = useCallback(
-    (epicId: string) => {
+    (epicId: string, currentExpanded: boolean) => {
       setExpand((prev) => {
-        const next = { ...prev, [epicId]: !prev[epicId] };
+        const next = { ...prev, [epicId]: !currentExpanded };
         AsyncStorage.setItem(
           `${EXPAND_STORAGE_PREFIX}${workspace}`,
           JSON.stringify(next),
@@ -186,14 +200,30 @@ export function MainDailyViewMobile({ workspace }: Props) {
     return m;
   }, [categories]);
 
+  const visibleCategories = useMemo(() => {
+    const used = new Set(epics.map((e) => e.categoryId));
+    return categories.filter((c) => used.has(c.id));
+  }, [categories, epics]);
+
+  const hasUncategorizedEpics = useMemo(
+    () => epics.some((e) => e.categoryId === null),
+    [epics],
+  );
+
   // 노출 정책: 진행 중 = 활성 Epic / 완료 = 본 일자 완료 Epic. (sub-prd-10 §일자 뷰 정합)
   const visibleEpics = useMemo(() => {
     return epics.filter((e) => {
+      if (categoryFilter.kind === 'category' && e.categoryId !== categoryFilter.id) {
+        return false;
+      }
+      if (categoryFilter.kind === 'uncategorized' && e.categoryId !== null) {
+        return false;
+      }
       if (e.status === 'active') return true;
       if (e.status === 'completed' && e.completedDate === date) return true;
       return false;
     });
-  }, [epics, date]);
+  }, [epics, date, categoryFilter]);
 
   const grouped = useMemo(
     () => groupByEpic([...todoList, ...doneList], visibleEpics),
@@ -232,13 +262,15 @@ export function MainDailyViewMobile({ workspace }: Props) {
   );
 
   const buildEpicRow = (entry: { epic: EpicIssue; subs: SubIssueWithJoins[] }): Row => {
-    const cat = categoryById.get(entry.epic.categoryId);
+    const cat = entry.epic.categoryId ? categoryById.get(entry.epic.categoryId) : null;
     return {
       type: 'epic',
       key: `e-${entry.epic.id}`,
       epic: entry.epic,
       subs: entry.subs,
-      category: cat ? { name: cat.name, color: cat.color } : undefined,
+      category: cat
+        ? { name: cat.name, color: cat.color }
+        : { name: '분류 없음', color: '#9CA3AF' },
     };
   };
 
@@ -271,7 +303,58 @@ export function MainDailyViewMobile({ workspace }: Props) {
   return (
     <GestureDetector gesture={swipe}>
       <View className="flex-1 bg-background">
-        <DateHeaderMobile date={date} onDateChange={setDate} />
+        <DateHeaderMobile
+          date={date}
+          onDateChange={setDate}
+          completedCounts={completedCounts}
+        />
+        <View className="border-b border-border bg-background px-3 py-2">
+          <FlatList
+            horizontal
+            data={[
+              { kind: 'all' as const, label: '전체' },
+              ...(hasUncategorizedEpics
+                ? [{ kind: 'uncategorized' as const, label: '분류 없음' }]
+                : []),
+              ...visibleCategories.map((c) => ({
+                kind: 'category' as const,
+                id: c.id,
+                label: c.name,
+              })),
+            ]}
+            keyExtractor={(item) => (item.kind === 'category' ? item.id : item.kind)}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => {
+              const active =
+                item.kind === 'category'
+                  ? categoryFilter.kind === 'category' && categoryFilter.id === item.id
+                  : categoryFilter.kind === item.kind;
+              return (
+                <Pressable
+                  onPress={() =>
+                    setCategoryFilter(
+                      item.kind === 'category'
+                        ? { kind: 'category', id: item.id }
+                        : { kind: item.kind },
+                    )
+                  }
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: active }}
+                  className={`mr-2 rounded-full border px-3 py-1.5 ${
+                    active ? 'border-primary bg-primary' : 'border-border bg-background'
+                  }`}
+                >
+                  <Text
+                    className={active ? 'text-xs text-primary-foreground' : 'text-xs text-foreground'}
+                    numberOfLines={1}
+                  >
+                    {item.label}
+                  </Text>
+                </Pressable>
+              );
+            }}
+          />
+        </View>
         {isLoading ? (
           <View className="flex-1 items-center justify-center py-12">
             <Spinner variant="inline" size="md" />
@@ -299,12 +382,6 @@ export function MainDailyViewMobile({ workspace }: Props) {
               if (item.type === 'epic') {
                 const total = item.subs.length;
                 const done = item.subs.filter((s) => s.status === 'done').length;
-                const progressPercent =
-                  total > 0
-                    ? Math.round((done / total) * 100)
-                    : Math.round(
-                        Math.max(0, Math.min(1, item.epic.progress)) * 100,
-                      );
                 // mainStatus 도 sub 상태 기반 (optimistic update 즉시 반영).
                 // sub 0개일 땐 epic.status 자체를 기준 ('completed' → 'done').
                 const mainStatus: 'todo' | 'done' =
@@ -315,16 +392,17 @@ export function MainDailyViewMobile({ workspace }: Props) {
                     : item.epic.status === 'completed'
                       ? 'done'
                       : 'todo';
+                const expanded = expand[item.epic.id] ?? item.epic.status !== 'completed';
                 return (
                   <IssueCardAccordion
                     epicId={item.epic.id}
                     title={item.epic.title}
-                    progressPercent={progressPercent}
-                    segments={item.subs.map((s) => ({ filled: s.status === 'done' }))}
+                    totalSubCount={total}
+                    completedSubCount={done}
                     category={item.category}
                     priority={item.epic.priority}
-                    expanded={!!expand[item.epic.id]}
-                    onToggleExpand={() => handleToggleExpand(item.epic.id)}
+                    expanded={expanded}
+                    onToggleExpand={() => handleToggleExpand(item.epic.id, expanded)}
                     onMainToggle={() => void handleCascadeToggle(item.epic, item.subs)}
                     mainStatus={mainStatus}
                     subIssues={item.subs}
@@ -341,7 +419,7 @@ export function MainDailyViewMobile({ workspace }: Props) {
                   category={
                     item.todo.category
                       ? { name: item.todo.category.name, color: item.todo.category.color }
-                      : undefined
+                      : { name: '분류 없음', color: '#9CA3AF' }
                   }
                   carryOverCount={item.todo.carryOverCount}
                   onToggle={handleToggle}

@@ -8,10 +8,10 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.daon.todolist"
+      "bundleIdentifier": "com.soncy0311.dopamineplanner"
     },
     "android": {
-      "package": "com.daon.todolist",
+      "package": "com.soncy0311.dopamineplanner",
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       }

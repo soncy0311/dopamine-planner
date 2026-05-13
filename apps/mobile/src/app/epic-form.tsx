@@ -17,7 +17,7 @@ type EpicEditFetch = {
   title: string;
   description: string | null;
   priority: 'high' | 'medium' | 'low';
-  category_id: string;
+  category_id: string | null;
 };
 
 async function fetchEpicForEdit(id: string): Promise<EpicEditFetch> {
@@ -85,6 +85,7 @@ export default function EpicFormScreen() {
         await create.mutateAsync({
           user_id: userRes.user.id,
           category_id: values.categoryId,
+          workspace,
           title: values.title,
           description: values.description ?? null,
           priority: values.priority,

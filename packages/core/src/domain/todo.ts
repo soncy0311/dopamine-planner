@@ -26,7 +26,7 @@ export type TodoView = SubIssue;
 
 export type SubIssueWithJoins = SubIssue & {
   epic: Pick<EpicIssue, 'id' | 'title' | 'progress'>;
-  category: Pick<Category, 'id' | 'name' | 'color'>;
+  category: Pick<Category, 'id' | 'name' | 'color'> | null;
 };
 
 export interface TodoDailyView {
@@ -80,11 +80,13 @@ export function flattenJoined(row: SubIssueRowWithJoins): SubIssueWithJoins {
       title: epicJoin?.title ?? '',
       progress: epicJoin?.progress ?? 0,
     },
-    category: {
-      id: cat?.id ?? '',
-      name: cat?.name ?? '',
-      color: cat?.color ?? '',
-    },
+    category: cat
+      ? {
+          id: cat.id,
+          name: cat.name,
+          color: cat.color ?? '',
+        }
+      : null,
   };
 }
 

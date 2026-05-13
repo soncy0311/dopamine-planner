@@ -52,7 +52,9 @@ export async function remove(
   client: AppSupabaseClient,
   id: string,
 ): Promise<void> {
-  const { error } = await client.from('category').delete().eq('id', id);
+  const { error } = await client.rpc('delete_category_detach_epics', {
+    p_category_id: id,
+  });
   if (error) throw error;
 }
 

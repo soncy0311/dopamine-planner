@@ -30,6 +30,9 @@ export const EpicFormSchema = z.object({
   title: z.string().min(1, '제목을 입력해주세요').max(100, '제목은 100자 이내'),
   description: z.string().max(2000).optional(),
   priority: z.enum(['high', 'medium', 'low']),
-  categoryId: z.string().uuid('분류를 선택해주세요'),
+  categoryId: z.preprocess(
+    (value) => (value === '' ? null : value),
+    z.string().uuid('올바른 분류가 아닙니다').nullable(),
+  ),
 });
 export type EpicFormValues = z.infer<typeof EpicFormSchema>;
