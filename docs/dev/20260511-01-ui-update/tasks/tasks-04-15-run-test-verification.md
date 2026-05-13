@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md) |
 | 작업 번호 | 04-15 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 04-03부터 04-14까지 완료 필요 |
 
 ## 작업 목표
@@ -51,12 +51,12 @@ Sub-04 의 자동 테스트 추가와 수동 QA 보완이 끝난 뒤 `make test`
 
 ## 검증 과정
 
-- [ ] 루트에서 `make test` 를 실행했다.
-- [ ] progress 관련 자동 테스트가 실행 범위에 포함되어 있다.
-- [ ] category/null category 관련 자동 테스트가 실행 범위에 포함되어 있다.
-- [ ] archive/calendar/realtime 관련 자동 테스트가 실행 범위에 포함되어 있다.
-- [ ] test 결과가 통과 또는 실패 원인과 함께 기록되어 있다.
-- [ ] 실패가 있으면 skip 처리하지 않고 관련 task 로 되돌려 수정한다.
+- [x] 루트에서 `make test` 를 실행했다.
+- [x] progress 관련 자동 테스트가 실행 범위에 포함되어 있다.
+- [x] category/null category 관련 자동 테스트가 실행 범위에 포함되어 있다.
+- [x] archive/calendar/realtime 관련 자동 테스트가 실행 범위에 포함되어 있다.
+- [x] test 결과가 통과 또는 실패 원인과 함께 기록되어 있다.
+- [x] 실패가 있으면 skip 처리하지 않고 관련 task 로 되돌려 수정한다.
 
 ## 주의사항
 
@@ -66,7 +66,7 @@ Sub-04 의 자동 테스트 추가와 수동 QA 보완이 끝난 뒤 `make test`
 - `"분류 없음"`은 `category_id = null`이며 실제 category row 생성 금지다.
 - 완료 archive/count 기준은 `status = 'completed'` 및 `completed_date` 존재다.
 - active 복귀로 `completed_date = null`이 되면 archive/count에서 제외한다.
-- 달력 indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- 달력 indicator 규칙은 0개 없음, 1~4개는 점 개수, 5개 이상은 `floor(count / 5)` 별표만 표시하고 점을 추가하지 않는다.
 - 접근성은 자동 속성 테스트와 수동 포커스/label 흐름 검증을 함께 다룬다.
 - 이 task 문서 생성 단계에서는 `make test` 를 실행하지 않고, Sub-04 구현 검증 단계에서 실행한다.
 
@@ -74,3 +74,10 @@ Sub-04 의 자동 테스트 추가와 수동 QA 보완이 끝난 뒤 `make test`
 
 - [`../main-prd-ui-update.md`](../main-prd-ui-update.md)
 - [`../sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md)
+
+## 실행 기록
+
+- **일시**: 2026-05-13 05:37 KST
+- **명령**: `make test`
+- **결과**: 통과
+- **범위**: core 7 files / 56 tests, ui 5 files / 40 tests, web 3 files / 15 tests

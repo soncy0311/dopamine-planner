@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md) |
 | 작업 번호 | 04-02 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 04-01 완료 필요 |
 
 ## 작업 목표
@@ -29,7 +29,7 @@ progress, category, completed archive, calendar count 검증에 사용할 공통
 1. **fixture 케이스 정의**
    - Sub 0개 Epic, 일부 Sub 완료 Epic, 전체 완료 Epic 을 포함한다.
    - 일반 분류 Epic, `category_id = null` Epic, 분류 삭제 전/후 Epic 을 포함한다.
-   - 같은 날짜 완료 Epic 0개, 1개, 5개, 6개, 10개 케이스를 포함한다.
+   - 같은 날짜 완료 Epic 0개, 1개, 4개, 5개, 6개, 10개 케이스를 포함한다.
 
 2. **플랫폼 공통 의미 고정**
    - web/mobile 테스트가 같은 fixture 명칭과 같은 기대값을 사용하도록 정리한다.
@@ -48,11 +48,11 @@ progress, category, completed archive, calendar count 검증에 사용할 공통
 
 ## 검증 과정
 
-- [ ] Sub 0개, 일부 완료, 전체 완료 Epic fixture 가 있다.
-- [ ] 일반 분류와 `category_id = null` Epic fixture 가 있다.
-- [ ] 분류 삭제 전/후 데이터 보존 검증용 fixture 가 있다.
-- [ ] 완료 Epic count 0/1/5/6/10 날짜 fixture 가 있다.
-- [ ] web/mobile 이 같은 fixture 의미로 검증된다는 기록이 있다.
+- [x] Sub 0개, 일부 완료, 전체 완료 Epic fixture 가 있다.
+- [x] 일반 분류와 `category_id = null` Epic fixture 가 있다.
+- [x] 분류 삭제 전/후 데이터 보존 검증용 fixture 가 있다.
+- [x] 완료 Epic count 0/1/4/5/6/10 날짜 fixture 가 있다.
+- [x] web/mobile 이 같은 fixture 의미로 검증된다는 기록이 있다.
 
 ## 주의사항
 
@@ -62,7 +62,7 @@ progress, category, completed archive, calendar count 검증에 사용할 공통
 - `"분류 없음"`은 `category_id = null`이며 실제 category row 생성 금지다.
 - 완료 archive/count 기준은 `status = 'completed'` 및 `completed_date` 존재다.
 - active 복귀로 `completed_date = null`이 되면 archive/count에서 제외한다.
-- 달력 indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- 달력 indicator 규칙은 0개 없음, 1~4개는 점 개수, 5개 이상은 `floor(count / 5)` 별표만 표시하고 점을 추가하지 않는다.
 - 접근성은 자동 속성 테스트와 수동 포커스/label 흐름 검증을 함께 다룬다.
 
 ## 관련 문서

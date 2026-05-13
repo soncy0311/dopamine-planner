@@ -8,9 +8,11 @@ import {
 import type { Category } from '../domain/category';
 import {
   countCompletedByDateForMonth,
+  update,
   listCompletedByCategoryPeriod,
   listCompletedByWorkspace,
 } from '../services/epic';
+import { qaCalendarCountCases, qaCategory, qaEpic } from './qaFixtures';
 
 const baseEpicRow: EpicRow = {
   id: 'ep-1',
@@ -168,6 +170,23 @@ describe('completed Epic archive service', () => {
     });
   });
 
+  it('active 로 복귀한 Epic 은 이전 completed_date 가 남아 있어도 calendar count 에서 제외한다', async () => {
+    const { client } = makeClient([
+      baseEpicRow,
+      {
+        ...baseEpicRow,
+        id: 'returned-active',
+        status: 'active',
+        completed_date: '2026-05-05',
+      },
+      { ...baseEpicRow, id: 'same-day-completed', completed_date: '2026-05-05' },
+    ]);
+
+    const result = await countCompletedByDateForMonth(client, 'life', '2026-05');
+
+    expect(result).toEqual({ '2026-05-05': 2 });
+  });
+
   it('선택 분류의 완료 Epic 을 월별로 조회한다', async () => {
     const { client } = makeClient([
       baseEpicRow,
@@ -227,5 +246,107 @@ describe('groupCompletedEpicsByCategory', () => {
       categoryName: '분류 없음',
     });
     expect(groups[2].epics.map((item) => item.id)).toEqual(['uncat']);
+  });
+
+  it('공통 QA fixture 로 완료 기준과 분류 없음 group 을 함께 검증한다', () => {
+    const groups = groupCompletedEpicsByCategory(
+      [
+        qaEpic({
+          id: 'qa-sub-zero-completed',
+          title: 'Sub 0개 완료',
+          status: 'completed',
+          completedDate: qaCalendarCountCases.one.date,
+          progress: 1,
+        }),
+        qaEpic({
+          id: 'qa-partial-active',
+          title: '일부 완료 진행중',
+          status: 'active',
+          completedDate: null,
+          progress: 0.5,
+        }),
+        qaEpic({
+          id: 'qa-uncategorized-completed',
+          title: '분류 없음 완료',
+          categoryId: null,
+          status: 'completed',
+          completedDate: qaCalendarCountCases.five.date,
+          progress: 1,
+        }),
+        qaEpic({
+          id: 'qa-completed-without-date',
+          title: '완료일 없는 완료 Epic',
+          status: 'completed',
+          completedDate: null,
+          progress: 1,
+        }),
+      ],
+      [qaCategory],
+    );
+
+    expect(groups[0].categoryName).toBe('QA 분류');
+    expect(groups[0].epics.map((item) => item.id)).toEqual([
+      'qa-sub-zero-completed',
+    ]);
+    expect(groups[1]).toMatchObject({
+      categoryId: null,
+      categoryName: '분류 없음',
+    });
+    expect(groups[1].epics.map((item) => item.id)).toEqual([
+      'qa-uncategorized-completed',
+    ]);
+  });
+});
+
+describe('epic update service', () => {
+  it('category_id null 저장과 이후 일반 분류 재지정 payload 를 허용한다', async () => {
+    const updates: Record<string, unknown>[] = [];
+    const client = {
+      from: (table: string) => ({
+        update: (patch: Record<string, unknown>) => {
+          updates.push({ table, patch });
+          return {
+            eq: () => ({
+              select: () => ({
+                single: async () => ({
+                  data: {
+                    ...baseEpicRow,
+                    category_id: patch.category_id as string | null,
+                    title: (patch.title as string | undefined) ?? baseEpicRow.title,
+                    description:
+                      (patch.description as string | null | undefined) ?? baseEpicRow.description,
+                  },
+                  error: null,
+                }),
+              }),
+            }),
+          };
+        },
+      }),
+    } as unknown as AppSupabaseClient;
+
+    await expect(
+      update(client, 'ep-1', {
+        category_id: null,
+        title: '분류 제거 후 제목 수정',
+      }),
+    ).resolves.toMatchObject({
+      categoryId: null,
+      title: '분류 제거 후 제목 수정',
+    });
+    await expect(
+      update(client, 'ep-1', {
+        category_id: 'cat-2',
+        description: '재지정 후 설명 수정',
+      }),
+    ).resolves.toMatchObject({
+      categoryId: 'cat-2',
+      description: '재지정 후 설명 수정',
+    });
+
+    expect(updates.map((call) => call.patch)).toEqual([
+      { category_id: null, title: '분류 제거 후 제목 수정' },
+      { category_id: 'cat-2', description: '재지정 후 설명 수정' },
+    ]);
   });
 });

@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md) |
 | 작업 번호 | 04-05 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 04-01, 04-02 완료 필요 |
 
 ## 작업 목표
@@ -49,11 +49,11 @@ category 삭제가 연결 Epic/Sub 삭제로 이어지지 않고 Epic 의 `categ
 
 ## 검증 과정
 
-- [ ] category 삭제 후 연결 Epic row 가 삭제되지 않는다.
-- [ ] category 삭제 후 연결 Epic 의 `category_id` 가 `null` 이 된다.
-- [ ] category 삭제 후 연결 Sub row 가 삭제되지 않는다.
-- [ ] 타 사용자 category 삭제가 차단되는 테스트가 있다.
-- [ ] UI mock 만으로 통과 처리하지 않고 DB 또는 core service 경로를 검증한다.
+- [x] category 삭제 후 연결 Epic row 가 삭제되지 않는다.
+- [x] category 삭제 후 연결 Epic 의 `category_id` 가 `null` 이 된다.
+- [x] category 삭제 후 연결 Sub row 가 삭제되지 않는다.
+- [x] 타 사용자 category 삭제가 차단되는 테스트가 있다.
+- [x] UI mock 만으로 통과 처리하지 않고 DB 또는 core service 경로를 검증한다.
 
 ## 주의사항
 
@@ -63,7 +63,7 @@ category 삭제가 연결 Epic/Sub 삭제로 이어지지 않고 Epic 의 `categ
 - `"분류 없음"`은 `category_id = null`이며 실제 category row 생성 금지다.
 - 완료 archive/count 기준은 `status = 'completed'` 및 `completed_date` 존재다.
 - active 복귀로 `completed_date = null`이 되면 archive/count에서 제외한다.
-- 달력 indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- 달력 indicator 규칙은 0개 없음, 1~4개는 점 개수, 5개 이상은 `floor(count / 5)` 별표만 표시하고 점을 추가하지 않는다.
 - 접근성은 자동 속성 테스트와 수동 포커스/label 흐름 검증을 함께 다룬다.
 
 ## 관련 문서

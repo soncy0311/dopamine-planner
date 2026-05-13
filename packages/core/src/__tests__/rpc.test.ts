@@ -1,8 +1,24 @@
 import { describe, it, expect, vi } from 'vitest';
+import { readFileSync } from 'node:fs';
 import type { AppSupabaseClient } from '../supabase/types';
 import { carryOverTodos } from '../services/carryOver';
 import { categoryService } from '../services/category';
 import { recalcEpicProgress } from '../services/epicProgress';
+
+const deleteCategoryDetachSql = readFileSync(
+  new URL(
+    '../../../../supabase/migrations/015_delete_category_detach_epics_rpc.sql',
+    import.meta.url,
+  ),
+  'utf8',
+);
+const categorySetNullSql = readFileSync(
+  new URL(
+    '../../../../supabase/migrations/014_category_nullable_set_null.sql',
+    import.meta.url,
+  ),
+  'utf8',
+);
 
 function clientWithRpc(result: { data: unknown; error: unknown }) {
   return {
@@ -56,5 +72,25 @@ describe('categoryService.remove', () => {
   it('RPC error 발생 시 throw', async () => {
     const client = clientWithRpc({ data: null, error: new Error('forbidden') });
     await expect(categoryService.remove(client, 'cat-1')).rejects.toThrow('forbidden');
+  });
+
+  it('DB migration 이 Epic 을 먼저 null 로 detach 한 뒤 category row 만 삭제한다', () => {
+    expect(categorySetNullSql).toContain('alter column category_id drop not null');
+    expect(categorySetNullSql).toContain('on delete set null');
+    expect(deleteCategoryDetachSql).toContain('security definer');
+    expect(deleteCategoryDetachSql).toContain('set category_id = null');
+    expect(deleteCategoryDetachSql).toContain('and user_id = auth.uid()');
+    expect(deleteCategoryDetachSql.indexOf('set category_id = null')).toBeLessThan(
+      deleteCategoryDetachSql.indexOf('delete from public.category'),
+    );
+  });
+
+  it('DB migration 이 미인증/타 사용자 category 삭제를 차단한다', () => {
+    expect(deleteCategoryDetachSql).toContain('requires an authenticated user');
+    expect(deleteCategoryDetachSql).toContain('v_user_id <> auth.uid()');
+    expect(deleteCategoryDetachSql).toContain('category does not belong to current user');
+    expect(deleteCategoryDetachSql).toContain(
+      'grant execute on function public.delete_category_detach_epics(uuid) to authenticated',
+    );
   });
 });

@@ -49,6 +49,18 @@ describe('queryKeys', () => {
     ]);
   });
 
+  it('전체 Epic, 분류 없음 Epic, 완료 archive key 는 서로 다른 namespace/조건을 가진다', () => {
+    expect(queryKeys.epics('life')).toEqual(['epics', { workspace: 'life' }]);
+    expect(queryKeys.uncategorizedEpics('life')).toEqual([
+      'epics',
+      { workspace: 'life', categoryId: null },
+    ]);
+    expect(queryKeys.completedEpics('life')).toEqual([
+      'completedEpics',
+      { workspace: 'life' },
+    ]);
+  });
+
   it('calendarCompletedCounts 헬퍼는 월 단위 key 를 가진다', () => {
     expect(queryKeys.calendarCompletedCounts('life', '2026-05')).toEqual([
       'calendarCompletedCounts',

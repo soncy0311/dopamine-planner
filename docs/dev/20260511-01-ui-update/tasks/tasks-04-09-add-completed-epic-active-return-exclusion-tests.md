@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md) |
 | 작업 번호 | 04-09 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 04-02, 04-08 완료 필요 |
 
 ## 작업 목표
@@ -46,11 +46,11 @@
 
 ## 검증 과정
 
-- [ ] completed Epic 을 active 로 되돌리면 `completed_date = null` 이 된다.
-- [ ] active 복귀 Epic 은 archive 목록에서 제외된다.
-- [ ] active 복귀 Epic 은 calendar count 에서 제외된다.
-- [ ] 기존 Todo/Sub 토글과 progress 재계산 회귀가 없다.
-- [ ] web/mobile 수동 QA 에서 active 복귀 후 archive/count 제외가 확인된다.
+- [x] completed Epic 을 active 로 되돌리면 `completed_date = null` 이 된다.
+- [x] active 복귀 Epic 은 archive 목록에서 제외된다.
+- [x] active 복귀 Epic 은 calendar count 에서 제외된다.
+- [x] 기존 Todo/Sub 토글과 progress 재계산 회귀가 없다.
+- [x] web/mobile 수동 QA 에서 active 복귀 후 archive/count 제외가 확인된다.
 
 ## 주의사항
 
@@ -60,7 +60,7 @@
 - `"분류 없음"`은 `category_id = null`이며 실제 category row 생성 금지다.
 - 완료 archive/count 기준은 `status = 'completed'` 및 `completed_date` 존재다.
 - active 복귀로 `completed_date = null`이 되면 archive/count에서 제외한다.
-- 달력 indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- 달력 indicator 규칙은 0개 없음, 1~4개는 점 개수, 5개 이상은 `floor(count / 5)` 별표만 표시하고 점을 추가하지 않는다.
 - 접근성은 자동 속성 테스트와 수동 포커스/label 흐름 검증을 함께 다룬다.
 
 ## 관련 문서

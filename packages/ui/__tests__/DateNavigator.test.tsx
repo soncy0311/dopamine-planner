@@ -62,9 +62,11 @@ describe('DateNavigator', () => {
     expect(screen.getByRole('button', { name: '5월 6일' })).toBeInTheDocument();
   });
 
-  it('indicator 규칙은 1~4개 점, 5개 이상은 5개당 별표만 표시한다', () => {
+  it('indicator 규칙은 0/1/4/5/6/10 fixture 에서 1~4개 점, 5개 이상 별표만 표시한다', () => {
     expect(getCompletedEpicDotCount(0)).toBe(0);
     expect(getCompletedEpicStarCount(0)).toBe(0);
+    expect(getCompletedEpicDotCount(1)).toBe(1);
+    expect(getCompletedEpicStarCount(1)).toBe(0);
     expect(getCompletedEpicDotCount(4)).toBe(4);
     expect(getCompletedEpicStarCount(4)).toBe(0);
     expect(getCompletedEpicDotCount(5)).toBe(0);

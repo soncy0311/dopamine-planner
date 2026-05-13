@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md) |
 | 작업 번호 | 04-14 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 04-03부터 04-13까지 완료 필요 |
 
 ## 작업 목표
@@ -47,10 +47,10 @@ Sub-04 자동 테스트와 수동 QA 보완 변경이 끝난 뒤 `make lint` 를
 
 ## 검증 과정
 
-- [ ] 루트에서 `make lint` 를 실행했다.
-- [ ] lint 결과가 통과 또는 실패 원인과 함께 기록되어 있다.
-- [ ] 실패가 있으면 관련 task 로 되돌려 수정 계획이 연결되어 있다.
-- [ ] web/mobile/core 변경 범위가 lint 검증 대상에 포함되어 있다.
+- [x] 루트에서 `make lint` 를 실행했다.
+- [x] lint 결과가 통과 또는 실패 원인과 함께 기록되어 있다.
+- [x] 실패가 있으면 관련 task 로 되돌려 수정 계획이 연결되어 있다.
+- [x] web/mobile/core 변경 범위가 lint 검증 대상에 포함되어 있다.
 
 ## 주의사항
 
@@ -60,7 +60,7 @@ Sub-04 자동 테스트와 수동 QA 보완 변경이 끝난 뒤 `make lint` 를
 - `"분류 없음"`은 `category_id = null`이며 실제 category row 생성 금지다.
 - 완료 archive/count 기준은 `status = 'completed'` 및 `completed_date` 존재다.
 - active 복귀로 `completed_date = null`이 되면 archive/count에서 제외한다.
-- 달력 indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- 달력 indicator 규칙은 0개 없음, 1~4개는 점 개수, 5개 이상은 `floor(count / 5)` 별표만 표시하고 점을 추가하지 않는다.
 - 접근성은 자동 속성 테스트와 수동 포커스/label 흐름 검증을 함께 다룬다.
 - 이 task 문서 생성 단계에서는 `make lint` 를 실행하지 않고, Sub-04 구현 검증 단계에서 실행한다.
 
@@ -68,3 +68,11 @@ Sub-04 자동 테스트와 수동 QA 보완 변경이 끝난 뒤 `make lint` 를
 
 - [`../main-prd-ui-update.md`](../main-prd-ui-update.md)
 - [`../sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md)
+
+## 실행 기록
+
+- **일시**: 2026-05-13 13:23 KST
+- **명령**: `make lint`
+- **결과**: 통과
+- **조치**: `@todo-list/mobile` 의 `lint` script 를 web 과 같은 `tsc --noEmit` 기반으로 변경해 mobile lint 도 단일 entry point 에서 동작하도록 정합했다.
+- **범위**: turbo lint 7 tasks successful.

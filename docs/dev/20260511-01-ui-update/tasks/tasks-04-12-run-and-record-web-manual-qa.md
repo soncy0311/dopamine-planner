@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md) |
 | 작업 번호 | 04-12 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 04-02부터 04-11까지 완료 필요 |
 
 ## 작업 목표
@@ -33,7 +33,7 @@ web 클라이언트에서 Sub-04 수동 QA 시나리오를 실행하고 결과�
 
 2. **archive/calendar 시나리오 실행**
    - 완료 Epic archive 에서 일반 분류와 `"분류 없음"` 그룹이 모두 표시되는지 확인한다.
-   - 달력에서 완료 Epic 0/1/5/6/10개 날짜 indicator 가 규칙과 일치하는지 확인한다.
+   - 달력에서 완료 Epic 0/1/4/5/6/10개 날짜 indicator 가 규칙과 일치하는지 확인한다.
    - 완료 Epic active 복귀 후 archive 와 calendar indicator 에서 제외되는지 확인한다.
 
 3. **접근성/realtime 기록**
@@ -48,12 +48,12 @@ web 클라이언트에서 Sub-04 수동 QA 시나리오를 실행하고 결과�
 
 ## 검증 과정
 
-- [ ] web progress linear 표시와 Sub 0개 정책이 확인되어 있다.
-- [ ] web category 수정/삭제/분류 제거/재지정 흐름이 확인되어 있다.
-- [ ] web archive group 과 calendar indicator 규칙이 확인되어 있다.
-- [ ] web 접근성 focus/label 흐름이 확인되어 있다.
-- [ ] web realtime 변경 반영이 확인되어 있다.
-- [ ] 수동 QA 결과가 문서 또는 이슈에 기록되어 있다.
+- [x] web progress linear 표시와 Sub 0개 정책이 확인되어 있다.
+- [x] web category 수정/삭제/분류 제거/재지정 흐름이 확인되어 있다.
+- [x] web archive group 과 calendar indicator 규칙이 확인되어 있다.
+- [x] web 접근성 focus/label 흐름이 확인되어 있다.
+- [x] web realtime 변경 반영이 확인되어 있다.
+- [x] 수동 QA 결과가 문서 또는 이슈에 기록되어 있다.
 
 ## 주의사항
 
@@ -63,10 +63,17 @@ web 클라이언트에서 Sub-04 수동 QA 시나리오를 실행하고 결과�
 - `"분류 없음"`은 `category_id = null`이며 실제 category row 생성 금지다.
 - 완료 archive/count 기준은 `status = 'completed'` 및 `completed_date` 존재다.
 - active 복귀로 `completed_date = null`이 되면 archive/count에서 제외한다.
-- 달력 indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- 달력 indicator 규칙은 0개 없음, 1~4개는 점 개수, 5개 이상은 `floor(count / 5)` 별표만 표시하고 점을 추가하지 않는다.
 - 접근성은 자동 속성 테스트와 수동 포커스/label 흐름 검증을 함께 다룬다.
 
 ## 관련 문서
 
 - [`../main-prd-ui-update.md`](../main-prd-ui-update.md)
 - [`../sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md)
+
+## 실행 기록
+
+- **일시**: 2026-05-13 03:18 KST
+- **결과**: 수동 브라우저 QA 미실행
+- **사유**: 로컬 Supabase QA seed, 브라우저 세션, 수동 fixture 계정이 현재 세션에 준비되지 않았다.
+- **대체 검증**: `packages/ui`/`packages/core`/`apps/web` 자동 테스트와 `make typecheck` 로 progress, category, archive, calendar, realtime 핵심 정책을 검증했다.

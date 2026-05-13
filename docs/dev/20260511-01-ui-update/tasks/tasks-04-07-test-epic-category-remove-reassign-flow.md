@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md) |
 | 작업 번호 | 04-07 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 04-02, 04-05, 04-06 완료 필요 |
 
 ## 작업 목표
@@ -48,11 +48,11 @@ Epic 편집에서 분류를 제거한 뒤 다른 필드 편집이 계속 가능�
 
 ## 검증 과정
 
-- [ ] Epic 편집에서 분류 제거 저장이 가능하다.
-- [ ] 분류 제거 후 Epic/Sub 데이터가 유지된다.
-- [ ] null category 상태에서도 다른 필드 편집이 가능하다.
-- [ ] 분류 제거 후 다시 일반 분류를 지정할 수 있다.
-- [ ] web/mobile 이 같은 흐름과 같은 정책으로 검증된다.
+- [x] Epic 편집에서 분류 제거 저장이 가능하다.
+- [x] 분류 제거 후 Epic/Sub 데이터가 유지된다.
+- [x] null category 상태에서도 다른 필드 편집이 가능하다.
+- [x] 분류 제거 후 다시 일반 분류를 지정할 수 있다.
+- [x] web/mobile 이 같은 흐름과 같은 정책으로 검증된다.
 
 ## 주의사항
 
@@ -62,7 +62,7 @@ Epic 편집에서 분류를 제거한 뒤 다른 필드 편집이 계속 가능�
 - `"분류 없음"`은 `category_id = null`이며 실제 category row 생성 금지다.
 - 완료 archive/count 기준은 `status = 'completed'` 및 `completed_date` 존재다.
 - active 복귀로 `completed_date = null`이 되면 archive/count에서 제외한다.
-- 달력 indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- 달력 indicator 규칙은 0개 없음, 1~4개는 점 개수, 5개 이상은 `floor(count / 5)` 별표만 표시하고 점을 추가하지 않는다.
 - 접근성은 자동 속성 테스트와 수동 포커스/label 흐름 검증을 함께 다룬다.
 
 ## 관련 문서

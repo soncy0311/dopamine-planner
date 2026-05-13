@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { mapCategoryRow, type CategoryRow } from '../domain/category';
 import { mapEpicRow, type EpicRow } from '../domain/epic';
 import { mapSubIssueRow, mapTodoDailyView, type TodoRow } from '../domain/todo';
+import { qaEpicRow } from './qaFixtures';
 
 const categoryRow: CategoryRow = {
   id: 'cat-1',
@@ -87,6 +88,25 @@ describe('mapEpicRow', () => {
 
   it('category_id null row 를 분류 없음 Epic 으로 변환한다', () => {
     expect(mapEpicRow({ ...epicRow, category_id: null }).categoryId).toBeNull();
+  });
+
+  it('공통 QA fixture 에서 category_id null 과 completed_date 를 domain 값으로 보존한다', () => {
+    const result = mapEpicRow({
+      ...qaEpicRow,
+      id: 'qa-completed-uncategorized',
+      category_id: null,
+      status: 'completed',
+      completed_date: '2026-05-04',
+      progress: 1,
+    });
+
+    expect(result).toMatchObject({
+      id: 'qa-completed-uncategorized',
+      categoryId: null,
+      status: 'completed',
+      completedDate: '2026-05-04',
+      progress: 1,
+    });
   });
 });
 

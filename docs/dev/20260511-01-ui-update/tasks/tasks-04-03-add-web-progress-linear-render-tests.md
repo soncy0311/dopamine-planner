@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md) |
 | 작업 번호 | 04-03 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 04-01, 04-02 완료 필요 |
 
 ## 작업 목표
@@ -46,11 +46,11 @@ web Epic 카드와 상세/편집 화면에서 progress 가 segmented 가 아닌 
 
 ## 검증 과정
 
-- [ ] web Epic 카드에서 linear progress 렌더링 테스트가 있다.
-- [ ] Sub 0개 Epic 에서 progressbar 미표기 테스트가 있다.
-- [ ] 일부 완료와 전체 완료 fixture 가 progress 표시를 검증한다.
-- [ ] segmented 구조 회귀를 잡을 수 있는 테스트가 있다.
-- [ ] `make test` 실행 시 관련 web 테스트가 통과한다.
+- [x] web Epic 카드에서 linear progress 렌더링 테스트가 있다.
+- [x] Sub 0개 Epic 에서 progressbar 미표기 테스트가 있다.
+- [x] 일부 완료와 전체 완료 fixture 가 progress 표시를 검증한다.
+- [x] segmented 구조 회귀를 잡을 수 있는 테스트가 있다.
+- [x] `make test` 실행 시 관련 web 테스트가 통과한다.
 
 ## 주의사항
 
@@ -60,7 +60,7 @@ web Epic 카드와 상세/편집 화면에서 progress 가 segmented 가 아닌 
 - `"분류 없음"`은 `category_id = null`이며 실제 category row 생성 금지다.
 - 완료 archive/count 기준은 `status = 'completed'` 및 `completed_date` 존재다.
 - active 복귀로 `completed_date = null`이 되면 archive/count에서 제외한다.
-- 달력 indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- 달력 indicator 규칙은 0개 없음, 1~4개는 점 개수, 5개 이상은 `floor(count / 5)` 별표만 표시하고 점을 추가하지 않는다.
 - 접근성은 자동 속성 테스트와 수동 포커스/label 흐름 검증을 함께 다룬다.
 
 ## 관련 문서

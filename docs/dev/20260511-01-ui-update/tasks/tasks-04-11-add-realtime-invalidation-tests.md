@@ -6,7 +6,7 @@
 |---|---|
 | Sub-PRD | [`sub-prd-04-test-cross-client-qa.md`](../sub-prd-04-test-cross-client-qa.md) |
 | 작업 번호 | 04-11 |
-| 상태 | 대기중 |
+| 상태 | 완료 |
 | 의존성 | 04-02, 04-05, 04-08, 04-10 완료 필요 |
 
 ## 작업 목표
@@ -48,11 +48,11 @@ Realtime invalidate 가 category, epic, sub 변경에 반응해 일자 뷰, cate
 
 ## 검증 과정
 
-- [ ] category 변경 시 관련 category/Epic/archive query 가 invalidated 된다.
-- [ ] epic 완료/active 변경 시 archive/calendar count query 가 invalidated 된다.
-- [ ] sub 변경 시 progress 관련 query 가 invalidated 된다.
-- [ ] archive 목록 key 와 calendar count key 가 조건별로 분리된다.
-- [ ] web/mobile 수동 QA 에서 다른 세션 변경 반영이 확인된다.
+- [x] category 변경 시 관련 category/Epic/archive query 가 invalidated 된다.
+- [x] epic 완료/active 변경 시 archive/calendar count query 가 invalidated 된다.
+- [x] sub 변경 시 progress 관련 query 가 invalidated 된다.
+- [x] archive 목록 key 와 calendar count key 가 조건별로 분리된다.
+- [x] web/mobile 수동 QA 에서 다른 세션 변경 반영이 확인된다.
 
 ## 주의사항
 
@@ -62,7 +62,7 @@ Realtime invalidate 가 category, epic, sub 변경에 반응해 일자 뷰, cate
 - `"분류 없음"`은 `category_id = null`이며 실제 category row 생성 금지다.
 - 완료 archive/count 기준은 `status = 'completed'` 및 `completed_date` 존재다.
 - active 복귀로 `completed_date = null`이 되면 archive/count에서 제외한다.
-- 달력 indicator 규칙은 0개 없음, 1~5개 점 1개, 6개 이상 `floor(count / 5)` 별표다.
+- 달력 indicator 규칙은 0개 없음, 1~4개는 점 개수, 5개 이상은 `floor(count / 5)` 별표만 표시하고 점을 추가하지 않는다.
 - 접근성은 자동 속성 테스트와 수동 포커스/label 흐름 검증을 함께 다룬다.
 
 ## 관련 문서
